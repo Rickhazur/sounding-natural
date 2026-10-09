@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chunk Lab — Lesson 2</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#F7FAFA;color:#123C46;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px}
+.header{text-align:center;margin-bottom:16px}
+.header h1{font-size:1.8rem;color:#026A79;margin-bottom:8px}
+.header p{color:#5a7a82;font-size:1rem;max-width:620px}
+.progress{color:#026A79;font-weight:bold;margin-bottom:16px}
+.card{background:#fff;border-radius:16px;padding:28px;max-width:680px;width:100%;text-align:center;border:2px solid #EBF0F0;box-shadow:0 4px 16px rgba(2,106,121,.08)}
+.flask{background:rgba(2,106,121,.05);border:2px dashed #026A79;border-radius:12px;padding:16px;margin:16px 0;min-height:80px}
+.flask h4{color:#026A79;margin-bottom:8px;font-size:.95rem}
+.flask .formula{font-size:1.3rem;font-weight:bold;color:#026A79;min-height:2rem}
+.elements{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:20px 0}
+.element{background:#EBF0F0;border:2px solid #B0C4C8;color:#123C46;padding:10px 16px;border-radius:10px;font-size:1.05rem;font-weight:600;cursor:pointer;transition:all .2s}
+.element:hover{background:#D4E8EB;transform:translateY(-2px)}
+.element.selected{background:#E8AA28;border-color:#E8AA28;color:#fff}
+.element.used{background:#ccc;border-color:#ccc;color:#999;cursor:default;opacity:.5}
+.element.used:hover{transform:none}
+.found-chunks{margin:16px 0;text-align:left}
+.found-chunks .chunk-item{background:rgba(46,204,113,.1);border:1px solid #2ecc71;border-radius:8px;padding:10px 14px;margin:8px 0;font-size:1.05rem}
+.found-chunks .chunk-item strong{color:#1a7a3a}
+.btn{display:inline-block;background:#026A79;color:#fff;border:none;padding:12px 24px;font-size:1rem;border-radius:10px;cursor:pointer;margin:6px;font-weight:bold;transition:transform .1s}
+.btn:hover{transform:scale(1.03)}
+.btn.amber{background:#E8AA28;color:#123C46}
+.btn.red{background:#e74c3c;color:#fff}
+.play-btn{background:#026A79;color:#fff;border:none;width:72px;height:72px;border-radius:50%;font-size:1.8rem;cursor:pointer;margin:10px}
+.play-btn:hover{transform:scale(1.06)}
+.feedback{margin-top:14px;padding:14px;border-radius:10px;font-size:1rem;display:none;text-align:left;line-height:1.5}
+.feedback.show{display:block}
+.feedback.good{background:rgba(46,204,113,.1);border:1px solid #2ecc71}
+.feedback.bad{background:rgba(231,76,60,.08);border:1px solid #e74c3c}
+.hidden{display:none!important}
+.final-card{text-align:center;padding:40px}
+.final-card h2{color:#026A79;font-size:2rem;margin-bottom:16px}
+.score{font-size:1.4rem;margin:16px 0;color:#026A79}
+.emoji-big{font-size:3.5rem;margin-bottom:16px}
+.instructions{background:rgba(2,106,121,.06);border:1px solid #026A79;border-radius:10px;padding:12px;margin-bottom:14px;font-size:.93rem;color:#026A79;text-align:left}
+h3.exp-title{color:#026A79;margin-bottom:8px}
+.transcript{background:#F7FAFA;border-radius:8px;padding:12px;margin:12px 0;font-style:italic;color:#5a7a82;font-size:.95rem;display:none}
+.transcript.show{display:block}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>🧪 Chunk Lab</h1>
+<p>Listen to the conversation. Combine the word elements to discover the hidden chunks — like a chemical formula.</p>
+</div>
+<div class="progress" id="progress">Experiment 1 of 5</div>
+<div class="card" id="game"></div>
+<div class="card hidden final-card" id="final">
+<div class="emoji-big">🔬</div>
+<h2>Lab Complete!</h2>
+<p class="score" id="score"></p>
+<p>You discovered all the chunks hiding in real conversations.</p>
+</div>
+<script>
+const AUDIO_BASE = "";
+const experiments = [
+{
+  title: "Experiment 1: At Work",
+  audio: "lab1.mp3",
+  transcript: "We need to make a decision today. Can you send the numbers as soon as possible? Of course. Let me know if you need help.",
+  words: ["We","need","to","make","a","decision","today.","Can","you","send","the","numbers","as","soon","as","possible?","Of","course.","Let","me","know","if","you","need","help."],
+  chunks: [
+    {words:["make","a","decision"], label:"make a decision", type:"Collocation", why:"Words that naturally go together when choosing."},
+    {words:["as","soon","as","possible?"], label:"as soon as possible?", type:"Fixed phrase", why:"Indicating urgency — a standard formula."},
+    {words:["Let","me","know"], label:"Let me know", type:"Collocation", why:"Requesting information — words that go together."}
+  ]
+},
+{
+  title: "Experiment 2: With Friends",
+  audio: "lab2.mp3",
+  transcript: "I was nervous, but he told a joke to break the ice. We had fun all night. See you soon!",
+  words: ["I","was","nervous,","but","he","told","a","joke","to","break","the","ice.","We","had","fun","all","night.","See","you","soon!"],
+  chunks: [
+    {words:["break","the","ice."], label:"break the ice.", type:"Idiom", why:"Starting a conversation — meaning is not literal."},
+    {words:["had","fun"], label:"had fun", type:"Collocation", why:"Words that naturally go together for enjoyment."},
+    {words:["See","you","soon!"], label:"See you soon!", type:"Fixed phrase", why:"Saying goodbye — a social formula."}
+  ]
+},
+{
+  title: "Experiment 3: At the Restaurant",
+  audio: "lab3.mp3",
+  transcript: "Can I have the chicken, please? Sure. Anything else? Just water. That'll be twelve dollars.",
+  words: ["Can","I","have","the","chicken,","please?","Sure.","Anything","else?","Just","water.","That'll","be","twelve","dollars."],
+  chunks: [
+    {words:["Can","I","have"], label:"Can I have", type:"Sentence frame", why:"A polite request — you fill in what you want."},
+    {words:["Anything","else?"], label:"Anything else?", type:"Fixed phrase", why:"Offering more — a service formula."},
+    {words:["That'll","be"], label:"That'll be", type:"Collocation", why:"Stating a price — words that go together."}
+  ]
+},
+{
+  title: "Experiment 4: Making Plans",
+  audio: "lab4.mp3",
+  transcript: "What about Friday night? Sounds good to me. Let's meet at seven. Great, see you then!",
+  words: ["What","about","Friday","night?","Sounds","good","to","me.","Let's","meet","at","seven.","Great,","see","you","then!"],
+  chunks: [
+    {words:["What","about"], label:"What about", type:"Sentence frame", why:"Suggesting — you fill in the idea."},
+    {words:["Sounds","good"], label:"Sounds good", type:"Fixed phrase", why:"Agreeing — a social formula."},
+    {words:["see","you","then!"], label:"see you then!", type:"Fixed phrase", why:"Confirming plans — a social formula."}
+  ]
+},
+{
+  title: "Experiment 5: Giving Opinions",
+  audio: "lab5.mp3",
+  transcript: "The problem is, we don't have time. In other words, we need help. At the end of the day, the client comes first.",
+  words: ["The","problem","is,","we","don't","have","time.","In","other","words,","we","need","help.","At","the","end","of","the","day,","the","client","comes","first."],
+  chunks: [
+    {words:["The","problem","is,"], label:"The problem is,", type:"Sentence frame", why:"Introducing an issue — you fill in the problem."},
+    {words:["In","other","words,"], label:"In other words,", type:"Fixed phrase", why:"Rephrasing — clarifying your point."},
+    {words:["At","the","end","of","the","day,"], label:"At the end of the day,", type:"Fixed phrase", why:"Summarizing — what really matters."}
+  ]
+}
+];
+let cur = 0, score = 0;
+let selected = [];
+let foundCount = 0;
+
+function render(){
+  document.getElementById('progress').textContent = `Experiment ${cur+1} of ${experiments.length}`;
+  selected = []; foundCount = 0;
+  const e = experiments[cur];
+  const g = document.getElementById('game');
+  
+  let elementsHtml = '<div class="elements">';
+  e.words.forEach((w, i) => {
+    elementsHtml += `<div class="element" data-idx="${i}" onclick="toggleWord(${i})">${w}</div>`;
+  });
+  elementsHtml += '</div>';
+  
+  g.innerHTML = `
+    <h3 class="exp-title">${e.title}</h3>
+    <button class="play-btn" onclick="playAudio()">🔊</button>
+    <div style="color:#5a7a82;font-size:.9rem;margin-bottom:8px">Listen to the conversation</div>
+    <button class="btn" style="background:#B0C4C8;font-size:.85rem;padding:8px 16px" onclick="toggleTranscript()">Show transcript</button>
+    <div class="transcript" id="transcript">${e.transcript}</div>
+    <div class="instructions">🧪 Click word elements <strong>in order</strong> to form a chunk formula, then press <strong>Test Formula</strong>.</div>
+    <div class="flask">
+      <h4>⚗️ Your formula:</h4>
+      <div class="formula" id="formula">—</div>
+    </div>
+    ${elementsHtml}
+    <button class="btn" onclick="testFormula()">Test Formula ⚗️</button>
+    <button class="btn red" onclick="clearSelection()">Clear</button>
+    <div class="found-chunks" id="foundChunks"></div>
+    <div class="feedback" id="fb"></div>
+    <div id="nextBtn" style="margin-top:12px"></div>
+  `;
+}
+
+function toggleTranscript(){
+  document.getElementById('transcript').classList.toggle('show');
+}
+function playAudio(){
+  new Audio(AUDIO_BASE + experiments[cur].audio).play();
+}
+function toggleWord(idx){
+  const el = document.querySelector(`[data-idx="${idx}"]`);
+  if(el.classList.contains('used')) return;
+  if(selected.includes(idx)){
+    selected = selected.filter(x => x !== idx);
+    el.classList.remove('selected');
+  } else {
+    selected.push(idx);
+    el.classList.add('selected');
+  }
+  updateFormula();
+}
+function updateFormula(){
+  const e = experiments[cur];
+  const words = selected.map(i => e.words[i]);
+  document.getElementById('formula').textContent = words.length ? words.join(' ') : '—';
+}
+function clearSelection(){
+  selected = [];
+  document.querySelectorAll('.element.selected').forEach(el => el.classList.remove('selected'));
+  updateFormula();
+}
+function testFormula(){
+  const e = experiments[cur];
+  const fb = document.getElementById('fb');
+  const selectedWords = selected.map(i => e.words[i]);
+  
+  if(selectedWords.length === 0){
+    fb.className = 'feedback show bad';
+    fb.innerHTML = 'Select some words first!';
+    return;
+  }
+  
+  // Buscar si coincide con algún chunk
+  const match = e.chunks.find(c => 
+    c.words.length === selectedWords.length &&
+    c.words.every((w, i) => w === selectedWords[i])
+  );
+  
+  // Verificar si ya fue encontrado
+  const alreadyFound = document.querySelector(`[data-found="${selectedWords.join(' ')}"]`);
+  
+  if(match && !alreadyFound){
+    // Correcto!
+    score += 20;
+    foundCount++;
+    const fc = document.getElementById('foundChunks');
+    fc.innerHTML += `<div class="chunk-item" data-found="${selectedWords.join(' ')}">✅ <strong>${match.label}</strong> <span style="color:#5a7a82;font-size:.85rem">(${match.type})</span><br><span style="color:#5a7a82;font-size:.9rem">${match.why}</span></div>`;
+    
+    // Marcar palabras como usadas
+    selected.forEach(i => {
+      document.querySelector(`[data-idx="${i}"]`).classList.add('used');
+      document.querySelector(`[data-idx="${i}"]`).classList.remove('selected');
+    });
+    selected = [];
+    updateFormula();
+    
+    fb.className = 'feedback show good';
+    fb.innerHTML = `✅ Correct formula! <strong>${match.label}</strong> is a ${match.type}.`;
+    
+    if(foundCount >= e.chunks.length){
+      fb.innerHTML += `<br><br>🎉 All chunks discovered!`;
+      document.getElementById('nextBtn').innerHTML = `<button class="btn amber" onclick="next()">Next experiment →</button>`;
+    }
+  } else if(alreadyFound){
+    fb.className = 'feedback show bad';
+    fb.innerHTML = 'You already found that one! Try a different combination.';
+  } else {
+    score = Math.max(0, score - 5);
+    fb.className = 'feedback show bad';
+    fb.innerHTML = `❌ <strong>"${selectedWords.join(' ')}"</strong> is not a chunk. Listen again — which words does the speaker say together as one unit?`;
+  }
+}
+function next(){
+  cur++;
+  if(cur >= experiments.length){
+    document.getElementById('game').classList.add('hidden');
+    document.getElementById('progress').classList.add('hidden');
+    document.getElementById('final').classList.remove('hidden');
+    document.getElementById('score').textContent = `Your score: ${score} / ${experiments.length * 60}`;
+  } else render();
+}
+render();
+</script>
+</body>
+</html>
