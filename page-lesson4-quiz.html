@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Final Quiz — Lesson 4</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#F7FAFA;color:#123C46;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px}
+.header{text-align:center;margin-bottom:14px}
+.header h1{font-size:1.9rem;color:#026A79;margin-bottom:6px}
+.header p{color:#5a7a82;font-size:.95rem}
+.hud{display:flex;gap:14px;justify-content:center;margin:10px 0;flex-wrap:wrap}
+.hud-box{background:#fff;border:2px solid #EBF0F0;border-radius:10px;padding:8px 18px;text-align:center;min-width:90px}
+.hud-box .label{font-size:.7rem;color:#5a7a82;text-transform:uppercase}
+.hud-box .value{font-size:1.4rem;font-weight:bold;color:#026A79}
+.progress-bar{width:100%;max-width:620px;height:8px;background:#EBF0F0;border-radius:4px;margin:10px 0;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#026A79,#E8AA28);border-radius:4px;transition:width .3s}
+.card{background:#fff;border:2px solid #EBF0F0;border-radius:16px;padding:30px;max-width:620px;width:100%;box-shadow:0 4px 16px rgba(2,106,121,.08)}
+.q-type{display:inline-block;font-size:.75rem;font-weight:bold;padding:4px 14px;border-radius:20px;margin-bottom:14px;text-transform:uppercase;letter-spacing:1px}
+.q-type.choose{background:rgba(2,106,121,.1);color:#026A79}
+.q-type.complete{background:rgba(232,170,40,.15);color:#b7791f}
+.q-type.name{background:rgba(155,89,182,.1);color:#8e44ad}
+.q-type.fix{background:rgba(231,76,60,.08);color:#c0392b}
+.q-text{font-size:1.12rem;margin:12px 0;line-height:1.6;color:#123C46}
+.q-sentence{font-size:1.3rem;font-weight:bold;color:#026A79;margin:14px 0;padding:16px;background:rgba(2,106,121,.05);border-radius:12px;line-height:1.5}
+.options{display:flex;flex-direction:column;gap:10px;margin:18px 0}
+.opt{background:#F7FAFA;border:2px solid #EBF0F0;border-radius:12px;padding:14px;font-size:1.02rem;cursor:pointer;transition:all .2s;text-align:left;color:#123C46}
+.opt:hover{border-color:#026A79;background:rgba(2,106,121,.04)}
+.opt.correct{border-color:#2ecc71;background:rgba(46,204,113,.1)}
+.opt.wrong{border-color:#e74c3c;background:rgba(231,76,60,.06)}
+.opt.disabled{pointer-events:none;opacity:.75}
+.feedback{margin-top:14px;padding:14px;border-radius:10px;font-size:.96rem;display:none;text-align:left;line-height:1.55}
+.feedback.show{display:block}
+.feedback.good{background:rgba(46,204,113,.08);border:1px solid #2ecc71}
+.feedback.bad{background:rgba(231,76,60,.05);border:1px solid #e74c3c}
+.feedback .structure{color:#026A79;font-weight:bold}
+.btn{background:#026A79;color:#fff;border:none;padding:13px 32px;font-size:1.05rem;border-radius:12px;cursor:pointer;font-weight:bold;margin-top:14px}
+.btn:hover{transform:scale(1.03)}
+.btn.amber{background:#E8AA28;color:#123C46}
+.hidden{display:none!important}
+.start-screen,.end-screen{background:#fff;border:2px solid #EBF0F0;border-radius:16px;padding:38px;max-width:560px;width:100%;text-align:center;box-shadow:0 4px 16px rgba(2,106,121,.08)}
+.start-screen h2,.end-screen h2{color:#026A79;font-size:1.85rem;margin-bottom:12px}
+.start-screen p,.end-screen p{color:#5a7a82;margin:8px 0;line-height:1.55}
+.emoji-big{font-size:3.5rem;margin-bottom:12px}
+.final-score{font-size:2rem;color:#026A79;font-weight:bold;margin:12px 0}
+.stars{font-size:2.2rem;margin:8px 0}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>🏆 Final Quiz — Lesson 4</h1>
+<p>Advanced Grammar Structures in Spoken English</p>
+</div>
+
+<div id="startScreen" class="start-screen">
+<div class="emoji-big">🎓</div>
+<h2>Prove Your Mastery</h2>
+<p>10 questions. 4 challenge types. Show you can use advanced structures like a professional.</p>
+<p style="color:#E8AA28;font-weight:bold">🔥 Streaks multiply your score!</p>
+<button class="btn" onclick="startQuiz()">START ▶</button>
+</div>
+
+<div id="quizScreen" class="hidden" style="width:100%;display:flex;flex-direction:column;align-items:center">
+<div class="hud">
+<div class="hud-box"><div class="label">Score</div><div class="value" id="score">0</div></div>
+<div class="hud-box"><div class="label">Streak</div><div class="value" id="streak" style="color:#E8AA28">0</div></div>
+<div class="hud-box"><div class="label">Question</div><div class="value" id="qnum">1/10</div></div>
+</div>
+<div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+<div class="card" id="qcard" style="text-align:center"></div>
+</div>
+
+<div id="endScreen" class="end-screen hidden">
+<div class="emoji-big" id="endEmoji">🏆</div>
+<h2 id="endTitle">Quiz Complete!</h2>
+<div class="stars" id="stars"></div>
+<div class="final-score" id="finalScore"></div>
+<p id="endMsg"></p>
+<button class="btn amber" onclick="startQuiz()">TRY AGAIN 🔄</button>
+</div>
+
+<script>
+const questions = [
+  {type:"choose", label:"🎯 Choose the Structure",
+   text:"Your boss asks who finished the project. You want to emphasize it was YOUR TEAM.",
+   options:["My team finished the project.","It was my team who finished the project.","What finished the project was my team."],
+   answer:1,
+   why:"<span class='structure'>It-cleft</span> — 'It was X who...' is the strongest way to emphasize WHO."},
+  {type:"name", label:"🔍 Name the Pattern",
+   sentence:"Never have I seen such dedication.",
+   options:["Fronting","Never-inversion","Hardly-inversion","Were-inversion"],
+   answer:1,
+   why:"<span class='structure'>Never-inversion</span> — negative opener + inverted order for dramatic emphasis."},
+  {type:"complete", label:"✏️ Complete It",
+   text:"Complete with the correct structure:",
+   sentence:"___ you need anything, call me.",
+   options:["If","Should","Were","Had"],
+   answer:1,
+   why:"<span class='structure'>Should-inversion</span> — 'Should you need...' is the formal, elegant conditional."},
+  {type:"fix", label:"🔧 Fix the Error",
+   text:"This sentence has an error. Choose the correct version:",
+   options:["I suggest that he goes immediately.","I suggest that he go immediately.","I suggest him to go immediately."],
+   answer:1,
+   why:"<span class='structure'>Mandative subjunctive</span> — after 'suggest', use the base form: 'he go'."},
+  {type:"choose", label:"🎯 Choose the Structure",
+   text:"In a news article, report that experts believe prices will fall — without naming anyone.",
+   options:["Experts believe prices will fall.","It is believed that prices will fall.","What is believed is prices will fall."],
+   answer:1,
+   why:"<span class='structure'>Impersonal passive</span> — 'It is believed that...' keeps it objective and sourceless."},
+  {type:"name", label:"🔍 Name the Pattern",
+   sentence:"Hardly had we arrived when it started raining.",
+   options:["Never-inversion","Hardly-inversion","Should-inversion","Fronting"],
+   answer:1,
+   why:"<span class='structure'>Hardly-inversion</span> — 'Hardly + inversion + when' shows immediate sequence with drama."},
+  {type:"complete", label:"✏️ Complete It",
+   text:"Complete with the correct structure:",
+   sentence:"___ I to accept, I'd need guarantees.",
+   options:["If","Were","Should","Had"],
+   answer:1,
+   why:"<span class='structure'>Were-inversion</span> — 'Were I to...' is the most formal hypothetical."},
+  {type:"choose", label:"🎯 Choose the Structure",
+   text:"You want to say you'll never forget this moment, with maximum emotional power.",
+   options:["I will never forget this moment.","This I will never forget.","What I will never forget is this moment."],
+   answer:1,
+   why:"<span class='structure'>Fronting</span> — moving the object first ('This...') adds emotional punch."},
+  {type:"name", label:"🔍 Name the Pattern",
+   sentence:"The reason I'm calling is to confirm.",
+   options:["It-cleft","What-cleft","The reason","Fronting"],
+   answer:2,
+   why:"<span class='structure'>The reason</span> — 'The reason + clause + be + purpose' for formal explanations."},
+  {type:"fix", label:"🔧 Fix the Error",
+   text:"This sentence has an error. Choose the correct version:",
+   options:["What I need are more time.","What I need is more time.","What do I need is more time."],
+   answer:1,
+   why:"<span class='structure'>What-cleft</span> — 'What I need <strong>is</strong>' (singular verb). 'What + clause + be + key info' emphasizes what matters most."}
+];
+const typeClasses = {choose:"choose", complete:"complete", name:"name", fix:"fix"};
+
+let qi, score, streak, answered;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function startQuiz(){
+  document.getElementById('startScreen').classList.add('hidden');
+  document.getElementById('endScreen').classList.add('hidden');
+  document.getElementById('quizScreen').classList.remove('hidden');
+  qi=0; score=0; streak=0; shuffle(questions); showQ();
+}
+function showQ(){
+  answered=false;
+  const q=questions[qi];
+  document.getElementById('score').textContent=score;
+  document.getElementById('streak').textContent=streak+(streak>=3?' 🔥':'');
+  document.getElementById('qnum').textContent=(qi+1)+'/'+questions.length;
+  document.getElementById('pfill').style.width=(qi/questions.length*100)+'%';
+  let html=`<span class="q-type ${typeClasses[q.type]}">${q.label}</span>`;
+  html+=`<div class="q-text">${q.text}</div>`;
+  if(q.sentence) html+=`<div class="q-sentence">${q.sentence}</div>`;
+  html+='<div class="options" style="text-align:left">';
+  const opts=q.options.map((t,i)=>({t,correct:i===q.answer}));
+  shuffle(opts);
+  opts.forEach(o=>{html+=`<div class="opt" onclick="answer(${o.correct},this)">${o.t}</div>`;});
+  html+='</div><div class="feedback" id="fb" style="text-align:left"></div><div id="nb"></div>';
+  document.getElementById('qcard').innerHTML=html;
+}
+function answer(correct, el){
+  if(answered) return; answered=true;
+  const q=questions[qi];
+  const fb=document.getElementById('fb');
+  document.querySelectorAll('.opt').forEach(o=>o.classList.add('disabled'));
+  if(correct){
+    const pts=10+streak*5; score+=pts; streak++;
+    el.classList.add('correct');
+    fb.className='feedback show good';
+    fb.innerHTML=`✅ <strong>Correct! +${pts} points</strong><br>${q.why}`;
+  }else{
+    streak=0; el.classList.add('wrong');
+    document.querySelectorAll('.opt').forEach(o=>{if(o.textContent===q.options[q.answer])o.classList.add('correct');});
+    fb.className='feedback show bad';
+    fb.innerHTML=`❌ Not quite.<br>${q.why}`;
+  }
+  document.getElementById('score').textContent=score;
+  document.getElementById('streak').textContent=streak+(streak>=3?' 🔥':'');
+  document.getElementById('nb').innerHTML=`<button class="btn" onclick="nextQ()">${qi+1<questions.length?'Next →':'See Results 🏆'}</button>`;
+}
+function nextQ(){ qi++; if(qi>=questions.length) endQuiz(); else showQ(); }
+function endQuiz(){
+  document.getElementById('quizScreen').classList.add('hidden');
+  document.getElementById('endScreen').classList.remove('hidden');
+  const pct=score/(questions.length*10);
+  let stars,emoji,msg;
+  if(pct>=1.2){stars='⭐⭐⭐';emoji='🏆';msg='Perfect! You command advanced structures like a true professional!';}
+  else if(pct>=0.8){stars='⭐⭐⭐';emoji='🎉';msg='Excellent! Your English sounds impressively sophisticated!';}
+  else if(pct>=0.5){stars='⭐⭐';emoji='💪';msg='Good progress! Review the 10 patterns and aim for 3 stars!';}
+  else{stars='⭐';emoji='📚';msg='Keep studying! Review the Grammar Diagrams and try again.';}
+  document.getElementById('endEmoji').textContent=emoji;
+  document.getElementById('stars').textContent=stars;
+  document.getElementById('finalScore').textContent=score+' points';
+  document.getElementById('endMsg').textContent=msg;
+}
+</script>
+</body>
+</html>
