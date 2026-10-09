@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Link Hunter — Sounding Natural</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#F7FAFA;color:#123C46;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px}
+.header{text-align:center;margin-bottom:16px}
+.header h1{font-size:1.8rem;color:#026A79;margin-bottom:8px}
+.header p{color:#5a7a82;font-size:1rem;max-width:600px}
+.progress{color:#026A79;font-weight:bold;margin-bottom:16px}
+.card{background:#fff;border-radius:16px;padding:28px;max-width:700px;width:100%;text-align:center;border:2px solid #EBF0F0;box-shadow:0 4px 16px rgba(2,106,121,.08)}
+.sentence-row{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-end;margin:24px 0;gap:0}
+.word{background:#EBF0F0;color:#123C46;padding:12px 16px;border-radius:10px;font-size:1.3rem;font-weight:600}
+.link-zone{width:56px;height:60px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;cursor:pointer;padding-bottom:4px;position:relative}
+.link-zone .arrow{font-size:1.8rem;color:#B0C4C8;transition:all .2s;line-height:1}
+.link-zone .hint{font-size:.65rem;color:#B0C4C8;margin-top:2px}
+.link-zone.marked .arrow{color:#E8AA28;transform:scale(1.3)}
+.link-zone.marked .hint{color:#E8AA28}
+.link-zone.correct .arrow{color:#2ecc71}
+.link-zone.wrong .arrow{color:#e74c3c}
+.link-zone.missed .arrow{color:#E8AA28;animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.3}}
+.word.clickable{cursor:pointer;transition:all .2s}
+.word.clickable:hover{background:#D4E8EB}
+.word.stressed{background:#E8AA28;color:#fff;transform:scale(1.05)}
+.word.stress-correct{background:#026A79;color:#fff}
+.word.stress-wrong{background:#e74c3c;color:#fff}
+.word.stress-missed{background:#E8AA28;color:#fff;animation:blink 1s infinite}
+.link-zone.static{cursor:default}
+.btn{display:inline-block;background:#026A79;color:#fff;border:none;padding:14px 28px;font-size:1.1rem;border-radius:12px;cursor:pointer;margin:8px;font-weight:bold;transition:transform .1s}
+.btn:hover{transform:scale(1.05)}
+.btn.blue{background:#E8AA28;color:#123C46}
+.btn:disabled{opacity:.4;cursor:default;transform:none}
+.play-btn{background:#026A79;color:#fff;border:none;width:80px;height:80px;border-radius:50%;font-size:2rem;cursor:pointer;margin:10px;transition:transform .1s}
+.play-btn:hover{transform:scale(1.1)}
+.feedback{margin-top:16px;padding:14px;border-radius:10px;font-size:1.1rem;display:none;text-align:left}
+.feedback.show{display:block}
+.feedback.good{background:rgba(46,204,113,.12);border:1px solid #2ecc71;color:#123C46}
+.feedback.bad{background:rgba(231,76,60,.08);border:1px solid #e74c3c;color:#123C46}
+.explain{margin-top:8px;font-size:.95rem;color:#5a7a82}
+.hidden{display:none!important}
+.final-card{text-align:center;padding:40px}
+.final-card h2{color:#026A79;font-size:2rem;margin-bottom:16px}
+.score{font-size:1.5rem;margin:16px 0;color:#026A79}
+.emoji-big{font-size:4rem;margin-bottom:16px}
+.instructions{background:rgba(2,106,121,.06);border:1px solid #026A79;border-radius:10px;padding:12px;margin-bottom:16px;font-size:.95rem;color:#026A79}
+h3{color:#026A79!important}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>🔗 Link Hunter</h1>
+<p>Listen to the natural version. Then click <strong>between the words</strong> where you hear them LINK together.</p>
+</div>
+<div class="progress" id="progress">Sentence 1 of 3</div>
+<div class="card" id="game"></div>
+<div class="card hidden final-card" id="final">
+<div class="emoji-big">🏆</div>
+<h2>Link Master!</h2>
+<p class="score" id="score"></p>
+<p>You can hear where words connect. That's the secret of natural speech.</p>
+</div>
+<script>
+const AUDIO_BASE = "";
+const sentences = [
+{
+  text: "It was Pedro who broke the record.",
+  words: ["It","was","Pedro","who","broke","the","record."],
+  nat: "lh1-nat.mp3",
+  links: [0, 1, 4],
+  stress: [2, 4, 6],
+  explain: "LINK: <strong>It‿was</strong>, <strong>was‿Pedro</strong>, <strong>broke‿the</strong>.<br>STRESS: <strong>PEDro</strong>, <strong>BROKE</strong>, <strong>REcord</strong>."
+},
+{
+  text: "What she wants is a new challenge.",
+  words: ["What","she","wants","is","a","new","challenge."],
+  nat: "lh2-nat.mp3",
+  links: [0, 2, 3],
+  stress: [0, 2, 6],
+  explain: "LINK: <strong>What‿she</strong>, <strong>wants‿is</strong>, <strong>is‿a</strong>.<br>STRESS: <strong>WHAT</strong>, <strong>WANTS</strong>, <strong>CHALlenge</strong>."
+},
+{
+  text: "Hardly had we arrived when it started.",
+  words: ["Hardly","had","we","arrived","when","it","started."],
+  nat: "lh3-nat.mp3",
+  links: [1, 2, 4],
+  stress: [0, 3, 6],
+  explain: "LINK: <strong>had‿we</strong>, <strong>we‿arrived</strong>, <strong>when‿it</strong>.<br>STRESS: <strong>HARDly</strong>, <strong>arRIVED</strong>, <strong>STARTed</strong>."
+}
+];
+let cur = 0, score = 0;
+let marked = new Set();
+let markedStress = new Set();
+let phase = 0; // 0 = linking, 1 = stress
+
+function render(){
+  document.getElementById('progress').textContent = `Sentence ${cur+1} of ${sentences.length}`;
+  marked = new Set();
+  markedStress = new Set();
+  phase = 0;
+  renderPhase();
+}
+
+function renderPhase(){
+  const s = sentences[cur];
+  const g = document.getElementById('game');
+  
+  let rowHtml = '<div class="sentence-row">';
+  s.words.forEach((w, i) => {
+    if(phase === 1){
+      // Fase stress: palabras clickeables
+      rowHtml += `<div class="word clickable" data-word="${i}" onclick="toggleStress(${i})">${w}</div>`;
+    } else {
+      rowHtml += `<div class="word">${w}</div>`;
+    }
+    if(i < s.words.length - 1){
+      if(phase === 0){
+        rowHtml += `<div class="link-zone" data-gap="${i}" onclick="toggleLink(${i})">
+          <div class="arrow">‿</div>
+          <div class="hint">tap</div>
+        </div>`;
+      } else {
+        rowHtml += `<div class="link-zone static"><div class="arrow" style="color:#333">·</div></div>`;
+      }
+    }
+  });
+  rowHtml += '</div>';
+  
+  const phaseTitle = phase === 0 ? "Step 1: Where are the LINKS? 🔗" : "Step 2: Which words are STRESSED? 💪";
+  const phaseInstr = phase === 0 
+    ? "👆 Tap the <strong>‿</strong> between words where you hear a LINK"
+    : "👆 Tap the <strong>words</strong> that carry the STRESS (they'll turn orange)";
+  const checkFn = phase === 0 ? "checkLinks()" : "checkStress()";
+  const checkLabel = phase === 0 ? "Check my links ✓" : "Check my stress ✓";
+  
+  g.innerHTML = `
+    <h3 style="color:#f0a500;margin-bottom:12px">${phaseTitle}</h3>
+    <div class="instructions">${phaseInstr}</div>
+    <button class="play-btn" onclick="playNat()">🔊</button>
+    <div style="color:#aaa;font-size:.9rem;margin-bottom:8px">Listen</div>
+    ${rowHtml}
+    <button class="btn" onclick="${checkFn}">${checkLabel}</button>
+    <div class="feedback" id="fb"></div>
+    <div id="nextBtn" style="margin-top:12px"></div>
+  `;
+}
+
+function toggleStress(idx){
+  const el = document.querySelector(`[data-word="${idx}"]`);
+  if(markedStress.has(idx)){
+    markedStress.delete(idx);
+    el.classList.remove('stressed');
+  } else {
+    markedStress.add(idx);
+    el.classList.add('stressed');
+  }
+}
+
+function toggleLink(gap){
+  const el = document.querySelector(`[data-gap="${gap}"]`);
+  if(marked.has(gap)){
+    marked.delete(gap);
+    el.classList.remove('marked');
+  } else {
+    marked.add(gap);
+    el.classList.add('marked');
+  }
+}
+
+function playNat(){
+  new Audio(AUDIO_BASE + sentences[cur].nat).play();
+}
+
+function checkLinks(){
+  const s = sentences[cur];
+  const need = new Set(s.links);
+  const fb = document.getElementById('fb');
+  
+  let correct = 0, wrong = 0, missed = 0;
+  
+  document.querySelectorAll('.link-zone[data-gap]').forEach(el => {
+    const gap = parseInt(el.dataset.gap);
+    el.classList.remove('marked');
+    el.onclick = null;
+    if(marked.has(gap) && need.has(gap)){
+      el.classList.add('correct');
+      correct++;
+    } else if(marked.has(gap) && !need.has(gap)){
+      el.classList.add('wrong');
+      wrong++;
+    } else if(!marked.has(gap) && need.has(gap)){
+      el.classList.add('missed');
+      missed++;
+    }
+  });
+  
+  const total = need.size;
+  const points = Math.max(0, (correct * 10) - (wrong * 5));
+  score += points;
+  
+  if(wrong === 0 && missed === 0){
+    fb.className = 'feedback show good';
+    fb.innerHTML = `✅ Perfect! All ${total} links found.`;
+  } else {
+    fb.className = 'feedback show bad';
+    let msg = `🔍 Links: ${correct}/${total}.`;
+    if(missed > 0) msg += ` Missed ${missed}.`;
+    if(wrong > 0) msg += ` ${wrong} wrong.`;
+    fb.innerHTML = msg;
+  }
+  
+  document.getElementById('nextBtn').innerHTML = `<button class="btn blue" onclick="goToStress()">Next: find the STRESS →</button>`;
+}
+
+function goToStress(){
+  phase = 1;
+  renderPhase();
+}
+
+function checkStress(){
+  const s = sentences[cur];
+  const need = new Set(s.stress);
+  const fb = document.getElementById('fb');
+  
+  let correct = 0, wrong = 0, missed = 0;
+  
+  document.querySelectorAll('.word.clickable').forEach(el => {
+    const idx = parseInt(el.dataset.word);
+    el.classList.remove('stressed');
+    el.onclick = null;
+    el.classList.remove('clickable');
+    if(markedStress.has(idx) && need.has(idx)){
+      el.classList.add('stress-correct');
+      correct++;
+    } else if(markedStress.has(idx) && !need.has(idx)){
+      el.classList.add('stress-wrong');
+      wrong++;
+    } else if(!markedStress.has(idx) && need.has(idx)){
+      el.classList.add('stress-missed');
+      missed++;
+    }
+  });
+  
+  const total = need.size;
+  const points = Math.max(0, (correct * 10) - (wrong * 5));
+  score += points;
+  
+  if(wrong === 0 && missed === 0){
+    fb.className = 'feedback show good';
+    fb.innerHTML = `✅ Perfect! All stressed words found.<div class="explain">${s.explain}</div>`;
+  } else {
+    fb.className = 'feedback show bad';
+    let msg = `🔍 Stress: ${correct}/${total}.`;
+    if(missed > 0) msg += ` Missed ${missed} (pulsing).`;
+    if(wrong > 0) msg += ` ${wrong} wrong (red).`;
+    fb.innerHTML = msg + `<div class="explain">${s.explain}</div>`;
+  }
+  
+  document.getElementById('nextBtn').innerHTML = `<button class="btn blue" onclick="next()">Next sentence →</button>`;
+}
+
+function next(){
+  cur++;
+  if(cur >= sentences.length){
+    document.getElementById('game').classList.add('hidden');
+    document.getElementById('progress').classList.add('hidden');
+    const f = document.getElementById('final');
+    f.classList.remove('hidden');
+    document.getElementById('score').textContent = `Your score: ${score} / ${sentences.length * 60}`;
+  } else {
+    render();
+  }
+}
+
+render();
+</script>
+</body>
+</html>
