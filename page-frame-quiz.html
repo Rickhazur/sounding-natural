@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frame Master Quiz — Lesson 3</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#F7FAFA;color:#123C46;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px}
+.header{text-align:center;margin-bottom:14px}
+.header h1{font-size:1.8rem;color:#026A79;margin-bottom:6px}
+.header p{color:#5a7a82;font-size:.95rem}
+.hud{display:flex;gap:14px;justify-content:center;margin:10px 0;flex-wrap:wrap}
+.hud-box{background:#fff;border:2px solid #EBF0F0;border-radius:10px;padding:8px 18px;text-align:center;min-width:90px}
+.hud-box .label{font-size:.7rem;color:#5a7a82;text-transform:uppercase}
+.hud-box .value{font-size:1.4rem;font-weight:bold;color:#026A79}
+.progress-bar{width:100%;max-width:600px;height:8px;background:#EBF0F0;border-radius:4px;margin:10px 0;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#026A79,#E8AA28);border-radius:4px;transition:width .3s}
+.card{background:#fff;border:2px solid #EBF0F0;border-radius:16px;padding:32px;max-width:600px;width:100%;text-align:center;box-shadow:0 4px 16px rgba(2,106,121,.08)}
+.q-type{display:inline-block;font-size:.75rem;font-weight:bold;padding:4px 14px;border-radius:20px;margin-bottom:14px;text-transform:uppercase;letter-spacing:1px}
+.q-type.pick{background:rgba(2,106,121,.1);color:#026A79}
+.q-type.complete{background:rgba(232,170,40,.15);color:#b7791f}
+.q-type.fix{background:rgba(231,76,60,.08);color:#c0392b}
+.q-text{font-size:1.2rem;margin:14px 0;line-height:1.6;text-align:left;background:#F7FAFA;padding:18px;border-radius:12px}
+.q-text .dialogue{color:#026A79;font-style:italic}
+.options{display:flex;flex-direction:column;gap:10px;margin:20px 0}
+.opt{background:#F7FAFA;border:2px solid #EBF0F0;border-radius:12px;padding:14px;font-size:1.05rem;cursor:pointer;transition:all .2s;text-align:left}
+.opt:hover{border-color:#026A79;background:rgba(2,106,121,.04)}
+.opt.correct{border-color:#2ecc71;background:rgba(46,204,113,.1)}
+.opt.wrong{border-color:#e74c3c;background:rgba(231,76,60,.08)}
+.opt.disabled{pointer-events:none;opacity:.7}
+.feedback{margin-top:14px;padding:14px;border-radius:10px;font-size:.98rem;display:none;text-align:left;line-height:1.5}
+.feedback.show{display:block}
+.feedback.good{background:rgba(46,204,113,.08);border:1px solid #2ecc71}
+.feedback.bad{background:rgba(231,76,60,.06);border:1px solid #e74c3c}
+.btn{background:#026A79;color:#fff;border:none;padding:13px 32px;font-size:1.05rem;border-radius:12px;cursor:pointer;font-weight:bold;margin-top:14px}
+.btn:hover{transform:scale(1.03)}
+.hidden{display:none!important}
+.start-screen,.end-screen{background:#fff;border:2px solid #EBF0F0;border-radius:16px;padding:36px;max-width:560px;width:100%;text-align:center;box-shadow:0 4px 16px rgba(2,106,121,.08)}
+.start-screen h2,.end-screen h2{color:#026A79;font-size:1.8rem;margin-bottom:12px}
+.start-screen p,.end-screen p{color:#5a7a82;margin:8px 0;line-height:1.5}
+.emoji-big{font-size:3.5rem;margin-bottom:12px}
+.final-score{font-size:2rem;color:#026A79;font-weight:bold;margin:12px 0}
+.stars{font-size:2.2rem;margin:8px 0}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>🏆 Frame Master Quiz</h1>
+<p>Lesson 3 — Use sentence frames like a natural speaker</p>
+</div>
+
+<div id="startScreen" class="start-screen">
+<div class="emoji-big">🗣️</div>
+<h2>Can you pick the right frame?</h2>
+<p>8 real-life situations. Choose the sentence frame a natural speaker would use. Streaks multiply your score!</p>
+<button class="btn" onclick="startQuiz()">START ▶</button>
+</div>
+
+<div id="quizScreen" class="hidden" style="width:100%;display:flex;flex-direction:column;align-items:center">
+<div class="hud">
+<div class="hud-box"><div class="label">Score</div><div class="value" id="score">0</div></div>
+<div class="hud-box"><div class="label">Streak</div><div class="value" id="streak" style="color:#E8AA28">0</div></div>
+<div class="hud-box"><div class="label">Question</div><div class="value" id="qnum">1/8</div></div>
+</div>
+<div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+<div class="card" id="qcard"></div>
+</div>
+
+<div id="endScreen" class="end-screen hidden">
+<div class="emoji-big" id="endEmoji">🏆</div>
+<h2 id="endTitle">Quiz Complete!</h2>
+<div class="stars" id="stars"></div>
+<div class="final-score" id="finalScore"></div>
+<p id="endMsg"></p>
+<button class="btn" onclick="startQuiz()" style="background:#E8AA28;color:#123C46">TRY AGAIN 🔄</button>
+</div>
+
+<script>
+const questions = [
+  {type:"pick", situation:"You want to give your personal opinion about a movie, making it clear it's just your view.",
+   options:["What I'm trying to say is, it was boring.","The way I see it, it was boring.","The problem is, it was boring.","What happens next is, it was boring."], answer:1,
+   why:"'The way I see it' = giving your personal perspective. Perfect for opinions."},
+  {type:"pick", situation:"Your neighbor asks: 'Is this a safe neighborhood?' You don't know for sure.",
+   options:["As far as I know, it's very safe.","The good news is, it's very safe.","If you ask me, it's very safe.","What I mean is, it's very safe."], answer:0,
+   why:"'As far as I know' = showing the limits of your knowledge. Honest and natural."},
+  {type:"pick", situation:"You need to explain WHY you're asking someone a personal question.",
+   options:["The problem is, I need to ask you something.","The reason I'm asking is, I need your help.","What happens next is, I need your help.","The bad news is, I need your help."], answer:1,
+   why:"'The reason I'm asking is' = explaining your motive before a sensitive question."},
+  {type:"fix", situation:"Someone says: 'I want to know the the problem is the car broke.' Fix it with a frame.",
+   options:["The problem is, the car broke.","What the problem is the car broke.","The problem is that the car broke down is.","Problem is, car broke."], answer:0,
+   why:"'The problem is, ___' + simple clause. Clean and natural."},
+  {type:"pick", situation:"You have good news and bad news about a job application. Start with the positive.",
+   options:["What I mean is, you got the job.","The good news is, you got the job.","If you ask me, you got the job.","The way I see it, you got the job."], answer:1,
+   why:"'The good news is' = framing positive information. Natural discourse marker."},
+  {type:"pick", situation:"A friend didn't understand your explanation. You want to clarify.",
+   options:["What happens next is, let me explain again.","The bad news is, let me explain again.","What I mean is, let me explain again.","As far as I know, let me explain again."], answer:2,
+   why:"'What I mean is' = clarifying when someone looks confused. Key rescue phrase."},
+  {type:"pick", situation:"Someone asks for your advice about buying a car. You want to give a direct opinion.",
+   options:["The reason I'm asking is, don't buy it.","If you ask me, don't buy it.","What happens next is, don't buy it.","The thing is, don't buy it."], answer:1,
+   why:"'If you ask me' = giving direct advice when someone wants your opinion."},
+  {type:"pick", situation:"You're telling a story and want to say what will occur after this moment.",
+   options:["The problem is what happens.","What happens next is, she opened the door.","The good news is what happens.","As far as I know what happens."], answer:1,
+   why:"'What happens next is' = narrative frame for sequencing events in a story."}
+];
+const typeLabels = {pick:"🎯 Pick the Frame", complete:"✏️ Complete", fix:"🔧 Fix It"};
+
+let qi, score, streak, answered;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function startQuiz(){
+  document.getElementById('startScreen').classList.add('hidden');
+  document.getElementById('endScreen').classList.add('hidden');
+  document.getElementById('quizScreen').classList.remove('hidden');
+  qi=0; score=0; streak=0; shuffle(questions); showQ();
+}
+function showQ(){
+  answered=false;
+  const q=questions[qi];
+  document.getElementById('score').textContent=score;
+  document.getElementById('streak').textContent=streak+(streak>=3?' 🔥':'');
+  document.getElementById('qnum').textContent=(qi+1)+'/'+questions.length;
+  document.getElementById('pfill').style.width=(qi/questions.length*100)+'%';
+  let html=`<span class="q-type ${q.type}">${typeLabels[q.type]}</span>`;
+  html+=`<div class="q-text">${q.situation}</div><div class="options">`;
+  const opts=q.options.map((t,i)=>({t,correct:i===q.answer}));
+  shuffle(opts);
+  opts.forEach(o=>{html+=`<div class="opt" onclick="answer(${o.correct},this)">${o.t}</div>`;});
+  html+='</div><div class="feedback" id="fb"></div><div id="nb"></div>';
+  document.getElementById('qcard').innerHTML=html;
+}
+function answer(correct, el){
+  if(answered) return; answered=true;
+  const q=questions[qi];
+  const fb=document.getElementById('fb');
+  document.querySelectorAll('.opt').forEach(o=>o.classList.add('disabled'));
+  if(correct){
+    const pts=10+streak*5; score+=pts; streak++;
+    el.classList.add('correct');
+    fb.className='feedback show good';
+    fb.innerHTML=`✅ <strong>Correct! +${pts} points</strong><br>${q.why}`;
+  }else{
+    streak=0; el.classList.add('wrong');
+    document.querySelectorAll('.opt').forEach(o=>{if(o.textContent===q.options[q.answer])o.classList.add('correct');});
+    fb.className='feedback show bad';
+    fb.innerHTML=`❌ Not quite.<br>${q.why}`;
+  }
+  document.getElementById('score').textContent=score;
+  document.getElementById('streak').textContent=streak+(streak>=3?' 🔥':'');
+  document.getElementById('nb').innerHTML=`<button class="btn" onclick="nextQ()">${qi+1<questions.length?'Next →':'See Results 🏆'}</button>`;
+}
+function nextQ(){ qi++; if(qi>=questions.length) endQuiz(); else showQ(); }
+function endQuiz(){
+  document.getElementById('quizScreen').classList.add('hidden');
+  document.getElementById('endScreen').classList.remove('hidden');
+  const pct=score/(questions.length*10);
+  let stars,emoji,msg;
+  if(pct>=1.2){stars='⭐⭐⭐';emoji='🏆';msg='Perfect! You use frames like a natural speaker!';}
+  else if(pct>=0.8){stars='⭐⭐⭐';emoji='🎉';msg='Excellent! Your frames sound natural!';}
+  else if(pct>=0.5){stars='⭐⭐';emoji='💪';msg='Good! Practice the frames and try for 3 stars!';}
+  else{stars='⭐';emoji='📚';msg='Keep practicing! Review Lesson 3 and try again.';}
+  document.getElementById('endEmoji').textContent=emoji;
+  document.getElementById('stars').textContent=stars;
+  document.getElementById('finalScore').textContent=score+' points';
+  document.getElementById('endMsg').textContent=msg;
+}
+</script>
+</body>
+</html>
