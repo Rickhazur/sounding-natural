@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chunk Sorter Turbo — Lesson 2</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#F7FAFA;color:#123C46;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px;overflow-x:hidden}
+.header{text-align:center;margin-bottom:10px}
+.header h1{font-size:1.6rem;color:#026A79}
+.header p{color:#5a7a82;font-size:.95rem}
+.hud{display:flex;gap:16px;justify-content:center;margin:10px 0;flex-wrap:wrap}
+.hud-box{background:#fff;border:2px solid #EBF0F0;border-radius:10px;padding:8px 18px;text-align:center;min-width:90px}
+.hud-box .label{font-size:.7rem;color:#5a7a82;text-transform:uppercase}
+.hud-box .value{font-size:1.4rem;font-weight:bold;color:#026A79}
+.hud-box .value.streak{color:#E8AA28}
+.arena{background:#fff;border:2px solid #EBF0F0;border-radius:16px;width:100%;max-width:640px;height:340px;position:relative;overflow:hidden;margin:8px 0;box-shadow:0 4px 16px rgba(2,106,121,.08)}
+.falling{position:absolute;background:#026A79;color:#fff;padding:14px 22px;border-radius:12px;font-size:1.15rem;font-weight:bold;cursor:pointer;user-select:none;box-shadow:0 4px 12px rgba(2,106,121,.3);transition:transform .1s;white-space:nowrap;left:50%;transform:translateX(-50%)}
+.falling:active{transform:translateX(-50%) scale(.95)}
+.bins{display:flex;gap:8px;justify-content:center;width:100%;max-width:640px;margin:8px 0;flex-wrap:wrap}
+.bin{flex:1;min-width:130px;max-width:150px;border:3px dashed #B0C4C8;border-radius:12px;padding:14px 8px;text-align:center;cursor:pointer;transition:all .2s;background:#fff}
+.bin:hover{border-color:#026A79;background:rgba(2,106,121,.05)}
+.bin .bin-title{font-weight:bold;font-size:.9rem;color:#026A79}
+.bin .bin-sub{font-size:.72rem;color:#5a7a82;margin-top:4px}
+.bin.flash-good{border-color:#2ecc71;background:rgba(46,204,113,.15);border-style:solid}
+.bin.flash-bad{border-color:#e74c3c;background:rgba(231,76,60,.1);border-style:solid}
+.feedback-area{min-height:60px;text-align:center;margin:8px 0;max-width:640px}
+.feedback-msg{font-size:1.05rem;padding:10px 16px;border-radius:10px;display:inline-block}
+.feedback-msg.good{background:rgba(46,204,113,.12);color:#1a7a3a;border:1px solid #2ecc71}
+.feedback-msg.bad{background:rgba(231,76,60,.08);color:#c0392b;border:1px solid #e74c3c}
+.feedback-msg .why{display:block;font-size:.88rem;color:#5a7a82;margin-top:4px}
+.btn{background:#026A79;color:#fff;border:none;padding:14px 36px;font-size:1.1rem;border-radius:12px;cursor:pointer;font-weight:bold;margin:10px}
+.btn:hover{transform:scale(1.03)}
+.btn.amber{background:#E8AA28;color:#123C46}
+.hidden{display:none!important}
+.start-screen,.end-screen{background:#fff;border:2px solid #EBF0F0;border-radius:16px;padding:36px;max-width:560px;width:100%;text-align:center;box-shadow:0 4px 16px rgba(2,106,121,.08)}
+.start-screen h2,.end-screen h2{color:#026A79;font-size:1.8rem;margin-bottom:12px}
+.start-screen p,.end-screen p{color:#5a7a82;margin:8px 0;line-height:1.5}
+.type-legend{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 0;text-align:left}
+.type-legend div{background:#F7FAFA;border-radius:8px;padding:10px;font-size:.88rem}
+.type-legend strong{color:#026A79}
+.emoji-big{font-size:3.5rem;margin-bottom:12px}
+.final-score{font-size:2.2rem;color:#026A79;font-weight:bold;margin:12px 0}
+.stars{font-size:2rem;margin:8px 0}
+.combo{position:absolute;font-weight:bold;font-size:1.3rem;color:#E8AA28;pointer-events:none;animation:floatUp 1s ease-out}
+@keyframes floatUp{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-40px)}}
+.progress-bar{width:100%;max-width:640px;height:8px;background:#EBF0F0;border-radius:4px;margin:8px 0;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#026A79,#E8AA28);border-radius:4px;transition:width .3s;width:0%}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>🎮 CHUNK SORTER TURBO</h1>
+<p>Sort each falling chunk into its correct type. Fast and accurate wins!</p>
+</div>
+
+<div id="startScreen" class="start-screen">
+<div class="emoji-big">🎮</div>
+<h2>Ready?</h2>
+<p>16 chunks will fall from the top. Click a chunk, then click the correct bin.</p>
+<div class="type-legend">
+<div><strong>📎 Collocations</strong><br>Words that naturally go together</div>
+<div><strong>🎭 Idioms</strong><br>Meaning ≠ sum of parts</div>
+<div><strong>📌 Fixed Phrases</strong><br>Social formulas</div>
+<div><strong>🏗️ Sentence Frames</strong><br>Skeletons you fill in</div>
+</div>
+<p style="color:#E8AA28;font-weight:bold">⚡ Streak bonus: +5 per consecutive correct!</p>
+<button class="btn" onclick="startGame()">START ▶</button>
+</div>
+
+<div id="gameScreen" class="hidden" style="width:100%;display:flex;flex-direction:column;align-items:center">
+<div class="hud">
+<div class="hud-box"><div class="label">Score</div><div class="value" id="score">0</div></div>
+<div class="hud-box"><div class="label">Streak</div><div class="value streak" id="streak">0</div></div>
+<div class="hud-box"><div class="label">Left</div><div class="value" id="left">16</div></div>
+</div>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="arena" id="arena"></div>
+<div class="bins">
+<div class="bin" data-type="collocation" onclick="sortTo('collocation')"><div class="bin-title">📎 Collocation</div><div class="bin-sub">go together</div></div>
+<div class="bin" data-type="idiom" onclick="sortTo('idiom')"><div class="bin-title">🎭 Idiom</div><div class="bin-sub">≠ sum of parts</div></div>
+<div class="bin" data-type="fixed" onclick="sortTo('fixed')"><div class="bin-title">📌 Fixed Phrase</div><div class="bin-sub">social formula</div></div>
+<div class="bin" data-type="frame" onclick="sortTo('frame')"><div class="bin-title">🏗️ Frame</div><div class="bin-sub">fill in ___</div></div>
+</div>
+<div class="feedback-area" id="feedbackArea"></div>
+</div>
+
+<div id="endScreen" class="end-screen hidden">
+<div class="emoji-big" id="endEmoji">🏆</div>
+<h2 id="endTitle">Game Over!</h2>
+<div class="stars" id="stars"></div>
+<div class="final-score" id="finalScore"></div>
+<p id="endMessage"></p>
+<button class="btn amber" onclick="startGame()">PLAY AGAIN 🔄</button>
+</div>
+
+<script>
+const chunks = [
+  {text:"make a decision", type:"collocation", why:"'Make' + 'decision' — not 'do a decision'. They always go together."},
+  {text:"heavy rain", type:"collocation", why:"'Heavy' + 'rain' — not 'strong rain'. Words that are married."},
+  {text:"take a break", type:"collocation", why:"'Take' + 'a break' — they naturally go together."},
+  {text:"strong coffee", type:"collocation", why:"'Strong' + 'coffee' — not 'powerful coffee'."},
+  {text:"break the ice", type:"idiom", why:"Means 'start a conversation' — nothing to do with real ice!"},
+  {text:"spill the beans", type:"idiom", why:"Means 'reveal a secret' — no real beans involved!"},
+  {text:"cost an arm and a leg", type:"idiom", why:"Means 'very expensive' — a secret hides inside."},
+  {text:"hit the nail on the head", type:"idiom", why:"Means 'say exactly the right thing' — the meaning is not literal."},
+  {text:"by the way", type:"fixed", why:"Social formula for introducing a new topic. Use as is."},
+  {text:"as soon as possible", type:"fixed", why:"Ready-made phrase for urgency. Use as is."},
+  {text:"for what it's worth", type:"fixed", why:"Social formula for softening your opinion."},
+  {text:"in other words", type:"fixed", why:"Ready-made phrase for restating more simply."},
+  {text:"The thing is, ___", type:"frame", why:"Skeleton — the frame stays the same, you fill in the real point."},
+  {text:"What I'm trying to say is ___", type:"frame", why:"Skeleton for clarifying — fill in your clarification."},
+  {text:"At the end of the day, ___", type:"frame", why:"Skeleton for your conclusion — fill in what matters."},
+  {text:"The problem is, ___", type:"frame", why:"Skeleton for naming the issue — fill in the problem."}
+];
+
+let score, streak, current, queue, fallInterval, selectedChunk;
+
+function shuffle(a){
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+function startGame(){
+  document.getElementById('startScreen').classList.add('hidden');
+  document.getElementById('endScreen').classList.add('hidden');
+  document.getElementById('gameScreen').classList.remove('hidden');
+  score = 0; streak = 0;
+  queue = shuffle([...chunks]);
+  updateHUD();
+  nextChunk();
+}
+
+function updateHUD(){
+  document.getElementById('score').textContent = score;
+  document.getElementById('streak').textContent = streak + 'x';
+  document.getElementById('left').textContent = queue.length + (current ? 1 : 0);
+  const done = chunks.length - (queue.length + (current ? 1 : 0));
+  document.getElementById('progressFill').style.width = (done / chunks.length * 100) + '%';
+}
+
+function nextChunk(){
+  if(queue.length === 0){
+    endGame();
+    return;
+  }
+  current = queue.shift();
+  selectedChunk = null;
+  const arena = document.getElementById('arena');
+  arena.innerHTML = '';
+  const el = document.createElement('div');
+  el.className = 'falling';
+  el.textContent = current.text;
+  el.style.top = '10px';
+  el.onclick = () => selectChunk(el);
+  arena.appendChild(el);
+  
+  // Animación de caída
+  let pos = 10;
+  clearInterval(fallInterval);
+  fallInterval = setInterval(() => {
+    pos += 1.2;
+    if(pos > 260){
+      // Se acabó el tiempo — cuenta como error
+      clearInterval(fallInterval);
+      handleTimeout();
+      return;
+    }
+    el.style.top = pos + 'px';
+  }, 30);
+  updateHUD();
+}
+
+function selectChunk(el){
+  document.querySelectorAll('.falling').forEach(x => x.style.outline = '');
+  el.style.outline = '3px solid #E8AA28';
+  selectedChunk = el;
+}
+
+function sortTo(type){
+  if(!current) return;
+  clearInterval(fallInterval);
+  const arena = document.getElementById('arena');
+  const fb = document.getElementById('feedbackArea');
+  const bin = document.querySelector(`[data-type="${type}"]`);
+  
+  if(type === current.type){
+    // Correcto
+    const bonus = streak * 5;
+    const pts = 10 + bonus;
+    score += pts;
+    streak++;
+    bin.classList.add('flash-good');
+    setTimeout(() => bin.classList.remove('flash-good'), 500);
+    
+    fb.innerHTML = `<div class="feedback-msg good">✅ Correct! <strong>${current.text}</strong> is a ${typeName(type)}.<span class="why">${current.why}</span></div>`;
+    
+    if(bonus > 0){
+      const combo = document.createElement('div');
+      combo.className = 'combo';
+      combo.textContent = `+${pts} (${streak}x streak!)`;
+      combo.style.left = '50%'; combo.style.top = '40%';
+      arena.appendChild(combo);
+      setTimeout(() => combo.remove(), 1000);
+    }
+  } else {
+    // Incorrecto
+    score = Math.max(0, score - 5);
+    streak = 0;
+    bin.classList.add('flash-bad');
+    setTimeout(() => bin.classList.remove('flash-bad'), 500);
+    
+    fb.innerHTML = `<div class="feedback-msg bad">❌ Not quite. <strong>${current.text}</strong> is a ${typeName(current.type)}, not ${typeName(type)}.<span class="why">${current.why}</span></div>`;
+  }
+  
+  updateHUD();
+  current = null;
+  setTimeout(nextChunk, 1800);
+}
+
+function handleTimeout(){
+  const fb = document.getElementById('feedbackArea');
+  streak = 0;
+  fb.innerHTML = `<div class="feedback-msg bad">⏰ Too slow! <strong>${current.text}</strong> is a ${typeName(current.type)}.<span class="why">${current.why}</span></div>`;
+  updateHUD();
+  current = null;
+  setTimeout(nextChunk, 1800);
+}
+
+function typeName(t){
+  return {collocation:'📎 Collocation', idiom:'🎭 Idiom', fixed:'📌 Fixed Phrase', frame:'🏗️ Sentence Frame'}[t];
+}
+
+function endGame(){
+  document.getElementById('gameScreen').classList.add('hidden');
+  document.getElementById('endScreen').classList.remove('hidden');
+  
+  const max = chunks.length * 10 + 45; // aproximado con streaks
+  const pct = score / (chunks.length * 10);
+  
+  let stars, emoji, msg;
+  if(pct >= 0.9){ stars='⭐⭐⭐'; emoji='🏆'; msg='Outstanding! You are a true Chunk Master.'; }
+  else if(pct >= 0.7){ stars='⭐⭐'; emoji='🎉'; msg='Great job! A little more practice and you\'ll be perfect.'; }
+  else if(pct >= 0.5){ stars='⭐'; emoji='💪'; msg='Good effort! Review the types and try again.'; }
+  else { stars=''; emoji='📚'; msg='Keep practicing! Look at the definitions and try again.'; }
+  
+  document.getElementById('endEmoji').textContent = emoji;
+  document.getElementById('stars').textContent = stars;
+  document.getElementById('finalScore').textContent = score + ' points';
+  document.getElementById('endMessage').textContent = msg;
+}
+</script>
+</body>
+</html>
