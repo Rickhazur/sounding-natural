@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chunk Master Quiz — Lesson 2</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#F7FAFA;color:#123C46;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px}
+.header{text-align:center;margin-bottom:14px}
+.header h1{font-size:1.8rem;color:#026A79;margin-bottom:6px}
+.hud{display:flex;gap:14px;justify-content:center;margin:10px 0;flex-wrap:wrap}
+.hud-box{background:#fff;border:2px solid #EBF0F0;border-radius:10px;padding:8px 18px;text-align:center;min-width:90px}
+.hud-box .label{font-size:.7rem;color:#5a7a82;text-transform:uppercase}
+.hud-box .value{font-size:1.4rem;font-weight:bold;color:#026A79}
+.progress-bar{width:100%;max-width:600px;height:8px;background:#EBF0F0;border-radius:4px;margin:10px 0;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#026A79,#E8AA28);border-radius:4px;transition:width .3s}
+.card{background:#fff;border:2px solid #EBF0F0;border-radius:16px;padding:32px;max-width:600px;width:100%;text-align:center;box-shadow:0 4px 16px rgba(2,106,121,.08)}
+.q-type{display:inline-block;font-size:.75rem;font-weight:bold;padding:4px 14px;border-radius:20px;margin-bottom:14px;text-transform:uppercase;letter-spacing:1px}
+.q-type.identify{background:rgba(2,106,121,.1);color:#026A79}
+.q-type.complete{background:rgba(232,170,40,.15);color:#b7791f}
+.q-type.situation{background:rgba(155,89,182,.1);color:#8e44ad}
+.q-text{font-size:1.25rem;margin:14px 0;line-height:1.5}
+.q-chunk{font-size:1.6rem;font-weight:bold;color:#026A79;margin:14px 0;padding:16px;background:rgba(2,106,121,.05);border-radius:12px}
+.options{display:flex;flex-direction:column;gap:10px;margin:20px 0}
+.opt{background:#F7FAFA;border:2px solid #EBF0F0;border-radius:12px;padding:14px;font-size:1.05rem;cursor:pointer;transition:all .2s;text-align:left}
+.opt:hover{border-color:#026A79;background:rgba(2,106,121,.04)}
+.opt.correct{border-color:#2ecc71;background:rgba(46,204,113,.1)}
+.opt.wrong{border-color:#e74c3c;background:rgba(231,76,60,.08)}
+.opt.disabled{pointer-events:none;opacity:.7}
+.feedback{margin-top:14px;padding:14px;border-radius:10px;font-size:.98rem;display:none;text-align:left;line-height:1.5}
+.feedback.show{display:block}
+.feedback.good{background:rgba(46,204,113,.08);border:1px solid #2ecc71}
+.feedback.bad{background:rgba(231,76,60,.06);border:1px solid #e74c3c}
+.btn{background:#026A79;color:#fff;border:none;padding:13px 32px;font-size:1.05rem;border-radius:12px;cursor:pointer;font-weight:bold;margin-top:14px}
+.btn:hover{transform:scale(1.03)}
+.hidden{display:none!important}
+.start-screen,.end-screen{background:#fff;border:2px solid #EBF0F0;border-radius:16px;padding:36px;max-width:560px;width:100%;text-align:center;box-shadow:0 4px 16px rgba(2,106,121,.08)}
+.start-screen h2,.end-screen h2{color:#026A79;font-size:1.8rem;margin-bottom:12px}
+.start-screen p,.end-screen p{color:#5a7a82;margin:8px 0;line-height:1.5}
+.emoji-big{font-size:3.5rem;margin-bottom:12px}
+.final-score{font-size:2rem;color:#026A79;font-weight:bold;margin:12px 0}
+.stars{font-size:2.2rem;margin:8px 0}
+.streak-fire{color:#E8AA28;font-weight:bold;animation:pulse 1s infinite}
+@keyframes pulse{50%{transform:scale(1.1)}}
+</style>
+</head>
+<body>
+<div class="header"><h1>🏆 Chunk Master Quiz</h1></div>
+
+<div id="startScreen" class="start-screen">
+<div class="emoji-big">🧠</div>
+<h2>Prove you're a Chunk Master!</h2>
+<p>8 questions. 3 different challenge types. Answer fast for bonus points!</p>
+<p style="color:#E8AA28;font-weight:bold">🔥 Streak bonus: consecutive correct answers multiply your score!</p>
+<button class="btn" onclick="startQuiz()">START ▶</button>
+</div>
+
+<div id="quizScreen" class="hidden" style="width:100%;display:flex;flex-direction:column;align-items:center">
+<div class="hud">
+<div class="hud-box"><div class="label">Score</div><div class="value" id="score">0</div></div>
+<div class="hud-box"><div class="label">Streak</div><div class="value" id="streak" style="color:#E8AA28">0</div></div>
+<div class="hud-box"><div class="label">Question</div><div class="value" id="qnum">1/8</div></div>
+</div>
+<div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+<div class="card" id="qcard"></div>
+</div>
+
+<div id="endScreen" class="end-screen hidden">
+<div class="emoji-big" id="endEmoji">🏆</div>
+<h2 id="endTitle">Quiz Complete!</h2>
+<div class="stars" id="stars"></div>
+<div class="final-score" id="finalScore"></div>
+<p id="endMsg"></p>
+<button class="btn" onclick="startQuiz()" style="background:#E8AA28;color:#123C46">TRY AGAIN 🔄</button>
+</div>
+
+<script>
+const questions = [
+  {type:"identify", q:"What type of chunk is this?", chunk:"spill the beans",
+   options:["📎 Collocation","🎭 Idiom","📌 Fixed Phrase","🏗️ Sentence Frame"], answer:1,
+   why:"It's an idiom — 'reveal a secret' has nothing to do with real beans!"},
+  {type:"complete", q:"Complete the chunk:", chunk:"heavy ___",
+   options:["snow","rain","storm","wind"], answer:1,
+   why:"'Heavy rain' — not 'strong rain'. These words are married!"},
+  {type:"situation", q:"Your friend is nervous before a presentation. You tell a joke to help. What did you do?",
+   options:["You spilled the beans","You broke the ice","You hit the nail on the head","You took a break"], answer:1,
+   why:"'Break the ice' = start a conversation, make people comfortable."},
+  {type:"identify", q:"What type of chunk is this?", chunk:"What I'm trying to say is ___",
+   options:["📎 Collocation","🎭 Idiom","📌 Fixed Phrase","🏗️ Sentence Frame"], answer:3,
+   why:"It's a sentence frame — the skeleton stays, you fill in your clarification."},
+  {type:"complete", q:"Complete the chunk:", chunk:"for what it's ___",
+   options:["about","worth","true","real"], answer:1,
+   why:"'For what it's worth' — a fixed phrase to soften your opinion."},
+  {type:"situation", q:"You want to rephrase something more simply. Which chunk do you use?",
+   options:["by the way","as soon as possible","in other words","at the end of the day"], answer:2,
+   why:"'In other words' = restating more simply. A fixed phrase."},
+  {type:"identify", q:"What type of chunk is this?", chunk:"take a break",
+   options:["📎 Collocation","🎭 Idiom","📌 Fixed Phrase","🏗️ Sentence Frame"], answer:0,
+   why:"It's a collocation — 'take' + 'a break' naturally go together."},
+  {type:"situation", q:"The meeting was long. You want to give your final conclusion. Which frame fits?",
+   options:["The thing is, ___","What I'm trying to say is ___","At the end of the day, ___","The problem is, ___"], answer:2,
+   why:"'At the end of the day, ___' = your conclusion, what really matters."}
+];
+const typeLabels = {identify:"🔍 Identify", complete:"✏️ Complete", situation:"🎯 Situation"};
+
+let qi, score, streak, answered;
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function startQuiz(){
+  document.getElementById('startScreen').classList.add('hidden');
+  document.getElementById('endScreen').classList.add('hidden');
+  document.getElementById('quizScreen').classList.remove('hidden');
+  qi=0; score=0; streak=0;
+  shuffle(questions);
+  showQ();
+}
+function showQ(){
+  answered=false;
+  const q=questions[qi];
+  document.getElementById('score').textContent=score;
+  document.getElementById('streak').textContent=streak+(streak>=3?' 🔥':'');
+  document.getElementById('qnum').textContent=(qi+1)+'/'+questions.length;
+  document.getElementById('pfill').style.width=(qi/questions.length*100)+'%';
+  
+  let html=`<span class="q-type ${q.type}">${typeLabels[q.type]}</span>`;
+  html+=`<div class="q-text">${q.q}</div>`;
+  if(q.chunk) html+=`<div class="q-chunk">${q.chunk}</div>`;
+  html+='<div class="options">';
+  // Shuffle options but track correct
+  const opts=q.options.map((t,i)=>({t,correct:i===q.answer}));
+  shuffle(opts);
+  opts.forEach((o,i)=>{html+=`<div class="opt" onclick="answer(${o.correct},this)">${o.t}</div>`;});
+  html+='</div><div class="feedback" id="fb"></div><div id="nb"></div>';
+  document.getElementById('qcard').innerHTML=html;
+}
+function answer(correct, el){
+  if(answered) return; answered=true;
+  const q=questions[qi];
+  const fb=document.getElementById('fb');
+  document.querySelectorAll('.opt').forEach(o=>o.classList.add('disabled'));
+  if(correct){
+    const pts=10+streak*5;
+    score+=pts; streak++;
+    el.classList.add('correct');
+    // Mark correct for learning (already clicked)
+    fb.className='feedback show good';
+    fb.innerHTML=`✅ <strong>Correct! +${pts} points</strong><br>${q.why}`;
+  }else{
+    streak=0;
+    el.classList.add('wrong');
+    document.querySelectorAll('.opt').forEach(o=>{
+      if(o.textContent===q.options[q.answer]) o.classList.add('correct');
+    });
+    fb.className='feedback show bad';
+    fb.innerHTML=`❌ Not quite.<br>${q.why}`;
+  }
+  document.getElementById('score').textContent=score;
+  document.getElementById('streak').textContent=streak+(streak>=3?' 🔥':'');
+  document.getElementById('nb').innerHTML=`<button class="btn" onclick="nextQ()">${qi+1<questions.length?'Next →':'See Results 🏆'}</button>`;
+}
+function nextQ(){
+  qi++;
+  if(qi>=questions.length) endQuiz();
+  else showQ();
+}
+function endQuiz(){
+  document.getElementById('quizScreen').classList.add('hidden');
+  document.getElementById('endScreen').classList.remove('hidden');
+  const maxPerQ=10+7*5; // aproximado
+  const pct=score/(questions.length*10);
+  let stars,emoji,msg;
+  if(pct>=1.2){stars='⭐⭐⭐';emoji='🏆';msg='Perfect! You are a true Chunk Master!';}
+  else if(pct>=0.8){stars='⭐⭐⭐';emoji='🎉';msg='Excellent! You really know your chunks!';}
+  else if(pct>=0.5){stars='⭐⭐';emoji='💪';msg='Good job! Review the types and try for 3 stars!';}
+  else{stars='⭐';emoji='📚';msg='Keep practicing! Go back to the lesson and try again.';}
+  document.getElementById('endEmoji').textContent=emoji;
+  document.getElementById('stars').textContent=stars;
+  document.getElementById('finalScore').textContent=score+' points';
+  document.getElementById('endMsg').textContent=msg;
+}
+</script>
+</body>
+</html>
