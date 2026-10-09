@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spot the Chunk — Lesson 2</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#F7FAFA;color:#123C46;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px}
+.header{text-align:center;margin-bottom:14px}
+.header h1{font-size:1.8rem;color:#026A79;margin-bottom:6px}
+.header p{color:#5a7a82;font-size:.98rem;max-width:620px}
+.progress{color:#026A79;font-weight:bold;margin-bottom:14px}
+.card{background:#fff;border-radius:16px;padding:28px;max-width:680px;width:100%;text-align:center;border:2px solid #EBF0F0;box-shadow:0 4px 16px rgba(2,106,121,.08)}
+.transcript-box{background:#F7FAFA;border-radius:12px;padding:24px;margin:18px 0;line-height:2.6;text-align:left;font-size:1.15rem}
+.w{cursor:pointer;padding:4px 6px;border-radius:6px;transition:all .15s;display:inline-block;margin:1px}
+.w:hover{background:#D4E8EB}
+.w.picked{background:#E8AA28;color:#fff}
+.w.ok{background:#2ecc71;color:#fff}
+.w.missed{background:#E8AA28;color:#fff;animation:blink 1s infinite}
+.w.wrong{background:#e74c3c;color:#fff}
+@keyframes blink{50%{opacity:.4}}
+.play-btn{background:#026A79;color:#fff;border:none;width:76px;height:76px;border-radius:50%;font-size:1.9rem;cursor:pointer;margin:10px;transition:transform .1s}
+.play-btn:hover{transform:scale(1.06)}
+.btn{display:inline-block;background:#026A79;color:#fff;border:none;padding:13px 28px;font-size:1.02rem;border-radius:12px;cursor:pointer;margin:8px;font-weight:bold}
+.btn:hover{transform:scale(1.03)}
+.btn.amber{background:#E8AA28;color:#123C46}
+.instructions{background:rgba(2,106,121,.06);border:1px solid #026A79;border-radius:10px;padding:12px;margin-bottom:14px;font-size:.93rem;color:#026A79;text-align:left}
+.feedback{margin-top:14px;padding:16px;border-radius:10px;font-size:1rem;display:none;text-align:left;line-height:1.6}
+.feedback.show{display:block}
+.feedback.good{background:rgba(46,204,113,.1);border:1px solid #2ecc71}
+.feedback.bad{background:rgba(232,170,40,.08);border:1px solid #E8AA28}
+.feedback h4{margin-bottom:8px}
+.feedback .right{color:#1a7a3a;margin:6px 0}
+.feedback .missing{color:#b7791f;margin:6px 0}
+.feedback .wrong{color:#c0392b;margin:6px 0}
+.feedback .why{color:#5a7a82;font-size:.9rem;margin:2px 0 6px 16px}
+.hidden{display:none!important}
+.final-card{text-align:center;padding:40px}
+.final-card h2{color:#026A79;font-size:2rem;margin-bottom:14px}
+.score{font-size:1.4rem;margin:14px 0;color:#026A79}
+.emoji-big{font-size:3.5rem;margin-bottom:14px}
+h3.scn-title{color:#026A79;margin-bottom:6px}
+.counter{color:#5a7a82;font-size:.9rem;margin:8px 0}
+.counter strong{color:#E8AA28}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>🎯 Spot the Chunk</h1>
+<p>Listen to the conversation. Then tap every word that belongs to a <strong>chunk</strong>.</p>
+</div>
+<div class="progress" id="progress">Conversation 1 of 5</div>
+<div class="card" id="game"></div>
+<div class="card hidden final-card" id="final">
+<div class="emoji-big">🏆</div>
+<h2>Sharp Ears!</h2>
+<p class="score" id="score"></p>
+<p>You can hear chunks hiding in real conversations.</p>
+</div>
+<script>
+const AUDIO_BASE = "";
+const conversations = [
+{
+  title:"At Work",
+  audio:"lab1.mp3",
+  words:["We","need","to","make","a","decision","today.","By","the","way,","the","report","is","ready.","The","problem","is,","we","have","no","budget."],
+  chunks:[
+    {words:["make","a","decision"],label:"make a decision",type:"Collocation",why:"'Make' + 'decision' — not 'do a decision'. They always go together."},
+    {words:["By","the","way,"],label:"by the way,",type:"Fixed phrase",why:"Social formula for introducing a new topic. Use as is."},
+    {words:["The","problem","is,"],label:"The problem is,",type:"Sentence frame",why:"Skeleton — the frame stays the same, you fill in the problem."}
+  ]
+},
+{
+  title:"With Friends",
+  audio:"lab2.mp3",
+  words:["Don't","spill","the","beans","about","the","party!","In","other","words,","keep","it","a","secret.","She","hit","the","nail","on","the","head","with","that","idea."],
+  chunks:[
+    {words:["spill","the","beans"],label:"spill the beans",type:"Idiom",why:"Means 'reveal a secret' — no real beans involved!"},
+    {words:["In","other","words,"],label:"in other words,",type:"Fixed phrase",why:"Ready-made phrase for restating more simply."},
+    {words:["hit","the","nail","on","the","head"],label:"hit the nail on the head",type:"Idiom",why:"Means 'say exactly the right thing' — the meaning is not literal."}
+  ]
+},
+{
+  title:"Bad Weather",
+  audio:"lab3.mp3",
+  words:["It's","heavy","rain","outside.","Let's","take","a","break","until","it","stops.","At","the","end","of","the","day,","safety","comes","first."],
+  chunks:[
+    {words:["heavy","rain"],label:"heavy rain",type:"Collocation",why:"'Heavy' + 'rain' — not 'strong rain'. Words that are married."},
+    {words:["take","a","break"],label:"take a break",type:"Collocation",why:"'Take' + 'a break' — they naturally go together."},
+    {words:["At","the","end","of","the","day,"],label:"At the end of the day,",type:"Sentence frame",why:"Skeleton for your conclusion — fill in what matters."}
+  ]
+},
+{
+  title:"Shopping",
+  audio:"lab4.mp3",
+  words:["That","jacket","cost","an","arm","and","a","leg!","For","what","it's","worth,","it","looks","great","on","you.","What","I'm","trying","to","say","is,","just","buy","it."],
+  chunks:[
+    {words:["cost","an","arm","and","a","leg!"],label:"cost an arm and a leg!",type:"Idiom",why:"Means 'very expensive' — a secret hides inside."},
+    {words:["For","what","it's","worth,"],label:"for what it's worth,",type:"Fixed phrase",why:"Social formula for softening your opinion."},
+    {words:["What","I'm","trying","to","say","is,"],label:"What I'm trying to say is,",type:"Sentence frame",why:"Skeleton for clarifying — fill in your clarification."}
+  ]
+},
+{
+  title:"Before a Meeting",
+  audio:"lab5.mp3",
+  words:["I","need","a","strong","coffee,","as","soon","as","possible.","The","thing","is,","I","have","a","meeting","in","ten","minutes.","He","told","a","joke","to","break","the","ice."],
+  chunks:[
+    {words:["strong","coffee,"],label:"strong coffee,",type:"Collocation",why:"'Strong' + 'coffee' — not 'powerful coffee'."},
+    {words:["as","soon","as","possible."],label:"as soon as possible.",type:"Fixed phrase",why:"Ready-made phrase for urgency. Use as is."},
+    {words:["The","thing","is,"],label:"The thing is,",type:"Sentence frame",why:"Skeleton — the frame stays the same, you fill in the real point."},
+    {words:["break","the","ice."],label:"break the ice.",type:"Idiom",why:"Means 'start a conversation' — nothing to do with real ice!"}
+  ]
+}
+];
+
+// Pre-calcular índices de palabras chunk para cada conversación
+conversations.forEach(c => {
+  c.chunkIndices = new Set();
+  c.chunks.forEach(ch => {
+    // Encontrar la secuencia en words
+    for(let i=0; i<=c.words.length - ch.words.length; i++){
+      let match = true;
+      for(let j=0; j<ch.words.length; j++){
+        if(c.words[i+j] !== ch.words[j]){ match=false; break; }
+      }
+      if(match){
+        for(let j=0; j<ch.words.length; j++) c.chunkIndices.add(i+j);
+        ch.startIdx = i;
+        break;
+      }
+    }
+  });
+});
+
+let cur=0, score=0;
+let picked=new Set();
+
+function render(){
+  document.getElementById('progress').textContent=`Conversation ${cur+1} of ${conversations.length}`;
+  picked=new Set();
+  const c=conversations[cur];
+  const g=document.getElementById('game');
+  let html='<div class="transcript-box">';
+  c.words.forEach((w,i)=>{
+    html+=`<span class="w" data-i="${i}" onclick="toggle(${i})">${w}</span> `;
+  });
+  html+='</div>';
+  g.innerHTML=`
+    <h3 class="scn-title">${c.title}</h3>
+    <button class="play-btn" onclick="playAudio()">🔊</button>
+    <div style="color:#5a7a82;font-size:.9rem;margin-bottom:6px">Listen first, then tap the chunks</div>
+    <div class="instructions">👆 Tap every word that is part of a <strong>chunk</strong>. Chunks are groups your brain treats as one unit.</div>
+    ${html}
+    <div class="counter">Words selected: <strong id="count">0</strong></div>
+    <button class="btn" onclick="check()">Check ✓</button>
+    <div class="feedback" id="fb"></div>
+    <div id="nextBtn" style="margin-top:10px"></div>`;
+}
+function toggle(i){
+  const el=document.querySelector(`[data-i="${i}"]`);
+  if(picked.has(i)){picked.delete(i);el.classList.remove('picked');}
+  else{picked.add(i);el.classList.add('picked');}
+  document.getElementById('count').textContent=picked.size;
+}
+function playAudio(){new Audio(AUDIO_BASE+conversations[cur].audio).play();}
+function check(){
+  const c=conversations[cur], fb=document.getElementById('fb');
+  const need=c.chunkIndices;
+  let ok=0, wrong=0, missed=0;
+  document.querySelectorAll('.w').forEach(el=>{
+    const i=parseInt(el.dataset.i);
+    el.classList.remove('picked'); el.onclick=null;
+    if(picked.has(i)&&need.has(i)){el.classList.add('ok');ok++;}
+    else if(picked.has(i)){el.classList.add('wrong');wrong++;}
+    else if(need.has(i)){el.classList.add('missed');missed++;}
+  });
+  const total=need.size;
+  const pts=Math.max(0,ok*5-wrong*3);
+  score+=pts;
+  let html=`<h4>🔍 You found ${ok}/${total} chunk words</h4>`;
+  // Agrupar por chunk para explicación
+  c.chunks.forEach(ch=>{
+    const indices=[];
+    for(let i=0;i<=c.words.length-ch.words.length;i++){
+      let m=true;
+      for(let j=0;j<ch.words.length;j++) if(c.words[i+j]!==ch.words[j]){m=false;break;}
+      if(m){for(let j=0;j<ch.words.length;j++)indices.push(i+j);break;}
+    }
+    const foundAll=indices.every(i=>picked.has(i));
+    const foundSome=indices.some(i=>picked.has(i));
+    if(foundAll) html+=`<div class="right">✅ <strong>${ch.label}</strong> (${ch.type}) — perfect!</div><div class="why">${ch.why}</div>`;
+    else if(foundSome) html+=`<div class="missing">⚠️ <strong>${ch.label}</strong> (${ch.type}) — partially found. All these words form one chunk.</div><div class="why">${ch.why}</div>`;
+    else html+=`<div class="missing">❓ Missed: <strong>${ch.label}</strong> (${ch.type})</div><div class="why">${ch.why}</div>`;
+  });
+  if(wrong>0) html+=`<div class="wrong">❌ ${wrong} word(s) are not part of any chunk — they stand alone.</div>`;
+  fb.className='feedback show '+(wrong===0&&missed===0?'good':'bad');
+  fb.innerHTML=html;
+  document.getElementById('nextBtn').innerHTML=`<button class="btn amber" onclick="next()">Next conversation →</button>`;
+}
+function next(){
+  cur++;
+  if(cur>=conversations.length){
+    document.getElementById('game').classList.add('hidden');
+    document.getElementById('progress').classList.add('hidden');
+    document.getElementById('final').classList.remove('hidden');
+    const maxPts=conversations.reduce((a,c)=>a+c.chunkIndices.size*5,0);
+    document.getElementById('score').textContent=`Your score: ${score} / ${maxPts}`;
+  }else render();
+}
+render();
+</script>
+</body>
+</html>
