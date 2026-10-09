@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Link & Stress Master — Sounding Natural</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#F7FAFA;color:#123C46;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px}
+.header{text-align:center;margin-bottom:16px}
+.header h1{font-size:1.8rem;color:#026A79;margin-bottom:8px}
+.header p{color:#5a7a82;font-size:1rem;max-width:640px}
+.progress{color:#026A79;font-weight:bold;margin-bottom:16px}
+.card{background:#fff;border-radius:16px;padding:28px;max-width:720px;width:100%;text-align:center;border:2px solid #EBF0F0;box-shadow:0 4px 16px rgba(2,106,121,.08)}
+.sentence-row{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-end;margin:24px 0;gap:0}
+.word{background:#EBF0F0;color:#123C46;padding:12px 16px;border-radius:10px;font-size:1.25rem;font-weight:600}
+.link-zone{width:52px;height:60px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;cursor:pointer;padding-bottom:4px}
+.link-zone .arrow{font-size:1.7rem;color:#B0C4C8;transition:all .2s;line-height:1}
+.link-zone .hint{font-size:.62rem;color:#B0C4C8;margin-top:2px}
+.link-zone.marked .arrow{color:#E8AA28;transform:scale(1.3)}
+.link-zone.marked .hint{color:#E8AA28}
+.link-zone.correct .arrow{color:#2ecc71}
+.link-zone.wrong .arrow{color:#e74c3c}
+.link-zone.missed .arrow{color:#E8AA28;animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.3}}
+.word.clickable{cursor:pointer;transition:all .2s}
+.word.clickable:hover{background:#D4E8EB}
+.word.stressed{background:#E8AA28;color:#fff;transform:scale(1.05)}
+.word.stress-correct{background:#026A79;color:#fff}
+.word.stress-wrong{background:#e74c3c;color:#fff}
+.word.stress-missed{background:#E8AA28;color:#fff;animation:blink 1s infinite}
+.link-zone.static{cursor:default}
+.btn{display:inline-block;background:#026A79;color:#fff;border:none;padding:14px 28px;font-size:1.05rem;border-radius:12px;cursor:pointer;margin:8px;font-weight:bold;transition:transform .1s}
+.btn:hover{transform:scale(1.05)}
+.btn.amber{background:#E8AA28;color:#123C46}
+.play-btn{background:#026A79;color:#fff;border:none;width:76px;height:76px;border-radius:50%;font-size:1.9rem;cursor:pointer;margin:10px;transition:transform .1s}
+.play-btn:hover{transform:scale(1.08)}
+.feedback{margin-top:16px;padding:16px;border-radius:10px;font-size:1.02rem;display:none;text-align:left;line-height:1.6}
+.feedback.show{display:block}
+.feedback.good{background:rgba(46,204,113,.1);border:1px solid #2ecc71}
+.feedback.bad{background:rgba(232,170,40,.08);border:1px solid #E8AA28}
+.feedback h4{margin-bottom:8px;font-size:1.1rem}
+.feedback .right{color:#1a7a3a;margin:6px 0}
+.feedback .missing{color:#b7791f;margin:6px 0}
+.feedback .wrong{color:#c0392b;margin:6px 0}
+.feedback .why{color:#5a7a82;font-size:.93rem;margin:4px 0 4px 16px}
+.hidden{display:none!important}
+.final-card{text-align:center;padding:40px}
+.final-card h2{color:#026A79;font-size:2rem;margin-bottom:16px}
+.score{font-size:1.5rem;margin:16px 0;color:#026A79}
+.emoji-big{font-size:4rem;margin-bottom:16px}
+.instructions{background:rgba(2,106,121,.06);border:1px solid #026A79;border-radius:10px;padding:12px;margin-bottom:16px;font-size:.95rem;color:#026A79}
+h3.step-title{color:#026A79;margin-bottom:10px;font-size:1.25rem}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>🎼 Link & Stress Master</h1>
+<p>Listen. Mark the <strong style="color:#E8AA28">links ‿</strong> where words connect. Mark the <strong style="color:#026A79">stressed words</strong> that carry the meaning.</p>
+</div>
+<div class="progress" id="progress">Sentence 1 of 10</div>
+<div class="card" id="game"></div>
+<div class="card hidden final-card" id="final">
+<div class="emoji-big">🏆</div>
+<h2>Master Complete!</h2>
+<p class="score" id="score"></p>
+<p>Your ten structures now have music. Copy the music, not just the words. 🎼</p>
+</div>
+<script>
+const AUDIO_BASE = "";
+const sentences = [
+{
+text:"It was Carlos who fixed the car.",
+words:["It","was","Carlos","who","fixed","the","car."],
+nat:"new-1-nat.mp3",
+links:[
+ {gap:0,pair:"It‿was",why:"The /t/ flows directly into /w/ — no pause between consonant and vowel."},
+ {gap:1,pair:"was‿Carlos",why:"The /z/ connects smoothly to /k/ — voiced consonant links to the next word."},
+ {gap:4,pair:"fixed‿the",why:"The /t/ links to /ð/ — consonant to consonant contact."}
+],
+stress:[
+ {idx:2,word:"CARlos",why:"Names carry meaning — CARlos is new information, so it's stressed."},
+ {idx:4,word:"FIXED",why:"The main verb carries the action — FIXED is the key event."},
+ {idx:6,word:"CAR",why:"The object completes the meaning — CAR gets the final stress."}
+]
+},
+{
+text:"The reason she's late is the traffic.",
+words:["The","reason","she's","late","is","the","traffic."],
+nat:"new-2-nat.mp3",
+links:[
+ {gap:1,pair:"reason‿she's",why:"The /n/ flows into /ʃ/ — nasal consonant connects to the next word."},
+ {gap:2,pair:"she's‿late",why:"The /z/ links to /l/ — the contraction flows without stopping."},
+ {gap:4,pair:"is‿the",why:"The /z/ connects to /ð/ — two voiced sounds glide together."}
+],
+stress:[
+ {idx:1,word:"REAson",why:"The key noun — REAson is what the sentence explains."},
+ {idx:3,word:"LATE",why:"The adjective carries the surprise — LATE is the important detail."},
+ {idx:6,word:"TRAFfic",why:"The cause gets final stress — TRAFfic is the new information."}
+]
+},
+{
+text:"What she said was surprising.",
+words:["What","she","said","was","surprising."],
+nat:"new-3-nat.mp3",
+links:[
+ {gap:0,pair:"What‿she",why:"The /t/ softens into /ʃ/ — consonant to consonant across words."},
+ {gap:2,pair:"said‿was",why:"The /d/ links to /w/ — past tense flows into the next word."}
+],
+stress:[
+ {idx:0,word:"WHAT",why:"The wh-word opens the cleft — WHAT signals the focus."},
+ {idx:2,word:"SAID",why:"The main verb — SAID is the core action."},
+ {idx:4,word:"surPRIsing",why:"The emotional peak — surPRIsing carries the reaction."}
+]
+},
+{
+text:"That I cannot accept.",
+words:["That","I","cannot","accept."],
+nat:"new-4-nat.mp3",
+links:[
+ {gap:0,pair:"That‿I",why:"The /t/ connects to the vowel /aɪ/ — fronting flows without break."}
+],
+stress:[
+ {idx:2,word:"CANnot",why:"The negative modal — CANnot carries the refusal."},
+ {idx:3,word:"acCEPT",why:"The main verb gets final stress — acCEPT is the decision."}
+]
+},
+{
+text:"Should you change your mind, let me know.",
+words:["Should","you","change","your","mind,","let","me","know."],
+nat:"new-5-nat.mp3",
+links:[
+ {gap:0,pair:"Should‿you",why:"The /d/ links to /j/ — modal flows into the pronoun."},
+ {gap:2,pair:"change‿your",why:"The /dʒ/ connects to /j/ — similar sounds merge."},
+ {gap:5,pair:"let‿me",why:"The /t/ links to /m/ — consonant to nasal."},
+ {gap:6,pair:"me‿know",why:"The vowel flows into /n/ — no break before the final verb."}
+],
+stress:[
+ {idx:2,word:"CHANGE",why:"The key verb — CHANGE is the condition."},
+ {idx:4,word:"MIND",why:"The object of change — MIND completes the condition."},
+ {idx:7,word:"KNOW",why:"The request gets final stress — KNOW is what you want."}
+]
+},
+{
+text:"Hardly had she spoken when the phone rang.",
+words:["Hardly","had","she","spoken","when","the","phone","rang."],
+nat:"new-6-nat.mp3",
+links:[
+ {gap:1,pair:"had‿she",why:"The /d/ links to /ʃ/ — past perfect flows smoothly."},
+ {gap:4,pair:"when‿the",why:"The /n/ connects to /ð/ — nasal to voiced consonant."},
+ {gap:5,pair:"the‿phone",why:"The /ð/ flows into /f/ — article links to noun."}
+],
+stress:[
+ {idx:0,word:"HARDly",why:"The inversion trigger — HARDly opens with emphasis."},
+ {idx:3,word:"SPOken",why:"The main verb — SPOken is the key event."},
+ {idx:6,word:"PHONE",why:"The subject of the result — PHONE is new information."},
+ {idx:7,word:"RANG",why:"The final verb — RANG closes with stress."}
+]
+},
+{
+text:"Rarely have I heard such nonsense.",
+words:["Rarely","have","I","heard","such","nonsense."],
+nat:"new-7-nat.mp3",
+links:[
+ {gap:1,pair:"have‿I",why:"The /v/ links to the vowel /aɪ/ — consonant to vowel glide."},
+ {gap:3,pair:"heard‿such",why:"The /d/ connects to /s/ — past tense flows forward."}
+],
+stress:[
+ {idx:0,word:"RAREly",why:"The inversion trigger — RAREly sets the tone."},
+ {idx:3,word:"HEARD",why:"The main verb — HEARD is the experience."},
+ {idx:5,word:"NONsense",why:"The emotional peak — NONsense carries the judgment."}
+]
+},
+{
+text:"Were he to call, I'd answer immediately.",
+words:["Were","he","to","call,","I'd","answer","immediately."],
+nat:"new-8-nat.mp3",
+links:[
+ {gap:0,pair:"Were‿he",why:"The /r/ links to /h/ — conditional flows without pause."},
+ {gap:2,pair:"to‿call",why:"The vowel reduces and links — /tə/ connects to /k/."}
+],
+stress:[
+ {idx:3,word:"CALL",why:"The key verb — CALL is the hypothetical event."},
+ {idx:5,word:"ANswer",why:"The response verb — ANswer is the promise."},
+ {idx:6,word:"imMEdiately",why:"The adverb gets final stress — imMEdiately shows urgency."}
+]
+},
+{
+text:"It is believed that he left the country.",
+words:["It","is","believed","that","he","left","the","country."],
+nat:"new-9-nat.mp3",
+links:[
+ {gap:0,pair:"It‿is",why:"The /t/ links to the vowel — impersonal opener flows."},
+ {gap:3,pair:"that‿he",why:"The /t/ connects to /h/ — conjunction to pronoun."},
+ {gap:5,pair:"left‿the",why:"The /t/ links to /ð/ — verb to article."}
+],
+stress:[
+ {idx:2,word:"beLIEVED",why:"The passive verb — beLIEVED is the report."},
+ {idx:5,word:"LEFT",why:"The main action — LEFT is what happened."},
+ {idx:7,word:"COUNtry",why:"The destination — COUNtry is the new information."}
+]
+},
+{
+text:"I demand that she be present.",
+words:["I","demand","that","she","be","present."],
+nat:"new-10-nat.mp3",
+links:[
+ {gap:2,pair:"that‿she",why:"The /t/ links to /ʃ/ — conjunction flows to pronoun."},
+ {gap:4,pair:"be‿present",why:"The vowel connects to /p/ — subjunctive flows forward."}
+],
+stress:[
+ {idx:1,word:"deMAND",why:"The commanding verb — deMAND shows authority."},
+ {idx:5,word:"PREsent",why:"The requirement — PREsent is the demand."}
+]
+}
+];
+let cur=0, score=0, phase=0;
+let markedLinks=new Set(), markedStress=new Set();
+
+function render(){
+  document.getElementById('progress').textContent=`Sentence ${cur+1} of ${sentences.length}`;
+  markedLinks=new Set(); markedStress=new Set(); phase=0;
+  renderPhase();
+}
+function renderPhase(){
+  const s=sentences[cur], g=document.getElementById('game');
+  let row='<div class="sentence-row">';
+  s.words.forEach((w,i)=>{
+    if(phase===1) row+=`<div class="word clickable" data-word="${i}" onclick="toggleStress(${i})">${w}</div>`;
+    else row+=`<div class="word">${w}</div>`;
+    if(i<s.words.length-1){
+      if(phase===0) row+=`<div class="link-zone" data-gap="${i}" onclick="toggleLink(${i})"><div class="arrow">‿</div><div class="hint">tap</div></div>`;
+      else row+=`<div class="link-zone static"><div class="arrow" style="color:#EBF0F0">·</div></div>`;
+    }
+  });
+  row+='</div>';
+  const title=phase===0?"Step 1: Where are the LINKS? 🔗":"Step 2: Which words are STRESSED? 💪";
+  const instr=phase===0?"👆 Tap the <strong>‿</strong> between words where you hear a LINK":"👆 Tap the <strong>words</strong> that carry the STRESS";
+  const fn=phase===0?"checkLinks()":"checkStress()";
+  const lbl=phase===0?"Check my links ✓":"Check my stress ✓";
+  g.innerHTML=`<h3 class="step-title">${title}</h3>
+  <div class="instructions">${instr}</div>
+  <button class="play-btn" onclick="playNat()">🔊</button>
+  <div style="color:#5a7a82;font-size:.9rem;margin-bottom:8px">Listen</div>
+  ${row}
+  <button class="btn" onclick="${fn}">${lbl}</button>
+  <div class="feedback" id="fb"></div>
+  <div id="nextBtn" style="margin-top:12px"></div>`;
+}
+function toggleLink(gap){
+  const el=document.querySelector(`[data-gap="${gap}"]`);
+  if(markedLinks.has(gap)){markedLinks.delete(gap);el.classList.remove('marked');}
+  else{markedLinks.add(gap);el.classList.add('marked');}
+}
+function toggleStress(idx){
+  const el=document.querySelector(`[data-word="${idx}"]`);
+  if(markedStress.has(idx)){markedStress.delete(idx);el.classList.remove('stressed');}
+  else{markedStress.add(idx);el.classList.add('stressed');}
+}
+function playNat(){new Audio(AUDIO_BASE+sentences[cur].nat).play();}
+
+function checkLinks(){
+  const s=sentences[cur], fb=document.getElementById('fb');
+  const need=new Map(s.links.map(l=>[l.gap,l]));
+  let correct=[], missed=[], wrong=[];
+  document.querySelectorAll('.link-zone[data-gap]').forEach(el=>{
+    const gap=parseInt(el.dataset.gap);
+    el.classList.remove('marked'); el.onclick=null;
+    if(markedLinks.has(gap)&&need.has(gap)){el.classList.add('correct');correct.push(need.get(gap));}
+    else if(markedLinks.has(gap)){el.classList.add('wrong');wrong.push({gap,pair:`"${s.words[gap]}‿${s.words[gap+1]}"`});}
+    else if(need.has(gap)){el.classList.add('missed');missed.push(need.get(gap));}
+  });
+  const pts=Math.max(0,correct.length*10-wrong.length*5);
+  score+=pts;
+  let html='';
+  if(wrong.length===0&&missed.length===0){
+    html=`<h4>✅ Perfect! All ${need.size} links found.</h4>`;
+    correct.forEach(l=>{html+=`<div class="right">✓ <strong>${l.pair}</strong></div><div class="why">${l.why}</div>`;});
+  } else {
+    html=`<h4>🔍 Links: ${correct.length}/${need.size}</h4>`;
+    correct.forEach(l=>{html+=`<div class="right">✓ <strong>${l.pair}</strong> — correct!</div><div class="why">${l.why}</div>`;});
+    missed.forEach(l=>{html+=`<div class="missing">❓ You missed: <strong>${l.pair}</strong></div><div class="why">${l.why}</div>`;});
+    wrong.forEach(l=>{html+=`<div class="wrong">❌ <strong>${l.pair}</strong> — not a link here. These words stay separate.</div>`;});
+  }
+  fb.className='feedback show '+(wrong.length===0&&missed.length===0?'good':'bad');
+  fb.innerHTML=html;
+  document.getElementById('nextBtn').innerHTML=`<button class="btn amber" onclick="goToStress()">Next: find the STRESS →</button>`;
+}
+function goToStress(){phase=1;renderPhase();}
+
+function checkStress(){
+  const s=sentences[cur], fb=document.getElementById('fb');
+  const need=new Map(s.stress.map(x=>[x.idx,x]));
+  let correct=[], missed=[], wrong=[];
+  document.querySelectorAll('.word.clickable').forEach(el=>{
+    const idx=parseInt(el.dataset.word);
+    el.classList.remove('stressed','clickable'); el.onclick=null;
+    if(markedStress.has(idx)&&need.has(idx)){el.classList.add('stress-correct');correct.push(need.get(idx));}
+    else if(markedStress.has(idx)){el.classList.add('stress-wrong');wrong.push({idx,word:s.words[idx]});}
+    else if(need.has(idx)){el.classList.add('stress-missed');missed.push(need.get(idx));}
+  });
+  const pts=Math.max(0,correct.length*10-wrong.length*5);
+  score+=pts;
+  let html='';
+  if(wrong.length===0&&missed.length===0){
+    html=`<h4>✅ Perfect! All stressed words found.</h4>`;
+    correct.forEach(x=>{html+=`<div class="right">✓ <strong>${x.word}</strong></div><div class="why">${x.why}</div>`;});
+  } else {
+    html=`<h4>🔍 Stress: ${correct.length}/${need.size}</h4>`;
+    correct.forEach(x=>{html+=`<div class="right">✓ <strong>${x.word}</strong> — correct!</div><div class="why">${x.why}</div>`;});
+    missed.forEach(x=>{html+=`<div class="missing">❓ You missed: <strong>${x.word}</strong></div><div class="why">${x.why}</div>`;});
+    wrong.forEach(x=>{html+=`<div class="wrong">❌ <strong>"${x.word}"</strong> — this is a function word, it stays quiet and quick.</div>`;});
+  }
+  fb.className='feedback show '+(wrong.length===0&&missed.length===0?'good':'bad');
+  fb.innerHTML=html;
+  document.getElementById('nextBtn').innerHTML=`<button class="btn amber" onclick="next()">Next sentence →</button>`;
+}
+function next(){
+  cur++;
+  if(cur>=sentences.length){
+    document.getElementById('game').classList.add('hidden');
+    document.getElementById('progress').classList.add('hidden');
+    document.getElementById('final').classList.remove('hidden');
+    document.getElementById('score').textContent=`Your score: ${score} / ${sentences.length*60}`;
+  } else render();
+}
+render();
+</script>
+</body>
+</html>
