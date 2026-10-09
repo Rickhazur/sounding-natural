@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connected Speech Lab — Lesson 2</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#F7FAFA;color:#123C46;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px}
+.header{text-align:center;margin-bottom:14px}
+.header h1{font-size:1.8rem;color:#026A79;margin-bottom:6px}
+.header p{color:#5a7a82;font-size:.98rem;max-width:640px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;max-width:900px;width:100%;margin-top:16px}
+.chunk-card{background:#fff;border:2px solid #EBF0F0;border-radius:14px;padding:18px;cursor:pointer;transition:all .2s;position:relative}
+.chunk-card:hover{border-color:#026A79;transform:translateY(-2px);box-shadow:0 4px 12px rgba(2,106,121,.15)}
+.chunk-card.playing{border-color:#E8AA28;box-shadow:0 0 16px rgba(232,170,40,.3)}
+.chunk-card .type-badge{display:inline-block;font-size:.72rem;font-weight:bold;padding:3px 10px;border-radius:20px;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
+.type-badge.collocation{background:rgba(2,106,121,.1);color:#026A79}
+.type-badge.idiom{background:rgba(155,89,182,.1);color:#8e44ad}
+.type-badge.fixed{background:rgba(232,170,40,.15);color:#b7791f}
+.type-badge.frame{background:rgba(46,204,113,.1);color:#1a7a3a}
+.chunk-card .natural{font-size:1.25rem;font-weight:bold;margin:6px 0;color:#123C46}
+.chunk-card .connected{font-size:1.05rem;color:#026A79;margin:6px 0;font-family:'Courier New',monospace;background:rgba(2,106,121,.06);padding:8px;border-radius:8px}
+.chunk-card .tip{font-size:.85rem;color:#5a7a82;margin-top:6px;line-height:1.4}
+.chunk-card .play-icon{position:absolute;top:14px;right:14px;font-size:1.4rem}
+.instructions{background:#fff;border:2px solid #026A79;border-radius:12px;padding:16px;max-width:900px;width:100%;margin-bottom:8px;font-size:.95rem;color:#026A79;line-height:1.5}
+.instructions strong{color:#E8AA28}
+.legend{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:12px 0;font-size:.85rem;color:#5a7a82}
+.legend span{background:#fff;padding:6px 12px;border-radius:20px;border:1px solid #EBF0F0}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>🔗 Connected Speech Lab</h1>
+<p>Native speakers don't say words separately — they <strong>connect</strong> them. Tap any chunk to hear how it really sounds.</p>
+</div>
+<div class="instructions">
+👆 <strong>Tap a card</strong> to hear the chunk. Notice how words <strong>link together</strong> — the end of one word flows into the start of the next. This is why chunks sound like one unit!
+</div>
+<div class="legend">
+<span>🔗 = words connect</span>
+<span>⚡ = reduced sound</span>
+</div>
+<div class="grid" id="grid"></div>
+<script>
+const AUDIO_BASE = "";
+const chunks = [
+  {text:"make a decision", connected:"make‿a‿decision", type:"collocation", tip:"⚡ 'make‿a' — the words flow together, no pause between them.", audio:"cs1.mp3"},
+  {text:"heavy rain", connected:"heavy‿rain", type:"collocation", tip:"🔗 'heavy‿rain' — the /i/ glides into /r/.", audio:"cs2.mp3"},
+  {text:"take a break", connected:"take‿a‿break", type:"collocation", tip:"🔗 'take‿a' — consonant links to vowel.", audio:"cs3.mp3"},
+  {text:"strong coffee", connected:"strong‿coffee", type:"collocation", tip:"🔗 The /ŋ/ flows into /k/ — one smooth sound.", audio:"cs4.mp3"},
+  {text:"break the ice", connected:"break‿the‿ice", type:"idiom", tip:"🔗 'break‿the' — /k/ links to /ð/. Say it as one breath.", audio:"cs5.mp3"},
+  {text:"spill the beans", connected:"spill‿the‿beans", type:"idiom", tip:"🔗 'spill‿the' — /l/ connects to /ð/.", audio:"cs6.mp3"},
+  {text:"cost an arm and a leg", connected:"cost‿an‿arm‿'n'‿a‿leg", type:"idiom", tip:"⚡ 'and' → 'n' — native speakers reduce it. 'arm‿'n'‿a'.", audio:"cs7.mp3"},
+  {text:"hit the nail on the head", connected:"hit‿the‿nail‿on‿the‿head", type:"idiom", tip:"🔗 Every word connects — practice it as one stream.", audio:"cs8.mp3"},
+  {text:"by the way", connected:"by‿the‿way", type:"fixed", tip:"🔗 'by‿the' — /aɪ/ glides into /ð/.", audio:"cs9.mp3"},
+  {text:"as soon as possible", connected:"as‿soon‿as‿possible", type:"fixed", tip:"🔗 'soon‿as' — /n/ links to /æ/. Smooth and fast.", audio:"cs10.mp3"},
+  {text:"for what it's worth", connected:"for‿what‿it's‿worth", type:"fixed", tip:"🔗 'for‿what' — /r/ links to /w/. One flowing phrase.", audio:"cs11.mp3"},
+  {text:"in other words", connected:"in‿other‿words", type:"fixed", tip:"🔗 'in‿other' — /n/ links to /ʌ/.", audio:"cs12.mp3"},
+  {text:"The thing is,", connected:"The‿thing‿is,", type:"frame", tip:"🔗 'The‿thing' — /ð/ + /θ/, tongue stays forward.", audio:"cs13.mp3"},
+  {text:"What I'm trying to say is,", connected:"What‿I'm‿trying‿to‿say‿is,", type:"frame", tip:"⚡ 'trying‿to' → 'trying‿ta' — 'to' reduces before consonants.", audio:"cs14.mp3"},
+  {text:"At the end of the day,", connected:"At‿the‿end‿of‿the‿day,", type:"frame", tip:"⚡ 'of' → 'uh' — 'end‿uh‿the'. Very common reduction.", audio:"cs15.mp3"},
+  {text:"The problem is,", connected:"The‿problem‿is,", type:"frame", tip:"🔗 'problem‿is' — /m/ links to /ɪ/.", audio:"cs16.mp3"}
+];
+const typeNames = {collocation:"📎 Collocation", idiom:"🎭 Idiom", fixed:"📌 Fixed Phrase", frame:"🏗️ Frame"};
+let currentAudio = null;
+let currentCard = null;
+
+const grid = document.getElementById('grid');
+chunks.forEach((c, i) => {
+  const card = document.createElement('div');
+  card.className = 'chunk-card';
+  card.innerHTML = `
+    <span class="type-badge ${c.type}">${typeNames[c.type]}</span>
+    <span class="play-icon">🔊</span>
+    <div class="natural">${c.text}</div>
+    <div class="connected">${c.connected}</div>
+    <div class="tip">${c.tip}</div>`;
+  card.onclick = () => playChunk(card, c.audio);
+  grid.appendChild(card);
+});
+
+function playChunk(card, audioFile){
+  if(currentAudio){ currentAudio.pause(); currentAudio = null; }
+  if(currentCard) currentCard.classList.remove('playing');
+  currentCard = card;
+  card.classList.add('playing');
+  currentAudio = new Audio(AUDIO_BASE + audioFile);
+  currentAudio.onended = () => card.classList.remove('playing');
+  currentAudio.play();
+}
+</script>
+</body>
+</html>
