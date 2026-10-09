@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Office Day — Module 1 Capstone</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#F7FAFA;color:#123C46;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px}
+#app{width:100%;max-width:700px}
+.scene{background:#fff;border:2px solid #EBF0F0;border-radius:20px;padding:0;overflow:hidden;box-shadow:0 6px 24px rgba(2,106,121,.1);animation:fadeIn .4s ease}
+.scene-header{padding:20px 28px;background:#026A79;border-bottom:3px solid #E8AA28;display:flex;justify-content:space-between;align-items:center}
+.time-badge{background:#E8AA28;color:#123C46;font-weight:bold;padding:6px 16px;border-radius:20px;font-size:.9rem}
+.location{color:#fff;font-size:.9rem;font-weight:600}
+.scene-body{padding:32px 28px;min-height:380px;position:relative}
+.character{display:flex;align-items:flex-start;gap:14px;margin:16px 0;animation:slideInLeft .5s ease}
+.avatar{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0;background:rgba(2,106,121,.1);border:2px solid #026A79;animation:bounceIn .5s ease}
+.avatar.boss{background:rgba(232,170,40,.15);border-color:#E8AA28}
+.speech{background:#F7FAFA;border:1px solid #EBF0F0;border-radius:4px 16px 16px 16px;padding:14px 18px;font-size:1.05rem;line-height:1.7;max-width:88%;color:#123C46;animation:fadeIn .6s ease .15s both}
+.speech .name{font-size:.78rem;color:#026A79;font-weight:bold;margin-bottom:4px;text-transform:uppercase;letter-spacing:1px}
+.speech strong{color:#026A79}
+.narration{color:#5a7a82;font-style:italic;margin:18px 0;line-height:1.7;font-size:1rem;text-align:center;animation:fadeIn .8s ease}
+.narration strong{color:#123C46;font-style:normal}
+.player-choices{display:flex;flex-direction:column;gap:10px;margin:20px 0}
+.choice{background:#fff;border:2px solid #B0C4C8;border-radius:12px;padding:15px 18px;font-size:1.02rem;cursor:pointer;transition:all .2s;color:#123C46;text-align:left;line-height:1.6;animation:slideInLeft .4s ease;font-weight:500}
+.choice:nth-child(2){animation-delay:.1s}
+.choice:nth-child(3){animation-delay:.2s}
+.choice:hover{border-color:#026A79;background:rgba(2,106,121,.04);transform:translateX(6px)}
+.choice.correct{border-color:#2ecc71;background:rgba(46,204,113,.1)}
+.choice.wrong{border-color:#e74c3c;background:rgba(231,76,60,.06)}
+.choice.disabled{pointer-events:none;opacity:.85}
+.choice .tag{display:inline-block;font-size:.7rem;background:rgba(2,106,121,.1);color:#026A79;padding:3px 10px;border-radius:10px;margin-bottom:8px;font-weight:bold}
+.feedback{margin:16px 0;padding:16px;border-radius:12px;font-size:1rem;display:none;line-height:1.7;color:#123C46}
+.feedback.show{display:block;animation:slideIn .3s ease}
+.feedback.good{background:rgba(46,204,113,.08);border:2px solid #2ecc71}
+.feedback.bad{background:rgba(232,170,40,.06);border:2px solid #E8AA28}
+.feedback strong{color:#026A79}
+.btn{background:#026A79;color:#fff;border:none;padding:14px 36px;font-size:1.05rem;border-radius:12px;cursor:pointer;font-weight:bold;margin:16px auto;display:block;transition:all .2s;animation:fadeIn 1s ease .3s both}
+.btn:hover{transform:scale(1.04);box-shadow:0 4px 16px rgba(2,106,121,.3)}
+.hidden{display:none!important}
+.intro-screen,.final-screen{background:#fff;border:2px solid #EBF0F0;border-radius:20px;padding:48px 36px;max-width:700px;width:100%;text-align:center;box-shadow:0 6px 24px rgba(2,106,121,.1)}
+.intro-screen h1{color:#026A79;font-size:2.2rem;margin-bottom:8px}
+.intro-screen h2{color:#5a7a82;font-size:1.1rem;font-weight:normal;margin-bottom:20px}
+.intro-screen p{color:#123C46;line-height:1.7;margin:12px 0;font-size:1rem}
+.timeline{display:flex;justify-content:center;gap:8px;margin:20px 0;flex-wrap:wrap}
+.timeline span{background:rgba(2,106,121,.06);padding:8px 14px;border-radius:20px;font-size:.82rem;color:#026A79;border:1px solid #026A79;font-weight:600}
+.score-breakdown{margin:20px 0;text-align:left}
+.score-row{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;margin:8px 0;background:#F7FAFA;border:1px solid #EBF0F0;border-radius:10px;font-size:.95rem}
+.score-row .lesson{color:#123C46;font-weight:500}
+.score-row .pts{color:#026A79;font-weight:bold;font-size:1.1rem}
+.certificate{border:3px solid #E8AA28;border-radius:16px;padding:32px;margin:20px 0;background:rgba(232,170,40,.05)}
+.certificate h2{color:#026A79;font-size:1.6rem;margin-bottom:8px}
+.certificate p{color:#5a7a82;margin:6px 0}
+.progress-dots{display:flex;justify-content:center;gap:8px;margin:16px 0}
+.dot{width:12px;height:12px;border-radius:50%;background:#D4E8EB}
+.dot.done{background:#026A79}
+.dot.current{background:#E8AA28;animation:pulse 1.2s infinite}
+.emoji-big{font-size:3rem;margin-bottom:12px}
+@keyframes slideInLeft{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:translateX(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes bounceIn{0%{opacity:0;transform:scale(.5)}60%{opacity:1;transform:scale(1.08)}100%{transform:scale(1)}}
+@keyframes pulse{50%{transform:scale(1.3)}}
+@keyframes slideIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.dlg-play{background:#026A79;color:#fff;border:none;width:28px;height:28px;border-radius:50%;font-size:.85rem;cursor:pointer;margin-left:8px;vertical-align:middle;transition:transform .15s}.dlg-play:hover{transform:scale(1.15)}
+.scene-body::before{content:'🏢';position:absolute;top:70px;right:24px;font-size:2.5rem;opacity:.06}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const AUDIO_BASE = "";
+const app = document.getElementById('app');
+let scores = {l1:0, l2:0, l3:0, l4:0, l5:0};
+let sceneIdx = 0;
+
+const scenes = [
+{
+  time:"9:00 AM", location:"🏢 Lobby — First Day",
+  setup:"You walk into the glass tower. Your badge says <strong>Regional Manager</strong>. A friendly colleague approaches with coffee.",
+  dialogue:[
+    {who:"Sarah", role:"", avatar:"👩‍💼", text:"Hi! You must be the new manager. I was nervous on my first day too — but let me <strong>break the ice</strong>: want a <strong>strong coffee</strong>?"},
+  ],
+  question:"Sarah used two chunks. Which ones are they?",
+  choices:[
+    {text:"\"break the ice\" and \"strong coffee\"", correct:true, lesson:"l2"},
+    {text:"\"nervous day\" and \"want coffee\"", correct:false, lesson:"l2"},
+    {text:"\"friendly colleague\" and \"first day\"", correct:false, lesson:"l2"},
+  ],
+  feedback_good:"✅ Exactly! <strong>\"break the ice\"</strong> (idiom) and <strong>\"strong coffee\"</strong> (collocation) — two chunks from Lesson 2, hiding in natural speech.",
+  feedback_bad:"❌ Listen again: <strong>\"break the ice\"</strong> (idiom = start a conversation) and <strong>\"strong coffee\"</strong> (collocation). These are Lesson 2 chunks."
+},
+{
+  time:"10:00 AM", location:"📋 Conference Room — Team Meeting",
+  setup:"You sit at the long table. Twelve faces look at you. Time to introduce yourself and share your vision.",
+  dialogue:[
+    {who:"You think", role:"", avatar:"🤔", text:"I need a sentence frame to give my opinion clearly..."},
+  ],
+  question:"Which frame sounds most professional for sharing your vision?",
+  choices:[
+    {text:"\"The way I see it, we can double our results this year.\"", correct:true, lesson:"l3"},
+    {text:"\"I think maybe we can do good things.\"", correct:false, lesson:"l3"},
+    {text:"\"In my opinionation, results will be doubled.\"", correct:false, lesson:"l3"},
+  ],
+  feedback_good:"✅ Perfect! <strong>\"The way I see it\"</strong> — a Lesson 3 sentence frame that sounds confident and professional.",
+  feedback_bad:"❌ The professional choice is <strong>\"The way I see it, ...\"</strong> — a Lesson 3 frame for giving your perspective."
+},
+{
+  time:"12:30 PM", location:"🍽️ Executive Lunch",
+  setup:"Over lunch, a client asks about your experience. You want to show the limits of your knowledge honestly.",
+  dialogue:[
+    {who:"Client", role:"boss", avatar:"🤵", text:"Have you worked with Asian markets before?"},
+  ],
+  question:"How do you answer professionally?",
+  choices:[
+    {text:"\"As far as I know, the principles are similar.\"", correct:true, lesson:"l3"},
+    {text:"\"I don't know nothing about that.\"", correct:false, lesson:"l3"},
+    {text:"\"No, never.\"", correct:false, lesson:"l3"},
+  ],
+  feedback_good:"✅ Excellent! <strong>\"As far as I know\"</strong> shows honesty about your knowledge limits — very professional.",
+  feedback_bad:"❌ <strong>\"As far as I know\"</strong> is the professional frame — it shows you know your limits."
+},
+{
+  time:"3:00 PM", location:"📊 Boardroom — Your Presentation",
+  setup:"The board is waiting. You need to emphasize that YOUR TEAM delivered the results.",
+  dialogue:[
+    {who:"You think", role:"", avatar:"🎯", text:"I need maximum emphasis on WHO did it..."},
+  ],
+  question:"Which structure gives the strongest emphasis?",
+  choices:[
+    {text:"\"My team delivered the results.\"", correct:false, lesson:"l4"},
+    {text:"\"It was my team who delivered the results.\"", correct:true, lesson:"l4"},
+    {text:"\"The results were delivered.\"", correct:false, lesson:"l4"},
+  ],
+  feedback_good:"✅ Masterful! <strong>It-cleft</strong> — \"It was X who...\" is the most powerful emphasis structure (Lesson 4).",
+  feedback_bad:"❌ <strong>\"It was my team who delivered\"</strong> (It-cleft) puts maximum spotlight on WHO."
+},
+{
+  time:"3:15 PM", location:"📊 Boardroom — Q&A",
+  setup:"A board member challenges your numbers. You must respond with a formal hypothetical.",
+  dialogue:[
+    {who:"Board Member", role:"boss", avatar:"👔", text:"What if the market crashes next quarter?"},
+  ],
+  question:"Answer with the most formal structure:",
+  choices:[
+    {text:"\"If the market crashes, we have a plan.\"", correct:false, lesson:"l4"},
+    {text:"\"Were the market to crash, we'd be prepared.\"", correct:true, lesson:"l4"},
+    {text:"\"If the market would crash, we'd be prepared.\"", correct:false, lesson:"l4"},
+  ],
+  feedback_good:"✅ Brilliant! <strong>Were-inversion</strong> — \"Were the market to crash...\" is boardroom-level formal (Lesson 4).",
+  feedback_bad:"❌ <strong>\"Were the market to crash\"</strong> (Were-inversion) is the most formal hypothetical."
+},
+{
+  time:"5:00 PM", location:"🎤 Your Office — Self Review",
+  setup:"End of day. Your boss asks you to describe how you'll speak from now on.",
+  dialogue:[
+    {who:"Boss", role:"boss", avatar:"👩‍💼", text:"So — what's the difference in how you'll communicate now?"},
+  ],
+  question:"Which answer shows you mastered connected speech (Lesson 5)?",
+  choices:[
+    {text:"\"I will speak each word clearly and separately.\"", correct:false, lesson:"l5"},
+    {text:"\"I'll link sounds, reduce small words, and stress what matters.\"", correct:true, lesson:"l5"},
+    {text:"\"I will talk faster.\"", correct:false, lesson:"l5"},
+  ],
+  feedback_good:"✅ Exactly! <strong>Link + reduce + stress</strong> — the 3 keys to natural pronunciation from Lesson 5.",
+  feedback_bad:"❌ The answer is <strong>link sounds, reduce small words, stress what matters</strong> — Lesson 5's 3 keys."
+},
+{
+  time:"2:00 PM", location:"📞 Phone Call — Client Update",
+  setup:"Your phone rings. A client needs the report urgently.",
+  dialogue:[
+    {who:"Client", role:"boss", avatar:"📞", text:"Hi! Can you send the report as soon as possible?"},
+  ],
+  question:"The client used a Lesson 2 chunk. Which type is \"as soon as possible\"?",
+  choices:[
+    {text:"📌 Fixed phrase — a ready-made formula for urgency", correct:true, lesson:"l2"},
+    {text:"🎭 Idiom — the meaning is hidden", correct:false, lesson:"l2"},
+    {text:"📎 Collocation — words that go together", correct:false, lesson:"l2"},
+  ],
+  feedback_good:"✅ Correct! <strong>\"as soon as possible\"</strong> is a fixed phrase — use it as is, no changes (Lesson 2).",
+  feedback_bad:"❌ <strong>\"as soon as possible\"</strong> is a 📌 fixed phrase — a social formula you use exactly as is."
+},
+{
+  time:"4:00 PM", location:"💻 Email Review",
+  setup:"Your assistant shows you a draft email. Something sounds wrong...",
+  dialogue:[
+    {who:"Assistant", role:"", avatar:"💁", text:"I wrote: 'I suggest that he goes tomorrow.' Is it correct?"},
+  ],
+  question:"What error did your assistant make? (Lesson 4)",
+  choices:[
+    {text:"\"he goes\" → \"he go\" — mandative subjunctive uses the base form", correct:true, lesson:"l4"},
+    {text:"The email is perfect.", correct:false, lesson:"l4"},
+    {text:"\"suggest\" should be \"recommend\"", correct:false, lesson:"l4"},
+  ],
+  feedback_good:"✅ Perfect catch! After <strong>\"suggest\"</strong>, use the base form: <strong>\"he go\"</strong>, not \"he goes\" — mandative subjunctive (Lesson 4).",
+  feedback_bad:"❌ The error: <strong>\"he go\"</strong> not \"he goes\" — mandative subjunctive after suggest/demand/insist (Lesson 4)."
+},
+{
+  time:"4:30 PM", location:"🤝 Negotiation Room",
+  setup:"You're negotiating a contract. You need to sound formal and give a strong reason.",
+  dialogue:[
+    {who:"You think", role:"", avatar:"🤔", text:"I need a formal structure to explain WHY we can't lower the price..."},
+  ],
+  question:"Which is the most professional?",
+  choices:[
+    {text:"\"The reason we cannot lower the price is our costs.\"", correct:true, lesson:"l4"},
+    {text:"\"We can't lower price because costs.\"", correct:false, lesson:"l4"},
+    {text:"\"The reason of not lowering is costs.\"", correct:false, lesson:"l4"},
+  ],
+  feedback_good:"✅ Excellent! <strong>The reason</strong> structure (Lesson 4) sounds formal and boardroom-ready.",
+  feedback_bad:"❌ <strong>\"The reason we cannot lower the price is our costs\"</strong> — the Lesson 4 structure for formal explanations."
+},
+{
+  time:"5:30 PM", location:"🏆 Lobby — Graduation",
+  setup:"Your boss walks you out. She has one final question.",
+  dialogue:[
+    {who:"Boss", role:"boss", avatar:"👩‍💼", text:"One last thing — why do chunks matter more than single words?"},
+  ],
+  question:"What's the best answer? (Lesson 1)",
+  choices:[
+    {text:"\"Because the brain processes chunks as single units — that's how natives think.\"", correct:true, lesson:"l1"},
+    {text:"\"Because words are too hard.\"", correct:false, lesson:"l1"},
+    {text:"\"Because grammar doesn't matter.\"", correct:false, lesson:"l1"},
+  ],
+  feedback_good:"✅ Perfect! The brain stores <strong>chunks as units</strong> — that's the foundation of everything in Module 1.",
+  feedback_bad:"❌ The key insight: <strong>the brain processes chunks as single units</strong> — that's why natives sound fluent."
+}
+];
+
+function renderIntro(){
+  app.innerHTML = `
+  <div class="intro-screen">
+    <div class="emoji-big">🏢</div>
+    <h1>OFFICE DAY</h1>
+    <h2>Module 1 Capstone — Your First Day as Regional Manager</h2>
+    <p>You've completed 5 lessons. Now prove it in the real world.</p>
+    <p>Walk through a full workday. Every decision tests what you learned.</p>
+    <div class="timeline">
+      <span>☕ 9:00 Arrival</span><span>📋 10:00 Meeting</span><span>🍽️ 12:30 Lunch</span>
+      <span>📊 3:00 Board</span><span>🎤 5:00 Review</span><span>🏆 5:30 Graduation</span>
+    </div>
+    <button class="btn" onclick="startDay()">START YOUR DAY ▶</button>
+  </div>`;
+}
+
+function startDay(){ sceneIdx=0; scores={l1:0,l2:0,l3:0,l4:0,l5:0}; renderScene(); }
+
+function renderScene(){
+  const s = scenes[sceneIdx];
+  let html = `
+  <div class="scene">
+    <div class="scene-header">
+      <span class="time-badge">${s.time}</span>
+      <span class="location">${s.location}</span>
+    </div>
+    <div class="scene-body">
+      <div class="progress-dots">${scenes.map((_,i)=>`<div class="dot ${i<sceneIdx?'done':i===sceneIdx?'current':''}"></div>`).join('')}</div>
+      <div class="narration">${s.setup}</div>`;
+  
+  const sceneAudio = {0:"od1.mp3",2:"od2.mp3",4:"od3.mp3",7:"od6.mp3",8:"od7.mp3",9:"od4.mp3",10:"od5.mp3"}[sceneIdx];
+  s.dialogue.forEach((d,di)=>{
+    const playBtn = sceneAudio ? `<button class="dlg-play" onclick="playDialogue('${sceneAudio}')" title="Listen">🔊</button>` : '';
+    html+=`<div class="character"><div class="avatar ${d.role}">${d.avatar}</div><div class="speech"><div class="name">${d.who} ${playBtn}</div><span class="typewriter" data-text="${d.text.replace(/"/g,'&quot')}"></span></div></div>`;
+  });
+  
+  html+=`<div class="narration" style="color:#E8AA28;font-style:normal;font-weight:bold">❓ ${s.question}</div><div class="player-choices">`;
+  const shuffled=[...s.choices].sort(()=>Math.random()-.5);
+  shuffled.forEach(c=>{
+    html+=`<div class="choice" onclick="answer(${c.correct},'${c.lesson}',this)"><div class="tag">YOUR RESPONSE</div>${c.text}</div>`;
+  });
+  html+=`</div><div class="feedback" id="fb"></div><div id="nb" style="text-align:center"></div>`;
+  html+=`</div></div>`;
+  app.innerHTML=html;
+  window.scrollTo(0,0);
+  // Typewriter effect
+  document.querySelectorAll('.typewriter').forEach((el,idx)=>{
+    const fullText = el.getAttribute('data-text');
+    // Extraer texto sin tags para el typewriter, luego restaurar HTML
+    const temp = document.createElement('div');
+    temp.innerHTML = fullText;
+    const plain = temp.textContent;
+    let i = 0;
+    el.textContent = '';
+    setTimeout(()=>{
+      const timer = setInterval(()=>{
+        if(i >= plain.length){ clearInterval(timer); el.innerHTML = fullText; return; }
+        el.textContent = plain.substring(0, ++i);
+      }, 18);
+    }, 300 + idx*400);
+  });
+}
+
+let currentDlgAudio=null;
+function playDialogue(file){
+  if(currentDlgAudio){currentDlgAudio.pause();}
+  currentDlgAudio=new Audio(AUDIO_BASE+file);
+  currentDlgAudio.play();
+}
+let answered=false;
+function answer(correct, lesson, el){
+  if(answered) return; answered=true;
+  const s=scenes[sceneIdx];
+  const fb=document.getElementById('fb');
+  document.querySelectorAll('.choice').forEach(c=>c.classList.add('disabled'));
+  if(correct){
+    scores[lesson]+=10;
+    el.classList.add('correct');
+    fb.className='feedback show good';
+    fb.innerHTML=s.feedback_good;
+  }else{
+    el.classList.add('wrong');
+    document.querySelectorAll('.choice').forEach(c=>{
+      if(c.textContent.includes(s.choices.find(x=>x.correct).text.substring(0,20))) c.classList.add('correct');
+    });
+    fb.className='feedback show bad';
+    fb.innerHTML=s.feedback_bad;
+  }
+  const isLast=sceneIdx>=scenes.length-1;
+  document.getElementById('nb').innerHTML=`<button class="btn" onclick="nextScene()">${isLast?'Finish Your Day 🏆':'Continue →'}</button>`;
+}
+
+function nextScene(){
+  answered=false;
+  sceneIdx++;
+  if(sceneIdx>=scenes.length) renderFinal();
+  else renderScene();
+}
+
+function renderFinal(){
+  const total=Object.values(scores).reduce((a,b)=>a+b,0);
+  const max=scenes.length*10;
+  const pct=total/max;
+  const lessons={l1:"Lesson 1 — Chunks",l2:"Lesson 2 — Chunk Types",l3:"Lesson 3 — Sentence Frames",l4:"Lesson 4 — Advanced Structures",l5:"Lesson 5 — Connected Speech"};
+  let stars,emoji,title;
+  if(pct>=0.85){stars='⭐⭐⭐';emoji='🏆';title='PROMOTED!';}
+  else if(pct>=0.6){stars='⭐⭐';emoji='🎉';title='WELL DONE!';}
+  else{stars='⭐';emoji='📚';title='KEEP GROWING';}
+  
+  let breakdown='';
+  for(const [k,v] of Object.entries(scores)){
+    breakdown+=`<div class="score-row"><span class="lesson">${lessons[k]}</span><span class="pts">${v} pts</span></div>`;
+  }
+  
+  app.innerHTML=`
+  <div class="final-screen">
+    <div class="emoji-big">${emoji}</div>
+    <h1 style="font-size:1.8rem">${title}</h1>
+    <div class="stars" style="font-size:2.2rem;margin:10px 0">${stars}</div>
+    <div class="certificate">
+      <h2>🎓 MODULE 1 COMPLETE</h2>
+      <p>Office Day — Regional Manager Simulation</p>
+      <p style="font-size:1.6rem;color:#E8AA28;font-weight:bold;margin:12px 0">${total} / ${max} points</p>
+    </div>
+    <div class="score-breakdown">${breakdown}</div>
+    <p style="color:#8ab0b8">${pct>=0.85?'Outstanding! You are ready for Module 2.':pct>=0.6?'Good first day! Review the lessons and try for 3 stars.':'Review the module lessons and try your first day again.'}</p>
+    <button class="btn" onclick="startDay()">REPLAY YOUR DAY 🔄</button>
+  </div>`;
+  window.scrollTo(0,0);
+}
+
+renderIntro();
+</script>
+</body>
+</html>
