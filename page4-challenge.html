@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Final Challenge — Sounding Natural</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Montserrat',sans-serif;background:linear-gradient(135deg,#026A79,#025F6D);color:#fff;max-width:800px;margin:0 auto;padding:20px;min-height:100vh}
+.header{text-align:center;margin-bottom:24px}
+.header h1{font-size:32px;font-weight:800}
+.header p{font-size:16px;margin-top:8px;opacity:.9}
+.card{background:#fff;color:#123C46;border-radius:16px;padding:24px;margin-bottom:20px}
+.card h2{font-size:20px;font-weight:700;color:#026A79;margin-bottom:12px}
+.sentence{font-size:20px;font-weight:600;margin:12px 0}
+.checklist{list-style:none;margin:16px 0}
+.checklist li{background:#EAF7F6;border-radius:10px;padding:12px 16px;margin:8px 0;font-size:16px;cursor:pointer;min-height:44px;display:flex;align-items:center}
+.checklist li.done{background:#026A79;color:#fff}
+.checklist li.done::before{content:"✅ "}
+.btn{background:#E69600;color:#fff;border:none;border-radius:12px;padding:14px 28px;font-size:16px;font-weight:700;cursor:pointer;min-height:44px;font-family:'Montserrat',sans-serif;margin:6px}
+.btn:hover{background:#d08600}
+.btn.teal{background:#026A79}
+.hidden{display:none}
+.final{text-align:center;padding:40px 20px;background:#fff;border-radius:20px;color:#123C46}
+.final h2{font-size:36px;color:#026A79;margin:16px 0}
+.stars{font-size:48px;letter-spacing:8px}
+.tip{background:#FFF8E7;border-radius:12px;padding:16px;margin:16px 0;color:#123C46;font-size:15px;line-height:1.7}
+.progress{text-align:center;font-weight:700;margin-bottom:16px;opacity:.9}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>🏆 THE FINAL CHALLENGE</h1>
+<p>Record yourself. Compare. Become natural.</p>
+</div>
+<div class="progress" id="prog">Challenge 1 of 3</div>
+<div id="game"></div>
+<div class="final hidden" id="final">
+<div class="stars">⭐⭐⭐</div>
+<h2>You Did It!</h2>
+<p style="font-size:18px;margin:16px 0">You completed <b>Sounding Natural</b>.</p>
+<p>Your ten structures now have music.<br>Copy the music, not just the words. 🎼</p>
+</div>
+<script>
+const AUDIO_BASE = "audio/";
+const challenges=[
+{audio:"new-pron-06-FINAL.mp3",text:"Hardly had she spoken when the phone rang.",
+tip:"Remember: HARDly hits like a drum. SPOken and RANG sing."},
+{audio:"new-pron-07-FINAL.mp3",text:"Rarely have I heard such nonsense.",
+tip:"RAREly explodes, HEARD shines, NONsense lands. Three beats."},
+{audio:"new-pron-10-FINAL.mp3",text:"I demand that she be present.",
+tip:"'that she' is a whisper. HIT on MAND, BE, PREsent."}
+];
+let cur=0;
+function render(){
+const c=challenges[cur];
+document.getElementById('prog').textContent=`Challenge ${cur+1} of ${challenges.length}`;
+document.getElementById('game').innerHTML=`<div class="card">
+<h2>🎯 ${c.text}</h2>
+<button class="btn teal" onclick="play()">▶ Listen to the model</button>
+<div class="tip">💡 ${c.tip}</div>
+<p style="font-weight:700;margin:12px 0">Now record yourself with your phone, then check:</p>
+<ul class="checklist" id="cl">
+<li onclick="this.classList.toggle('done')">Did I LINK the words smoothly?</li>
+<li onclick="this.classList.toggle('done')">Did I STRESS the right syllables?</li>
+<li onclick="this.classList.toggle('done')">Do I sound NATURAL, not robotic?</li>
+</ul>
+<button class="btn" onclick="next()">Next challenge →</button>
+</div>`;
+}
+function play(){new Audio(AUDIO_BASE+challenges[cur].audio).play();}
+function next(){cur++;
+if(cur>=challenges.length){
+document.getElementById('game').classList.add('hidden');
+document.getElementById('prog').classList.add('hidden');
+document.getElementById('final').classList.remove('hidden');
+}else render();
+}
+render();
+</script>
+</body>
+</html>

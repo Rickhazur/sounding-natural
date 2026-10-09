@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Orchestra Conductor — Sounding Natural</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Montserrat',sans-serif;background:#fff;color:#123C46;max-width:800px;margin:0 auto;padding:20px}
+.header{background:#026A79;color:#fff;border-radius:20px;padding:24px;text-align:center;margin-bottom:24px}
+.header h1{font-size:28px;font-weight:800}
+.header p{font-size:16px;margin-top:8px;opacity:.9}
+.card{background:#EAF7F6;border-radius:16px;padding:24px;margin-bottom:20px}
+.card h2{font-size:20px;font-weight:700;color:#026A79;margin-bottom:12px}
+.karaoke{font-size:26px;font-weight:700;line-height:2;margin:20px 0;text-align:center}
+.kword{display:inline-block;padding:4px 10px;margin:2px;border-radius:8px;transition:all .3s;color:#123C46}
+.kword.hit{background:#E69600;color:#fff;transform:scale(1.25)}
+.kword.soft{opacity:.5}
+.beats{display:flex;justify-content:center;gap:12px;margin:20px 0}
+.beat{width:20px;height:20px;border-radius:50%;background:#ccc;transition:all .2s}
+.beat.on{background:#E69600;transform:scale(1.5)}
+.btn{background:#026A79;color:#fff;border:none;border-radius:12px;padding:14px 28px;font-size:16px;font-weight:700;cursor:pointer;min-height:44px;font-family:'Montserrat',sans-serif;margin:6px}
+.btn:hover{background:#025F6D}
+.btn.amber{background:#E69600}
+.instruct{background:#fff;border-radius:12px;padding:16px;margin:16px 0;font-size:16px;line-height:1.8}
+.instruct b{color:#026A79}
+.hidden{display:none}
+.final{text-align:center;padding:40px 20px}
+.final h2{font-size:32px;color:#026A79;margin-bottom:16px}
+.progress{text-align:center;font-weight:700;color:#026A79;margin-bottom:16px}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>🎼 THE ORCHESTRA CONDUCTOR</h1>
+<p>Follow the beat. Strong hit on stress, smooth flow on links.</p>
+</div>
+<div class="progress" id="prog">Piece 1 of 3</div>
+<div id="game"></div>
+<div class="final hidden" id="final">
+<div style="font-size:64px">🎼</div>
+<h2>Bravo, Maestro!</h2>
+<p>You conducted all three pieces. Your pronunciation has music now.</p>
+</div>
+<script>
+const AUDIO_BASE = "audio/";
+const pieces=[
+{audio:"new-pron-08-FINAL.mp3",title:"Were-inversion",
+words:[["Were",0],["he",0],["to",0],["CALL,",1],["I'd",0],["an",0],["swer",1],["im",0],["MEdiately.",1]],
+tip:"<b>Were</b> stays soft — <b>CALL</b>, <b>AN</b>swer and <b>MED</b>iately shine. Conduct: soft-soft-soft-<b>HIT</b>-soft-<b>HIT</b>-soft-<b>HIT</b>."},
+{audio:"new-pron-09-FINAL.mp3",title:"Impersonal passive",
+words:[["It",0],["is",0],["be",0],["LIEVED",1],["that",0],["he",0],["LEFT",1],["the",0],["COUN",1],["try.",0]],
+tip:"<b>'It is believed that'</b> melts softly like one word. Then <b>HIT</b> on <b>LIEVED</b>, <b>LEFT</b>, <b>COUN</b>try."},
+{audio:"new-pron-10-FINAL.mp3",title:"Mandative subjunctive",
+words:[["I",0],["de",0],["MAND",1],["that",0],["she",0],["BE",1],["PRE",1],["sent.",0]],
+tip:"<b>'that she'</b> stays soft and quick. <b>HIT</b> on <b>MAND</b>, <b>BE</b>, <b>PRE</b>sent."}
+];
+let cur=0;
+function render(){
+const p=pieces[cur];
+document.getElementById('prog').textContent=`Piece ${cur+1} of ${pieces.length}`;
+const g=document.getElementById('game');
+let kw=p.words.map((w,i)=>`<span class="kword" id="kw${i}">${w[0]}</span>`).join('');
+let beats=p.words.filter(w=>w[1]===1).map(()=>'<div class="beat"></div>').join('');
+g.innerHTML=`<div class="card"><h2>${p.title}</h2>
+<div class="instruct">${p.tip}</div>
+<div class="karaoke">${kw}</div>
+<div class="beats">${beats}</div>
+<button class="btn" onclick="conduct()">🎼 Conduct with me</button>
+<button class="btn amber" onclick="shadow()">🎤 Shadow mode</button>
+<div id="nx" style="margin-top:12px"></div></div>`;
+}
+function conduct(){
+const p=pieces[cur];
+const audio=new Audio(AUDIO_BASE+p.audio);
+const kws=[...document.querySelectorAll('.kword')];
+const beats=[...document.querySelectorAll('.beat')];
+let bi=0;
+audio.play();
+let t=0;
+const iv=setInterval(()=>{
+kws.forEach(k=>k.classList.remove('hit'));
+const hits=kws.filter((k,i)=>p.words[i][1]===1);
+if(bi<hits.length){hits[bi].classList.add('hit');
+beats.forEach(b=>b.classList.remove('on'));if(beats[bi])beats[bi].classList.add('on');bi++;}
+t++;
+if(t>20){clearInterval(iv);beats.forEach(b=>b.classList.remove('on'));
+document.getElementById('nx').innerHTML=`<button class="btn amber" onclick="next()">Next piece →</button>`;}
+},600);
+}
+function shadow(){
+const p=pieces[cur];
+new Audio(AUDIO_BASE+p.audio).play();
+document.getElementById('nx').innerHTML=`<p style="margin:12px 0;font-weight:600">🎤 Repeat OUT LOUD with the music. Mark the rhythm with your hand!</p><button class="btn amber" onclick="next()">I did it →</button>`;
+}
+function next(){cur++;
+if(cur>=pieces.length){
+document.getElementById('game').classList.add('hidden');
+document.getElementById('prog').classList.add('hidden');
+document.getElementById('final').classList.remove('hidden');
+}else render();
+}
+render();
+</script>
+</body>
+</html>

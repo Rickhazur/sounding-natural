@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Detective — Sounding Natural</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Montserrat',sans-serif;background:#fff;color:#123C46;max-width:800px;margin:0 auto;padding:20px}
+.header{background:#026A79;color:#fff;border-radius:20px;padding:24px;text-align:center;margin-bottom:24px}
+.header h1{font-size:28px;font-weight:800}
+.header p{font-size:16px;margin-top:8px;opacity:.9}
+.card{background:#EAF7F6;border-radius:16px;padding:24px;margin-bottom:20px}
+.card h2{font-size:20px;font-weight:700;color:#026A79;margin-bottom:12px}
+.sentence{font-size:22px;font-weight:600;margin:16px 0;line-height:1.6}
+.words{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+.word{background:#fff;border:2px solid #49ADB3;border-radius:10px;padding:10px 16px;font-size:18px;font-weight:600;cursor:pointer;min-height:44px;display:flex;align-items:center;transition:all .2s}
+.word:hover{background:#EAF7F6}
+.word.correct{background:#026A79;color:#fff;border-color:#026A79}
+.word.wrong{background:#ff6b6b;color:#fff;border-color:#ff6b6b}
+.btn{background:#026A79;color:#fff;border:none;border-radius:12px;padding:14px 28px;font-size:16px;font-weight:700;cursor:pointer;min-height:44px;font-family:'Montserrat',sans-serif;margin:6px}
+.btn:hover{background:#025F6D}
+.btn.amber{background:#E69600}
+.btn.amber:hover{background:#d08600}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.feedback{border-radius:12px;padding:16px;margin-top:16px;font-weight:600;display:none}
+.feedback.show{display:block}
+.feedback.good{background:#d4edda;color:#155724}
+.feedback.bad{background:#f8d7da;color:#721c24}
+.explain{font-weight:400;margin-top:8px;font-size:15px}
+.progress{text-align:center;font-weight:700;color:#026A79;margin-bottom:16px;font-size:18px}
+.hidden{display:none}
+.final{text-align:center;padding:40px 20px}
+.final h2{font-size:32px;color:#026A79;margin-bottom:16px}
+.trophy{font-size:64px;margin-bottom:16px}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>🕵️ THE DETECTIVE</h1>
+<p>Listen to both versions. Which one sounds human?</p>
+</div>
+<div class="progress" id="progress">Sentence 1 of 3</div>
+<div id="game"></div>
+<div class="final hidden" id="final">
+<div class="trophy">🏆</div>
+<h2>Case Closed!</h2>
+<p id="score"></p>
+<p style="margin-top:16px">You found the differences. Now you know what natural sounds like.</p>
+</div>
+<script>
+const AUDIO_BASE = "audio/"; // Set your audio folder URL here, e.g. "https://yoursite.com/audio/lesson5/"
+const sentences = [
+{flat:"new-flat-1.mp3",nat:"new-pron-01-FINAL.mp3",text:"It was Carlos who fixed the car.",
+words:["It","was","Carlos","who","fixed","the","car."],
+linkIdx:[1,2],stressIdx:[2,4],
+explain:"LINK: was + Carlos melt together. STRESS: CARlos and FIXED stand out."},
+{flat:"new-flat-2.mp3",nat:"new-pron-02-FINAL.mp3",text:"The reason she's late is the traffic.",
+words:["The","reason","she's","late","is","the","traffic."],
+linkIdx:[1,2],stressIdx:[1,3,6],
+explain:"LINK: reason + she's connect. STRESS: REAson, LATE, TRAFfic."},
+{flat:"new-flat-3.mp3",nat:"new-pron-03-FINAL.mp3",text:"What we want is better service.",
+words:["What","we","want","is","better","service."],
+linkIdx:[0,1],stressIdx:[0,2,5],
+explain:"LINK: What + we join. STRESS: WHAT, WANT, SERvice shine."}
+];
+let cur=0,score=0,phase=0;
+function render(){
+const s=sentences[cur];
+document.getElementById('progress').textContent=`Sentence ${cur+1} of ${sentences.length}`;
+const g=document.getElementById('game');
+if(phase===0){
+g.innerHTML=`<div class="card"><h2>Step 1: Which sounds human?</h2>
+<p class="sentence">"${s.text}"</p>
+<button class="btn" onclick="playA()">▶ Version A</button>
+<button class="btn amber" onclick="playB()">▶ Version B</button>
+<div class="feedback" id="fb1"></div>
+<div id="voteBtns" style="margin-top:12px">
+<button class="btn" onclick="vote('A')">A sounds natural</button>
+<button class="btn" onclick="vote('B')">B sounds natural</button>
+</div></div>`;
+}else{
+g.innerHTML=`<div class="card"><h2>Step 2: Where is the difference?</h2>
+<p>Click the words that LINK together, then the STRESSED words.</p>
+<p class="sentence">"${s.text}"</p>
+<div class="words" id="w"></div>
+<button class="btn" onclick="check()">Check my detective work</button>
+<div class="feedback" id="fb2"></div>
+<div id="nextBtn" style="margin-top:12px"></div></div>`;
+const w=document.getElementById('w');
+s.words.forEach((wd,i)=>{
+const d=document.createElement('span');d.className='word';d.textContent=wd;
+d.onclick=()=>d.classList.toggle('correct');w.appendChild(d);});
+}
+}
+function playA(){new Audio(AUDIO_BASE+sentences[cur].flat).play();}
+function playB(){new Audio(AUDIO_BASE+sentences[cur].nat).play();}
+function vote(v){
+const fb=document.getElementById('fb1');
+if(v==='B'){fb.className='feedback show good';fb.innerHTML='✅ Correct! B is the natural version.<div class="explain">Now find WHERE the difference is.</div>';score+=10;
+setTimeout(()=>{phase=1;render();},1800);
+}else{fb.className='feedback show bad';fb.textContent='❌ Not quite. Listen again — which one flows like a real person?';}
+}
+function check(){
+const s=sentences[cur];
+const picked=[...document.querySelectorAll('.word.correct')].map(e=>[...e.parentNode.children].indexOf(e));
+const need=new Set([...s.linkIdx,...s.stressIdx]);
+const got=new Set(picked);
+let ok=need.size===got.size&&[...need].every(x=>got.has(x));
+const fb=document.getElementById('fb2');
+if(ok){fb.className='feedback show good';fb.innerHTML=`✅ Perfect detective work!<div class="explain">${s.explain}</div>`;score+=20;
+}else{fb.className='feedback show bad';fb.innerHTML=`🔍 Almost! <div class="explain">${s.explain}</div>`;}
+document.getElementById('nextBtn').innerHTML=`<button class="btn amber" onclick="next()">Next sentence →</button>`;
+}
+function next(){cur++;phase=0;
+if(cur>=sentences.length){
+document.getElementById('game').classList.add('hidden');
+document.getElementById('progress').classList.add('hidden');
+const f=document.getElementById('final');f.classList.remove('hidden');
+document.getElementById('score').textContent=`Your score: ${score} / ${(sentences.length*30)}`;
+}else render();
+}
+render();
+</script>
+</body>
+</html>
