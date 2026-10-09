@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pattern Picker Pro — Lesson 4</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#F7FAFA;color:#123C46;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px}
+.header{text-align:center;margin-bottom:14px}
+.header h1{font-size:1.9rem;color:#026A79;margin-bottom:6px}
+.header p{color:#5a7a82;font-size:.95rem;max-width:640px}
+.hud{display:flex;gap:14px;justify-content:center;margin:10px 0;flex-wrap:wrap}
+.hud-box{background:#fff;border:2px solid #EBF0F0;border-radius:10px;padding:8px 18px;text-align:center;min-width:90px}
+.hud-box .label{font-size:.7rem;color:#5a7a82;text-transform:uppercase}
+.hud-box .value{font-size:1.4rem;font-weight:bold;color:#026A79}
+.hud-box .value.streak{color:#E8AA28}
+.progress-bar{width:100%;max-width:640px;height:8px;background:#EBF0F0;border-radius:4px;margin:10px 0;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#026A79,#E8AA28);border-radius:4px;transition:width .3s}
+.card{background:#fff;border:2px solid #EBF0F0;border-radius:18px;padding:32px;max-width:640px;width:100%;text-align:center;box-shadow:0 4px 16px rgba(2,106,121,.08)}
+.mission{display:inline-block;font-size:.78rem;font-weight:bold;padding:6px 16px;border-radius:20px;margin-bottom:16px;text-transform:uppercase;letter-spacing:1px;background:rgba(232,170,40,.15);color:#b7791f;border:1px solid #E8AA28}
+.situation{font-size:1.12rem;line-height:1.6;margin:14px 0;text-align:left;background:#F7FAFA;padding:18px;border-radius:12px;border:1px solid #EBF0F0;color:#123C46}
+.situation .goal{color:#026A79;font-weight:bold;display:block;margin-top:10px}
+.options{display:flex;flex-direction:column;gap:10px;margin:20px 0}
+.opt{background:#F7FAFA;border:2px solid #EBF0F0;border-radius:12px;padding:15px;font-size:1.03rem;cursor:pointer;transition:all .2s;text-align:left;color:#123C46}
+.opt:hover{border-color:#026A79;background:rgba(2,106,121,.04);transform:translateX(4px)}
+.opt.correct{border-color:#2ecc71;background:rgba(46,204,113,.1)}
+.opt.wrong{border-color:#e74c3c;background:rgba(231,76,60,.06)}
+.opt.disabled{pointer-events:none;opacity:.75}
+.opt .pattern-tag{display:inline-block;font-size:.72rem;background:rgba(2,106,121,.1);color:#026A79;padding:2px 10px;border-radius:10px;margin-bottom:6px;font-weight:bold}
+.feedback{margin-top:14px;padding:16px;border-radius:12px;font-size:.98rem;display:none;text-align:left;line-height:1.6}
+.feedback.show{display:block;animation:slideIn .3s ease}
+@keyframes slideIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.feedback.good{background:rgba(46,204,113,.08);border:1px solid #2ecc71;color:#123C46}
+.feedback.bad{background:rgba(231,76,60,.05);border:1px solid #e74c3c;color:#123C46}
+.feedback .structure{color:#026A79;font-weight:bold}
+.btn{background:#026A79;color:#fff;border:none;padding:13px 32px;font-size:1.05rem;border-radius:12px;cursor:pointer;font-weight:bold;margin-top:14px;transition:all .2s}
+.btn:hover{transform:scale(1.04)}
+.btn.amber{background:#E8AA28;color:#123C46}
+.hidden{display:none!important}
+.start-screen,.end-screen{background:#fff;border:2px solid #EBF0F0;border-radius:18px;padding:40px;max-width:580px;width:100%;text-align:center;box-shadow:0 4px 16px rgba(2,106,121,.08)}
+.start-screen h2,.end-screen h2{color:#026A79;font-size:1.9rem;margin-bottom:12px}
+.start-screen p,.end-screen p{color:#5a7a82;margin:10px 0;line-height:1.6}
+.emoji-big{font-size:3.5rem;margin-bottom:12px}
+.final-score{font-size:2rem;color:#026A79;font-weight:bold;margin:12px 0}
+.stars{font-size:2.2rem;margin:8px 0}
+.structure-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:16px 0;text-align:left;font-size:.82rem;color:#5a7a82}
+.structure-grid div{background:#F7FAFA;padding:8px 10px;border-radius:8px;border:1px solid #EBF0F0}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>⚡ PATTERN PICKER PRO</h1>
+<p>Choose the advanced structure a sophisticated speaker would use in each situation.</p>
+</div>
+
+<div id="startScreen" class="start-screen">
+<div class="emoji-big">⚡</div>
+<h2>Master the 10 Patterns</h2>
+<p>Real professional situations. Pick the advanced structure that fits. Streaks multiply your score!</p>
+<div class="structure-grid">
+<div>It-cleft</div><div>The reason</div><div>What-cleft</div><div>Fronting</div>
+<div>Should-inversion</div><div>Hardly-inversion</div><div>Never-inversion</div><div>Were-inversion</div>
+<div>Impersonal passive</div><div>Mandative subjunctive</div>
+</div>
+
+<button class="btn" onclick="startGame()">START ▶</button>
+</div>
+
+<div id="gameScreen" class="hidden" style="width:100%;display:flex;flex-direction:column;align-items:center">
+<div class="hud">
+<div class="hud-box"><div class="label">Score</div><div class="value" id="score">0</div></div>
+<div class="hud-box"><div class="label">Streak</div><div class="value" id="streak">0</div></div>
+<div class="hud-box"><div class="label">Mission</div><div class="value" id="qnum">1/10</div></div>
+</div>
+<div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+<div class="card" id="qcard"></div>
+</div>
+
+<div id="endScreen" class="end-screen hidden">
+<div class="emoji-big" id="endEmoji">🏆</div>
+<h2 id="endTitle">Missions Complete!</h2>
+<div class="stars" id="stars"></div>
+<div class="final-score" id="finalScore"></div>
+<p id="endMsg"></p>
+<button class="btn" onclick="startGame()">PLAY AGAIN 🔄</button>
+</div>
+
+<script>
+const questions = [
+  {mission:"🎯 Emphasize WHO", situation:"A colleague asks: \"Who told you?\" You want to emphasize it was Maria.",
+   options:[
+     {tag:"It-cleft", text:"It was Maria who told me."},
+     {tag:"Basic", text:"Maria told me."},
+     {tag:"Simple", text:"I heard it from Maria."}
+   ], answer:0,
+   why:"<span class='structure'>It-cleft:</span> 'It was X who...' puts maximum emphasis on the person."},
+  {mission:"🎯 Explain your motive", situation:"You're calling a client. State your reason formally.",
+   options:[
+     {tag:"Basic", text:"I'm calling to confirm."},
+     {tag:"The reason", text:"The reason I'm calling is to confirm."},
+     {tag:"Simple", text:"I call for confirmation."}
+   ], answer:1,
+   why:"<span class='structure'>The reason:</span> 'The reason + clause + be + purpose' — formal and clear."},
+  {mission:"🎯 Emphasize WHAT", situation:"Someone asks what you need. Emphasize that TIME is what matters.",
+   options:[
+     {tag:"Basic", text:"I need more time."},
+     {tag:"What-cleft", text:"What I need is more time."},
+     {tag:"Simple", text:"More time, please."}
+   ], answer:1,
+   why:"<span class='structure'>What-cleft:</span> 'What + clause + be + key info' emphasizes what matters most."},
+  {mission:"🎯 Strong emotion", situation:"You want to say you'll never forget something, with maximum power.",
+   options:[
+     {tag:"Basic", text:"I will never forget this."},
+     {tag:"Fronting", text:"This I will never forget."},
+     {tag:"Simple", text:"This is unforgettable."}
+   ], answer:1,
+   why:"<span class='structure'>Fronting:</span> moving the object to the front adds emotional power."},
+  {mission:"🎯 Polite condition", situation:"Offer help formally: if the client needs anything, they should call.",
+   options:[
+     {tag:"Basic", text:"If you need anything, call me."},
+     {tag:"Should-inversion", text:"Should you need anything, call me."},
+     {tag:"Simple", text:"Call me if needed."}
+   ], answer:1,
+   why:"<span class='structure'>Should-inversion:</span> 'Should + subject + verb' — a formal way to say 'if'."},
+  {mission:"🎯 Immediate sequence", situation:"You arrived and it started raining right away. Add drama.",
+   options:[
+     {tag:"Basic", text:"We arrived and then it started raining."},
+     {tag:"Hardly-inversion", text:"Hardly had we arrived when it started raining."},
+     {tag:"Simple", text:"It rained after we arrived."}
+   ], answer:1,
+   why:"<span class='structure'>Hardly-inversion:</span> 'Hardly + inversion + when' — barely had time before the next event."},
+  {mission:"🎯 Express admiration", situation:"You want to praise someone's dedication with elegance.",
+   options:[
+     {tag:"Basic", text:"I have never seen such dedication."},
+     {tag:"Never-inversion", text:"Never have I seen such dedication."},
+     {tag:"Wrong", text:"Never I have seen such dedication."}
+   ], answer:1,
+   why:"<span class='structure'>Never-inversion:</span> negative word first + inversion = dramatic emphasis."},
+  {mission:"🎯 Formal hypothetical", situation:"A client asks for a discount. Answer with a formal hypothetical.",
+   options:[
+     {tag:"Basic", text:"If I accept, I need guarantees."},
+     {tag:"Were-inversion", text:"Were I to accept, I'd need guarantees."},
+     {tag:"Wrong", text:"If I would accept, I'd need guarantees."}
+   ], answer:1,
+   why:"<span class='structure'>Were-inversion:</span> 'Were + subject + to + verb' — formal hypothetical situations."},
+  {mission:"🎯 Report objectively", situation:"Report what people say without naming who says it.",
+   options:[
+     {tag:"Basic", text:"People say she speaks five languages."},
+     {tag:"Impersonal passive", text:"It is said that she speaks five languages."},
+     {tag:"Simple", text:"She speaks five languages, they say."}
+   ], answer:1,
+   why:"<span class='structure'>Impersonal passive:</span> 'It is said/believed/reported that...' — no one specific says it."},
+  {mission:"🎯 Formal demand", situation:"In a formal email, insist that he goes immediately.",
+   options:[
+     {tag:"Basic", text:"I suggest that he goes immediately."},
+     {tag:"Mandative subjunctive", text:"I suggest that he go immediately."},
+     {tag:"Wrong", text:"I suggest him to go immediately."}
+   ], answer:1,
+   why:"<span class='structure'>Mandative subjunctive:</span> after suggest/demand/insist, use the base verb — 'he go', not 'he goes'."}
+];
+
+let qi, score, streak, answered;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function startGame(){
+  document.getElementById('startScreen').classList.add('hidden');
+  document.getElementById('endScreen').classList.add('hidden');
+  document.getElementById('gameScreen').classList.remove('hidden');
+  qi=0; score=0; streak=0; shuffle(questions); showQ();
+}
+function showQ(){
+  answered=false;
+  const q=questions[qi];
+  document.getElementById('score').textContent=score;
+  document.getElementById('streak').textContent=streak+(streak>=3?' 🔥':'');
+  document.getElementById('qnum').textContent=(qi+1)+'/'+questions.length;
+  document.getElementById('pfill').style.width=(qi/questions.length*100)+'%';
+  let html=`<span class="mission">${q.mission}</span>`;
+  html+=`<div class="situation">${q.situation}<span class="goal">👆 Pick the most sophisticated option:</span></div><div class="options">`;
+  const opts=q.options.map((o,i)=>({...o,correct:i===q.answer}));
+  shuffle(opts);
+  opts.forEach(o=>{html+=`<div class="opt" onclick="answer(${o.correct},this)"><span class="pattern-tag">${o.tag}</span><br>${o.text}</div>`;});
+  html+='</div><div class="feedback" id="fb"></div><div id="nb"></div>';
+  document.getElementById('qcard').innerHTML=html;
+}
+function answer(correct, el){
+  if(answered) return; answered=true;
+  const q=questions[qi];
+  const fb=document.getElementById('fb');
+  document.querySelectorAll('.opt').forEach(o=>o.classList.add('disabled'));
+  if(correct){
+    const pts=10+streak*5; score+=pts; streak++;
+    el.classList.add('correct');
+    fb.className='feedback show good';
+    fb.innerHTML=`✅ <strong>Excellent! +${pts} points</strong><br>${q.why}`;
+  }else{
+    streak=0; el.classList.add('wrong');
+    document.querySelectorAll('.opt').forEach(o=>{if(o.querySelector('.pattern-tag').textContent===q.options[q.answer].tag)o.classList.add('correct');});
+    fb.className='feedback show bad';
+    fb.innerHTML=`❌ Not the most sophisticated choice.<br>${q.why}`;
+  }
+  document.getElementById('score').textContent=score;
+  document.getElementById('streak').textContent=streak+(streak>=3?' 🔥':'');
+  document.getElementById('nb').innerHTML=`<button class="btn" onclick="nextQ()">${qi+1<questions.length?'Next Mission →':'See Results 🏆'}</button>`;
+}
+function nextQ(){ qi++; if(qi>=questions.length) endGame(); else showQ(); }
+function endGame(){
+  document.getElementById('gameScreen').classList.add('hidden');
+  document.getElementById('endScreen').classList.remove('hidden');
+  const pct=score/(questions.length*10);
+  let stars,emoji,msg;
+  if(pct>=1.2){stars='⭐⭐⭐';emoji='🏆';msg='Outstanding! You wield advanced structures like a pro!';}
+  else if(pct>=0.8){stars='⭐⭐⭐';emoji='🎉';msg='Excellent! Your English sounds truly sophisticated!';}
+  else if(pct>=0.5){stars='⭐⭐';emoji='💪';msg='Good! Review the structures and aim for 3 stars!';}
+  else{stars='⭐';emoji='📚';msg='Keep studying! Review Lesson 4 structures and try again.';}
+  document.getElementById('endEmoji').textContent=emoji;
+  document.getElementById('stars').textContent=stars;
+  document.getElementById('finalScore').textContent=score+' points';
+  document.getElementById('endMsg').textContent=msg;
+}
+</script>
+</body>
+</html>
