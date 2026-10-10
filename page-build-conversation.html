@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build the Conversation</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#F5F9FA;color:#123C46;line-height:1.6}
+.container{max-width:780px;margin:0 auto;padding:24px}
+.header{text-align:center;margin-bottom:24px}
+h1{color:#026A79;font-size:30px;margin-bottom:8px}
+.subtitle{color:#5a7a82;font-size:16px;max-width:560px;margin:0 auto}
+.topbar{display:flex;justify-content:space-between;align-items:center;background:#fff;border-radius:12px;padding:12px 20px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.conv-count{font-weight:bold;color:#026A79}
+.score{font-size:22px;font-weight:bold;color:#E8AA28}
+.progress{display:flex;gap:8px;justify-content:center;margin-bottom:20px}
+.dot{width:12px;height:12px;border-radius:50%;background:#d0e4e6}
+.dot.done{background:#2E9B4A}.dot.current{background:#E8AA28}
+.card{background:#fff;border-radius:16px;padding:28px;box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.scene-tag{display:inline-block;background:#EAF7F6;color:#026A79;font-size:13px;font-weight:bold;padding:6px 14px;border-radius:20px;margin-bottom:12px;letter-spacing:1px}
+.scene-title{font-size:22px;color:#026A79;margin-bottom:8px}
+.scene-desc{color:#5a7a82;font-size:15px;margin-bottom:20px}
+.instruction{font-weight:bold;font-size:16px;margin-bottom:14px}
+.lbl{font-size:13px;font-weight:bold;color:#8a9fa5;letter-spacing:1px;margin-bottom:8px}
+.pool{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+.line-btn{background:#F5F9FA;border:2px solid #d0e4e6;border-radius:10px;padding:13px 16px;font-size:15.5px;cursor:pointer;text-align:left;font-family:inherit;color:#123C46;transition:all .15s;width:100%}
+.line-btn:hover:not(:disabled){border-color:#026A79;background:#EAF7F6}
+.line-btn:disabled{opacity:.35;cursor:default}
+.line-btn .sp{font-weight:bold;color:#026A79}
+.chunk{color:#B07A10;font-weight:bold}
+.build-area{background:#EAF7F6;border-radius:12px;padding:16px;margin-bottom:20px;min-height:120px}
+.built-line{background:#fff;border-radius:8px;padding:10px 14px;margin-bottom:8px;font-size:15.5px;display:flex;align-items:center;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.built-line .num{background:#026A79;color:#fff;width:24px;height:24px;border-radius:50%;font-size:13px;font-weight:bold;display:inline-flex;align-items:center;justify-content:center;margin-right:10px;flex-shrink:0}
+.built-line .sp{font-weight:bold;color:#026A79;margin-right:6px}
+.remove-btn{background:none;border:none;color:#c0392b;font-size:18px;cursor:pointer;margin-left:auto;padding:0 4px}
+.empty-msg{color:#8a9fa5;font-style:italic;text-align:center;padding:20px}
+.actions{display:flex;gap:12px}
+.btn{flex:1;padding:14px;font-size:16px;font-weight:bold;border-radius:12px;border:none;cursor:pointer;font-family:inherit}
+.btn-check{background:#E8AA28;color:#123C46}
+.btn-check:hover:not(:disabled){background:#d1941f}
+.btn-check:disabled{opacity:.4;cursor:default}
+.btn-clear{background:#fff;color:#026A79;border:2px solid #026A79;flex:0 0 110px}
+.feedback{margin-top:18px;padding:16px 20px;border-radius:12px;font-size:15.5px;display:none}
+.feedback.show{display:block}
+.feedback.good{background:#e8f7ee;border:1px solid #2E9B4A}
+.feedback.bad{background:#fdeaea;border:1px solid #D9534F}
+.feedback strong{display:block;margin-bottom:6px}
+.btn-next{display:none;margin-top:16px;background:#026A79;color:#fff;border:none;padding:14px;font-size:16px;font-weight:bold;border-radius:12px;cursor:pointer;font-family:inherit;width:100%}
+.btn-next.show{display:block}
+.final{display:none;text-align:center;background:#fff;border-radius:16px;padding:48px 32px;box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.final.show{display:block}
+.final-score{font-size:60px;font-weight:bold;color:#E8AA28;margin:12px 0}
+.final-rank{font-size:23px;color:#026A79;font-weight:bold;margin-bottom:12px}
+.final-msg{color:#5a7a82;max-width:480px;margin:0 auto 24px}
+.btn-restart{background:#026A79;color:#fff;border:none;padding:14px 40px;font-size:16px;font-weight:bold;border-radius:12px;cursor:pointer;font-family:inherit}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<h1>Build the Conversation</h1>
+<p class="subtitle">A professional conversation is scrambled. Put the lines in the right order — the way a native professional would say them.</p>
+</div>
+<div class="topbar">
+<span class="conv-count" id="conv-count">Conversation 1 of 6</span>
+<span>⭐ <span class="score" id="score">0</span></span>
+</div>
+<div class="progress" id="progress"></div>
+<div id="game"></div>
+<div class="final" id="final">
+<h1>Conversations Complete!</h1>
+<div class="final-score" id="final-score">0</div>
+<div class="final-rank" id="final-rank"></div>
+<p class="final-msg" id="final-msg"></p>
+<button class="btn-restart" onclick="location.reload()">Build Again</button>
+</div>
+</div>
+<script>
+var conversations=[
+{tag:"MONDAY STANDUP",title:"Morning Team Meeting",
+desc:"You're leading the Monday standup. Order your lines: open friendly, state the task, close with direction.",
+lines:[
+{sp:"You",t:"Let's <span class='chunk'>break the ice</span> \u2014 good morning, team! Hope everyone had a great weekend."},
+{sp:"You",t:"We need to <span class='chunk'>make a decision</span> on the project timeline today."},
+{sp:"You",t:"<span class='chunk'>At the end of the day</span>, the client needs results by Friday."}],
+why:"Professionals open warmly (break the ice), state the action (make a decision), then close with the bottom line (at the end of the day)."},
+{tag:"CLIENT EMAIL",title:"Writing to a Client",
+desc:"You're emailing an important client. Order the sentences: introduce your update, request urgency, add diplomacy.",
+lines:[
+{sp:"Email",t:"<span class='chunk'>By the way</span>, I wanted to update you on the project status."},
+{sp:"Email",t:"We need your approval <span class='chunk'>as soon as possible</span> to stay on schedule."},
+{sp:"Email",t:"<span class='chunk'>For what it\u2019s worth</span>, I believe we\u2019re ahead of expectations."}],
+why:"Professional emails introduce new info (by the way), state urgency (as soon as possible), then add a warm personal note (for what it's worth)."},
+{tag:"HONEST FEEDBACK",title:"Giving Tough Feedback",
+desc:"A colleague's report has problems. Order your feedback: be honest, frame the issue, clarify simply.",
+lines:[
+{sp:"You",t:"<span class='chunk'>To be honest</span>, the report needs significant revisions."},
+{sp:"You",t:"<span class='chunk'>The thing is</span>, the data doesn\u2019t support our main conclusion."},
+{sp:"You",t:"<span class='chunk'>In other words</span>, we need stronger evidence before presenting."}],
+why:"Tough feedback starts honest (to be honest), frames the core problem (the thing is), then restates clearly (in other words)."},
+{tag:"BUDGET REVIEW",title:"Discussing the Budget",
+desc:"Finance meeting. Order your points: state the fact, react to the cost, weigh the alternative.",
+lines:[
+{sp:"You",t:"<span class='chunk'>As a matter of fact</span>, we overspent by 15% last quarter."},
+{sp:"You",t:"This new software <span class='chunk'>costs an arm and a leg</span>."},
+{sp:"You",t:"<span class='chunk'>On the other hand</span>, it could save us 20 hours a week."}],
+why:"Budget talks start with facts (as a matter of fact), react to price (costs an arm and a leg), then show balance (on the other hand)."},
+{tag:"COFFEE BREAK",title:"Casual Office Chat",
+desc:"Coffee break with a colleague. Keep it natural: bond, share, transition back.",
+lines:[
+{sp:"You",t:"This <span class='chunk'>strong coffee</span> is saving my morning."},
+{sp:"Colleague",t:"Tell me about it \u2014 that <span class='chunk'>heavy rain</span> made my commute awful."},
+{sp:"You",t:"Let\u2019s <span class='chunk'>take a break</span> and tackle the report at two."}],
+why:"Small talk bonds over shared experience (strong coffee, heavy rain), then transitions to work (take a break)."},
+{tag:"WEEK RETROSPECTIVE",title:"Friday Wrap-Up",
+desc:"End-of-week meeting. Order your closing: praise insight, commit firmly, stay proactive.",
+lines:[
+{sp:"You",t:"Maria, you <span class='chunk'>hit the nail on the head</span> with that analysis."},
+{sp:"You",t:"<span class='chunk'>No matter what</span>, we\u2019ll deliver on time next week."},
+{sp:"You",t:"Someone might <span class='chunk'>spill the beans</span> about the launch, so let\u2019s announce it Monday."}],
+why:"Strong closings praise (hit the nail on the head), commit (no matter what), anticipate risks (spill the beans)."}
+];
+var cur=0,score=0,built=[],pool=[],locked=false;
+function shuffle(a){var r=a.slice();for(var i=r.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=r[i];r[i]=r[j];r[j]=t;}return r;}
+function renderProgress(){var p=document.getElementById('progress');p.innerHTML='';for(var i=0;i<conversations.length;i++){var d=document.createElement('div');d.className='dot'+(i<cur?' done':i===cur?' current':'');p.appendChild(d);}}
+function render(){
+built=[];pool=[];locked=false;renderProgress();
+document.getElementById('conv-count').textContent='Conversation '+(cur+1)+' of '+conversations.length;
+var c=conversations[cur];
+pool=shuffle(c.lines.map(function(l,i){return{sp:l.sp,t:l.t,oi:i};}));
+var h='<div class="card">';
+h+='<div class="scene-tag">'+c.tag+'</div>';
+h+='<div class="scene-title">'+c.title+'</div>';
+h+='<div class="scene-desc">'+c.desc+'</div>';
+h+='<div class="instruction">Tap the lines in the correct order:</div>';
+h+='<div class="lbl">SCRAMBLED LINES</div><div class="pool" id="pool"></div>';
+h+='<div class="lbl">YOUR CONVERSATION</div><div class="build-area" id="build"><div class="empty-msg">Tap a line above to add it here...</div></div>';
+h+='<div class="actions"><button class="btn btn-check" id="btn-check" onclick="check()" disabled>Check Order</button><button class="btn btn-clear" onclick="render()">Clear</button></div>';
+h+='<div class="feedback" id="fb"></div>';
+h+='<button class="btn-next" id="btn-next" onclick="next()">Next Conversation \u2192</button>';
+h+='</div>';
+document.getElementById('game').innerHTML=h;
+drawPool();drawBuild();
+}
+function drawPool(){
+var el=document.getElementById('pool');el.innerHTML='';
+pool.forEach(function(p,i){
+var b=document.createElement('button');b.className='line-btn';
+b.innerHTML='<span class="sp">'+p.sp+':</span> '+p.t;
+b.onclick=function(){addLine(i);};el.appendChild(b);
+});
+}
+function drawBuild(){
+var el=document.getElementById('build');el.innerHTML='';
+if(!built.length){el.innerHTML='<div class="empty-msg">Tap a line above to add it here...</div>';}
+built.forEach(function(b,i){
+var d=document.createElement('div');d.className='built-line';
+d.innerHTML='<span class="num">'+(i+1)+'</span><span><span class="sp">'+b.sp+':</span> '+b.t+'</span>';
+var r=document.createElement('button');r.className='remove-btn';r.innerHTML='\u2715';
+r.onclick=function(){removeLine(i);};d.appendChild(r);el.appendChild(d);
+});
+document.getElementById('btn-check').disabled=!built.length||locked;
+}
+function addLine(i){if(locked)return;built.push(pool[i]);pool.splice(i,1);drawPool();drawBuild();}
+function removeLine(i){if(locked)return;pool.push(built[i]);built.splice(i,1);drawPool();drawBuild();}
+function check(){
+if(locked||!built.length)return;locked=true;
+var c=conversations[cur],ok=true;
+for(var i=0;i<built.length;i++){if(built[i].oi!==i){ok=false;break;}}
+if(built.length!==c.lines.length)ok=false;
+var fb=document.getElementById('fb');
+var btns=document.querySelectorAll('#pool .line-btn, #build .built-line');
+if(ok){
+score+=15;document.getElementById('score').textContent=score;
+fb.className='feedback show good';
+fb.innerHTML='<strong>\u2705 +15 \u2014 Perfect order!</strong>'+c.why;
+}else{
+fb.className='feedback show bad';
+fb.innerHTML='<strong>\u274C Not quite \u2014 look at the flow.</strong>'+c.why+'<br><br>Try rearranging the lines.';
+locked=false;
+}
+document.getElementById('btn-next').classList.add('show');
+drawBuild();
+}
+function next(){cur++;if(cur>=conversations.length){showFinal();return;}render();window.scrollTo({top:0,behavior:'smooth'});}
+function showFinal(){
+document.getElementById('game').style.display='none';
+document.getElementById('progress').style.display='none';
+var fs=document.getElementById('final');fs.classList.add('show');
+document.getElementById('final-score').textContent=score;
+var max=conversations.length*15,rank,msg;
+if(score>=max*0.9){rank='\ud83c\udfc6 Master Conversationalist';msg='Flawless! You build professional conversations like a native. Your chunks flow naturally in every situation.';}
+else if(score>=max*0.7){rank='\ud83d\udcbc Confident Professional';msg='Excellent! You understand how professionals structure their conversations. Keep practicing the flow.';}
+else if(score>=max*0.5){rank='\ud83d\udcc8 Developing Voice';msg='Good progress! Think about how each line connects to the next \u2014 opening, developing, closing.';}
+else{rank='\ud83c\udf31 Keep Building';msg='Every expert was once a beginner. Review the 18 chunks in Lesson 1 and try building again.';}
+document.getElementById('final-rank').textContent=rank;
+document.getElementById('final-msg').textContent=msg;
+window.scrollTo({top:0,behavior:'smooth'});
+}
+render();
+</script>
+</body>
+</html>
