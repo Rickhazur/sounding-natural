@@ -89,21 +89,21 @@ h1{color:#026A79;font-size:30px;margin-bottom:8px}
 var emails=[
 {tag:"URGENT REQUEST",from:"you@company.com",to:"supplier@materials.co",subject:"Materials needed for Friday deadline",
 parts:[
-{t:"Dear Mr. Chen,"},
+{t:"Dear Mr. Chen,<br><br>"},
 {t:"We need the steel components "},{blank:0},
-{t:" our production line stops on Friday. "},{blank:1},{t:" I wanted to mention that we may increase our order next quarter."},
-{t:"Best regards,"},{t:"Alex Morgan"}
+{t:". Our production line stops on Friday. "},{blank:1},{t:" I wanted to mention that we may increase our order next quarter."},
+{t:"<br><br>Best regards,<br>"},{t:"Alex Morgan"}
 ],
 blanks:[
-{answer:"as soon as possible",options:["as soon as possible","at the end of the day","no matter what"],why:"<strong>As soon as possible</strong> communicates urgency professionally in emails."},
-{answer:"By the way",options:["By the way","In other words","The thing is"],why:"<strong>By the way</strong> smoothly introduces additional information."}
+{answer:"as soon as possible",options:["as soon as possible","as a matter of fact","at the end of the day"],why:"<strong>As soon as possible</strong> communicates urgency professionally in emails."},
+{answer:"By the way",options:["By the way","In other words","On the other hand"],why:"<strong>By the way</strong> smoothly introduces additional information."}
 ]},
 {tag:"DIPLOMATIC PUSHBACK",from:"you@company.com",to:"team@company.com",subject:"Re: Platform rebuild proposal",
 parts:[
-{t:"Hi team,"},
+{t:"Hi team,<br><br>"},
 {t:"Thanks for the ambitious proposal. "},{blank:0},{t:", I have concerns about the timeline. "},
 {blank:1},{t:", the current system handles 90% of our needs well."},
-{t:"Let's discuss alternatives tomorrow."},{t:"Alex"}
+{t:"<br><br>Let's discuss alternatives tomorrow.<br>"},{t:"Alex"}
 ],
 blanks:[
 {answer:"For what it's worth",options:["For what it's worth","Spill the beans","Break the ice"],why:"<strong>For what it's worth</strong> softens your opinion diplomatically."},
@@ -111,39 +111,85 @@ blanks:[
 ]},
 {tag:"MEETING FOLLOW-UP",from:"you@company.com",to:"all-staff@company.com",subject:"Action items from today's meeting",
 parts:[
-{t:"Hello everyone,"},
+{t:"Hello everyone,<br><br>"},
 {blank:0},{t:", the budget figures shared earlier were from Q2, not Q3. "},
 {t:"Please use the updated spreadsheet. "},{blank:1},{t:", our priority is the client launch."},
-{t:"Thanks,"},{t:"Alex"}
+{t:"<br><br>Thanks,<br>"},{t:"Alex"}
 ],
 blanks:[
 {answer:"As a matter of fact",options:["As a matter of fact","Hit the nail on the head","Strong coffee"],why:"<strong>As a matter of fact</strong> politely corrects information with facts."},
-{answer:"At the end of the day",options:["At the end of the day","Heavy rain","Break the ice"],why:"<strong>At the end of the day</strong> signals your final conclusion or priority."}
+{answer:"At the end of the day",options:["At the end of the day","As a matter of fact","In other words"],why:"<strong>At the end of the day</strong> signals your final conclusion or priority."}
 ]},
 {tag:"CLIENT UPDATE",from:"you@company.com",to:"client@bigcorp.com",subject:"Project status update",
 parts:[
-{t:"Dear Ms. Rodriguez,"},
+{t:"Dear Ms. Rodriguez,<br><br>"},
 {t:"The integration is more complex than expected. "},{blank:0},{t:", we need two extra weeks. "},
 {blank:1},{t:", the initial estimate didn't account for the legacy system."},
-{t:"I appreciate your understanding."},{t:"Alex Morgan"}
+{t:"<br><br>I appreciate your understanding.<br>"},{t:"Alex Morgan"}
 ],
 blanks:[
-{answer:"In other words",options:["In other words","By the way","Cost an arm and a leg"],why:"<strong>In other words</strong> restates something more simply for clarity."},
-{answer:"To be honest",options:["To be honest","Spill the beans","Take a break"],why:"<strong>To be honest</strong> shows transparency with clients."}
+{answer:"To be honest",options:["To be honest","By the way","Spill the beans"],why:"<strong>To be honest</strong> shows transparency when delivering bad news."},
+{answer:"In other words",options:["In other words","Spill the beans","Take a break"],why:"<strong>In other words</strong> restates the reason more simply and clearly."}
 ]},
 {tag:"TEAM ANNOUNCEMENT",from:"you@company.com",to:"team@company.com",subject:"Q4 commitments",
 parts:[
-{t:"Team,"},
+{t:"Team,<br><br>"},
 {blank:0},{t:", we have a serious challenge ahead. "},
 {t:"The client moved the deadline up by three weeks. "},{blank:1},{t:", we will deliver on time. I need everyone's full commitment."},
-{t:"Let's meet at 9 AM tomorrow to plan."},{t:"Alex"}
+{t:"<br><br>Let's meet at 9 AM tomorrow to plan.<br>"},{t:"Alex"}
 ],
 blanks:[
 {answer:"The thing is",options:["The thing is","Break the ice","Strong coffee"],why:"<strong>The thing is</strong> frames the core issue directly."},
-{answer:"No matter what",options:["No matter what","Heavy rain","As soon as possible"],why:"<strong>No matter what</strong> expresses strong determination and leadership."}
+{answer:"No matter what",options:["No matter what","As soon as possible","At the end of the day"],why:"<strong>No matter what</strong> expresses strong determination and leadership."}
+]}
+,
+{tag:"WELCOME ABOARD",from:"you@company.com",to:"newhire@company.com",subject:"Welcome to the team!",
+parts:[
+{t:"Hi Sarah,<br><br>"},
+{t:"Welcome aboard! Tomorrow morning, let\u2019s "},{blank:0},{t:" over coffee. "},
+{blank:1},{t:" is on me — my way of saying welcome."},
+{t:"<br><br>Looking forward to working with you.<br>"},{t:"Alex"}
+],
+blanks:[
+{answer:"break the ice",options:["break the ice","spill the beans","hit the nail on the head"],why:"<strong>Break the ice</strong> means to start a friendly conversation — perfect for welcoming someone new."},
+{answer:"strong coffee",options:["strong coffee","heavy rain","at the end of the day"],why:"<strong>Strong coffee</strong> is the natural collocation — we never say \u2018powerful coffee\u2019."}
+]},
+{tag:"VENDOR DECISION",from:"you@company.com",to:"leadership@company.com",subject:"Vendor selection — recommendation",
+parts:[
+{t:"Hello,<br><br>"},
+{t:"After reviewing both proposals, we need to "},{blank:0},{t:" by Thursday. Vendor A "},
+{blank:1},{t:". "},{blank:2},{t:", reliability matters more than price for this project."},
+{t:"<br><br>I'll present the full analysis tomorrow.<br>"},{t:"Alex"}
+],
+blanks:[
+{answer:"make a decision",options:["make a decision","take a break","spill the beans"],why:"<strong>Make a decision</strong> is the correct collocation — we never say \u2018do a decision\u2019."},
+{answer:"cost an arm and a leg",options:["cost an arm and a leg","break the ice","take a break"],why:"<strong>Cost an arm and a leg</strong> means very expensive — natural for reacting to high prices."},
+{answer:"At the end of the day",options:["At the end of the day","By the way","In other words"],why:"<strong>At the end of the day</strong> signals your final conclusion after weighing options."}
+]},
+{tag:"CHECK-IN NOTE",from:"you@company.com",to:"team@company.com",subject:"Quick check-in",
+parts:[
+{t:"Hi all,<br><br>"},
+{t:"I know the "},{blank:0},{t:" made everyone\u2019s commute miserable today. "},
+{t:"You\u2019ve been pushing hard — let\u2019s "},{blank:1},{t:" at 3 PM and recharge."},
+{t:"<br><br>Thanks for the great work.<br>"},{t:"Alex"}
+],
+blanks:[
+{answer:"heavy rain",options:["heavy rain","strong rain","at the end of the day"],why:"<strong>Heavy rain</strong> is the only natural collocation — \u2018strong rain\u2019 is a common learner mistake."},
+{answer:"take a break",options:["take a break","make a decision","break the ice"],why:"<strong>Take a break</strong> is the natural way to suggest rest — caring leadership."}
+]},
+{tag:"TEAM NEWS",from:"you@company.com",to:"team@company.com",subject:"Exciting news — please keep confidential",
+parts:[
+{t:"Team,<br><br>"},
+{t:"You "},{blank:0},{t:" with your market analysis — the board loved it. "},
+{t:"Please don\u2019t "},{blank:1},{t:" about the merger talks until the official announcement."},
+{t:"<br><br>Proud of this team.<br>"},{t:"Alex"}
+],
+blanks:[
+{answer:"hit the nail on the head",options:["hit the nail on the head","spill the beans","break the ice"],why:"<strong>Hit the nail on the head</strong> means to say exactly the right thing — perfect praise."},
+{answer:"spill the beans",options:["spill the beans","take a break","make a decision"],why:"<strong>Spill the beans</strong> means to reveal a secret — exactly what must not happen here."}
 ]}
 ];
-var cur=0,score=0,selBlank=-1,locked=false;
+var cur=0,selBlank=-1,locked=false;
 function renderProgress(){var p=document.getElementById('progress');p.innerHTML='';for(var i=0;i<emails.length;i++){var d=document.createElement('div');d.className='dot'+(i<cur?' done':i===cur?' current':'');p.appendChild(d);}}
 function render(){
 selBlank=-1;locked=false;renderProgress();
