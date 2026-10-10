@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 2 Quiz</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#F5F9FA;color:#123C46;line-height:1.6}
+.container{max-width:720px;margin:0 auto;padding:24px}
+.header{text-align:center;margin-bottom:24px}
+h1{color:#026A79;font-size:28px;margin-bottom:8px}
+.subtitle{color:#5a7a82;font-size:15px}
+.topbar{display:flex;justify-content:space-between;align-items:center;background:#fff;border-radius:12px;padding:12px 20px;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.qcount{font-weight:bold;color:#026A79}
+.card{background:#fff;border-radius:16px;padding:28px;box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.qtag{display:inline-block;background:#EAF7F6;color:#026A79;font-size:12px;font-weight:bold;padding:5px 12px;border-radius:20px;margin-bottom:12px;letter-spacing:1px}
+.situation{background:#F5F9FA;border-radius:10px;padding:16px 18px;margin-bottom:18px;font-size:15.5px;border-left:4px solid #E8AA28}
+.question{font-size:17px;font-weight:bold;margin-bottom:16px}
+.options{display:flex;flex-direction:column;gap:10px}
+.opt{background:#fff;border:2px solid #d0e4e6;border-radius:10px;padding:13px 18px;font-size:15.5px;cursor:pointer;text-align:left;font-family:inherit;color:#123C46;width:100%}
+.opt:hover:not(:disabled){border-color:#026A79;background:#EAF7F6}
+.opt:disabled{cursor:default;opacity:.7}
+.opt.right{border-color:#2E9B4A;background:#e8f7ee}
+.opt.wrongpick{border-color:#D9534F;background:#fdeaea}
+.feedback{margin-top:18px;padding:16px 20px;border-radius:12px;font-size:15px;display:none}
+.feedback.show{display:block}
+.feedback.good{background:#e8f7ee;border:1px solid #2E9B4A}
+.feedback.bad{background:#fdeaea;border:1px solid #D9534F}
+.feedback strong{display:block;margin-bottom:6px}
+.btn-next{display:none;margin-top:16px;background:#026A79;color:#fff;border:none;padding:14px;font-size:16px;font-weight:bold;border-radius:12px;cursor:pointer;font-family:inherit;width:100%}
+.btn-next.show{display:block}
+.final{display:none;text-align:center;background:#fff;border-radius:16px;padding:48px 32px;box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.final.show{display:block}
+.final-score{font-size:56px;font-weight:bold;color:#E8AA28;margin:12px 0}
+.final-title{font-size:22px;color:#026A79;font-weight:bold;margin-bottom:12px}
+.final-msg{color:#5a7a82;max-width:480px;margin:0 auto 24px}
+.btn-restart{background:#026A79;color:#fff;border:none;padding:14px 40px;font-size:16px;font-weight:bold;border-radius:12px;cursor:pointer;font-family:inherit}
+.progress{display:flex;gap:8px;justify-content:center;margin-bottom:20px}
+.dot{width:10px;height:10px;border-radius:50%;background:#d0e4e6}
+.dot.done{background:#2E9B4A}.dot.current{background:#E8AA28}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<h1>Lesson 2 Quiz</h1>
+<p class="subtitle">5 new situations. Choose the chunk a professional would use.</p>
+</div>
+<div class="topbar">
+<span class="qcount" id="qcount">Question 1 of 5</span>
+</div>
+<div class="progress" id="progress"></div>
+<div id="game"></div>
+<div class="final" id="final">
+<h1>Quiz Complete!</h1>
+<div class="final-score" id="final-score"></div>
+<div class="final-title" id="final-title"></div>
+<p class="final-msg" id="final-msg"></p>
+<button class="btn-restart" onclick="location.reload()">Try Again</button>
+</div>
+</div>
+<script>
+var questions=[
+{tag:"NEGOTIATION",
+sit:"You're negotiating a contract. The other party offers a price 40% above your budget. You need to signal it's too high without being rude.",
+q:"What do you say?",
+options:["That's quite expensive, to be honest.","That costs an arm and a leg, to be honest.","That spills the beans, to be honest."],
+answer:"That costs an arm and a leg, to be honest.",
+why:"<strong>Cost an arm and a leg</strong> signals a price is very high \u2014 direct but with a touch of humor that keeps negotiations friendly. Combined with <strong>to be honest</strong>, it's firm yet professional."},
+{tag:"TEAM CONFLICT",
+sit:"Two team members disagree loudly in a meeting. You need to acknowledge both views and guide them toward agreement.",
+q:"How do you intervene?",
+options:["On the other hand, let's hear both sides calmly.","By the way, let's hear both sides calmly.","At the end of the day, let's hear both sides calmly."],
+answer:"On the other hand, let's hear both sides calmly.",
+why:"<strong>On the other hand</strong> is the only option that introduces a contrasting perspective \u2014 exactly what you need when balancing two opposing views."},
+{tag:"JOB INTERVIEW",
+sit:"In a job interview, they ask why you left your last position. The truth is complex: good team, but no growth opportunities.",
+q:"How do you frame it professionally?",
+options:["The thing is, I needed new challenges to grow.","Spill the beans, I needed new challenges.","Break the ice, I needed new challenges."],
+answer:"The thing is, I needed new challenges to grow.",
+why:"<strong>The thing is</strong> frames the core reason clearly and professionally. The other options are completely wrong for an interview context."},
+{tag:"PROJECT DELAY",
+sit:"Your project is behind schedule. In the status meeting, you must explain why without making excuses, then state your plan.",
+q:"What's the most professional sequence?",
+options:["To be honest, we underestimated the scope. In other words, we need two more weeks with a revised plan.","For what it's worth, we underestimated. By the way, we need two more weeks.","Take a break, we underestimated. No matter what, two more weeks."],
+answer:"To be honest, we underestimated the scope. In other words, we need two more weeks with a revised plan.",
+why:"<strong>To be honest</strong> takes ownership, <strong>in other words</strong> clarifies the plan simply. This combination shows accountability + clarity \u2014 what leaders do."},
+{tag:"NETWORKING EVENT",
+sit:"You're at an industry conference. You spot a senior executive you'd like to meet, but you've never spoken before.",
+q:"How do you approach them?",
+options:["I'll break the ice with a genuine compliment about their talk.","I'll spill the beans with a genuine compliment.","I'll hit the nail on the head with small talk."],
+answer:"I'll break the ice with a genuine compliment about their talk.",
+why:"<strong>Break the ice</strong> means to initiate friendly contact \u2014 the professional networking skill. <strong>Spill the beans</strong> (reveal secrets) would be bizarre here."}
+];
+var cur=0,correct=0,locked=false;
+function renderProgress(){var p=document.getElementById('progress');p.innerHTML='';for(var i=0;i<questions.length;i++){var d=document.createElement('div');d.className='dot'+(i<cur?' done':i===cur?' current':'');p.appendChild(d);}}
+function render(){
+locked=false;renderProgress();
+document.getElementById('qcount').textContent='Question '+(cur+1)+' of '+questions.length;
+var q=questions[cur];
+var h='<div class="card">';
+h+='<div class="qtag">'+q.tag+'</div>';
+h+='<div class="situation">'+q.sit+'</div>';
+h+='<div class="question">'+q.q+'</div>';
+h+='<div class="options" id="opts">';
+q.options.forEach(function(o,i){h+='<button class="opt" onclick="answer('+i+')">'+o+'</button>';});
+h+='</div>';
+h+='<div class="feedback" id="fb"></div>';
+h+='<button class="btn-next" id="btn-next" onclick="next()">Next \u2192</button>';
+h+='</div>';
+document.getElementById('game').innerHTML=h;
+}
+function answer(i){
+if(locked)return;locked=true;
+var q=questions[cur],btns=document.querySelectorAll('.opt'),fb=document.getElementById('fb');
+if(q.options[i]===q.answer){
+btns[i].classList.add('right');correct++;
+fb.className='feedback show good';
+fb.innerHTML='<strong>\u2705 Correct!</strong>'+q.why;
+}else{
+btns[i].classList.add('wrongpick');
+for(var j=0;j<btns.length;j++){if(q.options[j]===q.answer)btns[j].classList.add('right');}
+fb.className='feedback show bad';
+fb.innerHTML='<strong>\u274C Not quite.</strong>'+q.why;
+}
+btns.forEach(function(b){b.disabled=true;});
+document.getElementById('btn-next').classList.add('show');
+}
+function next(){cur++;if(cur>=questions.length){showFinal();return;}render();window.scrollTo({top:0,behavior:'smooth'});}
+function showFinal(){
+document.getElementById('game').style.display='none';
+document.getElementById('progress').style.display='none';
+document.getElementById('qcount').textContent='Complete';
+var fs=document.getElementById('final');fs.classList.add('show');
+document.getElementById('final-score').textContent=correct+'/'+questions.length;
+var t,m;
+if(correct===5){t='\ud83c\udfc6 Outstanding!';m='Perfect score. You choose chunks like a true professional \u2014 ready for Lesson 3.';}
+else if(correct>=4){t='\ud83d\udc4f Excellent!';m='Strong judgment. You understand when to use each chunk in real situations.';}
+else if(correct>=3){t='\ud83d\udc4d Good!';m='Solid foundation. Review the explanations and try again for a perfect score.';}
+else{t='\ud83d\udcda Keep Studying';m='Review Lesson 2\\u2019s activities \u2014 focus on WHEN each chunk fits, not just what it means.';}
+document.getElementById('final-title').textContent=t;
+document.getElementById('final-msg').textContent=m;
+window.scrollTo({top:0,behavior:'smooth'});
+}
+render();
+</script>
+</body>
+</html>
