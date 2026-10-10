@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4 Speaking Keys</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#F5F9FA;color:#123C46;line-height:1.6}
+.container{max-width:760px;margin:0 auto;padding:24px}
+.header{text-align:center;margin-bottom:24px}
+h1{color:#026A79;font-size:30px;margin-bottom:8px}
+.subtitle{color:#5a7a82;font-size:15px;max-width:560px;margin:0 auto}
+.topbar{display:flex;justify-content:space-between;align-items:center;background:#fff;border-radius:12px;padding:12px 20px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.kcount{font-weight:bold;color:#026A79}
+.score{font-size:22px;font-weight:bold;color:#E8AA28}
+.progress{display:flex;gap:8px;justify-content:center;margin-bottom:20px}
+.dot{width:12px;height:12px;border-radius:50%;background:#d0e4e6}
+.dot.done{background:#2E9B4A}.dot.current{background:#E8AA28}
+.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.1)}
+.key-banner{background:linear-gradient(135deg,#026A79,#025F6D);padding:28px 32px;color:#fff}
+.key-num{display:inline-block;background:#E8AA28;color:#123C46;font-size:13px;font-weight:bold;padding:6px 16px;border-radius:20px;margin-bottom:12px}
+.key-title{font-size:26px;font-weight:bold;margin-bottom:4px}
+.key-body{padding:28px 32px}
+.key-text{font-size:16px;color:#3a5a62;margin-bottom:8px}
+.key-frames{background:#EAF7F6;border-radius:10px;padding:14px 18px;margin:16px 0;font-size:15px}
+.key-frames strong{color:#026A79}
+.question-label{font-size:13px;font-weight:bold;color:#E8AA28;letter-spacing:1px;margin:20px 0 8px}
+.question{font-size:17px;font-weight:bold;margin-bottom:16px}
+.options{display:flex;flex-direction:column;gap:10px}
+.opt{background:#F5F9FA;border:2px solid #d0e4e6;border-radius:10px;padding:14px 18px;font-size:15.5px;cursor:pointer;text-align:left;font-family:inherit;color:#123C46;width:100%}
+.opt:hover:not(:disabled){border-color:#026A79;background:#EAF7F6}
+.opt:disabled{cursor:default;opacity:.7}
+.opt.right{border-color:#2E9B4A;background:#e8f7ee}
+.opt.wrongpick{border-color:#D9534F;background:#fdeaea}
+.feedback{margin-top:16px;padding:14px 18px;border-radius:10px;font-size:15px;display:none}
+.feedback.show{display:block}
+.feedback.good{background:#e8f7ee;border:1px solid #2E9B4A}
+.feedback.bad{background:#fdeaea;border:1px solid #D9534F}
+.feedback strong{display:block;margin-bottom:4px}
+.btn-next{display:none;margin:20px 32px 28px;background:#026A79;color:#fff;border:none;padding:14px;font-size:16px;font-weight:bold;border-radius:12px;cursor:pointer;font-family:inherit;width:calc(100% - 64px)}
+.btn-next.show{display:block}
+.final{display:none;text-align:center;background:#fff;border-radius:16px;padding:48px 32px;box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.final.show{display:block}
+.final-score{font-size:56px;font-weight:bold;color:#E8AA28;margin:12px 0}
+.final-title{font-size:22px;color:#026A79;font-weight:bold;margin-bottom:12px}
+.final-msg{color:#5a7a82;max-width:480px;margin:0 auto 24px}
+.btn-restart{background:#026A79;color:#fff;border:none;padding:14px 40px;font-size:16px;font-weight:bold;border-radius:12px;cursor:pointer;font-family:inherit}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<h1>&#128273; 4 Speaking Keys</h1>
+<p class="subtitle">Master these keys and you will sound natural from the very first second.</p>
+</div>
+<div class="topbar">
+<span class="kcount" id="kcount">Key 1 of 4</span>
+<span>&#11088; <span class="score" id="score">0</span></span>
+</div>
+<div class="progress" id="progress"></div>
+<div id="game"></div>
+<div class="final" id="final">
+<h1>Keys Mastered!</h1>
+<div class="final-score" id="final-score"></div>
+<div class="final-title" id="final-title"></div>
+<p class="final-msg" id="final-msg"></p>
+<button class="btn-restart" onclick="location.reload()">Try Again</button>
+</div>
+</div>
+<script>
+var keys=[
+{num:"KEY 1",title:"Start with a frame, not a word",
+text:"When you don't know how to begin, don't search for the perfect word. Grab a frame. It buys you time \u2014 and you sound natural from the very first second.",
+frames:"Try: \u201CThe thing is...\u201D \u201CWhat I'm trying to say is...\u201D",
+q:"Your colleague asks an unexpected question in a meeting. You need 3 seconds to think. What's the most natural way to start?",
+options:["Ehh... umm... I... I think...","The thing is, we need to look at the numbers first.","I am thinking about the answer to your question."],
+answer:"The thing is, we need to look at the numbers first.",
+why:"A frame buys you thinking time AND sounds professional. Fillers (\u201Cehh... umm...\u201D) signal insecurity."},
+{num:"KEY 2",title:"Respond, don't translate",
+text:"Don't build your answer word by word from Spanish. Pull a ready-made frame and fill it. Native speakers don't construct sentences \u2014 they select frames.",
+frames:"Try: \u201CIf you ask me, ___\u201D \u201CThe way I see it, ___\u201D",
+q:"Your friend asks: \u201CShould I buy this phone?\u201D You want to give your opinion. What's the most natural response?",
+options:["In my opinion personal I think that yes, you should buy.","If you ask me, it's the best phone for the price.","Yes. Buy it."],
+answer:"If you ask me, it's the best phone for the price.",
+why:"\u201CIf you ask me\u201D frames your opinion naturally. Translating word-by-word from Spanish creates unnatural English."},
+{num:"KEY 3",title:"When they don't get it, reframe",
+text:"Conversations move fast. When someone looks confused, don't repeat the same words louder \u2014 reframe. One reframe is worth ten repetitions.",
+frames:"Try: \u201CWhat I mean is, ___\u201D \u201CWhat I'm trying to say is, ___\u201D",
+q:"You're explaining an idea and your colleague looks confused. What do you do?",
+options:["Repeat the same words louder and slower.","What I mean is, the client wants it simpler.","Do you understand? Do you understand?"],
+answer:"What I mean is, the client wants it simpler.",
+why:"Reframing with \u201CWhat I mean is\u201D restates your idea clearly. Repeating louder never helps \u2014 it just sounds aggressive."},
+{num:"KEY 4",title:"Finish strong",
+text:"Weak endings kill good ideas. Close with conviction. A strong frame makes your conclusion land.",
+frames:"Try: \u201CThe good news is, ___\u201D \u201CWhat happens next is, ___\u201D \u201CNo matter what, ___\u201D",
+q:"Your team is worried about the deadline. You want to close the meeting with confidence. What's the strongest ending?",
+options:["Well... I hope we can finish... maybe...","What happens next is, we test everything on Monday.","The meeting is finished now. Goodbye."],
+answer:"What happens next is, we test everything on Monday.",
+why:"\u201CWhat happens next is\u201D closes with a clear action plan \u2014 confident and professional. Hesitation (\u201Cmaybe...\u201D) kills trust."}
+];
+var cur=0,score=0,locked=false;
+function renderProgress(){var p=document.getElementById('progress');p.innerHTML='';for(var i=0;i<keys.length;i++){var d=document.createElement('div');d.className='dot'+(i<cur?' done':i===cur?' current':'');p.appendChild(d);}}
+function render(){
+locked=false;renderProgress();
+document.getElementById('kcount').textContent='Key '+(cur+1)+' of '+keys.length;
+var k=keys[cur];
+var h='<div class="card">';
+h+='<div class="key-banner"><div class="key-num">'+k.num+'</div><div class="key-title">'+k.title+'</div></div>';
+h+='<div class="key-body">';
+h+='<div class="key-text">'+k.text+'</div>';
+h+='<div class="key-frames"><strong>Frames to use:</strong><br>'+k.frames+'</div>';
+h+='<div class="question-label">CHECK YOURSELF</div>';
+h+='<div class="question">'+k.q+'</div>';
+h+='<div class="options">';
+k.options.forEach(function(o,i){h+='<button class="opt" onclick="answer('+i+')">'+o+'</button>';});
+h+='</div>';
+h+='<div class="feedback" id="fb"></div>';
+h+='</div>';
+h+='<button class="btn-next" id="btn-next" onclick="next()">Next Key \u2192</button>';
+h+='</div>';
+document.getElementById('game').innerHTML=h;
+}
+function answer(i){
+if(locked)return;locked=true;
+var k=keys[cur],btns=document.querySelectorAll('.opt'),fb=document.getElementById('fb');
+if(k.options[i]===k.answer){
+btns[i].classList.add('right');score+=25;
+document.getElementById('score').textContent=score;
+fb.className='feedback show good';
+fb.innerHTML='<strong>\u2705 +25 \u2014 Exactly!</strong>'+k.why;
+}else{
+btns[i].classList.add('wrongpick');
+for(var j=0;j<btns.length;j++){if(k.options[j]===k.answer)btns[j].classList.add('right');}
+fb.className='feedback show bad';
+fb.innerHTML='<strong>\u274C Not quite.</strong>'+k.why;
+}
+btns.forEach(function(b){b.disabled=true;});
+document.getElementById('btn-next').classList.add('show');
+}
+function next(){cur++;if(cur>=keys.length){showFinal();return;}render();window.scrollTo({top:0,behavior:'smooth'});}
+function showFinal(){
+document.getElementById('game').style.display='none';
+document.getElementById('progress').style.display='none';
+document.getElementById('kcount').textContent='Complete';
+var fs=document.getElementById('final');fs.classList.add('show');
+document.getElementById('final-score').textContent=score+'/100';
+var t,m;
+if(score===100){t='\ud83c\udfc6 Flawless!';m='Perfect! You think in frames like a native speaker. You are ready to speak with confidence.';}
+else if(score>=75){t='\ud83d\udc4f Excellent!';m='Strong instincts! You know when to grab a frame. Review the one you missed.';}
+else if(score>=50){t='\ud83d\udc4d Good start!';m='You understand the keys. Practice selecting frames instead of translating.';}
+else{t='\ud83d\udcda Keep practicing';m='Review each key above. The secret: don\\u2019t construct \u2014 select.';}
+document.getElementById('final-title').textContent=t;
+document.getElementById('final-msg').textContent=m;
+window.scrollTo({top:0,behavior:'smooth'});
+}
+render();
+</script>
+</body>
+</html>
