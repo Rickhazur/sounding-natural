@@ -15,7 +15,7 @@ h1 .one{background:#E8AA28;color:#123C46;padding:2px 12px;border-radius:8px}
 .card{border-radius:18px;overflow:hidden;cursor:pointer;transition:all .35s cubic-bezier(.4,0,.2,1);background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.06);border:2px solid transparent}
 .card:hover{transform:translateY(-6px);box-shadow:0 12px 28px rgba(0,0,0,.12)}
 .card.open{grid-column:1/-1;transform:none;cursor:default;border-color:var(--accent)}
-.card-head{padding:22px 18px;text-align:center;color:#fff;background:var(--accent);position:relative;transition:padding .3s}
+.card-head{padding:18px;min-height:118px;display:flex;flex-direction:column;justify-content:center;text-align:center;color:#fff;background:var(--accent);position:relative;transition:padding .3s}
 .card.open .card-head{padding:26px 18px 18px}
 .card-head h2{font-size:1.05rem;letter-spacing:1px;margin-bottom:6px}
 .card-head .tagline{font-size:.82rem;opacity:.92}
@@ -38,7 +38,7 @@ h1 .one{background:#E8AA28;color:#123C46;padding:2px 12px;border-radius:8px}
 .phrase .snd.playing{animation:pulseGlow 1s infinite}
 @keyframes pulseGlow{0%,100%{box-shadow:0 0 0 0 rgba(0,0,0,.15)}50%{box-shadow:0 0 0 8px rgba(0,0,0,0)}}
 .hint{text-align:center;color:#9aabab;font-size:.82rem;margin-top:20px}
-:root{--teal:#026A79;--purple:#7B2D8E;--amber:#E8AA28;--green:#1B8A6B}
+:root{--teal:#026A79;--amber:#E8AA28}
 </style>
 </head>
 <body>
@@ -64,7 +64,7 @@ phrases:[
 ]},
 {
 name:"IDIOMS", tagline:"Meaning ≠ sum of parts",
-accent:"#7B2D8E",
+accent:"#026A79",
 def:"<strong>Idioms</strong> are expressions where the meaning is completely different from the individual words. You can't translate them word by word!",
 phrases:[
 {en:"break the ice", audio:null},
@@ -87,7 +87,7 @@ phrases:[
 ]},
 {
 name:"SENTENCE FRAMES", tagline:"Skeletons you fill in",
-accent:"#1B8A6B",
+accent:"#026A79",
 def:"<strong>Sentence frames</strong> are sentence starters with a blank space. Learn the frame once, then fill it with infinite ideas.",
 phrases:[
 {en:"At the end of the day, ___", audio:"chunk-02-FINAL.mp3"},
