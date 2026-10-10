@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The 4 Chunk Types — Interactive</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#F7FAFA;color:#123C46;min-height:100vh;padding:24px 16px;display:flex;flex-direction:column;align-items:center}
+#app{width:100%;max-width:900px}
+h1{color:#123C46;text-align:center;font-size:1.7rem;margin:8px 0 4px}
+h1 .one{background:#E8AA28;color:#123C46;padding:2px 12px;border-radius:8px}
+.sub{color:#5a7a82;text-align:center;margin-bottom:28px;font-size:.95rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.card{border-radius:18px;overflow:hidden;cursor:pointer;transition:all .35s cubic-bezier(.4,0,.2,1);background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.06);border:2px solid transparent}
+.card:hover{transform:translateY(-6px);box-shadow:0 12px 28px rgba(0,0,0,.12)}
+.card.open{grid-column:1/-1;transform:none;cursor:default;border-color:var(--accent)}
+.card-head{padding:22px 18px;text-align:center;color:#fff;background:var(--accent);position:relative;transition:padding .3s}
+.card.open .card-head{padding:26px 18px 18px}
+.card-head h2{font-size:1.05rem;letter-spacing:1px;margin-bottom:6px}
+.card-head .tagline{font-size:.82rem;opacity:.92}
+.card-head .plus{position:absolute;top:14px;right:16px;font-size:1.4rem;font-weight:bold;transition:transform .3s;background:rgba(255,255,255,.2);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.card.open .card-head .plus{transform:rotate(45deg)}
+.card-body{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.4,0,.2,1)}
+.card.open .card-body{max-height:1200px}
+.card-inner{padding:24px}
+.def{background:rgba(0,0,0,.03);border-left:4px solid var(--accent);border-radius:0 12px 12px 0;padding:14px 18px;margin-bottom:20px}
+.def p{color:#3a555e;font-size:.95rem;line-height:1.6}
+.def strong{color:var(--accent)}
+.phrase-list{display:grid;gap:10px}
+.phrase{display:flex;align-items:center;gap:12px;background:#F7FAFA;border:2px solid #EBF0F0;border-radius:12px;padding:12px 16px;transition:all .2s}
+.phrase:hover{border-color:var(--accent);transform:translateX(4px)}
+.phrase .num{background:var(--accent);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:bold;flex-shrink:0}
+.phrase .text{flex:1}
+.phrase .text .en{font-weight:bold;color:#123C46;font-size:1rem}
+.phrase .snd{background:#fff;border:2px solid var(--accent);color:var(--accent);width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:1rem;flex-shrink:0;transition:all .2s;display:flex;align-items:center;justify-content:center}
+.phrase .snd:hover{background:var(--accent);color:#fff}
+.phrase .snd.playing{animation:pulseGlow 1s infinite}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 0 0 rgba(0,0,0,.15)}50%{box-shadow:0 0 0 8px rgba(0,0,0,0)}}
+.hint{text-align:center;color:#9aabab;font-size:.82rem;margin-top:20px}
+:root{--teal:#026A79;--purple:#7B2D8E;--amber:#E8AA28;--green:#1B8A6B}
+</style>
+</head>
+<body>
+<div id="app">
+<h1>A chunk is a group of words your brain treats as <span class="one">ONE</span> unit.</h1>
+<p class="sub">👆 Click each card to discover its phrases</p>
+<div class="cards" id="cards"></div>
+<p class="hint">🔊 Tap the speaker icon to hear the pronunciation</p>
+</div>
+
+<script>
+const AUDIO_BASE = "";
+const TYPES = [
+{
+name:"COLLOCATIONS", tagline:"Words that naturally go together",
+accent:"#026A79",
+def:"<strong>Collocations</strong> are word pairs that native speakers always use together. They sound natural — changing one word sounds strange to a native ear.",
+phrases:[
+{en:"make a decision", audio:null},
+{en:"heavy rain", audio:null},
+{en:"take a break", audio:null},
+{en:"strong coffee", audio:null}
+]},
+{
+name:"IDIOMS", tagline:"Meaning ≠ sum of parts",
+accent:"#7B2D8E",
+def:"<strong>Idioms</strong> are expressions where the meaning is completely different from the individual words. You can't translate them word by word!",
+phrases:[
+{en:"break the ice", audio:null},
+{en:"spill the beans", audio:null},
+{en:"cost an arm and a leg", audio:null},
+{en:"hit the nail on the head", audio:null}
+]},
+{
+name:"FIXED PHRASES", tagline:"Social formulas",
+accent:"#E8AA28",
+def:"<strong>Fixed phrases</strong> are ready-made expressions for social situations. Memorize them as complete blocks — never change the words inside.",
+phrases:[
+{en:"As a matter of fact", audio:"chunk-01-FINAL.mp3"},
+{en:"By the way", audio:"chunk-03-FINAL.mp3"},
+{en:"For what it's worth", audio:"chunk-04-FINAL.mp3"},
+{en:"In other words", audio:"chunk-05-FINAL.mp3"},
+{en:"On the other hand", audio:"chunk-06-FINAL.mp3"},
+{en:"As soon as possible", audio:"chunk-08-FINAL.mp3"},
+{en:"No matter what", audio:"chunk-09-FINAL.mp3"}
+]},
+{
+name:"SENTENCE FRAMES", tagline:"Skeletons you fill in",
+accent:"#1B8A6B",
+def:"<strong>Sentence frames</strong> are sentence starters with a blank space. Learn the frame once, then fill it with infinite ideas.",
+phrases:[
+{en:"At the end of the day, ___", audio:"chunk-02-FINAL.mp3"},
+{en:"To be honest, ___", audio:"chunk-07-FINAL.mp3"},
+{en:"The thing is, ___", audio:"chunk-10-FINAL.mp3"}
+]}
+];
+
+let openIdx = -1;
+let curAudio = null, curBtn = null;
+
+function build(){
+const wrap = document.getElementById('cards');
+TYPES.forEach((t, i)=>{
+const c = document.createElement('div');
+c.className = 'card'; c.style.setProperty('--accent', t.accent);
+c.id = 'card'+i;
+let ph = '';
+t.phrases.forEach((p, pi)=>{
+ph += `<div class="phrase">
+<div class="num">${pi+1}</div>
+<div class="text"><div class="en">${p.en}</div></div>
+${p.audio ? `<button class="snd" onclick="event.stopPropagation();playSnd('${p.audio}',this)">🔊</button>` : ''}
+</div>`;
+});
+c.innerHTML = `
+<div class="card-head" onclick="toggle(${i})">
+<div class="plus">+</div>
+<h2>${t.name}</h2><div class="tagline">${t.tagline}</div>
+</div>
+<div class="card-body"><div class="card-inner">
+<div class="def"><p>${t.def}</p></div>
+<div class="phrase-list">${ph}</div>
+</div></div>`;
+wrap.appendChild(c);
+});
+}
+function toggle(i){
+const cards = document.querySelectorAll('.card');
+if(openIdx === i){
+cards[i].classList.remove('open'); openIdx = -1;
+} else {
+if(openIdx >= 0) cards[openIdx].classList.remove('open');
+cards[i].classList.add('open'); openIdx = i;
+setTimeout(()=>cards[i].scrollIntoView({behavior:'smooth',block:'nearest'}), 100);
+}
+stopSnd();
+}
+function playSnd(file, btn){
+stopSnd();
+if(curBtn === btn){ curBtn = null; return; }
+curBtn = btn;
+curAudio = new Audio(AUDIO_BASE + file);
+btn.classList.add('playing'); btn.textContent = '⏸';
+curAudio.onended = ()=>stopSnd();
+curAudio.play();
+}
+function stopSnd(){
+if(curAudio){ curAudio.pause(); curAudio = null; }
+if(curBtn){ curBtn.classList.remove('playing'); curBtn.textContent = '🔊'; curBtn = null; }
+}
+build();
+</script>
+</body>
+</html>
