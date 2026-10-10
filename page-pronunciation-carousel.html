@@ -48,7 +48,7 @@ h1{color:#026A79;text-align:center;font-size:1.6rem;margin:12px 0 4px}
 <body>
 <div id="app">
 <h1>🔊 Pronunciation Lab</h1>
-<p class="sub">Swipe through all 10 chunks — tap 🔊 to hear each one</p>
+<p class="sub">Swipe through all 18 phrases — tap 🔊 to hear each one</p>
 <div class="carousel" id="carousel"></div>
 <div class="nav">
 <button class="nav-btn" id="btnPrev" onclick="go(-1)">← Prev</button>
@@ -70,6 +70,14 @@ const CHUNKS = [
 {w:[["as","az",0],["soon","",1],["as","az",0],["possible","",1]], say:"uhz-SOON-uhz-PAH-sih-buhl", title:"As soon as possible", meaning:"Urgently, without delay", ex:"Please send the report <strong>as soon as possible</strong>.", audio:"chunk-08-FINAL.mp3"},
 {w:[["no","",0],["matter","",1],["what","wut",0]], say:"no-MA-duh-WUT", title:"No matter what", meaning:"Regardless of circumstances", ex:"I'll finish this project, <strong>no matter what</strong>.", audio:"chunk-09-FINAL.mp3"},
 {w:[["the","thuh",0],["thing","",1],["is","iz",0]], say:"thuh-THING-iz", title:"The thing is", meaning:"Introducing the real point", ex:"<strong>The thing is</strong>, we don't have enough time.", audio:"chunk-10-FINAL.mp3"}
+{w:[["make","",0],["a","uh",0],["decision","",1]], say:"may-kuh-duh-SI-zhun", title:"Make a decision", meaning:"To choose after thinking", ex:"I need to <strong>make a decision</strong> by Friday.", audio:"extra-make-a-decision.mp3"},
+{w:[["heavy","",1],["rain","",1]], say:"HEH-vee-RAYN", title:"Heavy rain", meaning:"Strong, intense rain", ex:"We canceled the game because of the <strong>heavy rain</strong>.", audio:"extra-heavy-rain.mp3"},
+{w:[["take","",1],["a","uh",0],["break","",1]], say:"tay-kuh-BRAYK", title:"Take a break", meaning:"To rest briefly", ex:"You've worked for hours — <strong>take a break</strong>.", audio:"extra-take-a-break.mp3"},
+{w:[["strong","",1],["coffee","",1]], say:"strawng-KAH-fee", title:"Strong coffee", meaning:"Coffee with intense flavor", ex:"I need a <strong>strong coffee</strong> to wake up.", audio:"extra-strong-coffee.mp3"},
+{w:[["break","",1],["the","thuh",0],["ice","",1]], say:"brayk-thuh-AYSS", title:"Break the ice", meaning:"To start a conversation", ex:"He told a joke to <strong>break the ice</strong>.", audio:"extra-break-the-ice.mp3"},
+{w:[["spill","",1],["the","thuh",0],["beans","",1]], say:"spihl-thuh-BEENZ", title:"Spill the beans", meaning:"To reveal a secret", ex:"Come on, <strong>spill the beans</strong>! What happened?", audio:"extra-spill-the-beans.mp3"},
+{w:[["cost","",1],["an","uhn",0],["arm","",1],["and","n",0],["a","uh",0],["leg","",1]], say:"kahst-uhn-AHRM-nuh-LEHG", title:"Cost an arm and a leg", meaning:"To be very expensive", ex:"That car <strong>cost an arm and a leg</strong>.", audio:"extra-cost-an-arm-and-a-leg.mp3"},
+{w:[["hit","",1],["the","thuh",0],["nail","",1],["on","ahn",0],["the","thuh",0],["head","",1]], say:"hiht-thuh-NAYL-ahn-thuh-HEHD", title:"Hit the nail on the head", meaning:"To say exactly the right thing", ex:"You <strong>hit the nail on the head</strong> with that comment.", audio:"extra-hit-the-nail-on-the-head.mp3"}
 ];
 
 let idx = 0;
@@ -93,7 +101,7 @@ wordsHtml += `<div class="word-box">
 if(wi < c.w.length-1) wordsHtml += `<div class="link-arrow">‿</div>`;
 });
 s.innerHTML = `
-<div class="slide-num">CHUNK ${i+1} / 10</div>
+<div class="slide-num">PHRASE ${i+1} / 18</div>
 <div class="chunk-title">${c.title}</div>
 <div class="chunk-meaning">${c.meaning}</div>
 <div class="words-row">${wordsHtml}</div>
