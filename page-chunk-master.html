@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chunk Master Challenge</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#F7FAFA;color:#123C46;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px}
+#app{width:100%;max-width:640px}
+.screen{display:none;animation:fadeIn .4s ease}
+.screen.active{display:block}
+h1{color:#026A79;text-align:center;font-size:1.8rem;margin:12px 0 4px}
+.sub{color:#5a7a82;text-align:center;margin-bottom:20px}
+.btn{background:#026A79;color:#fff;border:none;padding:14px 44px;font-size:1.05rem;border-radius:12px;cursor:pointer;font-weight:bold;transition:all .2s}
+.btn:hover{background:#E8AA28;color:#123C46;transform:scale(1.03)}
+.btn-gold{background:#E8AA28;color:#123C46}
+.btn-gold:hover{background:#026A79;color:#fff}
+.hud{display:flex;justify-content:space-between;align-items:center;background:#fff;border:2px solid #EBF0F0;border-radius:14px;padding:12px 20px;margin-bottom:16px}
+.hud .item{text-align:center}
+.hud .item .v{font-size:1.3rem;font-weight:bold;color:#026A79}
+.hud .item .l{font-size:.72rem;color:#8a9a9e;letter-spacing:1px}
+.hud .lives{font-size:1.3rem;letter-spacing:2px}
+.streak-fire{animation:firePulse .6s ease infinite}
+@keyframes firePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
+.round-banner{text-align:center;margin-bottom:16px}
+.round-banner .tag{display:inline-block;background:#026A79;color:#fff;padding:6px 22px;border-radius:20px;font-size:.8rem;font-weight:bold;letter-spacing:2px}
+.round-banner h2{color:#123C46;margin-top:8px;font-size:1.25rem}
+.q-card{background:#fff;border:3px solid #026A79;border-radius:20px;padding:32px 24px;margin-bottom:16px;text-align:center;min-height:180px;display:flex;flex-direction:column;justify-content:center}
+.q-card .phrase{font-size:1.9rem;font-weight:bold;color:#123C46;margin-bottom:8px}
+.q-card .context{font-size:1.05rem;color:#5a7a82;line-height:1.7;font-style:italic}
+.q-card .q-label{font-size:.78rem;color:#8ab0b8;font-weight:bold;letter-spacing:2px;margin-bottom:12px}
+.answers{display:grid;gap:10px;margin-bottom:16px}
+.answer{background:#fff;border:2px solid #EBF0F0;border-radius:14px;padding:16px 20px;cursor:pointer;font-size:1.02rem;text-align:left;transition:all .2s;font-family:inherit;color:#123C46;width:100%}
+.answer:hover:not(:disabled){border-color:#026A79;transform:translateX(6px)}
+.answer:disabled{cursor:default}
+.answer.correct{border-color:#1B8A6B;background:rgba(27,138,107,.08)}
+.answer.wrong{border-color:#C0392B;background:rgba(192,57,43,.06)}
+.answer.dim{opacity:.4}
+.answer .type-dot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:10px}
+.feedback{padding:14px 20px;border-radius:14px;margin-bottom:16px;display:none;animation:fadeIn .3s}
+.feedback.show{display:block}
+.feedback.good{background:rgba(27,138,107,.08);border:2px solid #1B8A6B}
+.feedback.bad{background:rgba(192,57,43,.06);border:2px solid #C0392B}
+.feedback p{font-size:.92rem;color:#5a7a82;line-height:1.6}
+.feedback strong{color:#123C46}
+.timer-bar{background:#EBF0F0;border-radius:10px;height:14px;margin-bottom:16px;overflow:hidden}
+.timer-fill{background:linear-gradient(90deg,#E8AA28,#C0392B);height:100%;width:100%;transition:width 1s linear;border-radius:10px}
+.speed-q{font-size:2rem;text-align:center;margin:8px 0}
+.result-emoji{font-size:4rem;text-align:center;margin:20px 0;animation:bounce 1s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.rank-card{background:linear-gradient(135deg,#026A79,#038a9c);color:#fff;border-radius:20px;padding:32px;text-align:center;margin:20px 0}
+.rank-card .rank{font-size:2rem;font-weight:bold;color:#E8AA28;margin:8px 0}
+.rank-card p{opacity:.9;line-height:1.6}
+.score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
+.score-card{background:#fff;border:2px solid #EBF0F0;border-radius:14px;padding:16px;text-align:center}
+.score-card .n{font-size:1.6rem;font-weight:bold;color:#026A79}
+.score-card .l{font-size:.78rem;color:#5a7a82}
+.center{text-align:center}
+.combo{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);font-size:3rem;font-weight:bold;color:#E8AA28;text-shadow:0 2px 12px rgba(0,0,0,.2);pointer-events:none;opacity:0;z-index:99}
+.combo.pop{animation:comboPop 1s ease}
+@keyframes comboPop{0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}30%{opacity:1;transform:translate(-50%,-50%) scale(1.2)}100%{opacity:0;transform:translate(-50%,-80%) scale(1)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.shake{animation:shake .4s ease}
+</style>
+</head>
+<body>
+<div id="app">
+<div class="combo" id="combo"></div>
+
+<div class="screen active" id="scr-start">
+<h1>🎮 Chunk Master Challenge</h1>
+<p class="sub">4 rounds. 18 phrases. 3 lives.<br>How well do you <strong>really</strong> know your chunks?</p>
+<div style="background:#fff;border:2px solid #EBF0F0;border-radius:16px;padding:20px;margin:20px 0">
+<p style="color:#5a7a82;font-size:.92rem;line-height:2">
+🏷️ <strong>Round 1:</strong> Name That Type<br>
+🔧 <strong>Round 2:</strong> Fix the Mistake<br>
+💬 <strong>Round 3:</strong> Complete the Conversation<br>
+⚡ <strong>Round 4:</strong> Speed Round (60 seconds!)
+</p>
+</div>
+<div class="center"><button class="btn btn-gold" onclick="startGame()">▶ Start Challenge</button></div>
+</div>
+
+<div class="screen" id="scr-game">
+<div class="hud">
+<div class="item"><div class="v" id="hScore">0</div><div class="l">SCORE</div></div>
+<div class="item"><div class="lives" id="hLives">❤️❤️❤️</div><div class="l">LIVES</div></div>
+<div class="item"><div class="v" id="hStreak">🔥0</div><div class="l">STREAK</div></div>
+</div>
+<div id="speedTimer" style="display:none"><div class="timer-bar"><div class="timer-fill" id="tFill"></div></div></div>
+<div class="round-banner"><span class="tag" id="rTag">ROUND 1</span><h2 id="rTitle">Name That Type</h2></div>
+<div class="q-card" id="qCard"></div>
+<div class="answers" id="answers"></div>
+<div class="feedback" id="feedback"></div>
+<div class="center"><button class="btn" id="btnNext" style="display:none" onclick="nextQ()">Next →</button></div>
+</div>
+
+<div class="screen" id="scr-end">
+<div class="result-emoji" id="endEmoji">🏆</div>
+<div class="rank-card"><div style="font-size:.85rem;letter-spacing:2px;opacity:.8">YOUR RANK</div><div class="rank" id="endRank">Chunk Master</div><p id="endMsg"></p></div>
+<div class="score-grid">
+<div class="score-card"><div class="n" id="fScore">0</div><div class="l">Final Score</div></div>
+<div class="score-card"><div class="n" id="fCorrect">0</div><div class="l">Correct</div></div>
+<div class="score-card"><div class="n" id="fBest">0</div><div class="l">Best Streak</div></div>
+</div>
+<div class="center"><button class="btn" onclick="restart()">🔄 Play Again</button></div>
+</div>
+
+</div>
+
+<script>
+// ===== DATA =====
+const TYPES = {col:["COLLOCATION","#026A79"], idi:["IDIOM","#7B2D8E"], fix:["FIXED PHRASE","#E8AA28"], fra:["SENTENCE FRAME","#1B8A6B"]};
+
+// Round 1: Name That Type
+const R1 = [
+{p:"make a decision", t:"col", why:"Words that naturally go together — you MAKE decisions, you don't 'do' them."},
+{p:"break the ice", t:"idi", why:"Meaning ≠ sum of parts — it's about starting conversations, not actual ice."},
+{p:"as soon as possible", t:"fix", why:"A social formula — fixed words for urgency, always said the same way."},
+{p:"the thing is", t:"fra", why:"A sentence skeleton — you fill in the blank: 'The thing is, ___'."},
+{p:"heavy rain", t:"col", why:"Natural word pair — HEAVY rain, not 'strong rain'."},
+{p:"spill the beans", t:"idi", why:"Reveal a secret — nothing to do with actual beans!"},
+{p:"by the way", t:"fix", why:"Fixed social formula for introducing a new topic."},
+{p:"at the end of the day", t:"fra", why:"Frame you complete: 'At the end of the day, ___.'"},
+{p:"cost an arm and a leg", t:"idi", why:"Very expensive — the meaning has nothing to do with body parts."},
+{p:"strong coffee", t:"col", why:"Natural pairing — STRONG coffee, not 'powerful coffee'."}
+];
+// Round 2: Fix the Mistake
+const R2 = [
+{bad:"do a pause", good:"take a break", why:"It's always TAKE a break — 'do a pause' doesn't exist in English."},
+{bad:"powerful coffee", good:"strong coffee", why:"Coffee is STRONG, not powerful. Collocations are fixed pairs."},
+{bad:"strong rain", good:"heavy rain", why:"Rain is HEAVY. 'Strong rain' sounds foreign."},
+{bad:"create a decision", good:"make a decision", why:"You MAKE decisions — 'create' sounds like you're building furniture."},
+{bad:"break the glass", good:"break the ice", why:"It's ICE, not glass! Idioms are frozen — one wrong word breaks them."},
+{bad:"drop the beans", good:"spill the beans", why:"SPILL the beans — 'drop' changes the idiom completely."},
+{bad:"hit the hammer on the head", good:"hit the nail on the head", why:"It's the NAIL on the head — 'hammer' ruins this idiom."},
+{bad:"cost a foot and a hand", good:"cost an arm and a leg", why:"ARM and LEG — body parts are fixed in this idiom!"}
+];
+// Round 3: Complete the Conversation
+const R3 = [
+{ctx:"Your boss asks for your real opinion about the plan.", blank:"___, I think we need more time.",
+ opts:["To be honest", "By the way", "As soon as possible"], correct:0,
+ why:"TO BE HONEST signals a frank opinion is coming — perfect when asked for honesty."},
+{ctx:"You want to add a comment about something different.", blank:"___, did you see the game last night?",
+ opts:["For what it's worth", "By the way", "No matter what"], correct:1,
+ why:"BY THE WAY introduces a new topic — exactly what you need here."},
+{ctx:"The deadline is tomorrow and nothing will stop you.", blank:"I'll finish it, ___.",
+ opts:["in other words", "no matter what", "on the other hand"], correct:1,
+ why:"NO MATTER WHAT = regardless of circumstances — determination in three words."},
+{ctx:"You need to explain the real problem.", blank:"___, we don't have enough budget.",
+ opts:["The thing is", "As a matter of fact", "In other words"], correct:0,
+ why:"THE THING IS introduces the real point — the core of your message."},
+{ctx:"You disagree but want to soften it.", blank:"___, I think there's a better option.",
+ opts:["On the other hand", "For what it's worth", "As soon as possible"], correct:1,
+ why:"FOR WHAT IT'S WORTH softens your opinion — polite disagreement."},
+{ctx:"Two sides of the situation.", blank:"It's expensive. ___, it lasts forever.",
+ opts:["On the other hand", "To be honest", "By the way"], correct:0,
+ why:"ON THE OTHER HAND presents the opposite view — the classic contrast chunk."}
+];
+
+let round = 0, qi = 0, score = 0, lives = 3, streak = 0, bestStreak = 0, correct = 0;
+let speedQuestions = [], speedTimer = null, speedTime = 60, speedIdx = 0;
+let answered = false;
+
+function show(id){
+document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+}
+function startGame(){
+round=0; score=0; lives=3; streak=0; bestStreak=0; correct=0;
+show('scr-game'); startRound();
+}
+function updateHUD(){
+document.getElementById('hScore').textContent = score;
+document.getElementById('hLives').textContent = '❤️'.repeat(lives) + '🤍'.repeat(3-lives);
+const st = document.getElementById('hStreak');
+st.textContent = '🔥'+streak;
+st.className = 'v' + (streak>=3 ? ' streak-fire' : '');
+}
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+function startRound(){
+qi=0; answered=false;
+document.getElementById('speedTimer').style.display = 'none';
+const titles = [["ROUND 1","🏷️ Name That Type"],["ROUND 2","🔧 Fix the Mistake"],["ROUND 3","💬 Complete the Conversation"],["ROUND 4","⚡ Speed Round"]];
+document.getElementById('rTag').textContent = titles[round][0];
+document.getElementById('rTitle').textContent = titles[round][1];
+if(round===3){ startSpeedRound(); } else { renderQ(); }
+updateHUD();
+}
+
+// --- Render question ---
+function renderQ(){
+answered=false;
+const card = document.getElementById('qCard');
+const ans = document.getElementById('answers');
+const fb = document.getElementById('feedback');
+fb.className='feedback'; fb.innerHTML='';
+document.getElementById('btnNext').style.display='none';
+ans.innerHTML='';
+
+if(round===0){
+const q = R1[qi];
+card.innerHTML = `<div class="q-label">WHAT TYPE IS THIS?</div><div class="phrase">"${q.p}"</div>`;
+const opts = shuffle(Object.keys(TYPES));
+opts.forEach(k=>{
+const b=document.createElement('button'); b.className='answer';
+b.innerHTML=`<span class="type-dot" style="background:${TYPES[k][1]}"></span>${TYPES[k][0]}`;
+b.onclick=()=>answerR1(k===q.t, q.why, b, opts, q.t);
+ans.appendChild(b);
+});
+} else if(round===1){
+const q = R2[qi];
+card.innerHTML = `<div class="q-label">FIX THE MISTAKE</div><div class="phrase" style="text-decoration:line-through;color:#C0392B">\"${q.bad}\"</div><div class="context">This sounds unnatural. What's the correct version?</div>`;
+const opts = shuffle([q.good, q.bad]);
+opts.forEach(text=>{
+const b=document.createElement('button'); b.className='answer'; b.textContent=text;
+b.onclick=()=>answerR1(text===q.good, q.why, b, opts, q.good);
+ans.appendChild(b);
+});
+} else if(round===2){
+const q = R3[qi];
+card.innerHTML = `<div class="q-label">COMPLETE IT</div><div class="context">${q.ctx}</div><div class="phrase" style="font-size:1.3rem;margin-top:12px">${q.blank}</div>`;
+const order = shuffle([0,1,2]);
+order.forEach(oi=>{
+const b=document.createElement('button'); b.className='answer'; b.textContent=q.opts[oi];
+b.onclick=()=>answerR1(oi===q.correct, q.why, b, order, q.correct, q.opts);
+ans.appendChild(b);
+});
+}
+}
+
+function answerR1(isCorrect, why, btn, opts, correctKey, optTexts){
+if(answered) return;
+answered=true;
+const buttons = document.querySelectorAll('.answer');
+buttons.forEach(b=>{
+b.disabled=true;
+let val;
+if(round===0){ val = b.textContent.trim(); }
+else if(round===1){ val = b.textContent; }
+else { val = b.textContent; }
+// Marcar correcta
+let isThisCorrect = false;
+if(round===0){ isThisCorrect = TYPES[correctKey][0]===val; }
+else if(round===1){ isThisCorrect = val===correctKey; }
+else { isThisCorrect = val===optTexts[correctKey]; }
+if(isThisCorrect) b.classList.add('correct');
+else if(b===btn) b.classList.add('wrong');
+else b.classList.add('dim');
+});
+const fb=document.getElementById('feedback');
+if(isCorrect){
+correct++; streak++;
+bestStreak=Math.max(bestStreak,streak);
+const pts = 100 * Math.min(streak,5);
+score+=pts;
+fb.className='feedback show good';
+fb.innerHTML=`<p><strong>✅ Correct! +${pts} pts</strong><br>${why}</p>`;
+if(streak>=3) showCombo(streak);
+} else {
+streak=0; lives--;
+document.getElementById('app').classList.add('shake');
+setTimeout(()=>document.getElementById('app').classList.remove('shake'),400);
+fb.className='feedback show bad';
+fb.innerHTML=`<p><strong>❌ Not quite.</strong><br>${why}</p>`;
+if(lives<=0){ setTimeout(endGame,1200); updateHUD(); return; }
+}
+updateHUD();
+const total = round===0?R1.length:round===1?R2.length:R3.length;
+const nb=document.getElementById('btnNext');
+nb.style.display='inline-block';
+nb.textContent = (qi===total-1) ? (round===2?'Start Speed Round →':'Next Round →') : 'Next →';
+}
+
+function showCombo(s){
+const c=document.getElementById('combo');
+c.textContent=`🔥 x${Math.min(s,5)} COMBO!`;
+c.classList.remove('pop'); void c.offsetWidth; c.classList.add('pop');
+}
+
+function nextQ(){
+const total = round===0?R1.length:round===1?R2.length:R3.length;
+if(qi<total-1){ qi++; renderQ(); }
+else { round++; startRound(); }
+}
+
+// --- Speed Round ---
+function startSpeedRound(){
+speedQuestions = shuffle([...R1.map(q=>({p:q.p,t:q.t,why:q.why}))]);
+speedIdx=0; speedTime=60;
+document.getElementById('speedTimer').style.display='block';
+renderSpeedQ();
+clearInterval(speedTimer);
+speedTimer=setInterval(()=>{
+speedTime--;
+document.getElementById('tFill').style.width=(speedTime/60*100)+'%';
+if(speedTime<=0){ clearInterval(speedTimer); round++; endGame(); }
+},1000);
+}
+function renderSpeedQ(){
+if(speedIdx>=speedQuestions.length){ speedQuestions=shuffle(speedQuestions); speedIdx=0; }
+answered=false;
+const q=speedQuestions[speedIdx];
+const card=document.getElementById('qCard');
+card.innerHTML=`<div class="q-label">QUICK! WHAT TYPE?</div><div class="speed-q">"${q.p}"</div>`;
+const ans=document.getElementById('answers');
+ans.innerHTML='';
+const fb=document.getElementById('feedback');
+fb.className='feedback'; fb.innerHTML='';
+const opts=shuffle(Object.keys(TYPES));
+opts.forEach(k=>{
+const b=document.createElement('button'); b.className='answer';
+b.innerHTML=`<span class="type-dot" style="background:${TYPES[k][1]}"></span>${TYPES[k][0]}`;
+b.onclick=()=>{
+if(answered) return; answered=true;
+if(k===q.t){ correct++; streak++; bestStreak=Math.max(bestStreak,streak); score+=50*Math.min(streak,5); b.classList.add('correct'); if(streak>=3) showCombo(streak); }
+else { streak=0; b.classList.add('wrong'); }
+updateHUD();
+setTimeout(()=>{ speedIdx++; renderSpeedQ(); },350);
+};
+ans.appendChild(b);
+});
+updateHUD();
+}
+
+function endGame(){
+clearInterval(speedTimer);
+let rank, emoji, msg;
+if(score>=2500){ rank="🏆 CHUNK MASTER"; emoji="🏆"; msg="Flawless command of all 18 phrases. You think in chunks!"; }
+else if(score>=1500){ rank="🌟 CHUNK EXPERT"; emoji="🌟"; msg="Excellent! Your chunk instincts are sharp."; }
+else if(score>=800){ rank="💪 CHUNK PLAYER"; emoji="💪"; msg="Solid! A bit more practice and you'll be a master."; }
+else { rank="🌱 CHUNK ROOKIE"; emoji="🌱"; msg="Good start! Review the phrases and try again."; }
+document.getElementById('endEmoji').textContent=emoji;
+document.getElementById('endRank').textContent=rank;
+document.getElementById('endMsg').textContent=msg;
+document.getElementById('fScore').textContent=score;
+document.getElementById('fCorrect').textContent=correct;
+document.getElementById('fBest').textContent='🔥'+bestStreak;
+show('scr-end');
+}
+function restart(){ startGame(); }
+</script>
+</body>
+</html>
