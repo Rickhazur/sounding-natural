@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sentence Frames Carousel</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#F5F9FA;color:#123C46}
+.container{max-width:820px;margin:0 auto;padding:24px}
+.header{text-align:center;margin-bottom:20px}
+h1{color:#026A79;font-size:28px;margin-bottom:6px}
+.subtitle{color:#5a7a82;font-size:15px}
+.carousel{position:relative;background:#fff;border-radius:18px;box-shadow:0 4px 20px rgba(0,0,0,.1);overflow:hidden}
+.slide{display:none;animation:fade .4s}
+.slide.active{display:block}
+@keyframes fade{from{opacity:.4}to{opacity:1}}
+.slide img{width:100%;height:auto;display:block;max-height:400px;object-fit:cover}
+.slide-info{padding:24px 28px;text-align:center}
+.frame-tag{display:inline-block;background:#E8AA28;color:#123C46;font-size:13px;font-weight:bold;padding:6px 16px;border-radius:20px;margin-bottom:10px}
+.frame-text{font-size:24px;color:#026A79;font-weight:bold;margin-bottom:8px}
+.frame-use{font-size:15px;color:#5a7a82;margin-bottom:6px}
+.frame-ex{font-size:15px;background:#EAF7F6;border-radius:8px;padding:12px 16px;margin:10px auto;max-width:560px;text-align:left}
+.frame-ex strong{color:#026A79}
+.audio-btn{background:#E8AA28;border:none;border-radius:50%;width:60px;height:60px;font-size:26px;cursor:pointer;margin-top:8px}
+.audio-btn:hover{background:#d1941f}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:16px 24px;background:#fff;border-top:1px solid #e8f0f1}
+.arrow{background:#026A79;color:#fff;border:none;width:48px;height:48px;border-radius:50%;font-size:22px;cursor:pointer}
+.arrow:hover{background:#025F6D}
+.arrow:disabled{opacity:.3;cursor:default}
+.dots{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.dot{width:10px;height:10px;border-radius:50%;background:#d0e4e6;cursor:pointer;border:none;padding:0}
+.dot.active{background:#E8AA28}
+.counter{font-size:14px;color:#8a9fa5;font-weight:bold;text-align:center;margin-top:12px}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<h1>10 Sentence Frames</h1>
+<p class="subtitle">See each frame in action. Tap the speaker to hear it.</p>
+</div>
+<div class="carousel">
+<div id="slides"></div>
+<div class="nav">
+<button class="arrow" id="prev" onclick="go(-1)">&#8592;</button>
+<div class="dots" id="dots"></div>
+<button class="arrow" id="next" onclick="go(1)">&#8594;</button>
+</div>
+</div>
+<div class="counter" id="counter">1 / 10</div>
+</div>
+<script>
+var frames=[
+{img:"img/lesson3/frame-1-dialogue.webp",audio:"audio/lesson3-frames/frame-1-FINAL.mp3",frame:"What I'm trying to say is ___",use:"Clarify when someone misunderstands.",ex:"What I'm trying to say is, we need more time, not more people."},
+{img:"img/lesson3/frame-2-dialogue.webp",audio:"audio/lesson3-frames/frame-2-FINAL.mp3",frame:"The problem is ___",use:"Name an issue directly.",ex:"The problem is, the data doesn't support our conclusion."},
+{img:"img/lesson3/frame-3-dialogue.webp",audio:"audio/lesson3-frames/frame-3-FINAL.mp3",frame:"The reason I'm asking is ___",use:"Explain a sensitive question.",ex:"The reason I'm asking is, the client changed the requirements."},
+{img:"img/lesson3/frame-4-dialogue.webp",audio:"audio/lesson3-frames/frame-4-FINAL.mp3",frame:"What I mean is ___",use:"Restate more simply.",ex:"What I mean is, focus on quality over speed."},
+{img:"img/lesson3/frame-5-dialogue.webp",audio:"audio/lesson3-frames/frame-5-FINAL.mp3",frame:"The way I see it, ___",use:"Share your perspective.",ex:"The way I see it, remote work boosts productivity."},
+{img:"img/lesson3/frame-6-dialogue.webp",audio:"audio/lesson3-frames/frame-6-FINAL.mp3",frame:"If you ask me, ___",use:"Give your honest opinion.",ex:"If you ask me, we should hire two more developers."},
+{img:"img/lesson3/frame-7-dialogue.webp",audio:"audio/lesson3-frames/frame-7-FINAL.mp3",frame:"As far as I know, ___",use:"Share info with caution.",ex:"As far as I know, the launch is on schedule."},
+{img:"img/lesson3/frame-8-dialogue.webp",audio:"audio/lesson3-frames/frame-8-FINAL.mp3",frame:"The good news is ___",use:"Deliver positive updates.",ex:"The good news is, we finished ahead of schedule."},
+{img:"img/lesson3/frame-9-dialogue.webp",audio:"audio/lesson3-frames/frame-9-FINAL.mp3",frame:"The bad news is ___",use:"Deliver difficult news.",ex:"The bad news is, we need to cut the budget."},
+{img:"img/lesson3/frame-10-dialogue.webp",audio:"audio/lesson3-frames/frame-10-FINAL.mp3",frame:"What happens next is ___",use:"Outline next steps.",ex:"What happens next is, I'll send the revised proposal."}
+];
+var cur=0,aud=null;
+function render(){
+var s=document.getElementById('slides');s.innerHTML='';
+for(var i=0;i<frames.length;i++){
+var f=frames[i],d=document.createElement('div');
+d.className='slide'+(i===cur?' active':'');
+d.innerHTML='<img src="'+f.img+'" alt="Frame '+(i+1)+'" onerror="this.style.display=\'none\'">'
++'<div class="slide-info"><div class="frame-tag">FRAME '+(i+1)+'</div>'
++'<div class="frame-text">'+f.frame+'</div>'
++'<div class="frame-use">'+f.use+'</div>'
++'<div class="frame-ex"><strong>Example:</strong> '+f.ex+'</div>'
++'<button class="audio-btn" onclick="playA('+i+')">&#128266;</button></div>';
+s.appendChild(d);
+}
+var dt=document.getElementById('dots');dt.innerHTML='';
+for(var j=0;j<frames.length;j++){
+(function(idx){
+var b=document.createElement('button');
+b.className='dot'+(idx===cur?' active':'');
+b.onclick=function(){stopA();cur=idx;render();};
+dt.appendChild(b);
+})(j);
+}
+document.getElementById('counter').textContent=(cur+1)+' / '+frames.length;
+document.getElementById('prev').disabled=cur===0;
+document.getElementById('next').disabled=cur===frames.length-1;
+}
+function playA(i){stopA();aud=new Audio(frames[i].audio);aud.play();}
+function stopA(){if(aud){aud.pause();aud=null;}}
+function go(d){stopA();cur=Math.max(0,Math.min(frames.length-1,cur+d));render();}
+document.addEventListener('keydown',function(e){if(e.key==='ArrowLeft')go(-1);if(e.key==='ArrowRight')go(1);});
+render();
+</script>
+</body>
+</html>
