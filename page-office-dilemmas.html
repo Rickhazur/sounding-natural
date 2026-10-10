@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Office Dilemmas — 18 Phrases in Action</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#F7FAFA;color:#123C46;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px}
+#app{width:100%;max-width:680px}
+.screen{display:none;animation:fadeIn .5s ease}
+.screen.active{display:block}
+h1{color:#026A79;text-align:center;font-size:1.7rem;margin:12px 0 4px}
+.sub{color:#5a7a82;text-align:center;margin-bottom:20px;font-size:.95rem}
+.btn{background:#026A79;color:#fff;border:none;padding:14px 44px;font-size:1.05rem;border-radius:12px;cursor:pointer;font-weight:bold;transition:all .2s}
+.btn:hover{background:#E8AA28;color:#123C46;transform:scale(1.03)}
+.btn-gold{background:#E8AA28;color:#123C46}
+.btn-gold:hover{background:#026A79;color:#fff}
+.scenario{background:#fff;border:3px solid #026A79;border-radius:20px;overflow:hidden;margin:16px 0;box-shadow:0 4px 16px rgba(2,106,121,.1)}
+.scenario-head{background:linear-gradient(135deg,#026A79,#038a9c);color:#fff;padding:16px 20px;display:flex;align-items:center;gap:12px}
+.scenario-head .avatar{width:48px;height:48px;border-radius:50%;background:#E8AA28;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+.scenario-head .who{flex:1}
+.scenario-head .who .name{font-weight:bold;font-size:.95rem}
+.scenario-head .who .role{font-size:.78rem;opacity:.85}
+.scenario-head .num{background:rgba(255,255,255,.2);padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:bold}
+.dialogue{padding:24px 20px;background:#F0F7F7;border-bottom:2px solid #EBF0F0}
+.dialogue .bubble{background:#fff;border:2px solid #EBF0F0;border-radius:4px 18px 18px 18px;padding:16px 20px;font-size:1.08rem;line-height:1.6;color:#123C46;max-width:90%;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.dialogue .label{font-size:.75rem;color:#8ab0b8;font-weight:bold;letter-spacing:1px;margin-bottom:8px}
+.prompt{padding:18px 20px 6px;color:#026A79;font-weight:bold;font-size:.95rem}
+.options{padding:12px 20px 24px;display:grid;gap:12px}
+.option{background:#fff;border:2px solid #EBF0F0;border-radius:14px;padding:16px 18px;cursor:pointer;transition:all .25s;display:flex;gap:14px;align-items:flex-start;text-align:left;width:100%;font-family:inherit;font-size:1rem}
+.option:hover:not(:disabled){border-color:#026A79;transform:translateX(6px);box-shadow:0 4px 12px rgba(2,106,121,.12)}
+.option:disabled{cursor:default}
+.option .n{background:#EBF0F0;color:#026A79;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;flex-shrink:0;transition:all .2s}
+.option.correct{border-color:#1B8A6B;background:rgba(27,138,107,.06)}
+.option.correct .n{background:#1B8A6B;color:#fff}
+.option.wrong{border-color:#C0392B;background:rgba(192,57,43,.05)}
+.option.wrong .n{background:#C0392B;color:#fff}
+.option.dim{opacity:.45}
+.feedback{margin:0 20px 20px;padding:16px 20px;border-radius:14px;display:none;animation:fadeIn .4s ease}
+.feedback.show{display:block}
+.feedback.good{background:rgba(27,138,107,.08);border:2px solid #1B8A6B}
+.feedback.bad{background:rgba(192,57,43,.06);border:2px solid #C0392B}
+.feedback h4{margin-bottom:8px;font-size:1rem}
+.feedback.good h4{color:#1B8A6B}
+.feedback.bad h4{color:#C0392B}
+.feedback p{color:#5a7a82;font-size:.92rem;line-height:1.6}
+.feedback .chunk-hl{background:#E8AA28;color:#123C46;padding:1px 8px;border-radius:6px;font-weight:bold}
+.progress-bar{background:#EBF0F0;border-radius:10px;height:10px;margin:12px 0;overflow:hidden}
+.progress-fill{background:linear-gradient(90deg,#026A79,#E8AA28);height:100%;width:0%;transition:width .4s;border-radius:10px}
+.score-line{text-align:center;color:#5a7a82;font-size:.88rem;margin-bottom:8px}
+.score-line strong{color:#026A79}
+.result-emoji{font-size:4rem;text-align:center;margin:20px 0;animation:bounce 1s ease infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}
+.score-card{background:#fff;border:2px solid #EBF0F0;border-radius:14px;padding:18px;text-align:center}
+.score-card .n{font-size:1.8rem;font-weight:bold;color:#026A79}
+.score-card .l{font-size:.82rem;color:#5a7a82}
+.center{text-align:center}
+.phrase-tag{display:inline-block;background:rgba(2,106,121,.08);color:#026A79;font-size:.72rem;font-weight:bold;padding:3px 12px;border-radius:12px;margin-bottom:8px}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.next-btn-row{text-align:center;margin:8px 0 16px}
+</style>
+</head>
+<body>
+<div id="app">
+
+<div class="screen active" id="scr-start">
+<h1>💼 Office Dilemmas</h1>
+<p class="sub">6 scenarios. <strong>All 18 phrases</strong> in action.<br>Choose the most <strong>natural</strong> response — not the most grammatical, the most <em>human</em>.</p>
+<div style="text-align:center;margin:24px 0"><div style="font-size:3rem">🏢</div></div>
+<div class="center"><button class="btn btn-gold" onclick="startGame()">Start Scenario 1 →</button></div>
+</div>
+
+<div class="screen" id="scr-game">
+<div class="score-line">Scenario <strong id="sNum">1</strong> of 6 &nbsp;·&nbsp; Score: <strong id="sScore">0</strong></div>
+<div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+<div class="scenario">
+<div class="scenario-head">
+<div class="avatar" id="sAvatar">👩‍💼</div>
+<div class="who"><div class="name" id="sName">Sarah</div><div class="role" id="sRole">Project Manager</div></div>
+<div class="num" id="sTag">SCENARIO 1</div>
+</div>
+<div class="dialogue">
+<div class="label">💬 THEY SAY:</div>
+<div class="bubble" id="sDialogue"></div>
+</div>
+<div class="prompt">🎯 YOUR RESPONSE — pick the most natural one:</div>
+<div class="options" id="sOptions"></div>
+<div class="feedback" id="sFeedback"></div>
+<div class="next-btn-row"><button class="btn" id="btnNext" style="display:none" onclick="nextScenario()">Next →</button></div>
+</div>
+</div>
+
+<div class="screen" id="scr-end">
+<div class="result-emoji" id="endEmoji">🏆</div>
+<h1 id="endTitle">Great instincts!</h1>
+<p class="sub" id="endMsg"></p>
+<div class="score-grid">
+<div class="score-card"><div class="n" id="fScore">0/6</div><div class="l">Natural choices</div></div>
+<div class="score-card"><div class="n">6</div><div class="l">Scenarios</div></div>
+<div class="score-card"><div class="n">18</div><div class="l">Phrases in action</div></div>
+</div>
+<div class="center"><button class="btn" onclick="restart()">🔄 Try Again</button></div>
+</div>
+
+</div>
+
+<script>
+const SCENARIOS = [
+// 1 - Collocations: make a decision / take a break / heavy rain
+{
+avatar:"👩‍💼", name:"Sarah", role:"Project Manager",
+dialogue:"We've been in this meeting for three hours. I can't think anymore.",
+options:[
+{t:"Let's take a break and make a decision after lunch.", correct:true, tag:"COLLOCATIONS",
+ fb:"<strong>Perfect!</strong> Two natural collocations: <span class='chunk-hl'>take a break</span> + <span class='chunk-hl'>make a decision</span>. This is exactly how a native speaker sounds."},
+{t:"Let's do a pause and create a decision after lunch.", correct:false, tag:"—",
+ fb:"Wrong word pairs! <span class='chunk-hl'>Do a pause</span> and <span class='chunk-hl'>create a decision</span> sound unnatural. Collocations are fixed — <span class='chunk-hl'>take a break</span>, <span class='chunk-hl'>make a decision</span>."},
+{t:"No matter what, we continue now.", correct:false, tag:"—",
+ fb:"Too harsh! <span class='chunk-hl'>No matter what</span> ignores that the team is exhausted. A good leader reads the room."}
+]},
+ // 2 - Collocations: strong coffee / heavy rain
+{
+avatar:"👨‍💻", name:"Diego", role:"Teammate",
+dialogue:"I couldn't sleep last night because of the storm. I'm useless today.",
+options:[
+{t:"You need a strong coffee. The heavy rain kept me up too.", correct:true, tag:"COLLOCATIONS",
+ fb:"<strong>Natural!</strong> <span class='chunk-hl'>Strong coffee</span> (not 'powerful coffee') and <span class='chunk-hl'>heavy rain</span> (not 'strong rain') — collocations native speakers never mix up."},
+{t:"You need a powerful coffee. The strong rain kept me up too.", correct:false, tag:"—",
+ fb:"Swapped! It's <span class='chunk-hl'>strong coffee</span> but <span class='chunk-hl'>heavy rain</span>. Mixing them is the classic collocation mistake."},
+{t:"At the end of the day, sleep is sleep.", correct:false, tag:"—",
+ fb:"Dismissive and the chunk doesn't fit. <span class='chunk-hl'>At the end of the day</span> gives perspective, not comfort to someone exhausted."}
+]},
+ // 3 - Idioms: break the ice / spill the beans
+{
+avatar:"👩‍💻", name:"Ana", role:"New Colleague",
+dialogue:"It's my first day and I don't know anyone here. This is awkward.",
+options:[
+{t:"Don't worry! Let me break the ice — spill the beans, what do you do for fun?", correct:true, tag:"IDIOMS",
+ fb:"<strong>Friendly and natural!</strong> <span class='chunk-hl'>Break the ice</span> (start a conversation) + <span class='chunk-hl'>spill the beans</span> (tell me more) — warm, human, idiomatic."},
+{t:"Don't worry! Let me break the glass — drop the beans, what do you do?", correct:false, tag:"—",
+ fb:"Broken idioms! It's <span class='chunk-hl'>break the ICE</span> and <span class='chunk-hl'>spill the BEANS</span>. Idioms can't be translated word by word — memorize them whole."},
+{t:"In other words, you're new.", correct:false, tag:"—",
+ fb:"Cold! <span class='chunk-hl'>In other words</span> just restates the obvious. She needs warmth, not a summary."}
+]},
+ // 4 - Idioms: cost an arm and a leg / hit the nail on the head
+{
+avatar:"🧑‍💼", name:"Mr. Chen", role:"Regional Director",
+dialogue:"Your analysis of the budget problem was exactly right. But the solution seems expensive.",
+options:[
+{t:"You hit the nail on the head — and yes, it will cost an arm and a leg.", correct:true, tag:"IDIOMS",
+ fb:"<strong>Brilliant!</strong> <span class='chunk-hl'>Hit the nail on the head</span> (exactly right) + <span class='chunk-hl'>cost an arm and a leg</span> (very expensive). Two idioms, one confident answer."},
+{t:"You hit the hammer on the head — and yes, it will cost a foot and a hand.", correct:false, tag:"—",
+ fb:"Mixed-up idioms! It's <span class='chunk-hl'>hit the NAIL on the head</span> and <span class='chunk-hl'>cost an ARM and a LEG</span>. Idioms are frozen — one wrong word breaks them."},
+{t:"To be honest, money is money.", correct:false, tag:"—",
+ fb:"Vague and unhelpful. He praised your analysis — match his level with precise, confident language."}
+]},
+ // 5 - Fixed phrases: as a matter of fact / by the way / for what it's worth / as soon as possible
+{
+avatar:"👩‍💼", name:"Sarah", role:"Project Manager",
+dialogue:"The client wants the proposal tomorrow. Can you handle it?",
+options:[
+{t:"As a matter of fact, it's almost done. By the way, for what it's worth, I added extra data.", correct:true, tag:"FIXED PHRASES",
+ fb:"<strong>Smooth!</strong> <span class='chunk-hl'>As a matter of fact</span> (surprising fact) + <span class='chunk-hl'>by the way</span> (new topic) + <span class='chunk-hl'>for what it's worth</span> (softening) — three fixed phrases flowing naturally."},
+{t:"I need it as soon as possible, no matter what happens today.", correct:false, tag:"—",
+ fb:"Wrong direction! SHE asked YOU. <span class='chunk-hl'>As soon as possible</span> + <span class='chunk-hl'>no matter what</span> sounds like you're giving orders back."},
+{t:"On the other hand, tomorrow is tomorrow.", correct:false, tag:"—",
+ fb:"Empty! <span class='chunk-hl'>On the other hand</span> needs a contrast — and 'tomorrow is tomorrow' says nothing."}
+]},
+ // 6 - Sentence frames + fixed: the thing is / to be honest / at the end of the day / in other words
+{
+avatar:"👨‍💻", name:"Diego", role:"Teammate",
+dialogue:"Should we tell the client the truth about the delay?",
+options:[
+{t:"To be honest, yes. The thing is, at the end of the day, honesty builds trust.", correct:true, tag:"SENTENCE FRAMES",
+ fb:"<strong>Masterful!</strong> <span class='chunk-hl'>To be honest</span> + <span class='chunk-hl'>the thing is</span> + <span class='chunk-hl'>at the end of the day</span> — three sentence frames building one powerful, professional answer."},
+{t:"In other words, maybe we should maybe tell them something.", correct:false, tag:"—",
+ fb:"Weak! <span class='chunk-hl'>In other words</span> restates — but 'maybe... maybe... something' is vague. Frames need confident completions."},
+{t:"For what it's worth, delays are delays.", correct:false, tag:"—",
+ fb:"A shrug, not an answer. <span class='chunk-hl'>For what it's worth</span> softens opinions — but you still need a real opinion!"}
+]}
+];
+
+let idx = 0, score = 0, answered = false;
+const TOTAL = SCENARIOS.length;
+
+function show(id){
+document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+}
+function startGame(){ idx=0; score=0; show('scr-game'); render(); }
+function render(){
+answered = false;
+const s = SCENARIOS[idx];
+document.getElementById('sNum').textContent = idx+1;
+document.querySelector('.score-line').innerHTML = `Scenario <strong>${idx+1}</strong> of ${TOTAL} &nbsp;·&nbsp; Score: <strong id="sScore">${score}</strong>`;
+document.getElementById('pfill').style.width = (idx/TOTAL*100)+'%';
+document.getElementById('sAvatar').textContent = s.avatar;
+document.getElementById('sName').textContent = s.name;
+document.getElementById('sRole').textContent = s.role;
+document.getElementById('sTag').textContent = 'SCENARIO '+(idx+1);
+const dEl = document.getElementById('sDialogue');
+dEl.textContent = '';
+let ci = 0;
+const tw = setInterval(()=>{
+if(ci >= s.dialogue.length){ clearInterval(tw); return; }
+dEl.textContent += s.dialogue[ci]; ci++;
+}, 16);
+const oEl = document.getElementById('sOptions');
+oEl.innerHTML = '';
+s.options.forEach((o, oi)=>{
+const b = document.createElement('button');
+b.className = 'option'; b.id = 'opt'+oi;
+b.innerHTML = `<div class="n">${oi+1}</div><div>${o.tag!=='—' ? `<div class="phrase-tag">${o.tag}</div>` : ''}<div>${o.t}</div></div>`;
+b.onclick = ()=>answer(oi);
+oEl.appendChild(b);
+});
+document.getElementById('sFeedback').className = 'feedback';
+document.getElementById('sFeedback').innerHTML = '';
+const nb = document.getElementById('btnNext');
+nb.style.display = 'none';
+nb.textContent = idx===TOTAL-1 ? 'See Results →' : 'Next Scenario →';
+}
+function answer(oi){
+if(answered) return;
+answered = true;
+const s = SCENARIOS[idx];
+const o = s.options[oi];
+s.options.forEach((_, i)=>{
+const b = document.getElementById('opt'+i);
+b.disabled = true;
+if(s.options[i].correct){ b.classList.add('correct'); }
+else if(i===oi){ b.classList.add('wrong'); }
+else { b.classList.add('dim'); }
+});
+const fb = document.getElementById('sFeedback');
+fb.className = 'feedback show ' + (o.correct ? 'good' : 'bad');
+fb.innerHTML = `<h4>${o.correct ? '✅ Natural choice!' : '❌ Not quite...'}</h4><p>${o.fb}</p>`;
+if(o.correct) score++;
+document.getElementById('sScore').textContent = score;
+document.getElementById('pfill').style.width = ((idx+1)/TOTAL*100)+'%';
+document.getElementById('btnNext').style.display = 'inline-block';
+}
+function nextScenario(){
+if(idx < TOTAL-1){ idx++; render(); }
+else { showResults(); }
+}
+function showResults(){
+const pct = score/TOTAL;
+let d;
+if(pct===1) d={e:"🏆", t:"Flawless!", m:"All 18 phrases at your command. You think like a native speaker."};
+else if(pct>=0.66) d={e:"🌟", t:"Excellent!", m:"You clearly understand how all 18 phrases work in real conversations."};
+else if(pct>=0.4) d={e:"💪", t:"Good effort!", m:"Review the feedback — understanding WHY is how you improve."};
+else d={e:"🔄", t:"Try again!", m:"Replay and pay attention to what each phrase really does."};
+document.getElementById('endEmoji').textContent = d.e;
+document.getElementById('endTitle').textContent = d.t;
+document.getElementById('endMsg').textContent = d.m;
+document.getElementById('fScore').textContent = score+'/'+TOTAL;
+show('scr-end');
+}
+function restart(){ idx=0; score=0; show('scr-game'); render(); }
+</script>
+</body>
+</html>
