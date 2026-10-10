@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pronunciation Carousel — 10 Chunks</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#F7FAFA;color:#123C46;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px}
+#app{width:100%;max-width:720px}
+h1{color:#026A79;text-align:center;font-size:1.6rem;margin:12px 0 4px}
+.sub{color:#5a7a82;text-align:center;font-size:.92rem;margin-bottom:20px}
+.carousel{position:relative;background:#fff;border:3px solid #026A79;border-radius:20px;padding:36px 24px 28px;min-height:480px;overflow:hidden}
+.slide{display:none;animation:slideIn .45s ease}
+.slide.active{display:block}
+@keyframes slideIn{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+.slide-num{text-align:center;color:#8ab0b8;font-size:.82rem;font-weight:bold;letter-spacing:2px;margin-bottom:8px}
+.chunk-title{text-align:center;font-size:1.5rem;color:#123C46;margin-bottom:4px}
+.chunk-meaning{text-align:center;color:#5a7a82;font-size:.9rem;font-style:italic;margin-bottom:24px}
+.words-row{display:flex;justify-content:center;align-items:flex-start;flex-wrap:wrap;gap:4px;margin:20px 0}
+.word-box{display:flex;flex-direction:column;align-items:center;position:relative}
+.word{background:#EDF2F2;color:#7a9096;padding:12px 20px;border-radius:14px;font-size:1.4rem;font-weight:bold;min-width:70px;text-align:center}
+.word.loud{background:#026A79;color:#fff}
+.word-reduced{font-size:.82rem;color:#9aabab;margin-top:6px;height:20px}
+.stress-mark{color:#E8AA28;font-size:1rem;height:18px;margin-bottom:2px}
+.link-arrow{color:#E8AA28;font-size:1.6rem;font-weight:bold;align-self:center;margin:0 2px;padding-top:18px}
+.say-it{text-align:center;margin:24px 0 8px}
+.say-it .label{font-size:1.05rem;font-weight:bold;color:#123C46;margin-bottom:6px}
+.say-it .phon{font-size:1.7rem;font-weight:bold;color:#026A79;letter-spacing:1px}
+.legend{text-align:center;color:#9aabab;font-size:.8rem;margin:16px 0}
+.audio-row{text-align:center;margin:16px 0}
+.play-btn{background:#026A79;color:#fff;border:none;width:64px;height:64px;border-radius:50%;font-size:1.6rem;cursor:pointer;transition:all .2s}
+.play-btn:hover{transform:scale(1.08);background:#E8AA28;color:#123C46}
+.play-btn.playing{animation:pulseGlow 1.2s infinite}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 0 0 rgba(2,106,121,.4)}50%{box-shadow:0 0 0 12px rgba(2,106,121,0)}}
+.nav{display:flex;justify-content:space-between;align-items:center;margin-top:20px}
+.nav-btn{background:#fff;border:2px solid #026A79;color:#026A79;padding:10px 28px;border-radius:10px;cursor:pointer;font-weight:bold;font-size:.95rem;transition:all .2s}
+.nav-btn:hover:not(:disabled){background:#026A79;color:#fff}
+.nav-btn:disabled{opacity:.25;cursor:not-allowed}
+.dots{display:flex;justify-content:center;gap:8px;margin-top:18px}
+.dot{width:12px;height:12px;border-radius:50%;background:#D4E8EB;cursor:pointer;transition:all .2s}
+.dot.active{background:#E8AA28;transform:scale(1.3)}
+.example{background:rgba(2,106,121,.05);border-radius:12px;padding:14px 18px;margin:16px 0;text-align:center}
+.example p{color:#5a7a82;font-size:.9rem;font-style:italic}
+.example strong{color:#026A79}
+</style>
+</head>
+<body>
+<div id="app">
+<h1>🔊 Pronunciation Lab</h1>
+<p class="sub">Swipe through all 10 chunks — tap 🔊 to hear each one</p>
+<div class="carousel" id="carousel"></div>
+<div class="nav">
+<button class="nav-btn" id="btnPrev" onclick="go(-1)">← Prev</button>
+<button class="nav-btn" id="btnNext" onclick="go(1)">Next →</button>
+</div>
+<div class="dots" id="dots"></div>
+</div>
+
+<script>
+const AUDIO_BASE = "";
+const CHUNKS = [
+{w:[["as","az",0],["a","uh",0],["matter","",1],["of","uv",0],["fact","",1]], say:"uh-zuh-MA-duh-ruv-FACT", title:"As a matter of fact", meaning:"Actually; introducing a surprising fact", ex:"I don't like coffee. <strong>As a matter of fact</strong>, I can't stand it.", audio:"chunk-01-FINAL.mp3"},
+{w:[["at","",0],["the","",0],["end","",1],["of","uv",0],["the","thuh",0],["day","",1]], say:"ut-thee-END-uv-thuh-DAY", title:"At the end of the day", meaning:"When everything is considered", ex:"<strong>At the end of the day</strong>, what matters is your health.", audio:"chunk-02-FINAL.mp3"},
+{w:[["by","",0],["the","thuh",0],["way","",1]], say:"by-thuh-WAY", title:"By the way", meaning:"Introducing a new topic", ex:"<strong>By the way</strong>, did you see the game last night?", audio:"chunk-03-FINAL.mp3"},
+{w:[["for","fer",0],["what","wuh",0],["it's","its",0],["worth","",1]], say:"fer-wuh-tits-WURTH", title:"For what it's worth", meaning:"Softening an opinion", ex:"<strong>For what it's worth</strong>, I think you should take the job.", audio:"chunk-04-FINAL.mp3"},
+{w:[["in","ih",0],["other","",1],["words","",1]], say:"ih-NUH-thur-WURDZ", title:"In other words", meaning:"Restating more simply", ex:"He's not coming. <strong>In other words</strong>, we're on our own.", audio:"chunk-05-FINAL.mp3"},
+{w:[["on","",0],["the","thee",0],["other","",0],["hand","",1]], say:"on-thee-UH-thur-HAND", title:"On the other hand", meaning:"Presenting the opposite view", ex:"It's expensive. <strong>On the other hand</strong>, it lasts forever.", audio:"chunk-06-FINAL.mp3"},
+{w:[["to","tuh",0],["be","bee",0],["honest","",1]], say:"tuh-bee-AH-nist", title:"To be honest", meaning:"A frank opinion is coming", ex:"<strong>To be honest</strong>, I didn't enjoy the movie.", audio:"chunk-07-FINAL.mp3"},
+{w:[["as","az",0],["soon","",1],["as","az",0],["possible","",1]], say:"uhz-SOON-uhz-PAH-sih-buhl", title:"As soon as possible", meaning:"Urgently, without delay", ex:"Please send the report <strong>as soon as possible</strong>.", audio:"chunk-08-FINAL.mp3"},
+{w:[["no","",0],["matter","",1],["what","wut",0]], say:"no-MA-duh-WUT", title:"No matter what", meaning:"Regardless of circumstances", ex:"I'll finish this project, <strong>no matter what</strong>.", audio:"chunk-09-FINAL.mp3"},
+{w:[["the","thuh",0],["thing","",1],["is","iz",0]], say:"thuh-THING-iz", title:"The thing is", meaning:"Introducing the real point", ex:"<strong>The thing is</strong>, we don't have enough time.", audio:"chunk-10-FINAL.mp3"}
+];
+
+let idx = 0;
+let currentAudio = null;
+let currentBtn = null;
+
+function build(){
+const car = document.getElementById('carousel');
+const dots = document.getElementById('dots');
+CHUNKS.forEach((c, i)=>{
+// Slide
+const s = document.createElement('div');
+s.className = 'slide' + (i===0 ? ' active' : '');
+let wordsHtml = '';
+c.w.forEach(([word, reduced, loud], wi)=>{
+wordsHtml += `<div class="word-box">
+<div class="stress-mark">${loud?'▲':''}</div>
+<div class="word${loud?' loud':''}">${word}</div>
+<div class="word-reduced">${reduced?'→ "'+reduced+'"':''}</div>
+</div>`;
+if(wi < c.w.length-1) wordsHtml += `<div class="link-arrow">‿</div>`;
+});
+s.innerHTML = `
+<div class="slide-num">CHUNK ${i+1} / 10</div>
+<div class="chunk-title">${c.title}</div>
+<div class="chunk-meaning">${c.meaning}</div>
+<div class="words-row">${wordsHtml}</div>
+<div class="say-it"><div class="label">Say it:</div><div class="phon">${c.say}</div></div>
+<div class="legend">teal = LOUD &nbsp;·&nbsp; gray = soft & reduced &nbsp;·&nbsp; ▲ = stress &nbsp;·&nbsp; ‿ = link together</div>
+<div class="audio-row"><button class="play-btn" onclick="playChunk(${i}, this)">🔊</button></div>
+<div class="example"><p>${c.ex}</p></div>`;
+car.appendChild(s);
+// Dot
+const d = document.createElement('div');
+d.className = 'dot' + (i===0 ? ' active' : '');
+d.onclick = ()=>goTo(i);
+dots.appendChild(d);
+});
+updateNav();
+}
+function playChunk(i, btn){
+if(currentAudio){ currentAudio.pause(); currentAudio=null; }
+if(currentBtn){ currentBtn.textContent='🔊'; currentBtn.classList.remove('playing'); }
+if(currentBtn===btn){ currentBtn=null; return; } // toggle off
+currentBtn = btn;
+currentAudio = new Audio(AUDIO_BASE + CHUNKS[i].audio);
+btn.textContent='⏸'; btn.classList.add('playing');
+currentAudio.onended = ()=>{ btn.textContent='🔊'; btn.classList.remove('playing'); currentBtn=null; currentAudio=null; };
+currentAudio.play();
+}
+function goTo(i){
+if(currentAudio){ currentAudio.pause(); currentAudio=null; }
+if(currentBtn){ currentBtn.textContent='🔊'; currentBtn.classList.remove('playing'); currentBtn=null; }
+idx = i;
+document.querySelectorAll('.slide').forEach((s,si)=>s.classList.toggle('active', si===idx));
+document.querySelectorAll('.dot').forEach((d,di)=>d.classList.toggle('active', di===idx));
+updateNav();
+}
+function go(dir){
+const n = idx + dir;
+if(n>=0 && n<CHUNKS.length) goTo(n);
+}
+function updateNav(){
+document.getElementById('btnPrev').disabled = (idx===0);
+document.getElementById('btnNext').disabled = (idx===CHUNKS.length-1);
+}
+build();
+</script>
+</body>
+</html>
