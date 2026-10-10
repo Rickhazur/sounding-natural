@@ -33,9 +33,6 @@ h1 .one{background:#E8AA28;color:#123C46;padding:2px 12px;border-radius:8px}
 .phrase .num{background:var(--accent);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:bold;flex-shrink:0}
 .phrase .text{flex:1}
 .phrase .text .en{font-weight:bold;color:#123C46;font-size:1rem}
-.phrase .snd{background:#fff;border:2px solid var(--accent);color:var(--accent);width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:1rem;flex-shrink:0;transition:all .2s;display:flex;align-items:center;justify-content:center}
-.phrase .snd:hover{background:var(--accent);color:#fff}
-.phrase .snd.playing{animation:pulseGlow 1s infinite}
 @keyframes pulseGlow{0%,100%{box-shadow:0 0 0 0 rgba(0,0,0,.15)}50%{box-shadow:0 0 0 8px rgba(0,0,0,0)}}
 .hint{text-align:center;color:#9aabab;font-size:.82rem;margin-top:20px}
 :root{--teal:#026A79;--amber:#E8AA28}
@@ -48,7 +45,7 @@ h1 .one{background:#E8AA28;color:#123C46;padding:2px 12px;border-radius:8px}
 <h1>A chunk is a group of words your brain treats as <span class="one">ONE</span> unit.</h1>
 <p class="sub">👆 Click each card to discover its phrases</p>
 <div class="cards" id="cards"></div>
-<p class="hint">🔊 Tap the speaker icon to hear the pronunciation</p>
+
 </div>
 
 <script>
@@ -79,27 +76,26 @@ name:"FIXED PHRASES", tagline:"Social formulas",
 accent:"#E8AA28",
 def:"<strong>Fixed phrases</strong> are ready-made expressions for social situations. Memorize them as complete blocks — never change the words inside.",
 phrases:[
-{en:"As a matter of fact", audio:"chunk-01-FINAL.mp3"},
-{en:"By the way", audio:"chunk-03-FINAL.mp3"},
-{en:"For what it's worth", audio:"chunk-04-FINAL.mp3"},
-{en:"In other words", audio:"chunk-05-FINAL.mp3"},
-{en:"On the other hand", audio:"chunk-06-FINAL.mp3"},
-{en:"As soon as possible", audio:"chunk-08-FINAL.mp3"},
-{en:"No matter what", audio:"chunk-09-FINAL.mp3"}
+{en:"As a matter of fact"},
+{en:"By the way"},
+{en:"For what it's worth"},
+{en:"In other words"},
+{en:"On the other hand"},
+{en:"As soon as possible"},
+{en:"No matter what"}
 ]},
 {
 name:"SENTENCE FRAMES", tagline:"Skeletons you fill in",
 accent:"#1B8A6B",
 def:"<strong>Sentence frames</strong> are sentence starters with a blank space. Learn the frame once, then fill it with infinite ideas.",
 phrases:[
-{en:"At the end of the day, ___", audio:"chunk-02-FINAL.mp3"},
-{en:"To be honest, ___", audio:"chunk-07-FINAL.mp3"},
-{en:"The thing is, ___", audio:"chunk-10-FINAL.mp3"}
+{en:"At the end of the day, ___"},
+{en:"To be honest, ___"},
+{en:"The thing is, ___"}
 ]}
 ];
 
 let openIdx = -1;
-let curAudio = null, curBtn = null;
 
 function build(){
 const wrap = document.getElementById('cards');
@@ -112,7 +108,7 @@ t.phrases.forEach((p, pi)=>{
 ph += `<div class="phrase">
 <div class="num">${pi+1}</div>
 <div class="text"><div class="en">${p.en}</div></div>
-${p.audio ? `<button class="snd" onclick="event.stopPropagation();playSnd('${p.audio}',this)">🔊</button>` : ''}
+
 </div>`;
 });
 c.innerHTML = `
@@ -136,21 +132,9 @@ if(openIdx >= 0) cards[openIdx].classList.remove('open');
 cards[i].classList.add('open'); openIdx = i;
 setTimeout(()=>cards[i].scrollIntoView({behavior:'smooth',block:'nearest'}), 100);
 }
-stopSnd();
 }
-function playSnd(file, btn){
-stopSnd();
-if(curBtn === btn){ curBtn = null; return; }
-curBtn = btn;
-curAudio = new Audio(AUDIO_BASE + file);
-btn.classList.add('playing'); btn.textContent = '⏸';
-curAudio.onended = ()=>stopSnd();
-curAudio.play();
-}
-function stopSnd(){
-if(curAudio){ curAudio.pause(); curAudio = null; }
-if(curBtn){ curBtn.classList.remove('playing'); curBtn.textContent = '🔊'; curBtn = null; }
-}
+
+
 build();
 </script>
 </body>
