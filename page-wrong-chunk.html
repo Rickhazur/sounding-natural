@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Wrong Chunk</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#F5F9FA;color:#123C46;line-height:1.6}
+.container{max-width:780px;margin:0 auto;padding:24px}
+.header{text-align:center;margin-bottom:20px}
+h1{color:#026A79;font-size:30px;margin-bottom:8px}
+.subtitle{color:#5a7a82;font-size:16px;max-width:600px;margin:0 auto}
+.howto{background:#fff;border-radius:12px;padding:18px 22px;margin:0 auto 20px;max-width:600px;box-shadow:0 2px 8px rgba(0,0,0,.06);text-align:left}
+.howto h3{color:#026A79;font-size:16px;margin-bottom:10px}
+.howto ol{margin-left:20px;font-size:15px}
+.howto li{margin-bottom:6px}
+.topbar{display:flex;justify-content:space-between;align-items:center;background:#fff;border-radius:12px;padding:12px 20px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.dcount{font-weight:bold;color:#026A79}
+.score{font-size:22px;font-weight:bold;color:#E8AA28}
+.progress{display:flex;gap:8px;justify-content:center;margin-bottom:20px;flex-wrap:wrap}
+.dot{width:12px;height:12px;border-radius:50%;background:#d0e4e6}
+.dot.done{background:#2E9B4A}.dot.current{background:#E8AA28}
+.card{background:#fff;border-radius:16px;padding:28px;box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.dtag{display:inline-block;background:#EAF7F6;color:#026A79;font-size:13px;font-weight:bold;padding:6px 14px;border-radius:20px;margin-bottom:12px;letter-spacing:1px}
+.dtitle{font-size:22px;color:#026A79;margin-bottom:16px}
+.dialogue{background:#F5F9FA;border-radius:12px;padding:20px;margin-bottom:20px;font-size:16px}
+.dialogue .sp{font-weight:bold;color:#026A79}
+.wrong-chunk{background:#fdeaea;border:2px solid #D9534F;border-radius:6px;padding:2px 8px;font-weight:bold;color:#c0392b}
+.question{font-size:17px;font-weight:bold;margin-bottom:14px}
+.options{display:flex;flex-direction:column;gap:10px}
+.opt{background:#F5F9FA;border:2px solid #d0e4e6;border-radius:10px;padding:13px 18px;font-size:16px;cursor:pointer;text-align:left;font-family:inherit;color:#123C46;width:100%}
+.opt:hover:not(:disabled){border-color:#026A79;background:#EAF7F6}
+.opt:disabled{cursor:default;opacity:.7}
+.opt.right{border-color:#2E9B4A;background:#e8f7ee}
+.opt.wrongpick{border-color:#D9534F;background:#fdeaea}
+.feedback{margin-top:18px;padding:16px 20px;border-radius:12px;font-size:15.5px;display:none}
+.feedback.show{display:block}
+.feedback.good{background:#e8f7ee;border:1px solid #2E9B4A}
+.feedback.bad{background:#fdeaea;border:1px solid #D9534F}
+.feedback strong{display:block;margin-bottom:6px}
+.btn-next{display:none;margin-top:16px;background:#026A79;color:#fff;border:none;padding:14px;font-size:16px;font-weight:bold;border-radius:12px;cursor:pointer;font-family:inherit;width:100%}
+.btn-next.show{display:block}
+.final{display:none;text-align:center;background:#fff;border-radius:16px;padding:48px 32px;box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.final.show{display:block}
+.final-score{font-size:60px;font-weight:bold;color:#E8AA28;margin:12px 0}
+.final-rank{font-size:23px;color:#026A79;font-weight:bold;margin-bottom:12px}
+.final-msg{color:#5a7a82;max-width:480px;margin:0 auto 24px}
+.btn-restart{background:#026A79;color:#fff;border:none;padding:14px 40px;font-size:16px;font-weight:bold;border-radius:12px;cursor:pointer;font-family:inherit}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<h1>The Wrong Chunk</h1>
+<p class="subtitle">Someone used the wrong chunk. Spot the mistake and fix it like a professional.</p>
+</div>
+<div class="howto">
+<h3>How to play:</h3>
+<ol>
+<li><strong>Read</strong> the dialogue — one chunk is misused (highlighted in red).</li>
+<li><strong>Choose</strong> the correct chunk to replace it.</li>
+<li><strong>Learn</strong> why the original was wrong.</li>
+</ol>
+</div>
+<div class="topbar">
+<span class="dcount" id="dcount">Dialogue 1 of 9</span>
+<span>⭐ <span class="score" id="score">0</span></span>
+</div>
+<div class="progress" id="progress"></div>
+<div id="game"></div>
+<div class="final" id="final">
+<h1>Sharp Eye!</h1>
+<div class="final-score" id="final-score">0</div>
+<div class="final-rank" id="final-rank"></div>
+<p class="final-msg" id="final-msg"></p>
+<button class="btn-restart" onclick="location.reload()">Play Again</button>
+</div>
+</div>
+<script>
+var dialogues=[
+{tag:"NETWORKING",title:"First Impressions",
+lines:[["You","Let's <span class='wrong-chunk'>spill the beans</span> \u2014 hi, I'm Alex, the new manager!"]],
+q:"The highlighted chunk is wrong. What should it be?",
+options:["break the ice","hit the nail on the head","cost an arm and a leg"],answer:"break the ice",
+why:"<strong>Spill the beans</strong> means to reveal a secret \u2014 terrible for a first greeting! <strong>Break the ice</strong> means to start a friendly conversation."},
+{tag:"WEATHER TALK",title:"Monday Morning",
+lines:[["Colleague","That <span class='wrong-chunk'>strong rain</span> last night was crazy."],["You","Tell me about it!"]],
+q:"What's the correct collocation?",
+options:["heavy rain","strong rain","big rain"],answer:"heavy rain",
+why:"In English it's always <strong>heavy rain</strong> \u2014 never \u2018strong rain.\u2019 Collocations are fixed; you can't swap the adjective."},
+{tag:"DECISION TIME",title:"Team Meeting",
+lines:[["Manager","We need to <span class='wrong-chunk'>do a decision</span> before Friday."]],
+q:"What's the correct chunk?",
+options:["make a decision","take a decision","have a decision"],answer:"make a decision",
+why:"The correct collocation is <strong>make a decision</strong> \u2014 never \u2018do a decision.\u2019 This is one of the most common mistakes."},
+{tag:"BUDGET SHOCK",title:"Finance Review",
+lines:[["Analyst","The new licenses <span class='wrong-chunk'>break the ice</span> at $80,000."]],
+q:"The chunk doesn't fit the context. What should it be?",
+options:["cost an arm and a leg","spill the beans","take a break"],answer:"cost an arm and a leg",
+why:"<strong>Break the ice</strong> is for starting conversations. For shocking prices, use <strong>cost an arm and a leg</strong> (very expensive)."},
+{tag:"GIVING FEEDBACK",title:"Performance Review",
+lines:[["Manager","<span class='wrong-chunk'>Spill the beans</span> \u2014 your report was excellent."]],
+q:"Wrong chunk for praising. What's correct?",
+options:["hit the nail on the head","break the ice","take a break"],answer:"hit the nail on the head",
+why:"<strong>Spill the beans</strong> means revealing secrets. To praise accurate work, use <strong>hit the nail on the head</strong> (say exactly the right thing)."},
+{tag:"URGENT EMAIL",title:"Deadline Pressure",
+lines:[["Email","Please send the files <span class='wrong-chunk'>at the end of the day</span> \u2014 the client is waiting NOW."]],
+q:"This doesn't communicate urgency. Fix it:",
+options:["as soon as possible","no matter what","by the way"],answer:"as soon as possible",
+why:"<strong>At the end of the day</strong> means \u2018ultimately\u2019 \u2014 not urgent. <strong>As soon as possible</strong> is the professional urgency marker."},
+{tag:"MEETING PIVOT",title:"Changing Topics",
+lines:[["Lead","OK, budget's done. <span class='wrong-chunk'>In other words</span>, let's talk about hiring."]],
+q:"Wrong transition. What introduces a new topic?",
+options:["By the way","The thing is","To be honest"],answer:"By the way",
+why:"<strong>In other words</strong> restates the SAME idea. <strong>By the way</strong> introduces a NEW topic \u2014 that's what you need here."},
+{tag:"HONEST MOMENT",title:"Client Call",
+lines:[["You","<span class='wrong-chunk'>For what it's worth</span>, our system crashed last night."]],
+q:"Too soft for delivering bad news. Be direct:",
+options:["To be honest","On the other hand","As a matter of fact"],answer:"To be honest",
+why:"<strong>For what it's worth</strong> softens opinions as if they might not matter. Bad news needs direct honesty: <strong>to be honest</strong>."},
+{tag:"WRAPPING UP",title:"End of Meeting",
+lines:[["Lead","<span class='wrong-chunk'>By the way</span>, our main goal is customer satisfaction."]],
+q:"Wrong closer. What signals a final conclusion?",
+options:["At the end of the day","As soon as possible","No matter what"],answer:"At the end of the day",
+why:"<strong>By the way</strong> introduces NEW topics \u2014 wrong for closing. <strong>At the end of the day</strong> signals your bottom line."}
+];
+var cur=0,score=0,locked=false;
+function renderProgress(){var p=document.getElementById('progress');p.innerHTML='';for(var i=0;i<dialogues.length;i++){var d=document.createElement('div');d.className='dot'+(i<cur?' done':i===cur?' current':'');p.appendChild(d);}}
+function render(){
+locked=false;renderProgress();
+document.getElementById('dcount').textContent='Dialogue '+(cur+1)+' of '+dialogues.length;
+var d=dialogues[cur];
+var h='<div class="card">';
+h+='<div class="dtag">'+d.tag+'</div>';
+h+='<div class="dtitle">'+d.title+'</div>';
+h+='<div class="dialogue">';
+d.lines.forEach(function(l){h+='<p><span class="sp">'+l[0]+':</span> '+l[1]+'</p>';});
+h+='</div>';
+h+='<div class="question">'+d.q+'</div>';
+h+='<div class="options" id="opts">';
+d.options.forEach(function(o,i){h+='<button class="opt" onclick="answer('+i+')">'+o+'</button>';});
+h+='</div>';
+h+='<div class="feedback" id="fb"></div>';
+h+='<button class="btn-next" id="btn-next" onclick="next()">Next Dialogue \u2192</button>';
+h+='</div>';
+document.getElementById('game').innerHTML=h;
+}
+function answer(i){
+if(locked)return;locked=true;
+var d=dialogues[cur],btns=document.querySelectorAll('.opt'),fb=document.getElementById('fb');
+var picked=d.options[i];
+if(picked===d.answer){
+btns[i].classList.add('right');score+=15;
+document.getElementById('score').textContent=score;
+fb.className='feedback show good';
+fb.innerHTML='<strong>\u2705 +15 \u2014 Sharp eye!</strong>'+d.why;
+}else{
+btns[i].classList.add('wrongpick');
+for(var j=0;j<btns.length;j++){if(d.options[j]===d.answer)btns[j].classList.add('right');}
+fb.className='feedback show bad';
+fb.innerHTML='<strong>\u274C The correct answer is: '+d.answer+'</strong>'+d.why;
+}
+btns.forEach(function(b){b.disabled=true;});
+document.getElementById('btn-next').classList.add('show');
+}
+function next(){cur++;if(cur>=dialogues.length){showFinal();return;}render();window.scrollTo({top:0,behavior:'smooth'});}
+function showFinal(){
+document.getElementById('game').style.display='none';
+document.getElementById('progress').style.display='none';
+var fs=document.getElementById('final');fs.classList.add('show');
+document.getElementById('final-score').textContent=score;
+var max=dialogues.length*15,rank,msg;
+if(score>=max*0.9){rank='\ud83c\udfc6 Eagle Eye';msg='Incredible! You spot misused chunks instantly. You think like a native professional.';}
+else if(score>=max*0.7){rank='\ud83d\udd0d Sharp Observer';msg='Great! You catch most errors. Keep training your professional ear.';}
+else if(score>=max*0.5){rank='\ud83d\udcc8 Developing Eye';msg='Good start! Review why each chunk fits its context \u2014 that\\u2019s the key skill.';}
+else{rank='\ud83c\udf31 Keep Training';msg='Go back to Lesson 1, review the 18 chunks and their meanings, then try again.';}
+document.getElementById('final-rank').textContent=rank;
+document.getElementById('final-msg').textContent=msg;
+window.scrollTo({top:0,behavior:'smooth'});
+}
+render();
+</script>
+</body>
+</html>
