@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The New Manager — Lesson 2</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #F5F9FA; color: #123C46; line-height: 1.6; }
+  .container { max-width: 800px; margin: 0 auto; padding: 24px; }
+  .header { text-align: center; margin-bottom: 24px; }
+  .badge { display: inline-block; background: #026A79; color: #fff; padding: 8px 24px; border-radius: 20px; font-weight: bold; font-size: 14px; letter-spacing: 2px; margin-bottom: 12px; }
+  h1 { color: #026A79; font-size: 32px; margin-bottom: 8px; }
+  .subtitle { color: #5a7a82; font-size: 17px; }
+  .cred-bar { background: #fff; border-radius: 12px; padding: 12px 20px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .cred-label { font-weight: bold; color: #026A79; }
+  .cred-score { font-size: 24px; font-weight: bold; color: #E8AA28; }
+  .scene-card { background: #fff; border-radius: 16px; padding: 32px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); margin-bottom: 20px; }
+  .scene-num { color: #E8AA28; font-weight: bold; font-size: 14px; letter-spacing: 1px; margin-bottom: 8px; }
+  .scene-title { font-size: 24px; color: #026A79; margin-bottom: 16px; }
+  .situation { background: #EAF7F6; border-left: 4px solid #026A79; padding: 16px 20px; border-radius: 0 12px 12px 0; margin-bottom: 20px; font-size: 16px; }
+  .dialogue { margin-bottom: 20px; font-size: 16px; }
+  .dialogue .speaker { font-weight: bold; color: #026A79; }
+  .question { font-size: 18px; font-weight: bold; margin-bottom: 16px; color: #123C46; }
+  .options { display: flex; flex-direction: column; gap: 12px; }
+  .option { background: #F5F9FA; border: 2px solid #d0e4e6; border-radius: 12px; padding: 16px 20px; font-size: 17px; cursor: pointer; transition: all 0.2s; text-align: left; width: 100%; font-family: inherit; color: #123C46; }
+  .option:hover { border-color: #026A79; background: #EAF7F6; transform: translateY(-1px); }
+  .option:disabled { cursor: default; opacity: 0.7; }
+  .option.correct { border-color: #2E9B4A; background: #e8f7ee; }
+  .option.wrong { border-color: #D9534F; background: #fdeaea; }
+  .feedback { margin-top: 20px; padding: 16px 20px; border-radius: 12px; font-size: 16px; display: none; }
+  .feedback.show { display: block; }
+  .feedback.good { background: #e8f7ee; border: 1px solid #2E9B4A; }
+  .feedback.bad { background: #fdeaea; border: 1px solid #D9534F; }
+  .feedback strong { display: block; margin-bottom: 6px; font-size: 17px; }
+  .btn-next { display: none; margin-top: 20px; background: #E8AA28; color: #123C46; border: none; padding: 14px 40px; font-size: 17px; font-weight: bold; border-radius: 12px; cursor: pointer; font-family: inherit; }
+  .btn-next:hover { background: #d1941f; }
+  .btn-next.show { display: inline-block; }
+  .btn-retry { margin-top: 12px; background: #026A79; color: #fff; border: none; padding: 12px 32px; font-size: 16px; font-weight: bold; border-radius: 12px; cursor: pointer; font-family: inherit; display: none; }
+  .btn-retry.show { display: inline-block; }
+  .final-screen { display: none; text-align: center; background: #fff; border-radius: 16px; padding: 48px 32px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+  .final-screen.show { display: block; }
+  .final-score { font-size: 64px; font-weight: bold; color: #E8AA28; margin: 16px 0; }
+  .final-rank { font-size: 24px; color: #026A79; font-weight: bold; margin-bottom: 16px; }
+  .final-msg { font-size: 17px; color: #5a7a82; max-width: 500px; margin: 0 auto 24px; }
+  .btn-restart { background: #026A79; color: #fff; border: none; padding: 14px 40px; font-size: 17px; font-weight: bold; border-radius: 12px; cursor: pointer; font-family: inherit; }
+  .progress { display: flex; gap: 8px; margin-bottom: 20px; justify-content: center; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; background: #d0e4e6; }
+  .dot.done { background: #2E9B4A; }
+  .dot.current { background: #E8AA28; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="badge">LESSON 2</div>
+    <h1>The New Manager</h1>
+    <p class="subtitle">Your first week as a manager. Choose the right chunk for every situation.</p>
+  </div>
+  <div class="cred-bar">
+    <span class="cred-label">🏢 Professional Credibility</span>
+    <span class="cred-score" id="score">0</span>
+  </div>
+  <div class="progress" id="progress"></div>
+  <div id="game-area"></div>
+  <div class="final-screen" id="final-screen">
+    <div class="badge">WEEK COMPLETE</div>
+    <h1>Your First Week</h1>
+    <div class="final-score" id="final-score">0</div>
+    <div class="final-rank" id="final-rank"></div>
+    <p class="final-msg" id="final-msg"></p>
+    <button class="btn-restart" onclick="location.reload()">Play Again</button>
+  </div>
+</div>
+<script>
+const scenes = [
+  {
+    title: "Monday — The Networking Event",
+    situation: "It's your first day. You're at a company networking event and you don't know anyone. A colleague is standing alone by the coffee station.",
+    dialogue: '<p><span class="speaker">You</span> walk over with your coffee. You need to start a conversation naturally.</p>',
+    question: "What do you say first?",
+    options: [
+      { text: '"I\'ll <strong>break the ice</strong> — Hi, I\'m the new manager. How long have you been here?"', correct: true, explain: "Perfect. <strong>Break the ice</strong> means to start a conversation in a friendly way — exactly what you need at a networking event." },
+      { text: '"I\'ll <strong>spill the beans</strong> — Hi, let me tell you a secret about the company."', correct: false, explain: "<strong>Spill the beans</strong> means to reveal a secret. Terrible choice for meeting someone for the first time!" },
+      { text: '"This coffee <strong>cost an arm and a leg</strong>, right?"', correct: false, explain: "<strong>Cost an arm and a leg</strong> means very expensive. It's free office coffee — this makes no sense here." }
+    ]
+  },
+  {
+    title: "Monday Afternoon — Small Talk",
+    situation: "You're chatting with your new assistant. She mentions she got soaked coming to work.",
+    dialogue: '<p><span class="speaker">Assistant:</span> "The commute was awful today. I got completely wet waiting for the bus."</p><p><span class="speaker">You</span> want to respond naturally and show empathy.</p>',
+    question: "What do you say?",
+    options: [
+      { text: '"Yeah, that <strong>heavy rain</strong> this morning was terrible."', correct: true, explain: "Correct. <strong>Heavy rain</strong> is the natural collocation — we never say 'strong rain' in English." },
+      { text: '"Yeah, that <strong>strong rain</strong> was terrible."', correct: false, explain: "Wrong collocation! In English it's always <strong>heavy rain</strong>, never 'strong rain'. This is exactly the kind of mistake chunks prevent." },
+      { text: '"<strong>As a matter of fact</strong>, I drove here."', correct: false, explain: "<strong>As a matter of fact</strong> is for correcting or adding precise information — not for showing empathy about weather." }
+    ]
+  },
+  {
+    title: "Tuesday — The Budget Meeting",
+    situation: "In your first budget meeting, the team is discussing new software. The price is shockingly high.",
+    dialogue: '<p><span class="speaker">Finance Lead:</span> "The enterprise license is $50,000 per year."</p><p><span class="speaker">You</span> need to react professionally to the high price.</p>',
+    question: "What do you say?",
+    options: [
+      { text: '"Wow, that <strong>costs an arm and a leg</strong>."', correct: true, explain: "Excellent. <strong>Cost an arm and a leg</strong> means very expensive — a natural, professional way to react to a shocking price." },
+      { text: '"Wow, that <strong>breaks the ice</strong>."', correct: false, explain: "<strong>Break the ice</strong> means to start a conversation. It has nothing to do with prices!" },
+      { text: '"Wow, that <strong>spills the beans</strong>."', correct: false, explain: "<strong>Spill the beans</strong> means to reveal a secret. Completely wrong for discussing a price." }
+    ]
+  },
+  {
+    title: "Tuesday Afternoon — Weighing Options",
+    situation: "The team is divided. Half wants the expensive software, half wants the cheaper option. You need to show you're considering both sides.",
+    dialogue: '<p><span class="speaker">You:</span> "The premium option has better features..."</p>',
+    question: "How do you introduce the other side?",
+    options: [
+      { text: '"<strong>On the other hand</strong>, the basic plan saves us $30,000."', correct: true, explain: "Perfect. <strong>On the other hand</strong> introduces a contrasting point — essential for balanced professional discussions." },
+      { text: '"<strong>By the way</strong>, the basic plan saves us $30,000."', correct: false, explain: "<strong>By the way</strong> introduces a new, unrelated topic. Here you're contrasting — not changing the subject." },
+      { text: '"<strong>No matter what</strong>, the basic plan saves us $30,000."', correct: false, explain: "<strong>No matter what</strong> expresses determination. It doesn't work for presenting an alternative viewpoint." }
+    ]
+  },
+  {
+    title: "Wednesday — The Difficult Email",
+    situation: "You need to email a supplier about a delayed delivery. The deadline is critical and you need it urgently, but you want to stay professional.",
+    dialogue: '<p><span class="speaker">You</span> are writing: "Dear Mr. Chen, we need the materials..."</p>',
+    question: "How do you express urgency professionally?",
+    options: [
+      { text: '"...we need the materials <strong>as soon as possible</strong>."', correct: true, explain: "Correct. <strong>As soon as possible</strong> is the standard professional way to communicate urgency in emails." },
+      { text: '"...we need the materials <strong>at the end of the day</strong>."', correct: false, explain: "<strong>At the end of the day</strong> means 'ultimately' or 'when all is considered' — it doesn't communicate urgency." },
+      { text: '"...we need the materials <strong>no matter what</strong>."', correct: false, explain: "<strong>No matter what</strong> sounds aggressive and demanding in an email. Too strong for professional communication." }
+    ]
+  },
+  {
+    title: "Wednesday Afternoon — Adding a Topic",
+    situation: "In a team video call, you've finished discussing the main project. You remember an important update about the client visit next week.",
+    dialogue: '<p><span class="speaker">You:</span> "OK, so we're aligned on the project timeline."</p>',
+    question: "How do you smoothly introduce the new topic?",
+    options: [
+      { text: '"<strong>By the way</strong>, the client visit is confirmed for Thursday."', correct: true, explain: "Exactly right. <strong>By the way</strong> smoothly introduces a new but related topic — a key meeting skill." },
+      { text: '"<strong>In other words</strong>, the client visit is confirmed for Thursday."', correct: false, explain: "<strong>In other words</strong> restates the same idea differently. You're introducing NEW information, not rephrasing." },
+      { text: '"<strong>The thing is</strong>, the client visit is confirmed for Thursday."', correct: false, explain: "<strong>The thing is</strong> introduces a problem or key issue. A confirmed visit isn't a problem." }
+    ]
+  },
+  {
+    title: "Thursday — The Client Complaint",
+    situation: "An important client calls. They're unhappy about a delay. You need to be honest and frame the real problem clearly.",
+    dialogue: '<p><span class="speaker">Client:</span> "This delay is unacceptable. What happened?"</p>',
+    question: "How do you respond with honest professionalism?",
+    options: [
+      { text: '"<strong>To be honest</strong>, we underestimated the timeline. <strong>The thing is</strong>, our supplier failed us."', correct: true, explain: "Brilliant — two chunks! <strong>To be honest</strong> shows transparency, and <strong>The thing is</strong> frames the core issue. This is how professionals handle complaints." },
+      { text: '"<strong>For what it\'s worth</strong>, we underestimated the timeline."', correct: false, explain: "<strong>For what it's worth</strong> softens an opinion as if it might not matter. With an angry client, you need direct honesty, not softening." },
+      { text: '"<strong>Take a break</strong> and calm down, we had a supplier issue."', correct: false, explain: "Telling an angry client to <strong>take a break</strong> is condescending and unprofessional. Never do this!" }
+    ]
+  },
+  {
+    title: "Thursday Afternoon — Clarifying",
+    situation: "In a presentation, you see confused faces. Your technical explanation was too complex. You need to restate it simply.",
+    dialogue: '<p><span class="speaker">You:</span> "The API integration requires asynchronous webhook callbacks..."</p><p><span class="speaker">Audience:</span> 😕😕😕</p>',
+    question: "How do you clarify?",
+    options: [
+      { text: '"<strong>In other words</strong>, our system will notify yours automatically when something happens."', correct: true, explain: "Perfect. <strong>In other words</strong> signals you're restating something more simply — a critical presentation skill." },
+      { text: '"<strong>As a matter of fact</strong>, our system will notify yours automatically."', correct: false, explain: "<strong>As a matter of fact</strong> adds or corrects information. You're not correcting — you're simplifying." },
+      { text: '"<strong>Hit the nail on the head</strong>, our system notifies yours automatically."', correct: false, explain: "<strong>Hit the nail on the head</strong> means to say exactly the right thing — it's praise for someone else's comment, not a way to rephrase your own." }
+    ]
+  },
+  {
+    title: "Friday — Giving Diplomatic Feedback",
+    situation: "A team member proposes an idea you think won't work. You want to share your opinion without crushing their enthusiasm.",
+    dialogue: '<p><span class="speaker">Team member:</span> "What if we rebuild the entire platform from scratch?"</p>',
+    question: "How do you give your honest opinion diplomatically?",
+    options: [
+      { text: '"<strong>For what it\'s worth</strong>, I think that would take too long given our deadline."', correct: true, explain: "Excellent diplomacy. <strong>For what it's worth</strong> softens your opinion — you disagree without being harsh. This is professional emotional intelligence." },
+      { text: '"<strong>Spill the beans</strong> — that idea will never work."', correct: false, explain: "<strong>Spill the beans</strong> means to reveal a secret. Using it here is both wrong and rude." },
+      { text: '"<strong>As soon as possible</strong>, we need a better idea."', correct: false, explain: "<strong>As soon as possible</strong> is about urgency/timing. It doesn't help you give diplomatic feedback." }
+    ]
+  },
+  {
+    title: "Friday Afternoon — Correcting Data",
+    situation: "A colleague presents outdated sales numbers in a meeting. You have the correct figures and need to update the team politely.",
+    dialogue: '<p><span class="speaker">Colleague:</span> "Sales dropped 20% last quarter."</p><p><span class="speaker">You</span> know it was actually 12%.</p>',
+    question: "How do you correct this professionally?",
+    options: [
+      { text: '"<strong>As a matter of fact</strong>, the drop was 12%, according to the latest report."', correct: true, explain: "Spot on. <strong>As a matter of fact</strong> politely introduces a correction with facts — firm but respectful." },
+      { text: '"<strong>Break the ice</strong> — the drop was actually 12%."', correct: false, explain: "<strong>Break the ice</strong> is for starting conversations, not for correcting data mid-meeting." },
+      { text: '"<strong>Take a break</strong>, the real number is 12%."', correct: false, explain: "Telling a colleague to <strong>take a break</strong> when correcting them is dismissive and rude." }
+    ]
+  },
+  {
+    title: "Friday Evening — Praising Insight",
+    situation: "In the week's final meeting, a junior analyst makes a brilliant observation that explains the whole problem.",
+    dialogue: '<p><span class="speaker">Analyst:</span> "I think the issue isn\'t the product — it\'s that our onboarding confuses new users."</p><p><span class="speaker">Everyone:</span> nods in agreement.</p>',
+    question: "How do you acknowledge their insight?",
+    options: [
+      { text: '"You <strong>hit the nail on the head</strong>. That\'s exactly the problem."', correct: true, explain: "Perfect recognition. <strong>Hit the nail on the head</strong> means to say exactly the right thing — ideal for praising sharp thinking." },
+      { text: '"You <strong>spilled the beans</strong>. That\'s the problem."', correct: false, explain: "<strong>Spill the beans</strong> means revealing a secret. The analyst shared an insight, not a secret!" },
+      { text: '"You <strong>made a decision</strong>. That\'s the problem."', correct: false, explain: "<strong>Make a decision</strong> is about choosing. The analyst made an observation, not a decision." }
+    ]
+  },
+  {
+    title: "Friday Night — The Final Decision",
+    situation: "End of your first week. You must decide on the software purchase. The team is waiting for your call.",
+    dialogue: '<p><span class="speaker">You</span> have weighed all the options. Time to lead.</p>',
+    question: "How do you announce a firm, confident decision?",
+    options: [
+      { text: '"<strong>At the end of the day</strong>, we\'ll go with the basic plan and upgrade later. I\'ll <strong>make a decision</strong> now: approved."', correct: true, explain: "Outstanding leadership. <strong>At the end of the day</strong> signals your final conclusion after weighing everything, and <strong>make a decision</strong> shows decisive action. Two chunks, one strong leader." },
+      { text: '"<strong>Heavy rain</strong> or not, we\'ll go with the basic plan."', correct: false, explain: "<strong>Heavy rain</strong> is about weather. Using it metaphorically for a business decision makes no sense." },
+      { text: '"<strong>Strong coffee</strong> helps me decide: basic plan it is."', correct: false, explain: "<strong>Strong coffee</strong> is a drink preference, not a decision-making tool. This would confuse your entire team!" }
+    ]
+  }
+];
+
+let current = 0, score = 0, answered = false;
+
+function renderProgress() {
+  const p = document.getElementById('progress');
+  p.innerHTML = '';
+  scenes.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i < current ? ' done' : i === current ? ' current' : '');
+    p.appendChild(d);
+  });
+}
+
+function renderScene() {
+  answered = false;
+  renderProgress();
+  const s = scenes[current];
+  const area = document.getElementById('game-area');
+  let html = '<div class="scene-card">';
+  html += '<div class="scene-num">SCENE ' + (current + 1) + ' OF ' + scenes.length + '</div>';
+  html += '<div class="scene-title">' + s.title + '</div>';
+  html += '<div class="situation">' + s.situation + '</div>';
+  html += '<div class="dialogue">' + s.dialogue + '</div>';
+  html += '<div class="question">' + s.question + '</div>';
+  html += '<div class="options" id="options">';
+  s.options.forEach((o, i) => {
+    html += '<button class="option" onclick="answer(' + i + ')">' + o.text + '</button>';
+  });
+  html += '</div>';
+  html += '<div class="feedback" id="feedback"></div>';
+  html += '<button class="btn-retry" id="btn-retry" onclick="retry()">Try Again</button>';
+  html += '<button class="btn-next" id="btn-next" onclick="next()">Continue →</button>';
+  html += '</div>';
+  area.innerHTML = html;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function answer(idx) {
+  if (answered) return;
+  const s = scenes[current];
+  const opt = s.options[idx];
+  const btns = document.querySelectorAll('.option');
+  const fb = document.getElementById('feedback');
+
+  if (opt.correct) {
+    answered = true;
+    btns[idx].classList.add('correct');
+    btns.forEach(b => b.disabled = true);
+    score += 10;
+    document.getElementById('score').textContent = score;
+    fb.className = 'feedback show good';
+    fb.innerHTML = '<strong>✅ +10 Credibility — Excellent choice!</strong>' + opt.explain;
+    document.getElementById('btn-next').classList.add('show');
+  } else {
+    btns[idx].classList.add('wrong');
+    btns[idx].disabled = true;
+    fb.className = 'feedback show bad';
+    fb.innerHTML = '<strong>❌ Not quite — think again.</strong>' + opt.explain;
+    document.getElementById('btn-retry').classList.add('show');
+    const remaining = [...btns].filter(b => !b.disabled);
+    if (remaining.length === 1) {
+      answered = true;
+      remaining[0].classList.add('correct');
+      btns.forEach(b => b.disabled = true);
+      score += 5;
+      document.getElementById('score').textContent = score;
+      fb.innerHTML = '<strong>✅ +5 Credibility — you got there!</strong>' + s.options.find(o => o.correct).explain;
+      document.getElementById('btn-retry').classList.remove('show');
+      document.getElementById('btn-next').classList.add('show');
+    }
+  }
+}
+
+function retry() {
+  document.getElementById('feedback').className = 'feedback';
+  document.getElementById('btn-retry').classList.remove('show');
+}
+
+function next() {
+  current++;
+  if (current >= scenes.length) { showFinal(); return; }
+  renderScene();
+}
+
+function showFinal() {
+  document.getElementById('game-area').style.display = 'none';
+  document.getElementById('progress').style.display = 'none';
+  const fs = document.getElementById('final-screen');
+  fs.classList.add('show');
+  document.getElementById('final-score').textContent = score;
+  const max = scenes.length * 10;
+  let rank, msg;
+  if (score >= max * 0.9) { rank = "🏆 Executive Material"; msg = "Outstanding! You chose the right chunk almost every time. You communicate like a seasoned professional."; }
+  else if (score >= max * 0.7) { rank = "💼 Rising Professional"; msg = "Strong performance! You have great instincts for professional communication. A little more practice and you'll be flawless."; }
+  else if (score >= max * 0.5) { rank = "📈 Developing Talent"; msg = "Good effort! You're building your professional voice. Review the chunks and try again — you'll get sharper each time."; }
+  else { rank = "🌱 Keep Growing"; msg = "Every professional starts somewhere. Go back to Lesson 1, review the 18 chunks, and come back stronger."; }
+  document.getElementById('final-rank').textContent = rank;
+  document.getElementById('final-msg').textContent = msg;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+renderScene();
+</script>
+</body>
+</html>
