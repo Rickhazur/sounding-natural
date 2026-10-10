@@ -129,14 +129,14 @@ const R1 = [
 ];
 // Round 2: Fix the Mistake
 const R2 = [
-{bad:"do a pause", good:"take a break", why:"It's always TAKE a break — 'do a pause' doesn't exist in English."},
-{bad:"powerful coffee", good:"strong coffee", why:"Coffee is STRONG, not powerful. Collocations are fixed pairs."},
-{bad:"strong rain", good:"heavy rain", why:"Rain is HEAVY. 'Strong rain' sounds foreign."},
-{bad:"create a decision", good:"make a decision", why:"You MAKE decisions — 'create' sounds like you're building furniture."},
-{bad:"break the glass", good:"break the ice", why:"It's ICE, not glass! Idioms are frozen — one wrong word breaks them."},
-{bad:"drop the beans", good:"spill the beans", why:"SPILL the beans — 'drop' changes the idiom completely."},
-{bad:"hit the hammer on the head", good:"hit the nail on the head", why:"It's the NAIL on the head — 'hammer' ruins this idiom."},
-{bad:"cost a foot and a hand", good:"cost an arm and a leg", why:"ARM and LEG — body parts are fixed in this idiom!"}
+{bad:"do a pause", opts:["take a break","make a pause","have a break","do a rest"], correct:0, why:"It's always TAKE a break — the other options don't exist in English.",
+{bad:"powerful coffee", opts:["strong coffee","heavy coffee","tough coffee"], correct:0, why:"Coffee is STRONG, not powerful, heavy, or tough.",
+{bad:"strong rain", opts:["heavy rain","hard rain","big rain"], correct:0, why:"Rain is HEAVY. The others sound foreign.",
+{bad:"create a decision", opts:["make a decision","do a decision","build a decision"], correct:0, why:"You MAKE decisions — create, do, and build don't work here.",
+{bad:"break the glass", opts:["break the ice","crack the ice","smash the ice"], correct:0, why:"It's ICE, not glass! And BREAK, not crack or smash. Idioms are frozen.",
+{bad:"drop the beans", opts:["spill the beans","throw the beans","pour the beans"], correct:0, why:"SPILL the beans — drop, throw, and pour break the idiom.",
+{bad:"hit the hammer on the head", opts:["hit the nail on the head","hit the screw on the head","strike the nail on the head"], correct:0, why:"It's the NAIL — and HIT, not strike. Every word matters in idioms.",
+{bad:"cost a foot and a hand", opts:["cost an arm and a leg","cost an elbow and a knee","cost a finger and a toe"], correct:0, why:"ARM and LEG — the body parts are fixed!"
 ];
 // Round 3: Complete the Conversation
 const R3 = [
@@ -213,11 +213,11 @@ ans.appendChild(b);
 });
 } else if(round===1){
 const q = R2[qi];
-card.innerHTML = `<div class="q-label">FIX THE MISTAKE</div><div class="phrase" style="text-decoration:line-through;color:#C0392B">\"${q.bad}\"</div><div class="context">This sounds unnatural. What's the correct version?</div>`;
-const opts = shuffle([q.good, q.bad]);
-opts.forEach(text=>{
-const b=document.createElement('button'); b.className='answer'; b.textContent=text;
-b.onclick=()=>answerR1(text===q.good, q.why, b, opts, q.good);
+card.innerHTML = `<div class="q-label">FIX THE MISTAKE</div><div class="phrase" style="text-decoration:line-through;color:#C0392B">\"${q.bad}\"</div><div class="context">This sounds unnatural. Pick the correct version:</div>`;
+const order = shuffle([0,1,2,3]);
+order.forEach(oi=>{
+const b=document.createElement('button'); b.className='answer'; b.textContent=q.opts[oi];
+b.onclick=()=>answerR1(oi===q.correct, q.why, b, order, q.correct, q.opts);
 ans.appendChild(b);
 });
 } else if(round===2){
