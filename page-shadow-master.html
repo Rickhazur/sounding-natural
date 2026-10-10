@@ -16,7 +16,7 @@ h1{color:#026A79;font-size:2.2rem;margin:20px 0 8px}
 .btn:hover{background:#E8AA28;color:#123C46;transform:scale(1.03)}
 .btn-gold{background:#E8AA28;color:#123C46}
 .btn-gold:hover{background:#026A79;color:#fff}
-.round-tabs{display:flex;justify-content:center;gap:10px;margin:20px 0}
+.round-tabs{display:flex;justify-content:center;gap:10px;margin:20px 0;flex-wrap:wrap}
 .round-tab{padding:10px 20px;border-radius:10px;border:2px solid #EBF0F0;background:#fff;cursor:pointer;font-weight:bold;color:#5a7a82;font-size:.9rem;transition:all .2s}
 .round-tab.active{border-color:#026A79;background:#026A79;color:#fff}
 .round-tab.locked{opacity:.4;cursor:not-allowed}
@@ -27,7 +27,7 @@ h1{color:#026A79;font-size:2.2rem;margin:20px 0 8px}
 .chunk-stage::before{content:'🎤';position:absolute;top:12px;right:16px;font-size:1.6rem;opacity:.25}
 .chunk-text{font-size:2rem;font-weight:bold;line-height:1.5;color:#123C46}
 .chunk-text .word{transition:all .15s;padding:2px 4px;border-radius:6px}
-.chunk-text .word.lit{background:#E8AA28;color:#123C46;transform:scale(1.05);display:inline-block}
+.chunk-text .word.lit{background:#E8AA28;color:#123C46;transform:scale(1.08);display:inline-block}
 .chunk-text.blind .word{color:transparent;text-shadow:0 0 18px rgba(18,60,70,.55)}
 .chunk-meaning{color:#5a7a82;font-size:.92rem;margin-top:14px;font-style:italic}
 .mode-banner{display:inline-block;padding:8px 22px;border-radius:20px;font-weight:bold;font-size:.88rem;margin-bottom:12px}
@@ -37,6 +37,8 @@ h1{color:#026A79;font-size:2.2rem;margin:20px 0 8px}
 .controls{display:flex;justify-content:center;gap:12px;margin:16px 0;align-items:center}
 .play-big{background:#026A79;color:#fff;border:none;width:70px;height:70px;border-radius:50%;font-size:1.8rem;cursor:pointer;transition:all .2s}
 .play-big:hover{transform:scale(1.08)}
+.play-big.playing{animation:pulseGlow 1.2s infinite}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 0 0 rgba(2,106,121,.4)}50%{box-shadow:0 0 0 12px rgba(2,106,121,0)}}
 .nav-btn{background:#fff;border:2px solid #026A79;color:#026A79;padding:10px 24px;border-radius:10px;cursor:pointer;font-weight:bold;transition:all .2s}
 .nav-btn:hover:not(:disabled){background:#026A79;color:#fff}
 .nav-btn:disabled{opacity:.3;cursor:not-allowed}
@@ -49,8 +51,8 @@ h1{color:#026A79;font-size:2.2rem;margin:20px 0 8px}
 .score-card{background:#fff;border:2px solid #EBF0F0;border-radius:14px;padding:18px}
 .score-card .n{font-size:1.8rem;font-weight:bold;color:#026A79}
 .score-card .l{font-size:.82rem;color:#5a7a82}
+.instruction-audio{background:#fff;border:2px solid #026A79;border-radius:14px;padding:20px;margin:20px 0}
 @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.word-pop{animation:fadeIn .3s ease}
 </style>
 </head>
 <body>
@@ -60,13 +62,17 @@ h1{color:#026A79;font-size:2.2rem;margin:20px 0 8px}
 <div class="screen active" id="scr-start">
 <h1>🎤 Shadow Master</h1>
 <p class="sub">Listen to each chunk and repeat it <strong>at the same time</strong> as the audio — like a shadow.<br>Don't wait for it to finish. Copy the rhythm and the melody, not just the words.</p>
+<div class="instruction-audio">
+<p style="color:#026A79;font-weight:bold;margin-bottom:10px">🔊 First, listen to the instructions:</p>
+<button class="btn" id="btnIntro" onclick="playIntro()">▶ Play Instructions</button>
+</div>
 <div class="tip-box">
 <h4>📋 How it works</h4>
 <p><strong>Round 1 — 👂 Just Listen:</strong> hear each chunk, follow the highlighted words.<br>
 <strong>Round 2 — 🗣️ Shadow Along:</strong> speak AT THE SAME TIME as the audio.<br>
 <strong>Round 3 — 🙈 Shadow Blind:</strong> the text disappears — shadow from memory!</p>
 </div>
-<button class="btn btn-gold" onclick="startGame()">Start Round 1 →</button>
+<button class="btn btn-gold" onclick="startGame()">Click Next for our First Sentence →</button>
 </div>
 
 <!-- GAME SCREEN -->
@@ -116,25 +122,25 @@ h1{color:#026A79;font-size:2.2rem;margin:20px 0 8px}
 
 <script>
 const AUDIO_BASE = "";
+// Tiempos reales medidos del audio (segmentos de voz detectados)
 const CHUNKS = [
-{t:"As a matter of fact", m:"Actually; introducing a surprising fact"},
-{t:"At the end of the day", m:"When everything is considered"},
-{t:"By the way", m:"Introducing a new topic"},
-{t:"For what it's worth", m:"Softening an opinion"},
-{t:"In other words", m:"Restating more simply"},
-{t:"On the other hand", m:"Presenting the opposite view"},
-{t:"To be honest", m:"A frank opinion is coming"},
-{t:"As soon as possible", m:"Urgently, without delay"},
-{t:"No matter what", m:"Regardless of circumstances"},
-{t:"The thing is", m:"Introducing the real point"}
+{t:"As a matter of fact", m:"Actually; introducing a surprising fact", start:3.9, reps:[[4.06,5.04],[5.58,6.90]]},
+{t:"At the end of the day", m:"When everything is considered", start:7.4, reps:[[7.64,8.71],[9.31,10.52]]},
+{t:"By the way", m:"Introducing a new topic", start:10.8, reps:[[11.05,11.92],[12.78,13.48]]},
+{t:"For what it's worth", m:"Softening an opinion", start:14.0, reps:[[14.29,15.27],[16.00,17.15]]},
+{t:"In other words", m:"Restating more simply", start:17.7, reps:[[17.96,18.87],[19.64,20.58]]},
+{t:"On the other hand", m:"Presenting the opposite view", start:21.0, reps:[[21.24,22.16],[23.03,23.96]]},
+{t:"To be honest", m:"A frank opinion is coming", start:24.4, reps:[[24.68,25.61],[26.41,27.35]]},
+{t:"As soon as possible", m:"Urgently, without delay", start:27.9, reps:[[28.10,29.20],[29.79,31.18]]},
+{t:"No matter what", m:"Regardless of circumstances", start:31.6, reps:[[31.86,32.57],[33.59,34.36]]},
+{t:"The thing is", m:"Introducing the real point", start:35.0, reps:[[35.21,36.12],[36.99,37.96]]}
 ];
-// Cada chunk ocupa ~4.8s en el audio (48s / 10 chunks, dicho 2 veces)
-const CHUNK_LEN = 4.8;
 
 let round = 1, idx = 0;
 let audio = new Audio(AUDIO_BASE + "shadowing-drill-FINAL.mp3");
-let playTimer = null, wordTimer = null;
+let karaokeTimers = [];
 let isPlaying = false;
+let introPlaying = false;
 
 const MODES = {
 1: {banner:"👂 JUST LISTEN — follow the highlighted words", cls:"mode-listen", hint:"Tap ▶ to hear the chunk", blind:false},
@@ -146,6 +152,18 @@ function show(id){
 document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
 document.getElementById(id).classList.add('active');
 }
+// Intro: reproduce solo los primeros 3 segundos (instrucciones)
+function playIntro(){
+const btn = document.getElementById('btnIntro');
+if(introPlaying){ audio.pause(); introPlaying=false; btn.textContent='▶ Play Instructions'; return; }
+stopChunk();
+audio.currentTime = 0;
+audio.play();
+introPlaying = true;
+btn.textContent = '⏸ Playing...';
+btn.classList.add('playing');
+setTimeout(()=>{ audio.pause(); introPlaying=false; btn.textContent='▶ Play Instructions'; }, 3200);
+}
 function startGame(){ round=1; idx=0; show('scr-game'); renderChunk(); updateTabs(); }
 function updateTabs(){
 for(let r=1;r<=3;r++){
@@ -155,70 +173,83 @@ t.classList.toggle('locked', r>round);
 }
 }
 function renderChunk(){
-stopAudio();
+stopChunk();
 const c = CHUNKS[idx];
 const mode = MODES[round];
-// Texto con palabras separadas
 const words = c.t.split(' ').map(w=>`<span class="word">${w}</span>`).join(' ');
 const ct = document.getElementById('chunkText');
 ct.innerHTML = words;
 ct.classList.toggle('blind', mode.blind);
 document.getElementById('chunkMeaning').textContent = mode.blind ? '' : c.m;
 document.getElementById('counter').textContent = `Chunk ${idx+1} of 10`;
-document.getElementById('pfill').style.width = ((idx)/10*100)+'%';
+document.getElementById('pfill').style.width = (idx/10*100)+'%';
 const mb = document.getElementById('modeBanner');
 mb.textContent = mode.banner; mb.className = 'mode-banner '+mode.cls;
 document.getElementById('hint').textContent = mode.hint;
 document.getElementById('btnPrev').disabled = (idx===0);
 document.getElementById('btnNext').textContent = (idx===9) ? 'Finish Round →' : 'Next →';
-document.getElementById('btnPlay').textContent = '▶';
+const bp = document.getElementById('btnPlay');
+bp.textContent = '▶'; bp.classList.remove('playing');
 isPlaying = false;
 }
 function togglePlay(){
-if(isPlaying){ stopAudio(); document.getElementById('btnPlay').textContent='▶'; isPlaying=false; return; }
-// Saltar al chunk actual
-audio.currentTime = idx * CHUNK_LEN;
+if(isPlaying){ stopChunk(); resetPlayBtn(); return; }
+const c = CHUNKS[idx];
+const words = document.querySelectorAll('#chunkText .word');
+words.forEach(w=>w.classList.remove('lit'));
+// Saltar al inicio exacto del chunk
+audio.currentTime = c.start;
 audio.play();
 isPlaying = true;
-document.getElementById('btnPlay').textContent='⏸';
-// Karaoke: iluminar palabras proporcionalmente
-const words = document.querySelectorAll('#chunkText .word');
+const bp = document.getElementById('btnPlay');
+bp.textContent = '⏸'; bp.classList.add('playing');
+// Karaoke sincronizado con los tiempos reales de cada repetición
 const totalWords = words.length;
-const speakTime = CHUNK_LEN * 0.85; // el chunk se dice 2 veces
-const perWord = speakTime / (totalWords * 2);
-let wi = 0, rep = 0;
+c.reps.forEach(([rs, re], ri)=>{
+const dur = (re - rs) * 1000;
+const perWord = dur / totalWords;
+// Offset desde que presionamos play
+const offset = (rs - c.start) * 1000;
+for(let wi=0; wi<totalWords; wi++){
+const tOn = offset + wi*perWord;
+const tOff = offset + (wi+1)*perWord;
+// Encender palabra (apagar la anterior de esta rep)
+karaokeTimers.push(setTimeout(()=>{
+// Apagar todas primero en esta repetición
 words.forEach(w=>w.classList.remove('lit'));
-clearInterval(wordTimer);
-wordTimer = setInterval(()=>{
-if(wi>0) words[(wi-1)%totalWords].classList.remove('lit');
-if(wi>=totalWords){ rep++; wi=0; if(rep>=2){ clearInterval(wordTimer); return; } }
-words[wi%totalWords].classList.add('lit');
-wi++;
-}, perWord*1000);
-// Detener al final del chunk
-clearTimeout(playTimer);
-playTimer = setTimeout(()=>{
-stopAudio();
-document.getElementById('btnPlay').textContent='▶';
-isPlaying=false;
-words.forEach(w=>w.classList.remove('lit'));
-}, CHUNK_LEN*1000);
+words[wi].classList.add('lit');
+}, tOn));
+karaokeTimers.push(setTimeout(()=>{ words[wi].classList.remove('lit'); }, tOff));
 }
-function stopAudio(){ audio.pause(); clearTimeout(playTimer); clearInterval(wordTimer); }
+});
+// Detener al final de la 2da repetición
+const totalDur = (c.reps[1][1] - c.start) * 1000 + 300;
+karaokeTimers.push(setTimeout(()=>{ stopChunk(); resetPlayBtn(); }, totalDur));
+}
+function resetPlayBtn(){
+const bp = document.getElementById('btnPlay');
+bp.textContent='▶'; bp.classList.remove('playing');
+isPlaying=false;
+document.querySelectorAll('#chunkText .word').forEach(w=>w.classList.remove('lit'));
+}
+function stopChunk(){
+audio.pause();
+karaokeTimers.forEach(t=>clearTimeout(t));
+karaokeTimers=[];
+}
 function prevChunk(){ if(idx>0){ idx--; renderChunk(); } }
 function nextChunk(){
 if(idx<9){ idx++; renderChunk(); }
 else { completeRound(); }
 }
 function completeRound(){
-stopAudio();
+stopChunk(); resetPlayBtn();
 const msgs = {
 1:{e:"👂🎉", t:"Round 1 Complete!", m:"Your ears are tuned. Now the real challenge: speak AT THE SAME TIME as the audio."},
-2:{e:"🗣️🔥", t:"Round 2 Complete!", m:"You're shadowing like a pro. Final boss: no text. Just your ears and your voice."},
-3:{e:"🏆", t:"All Rounds Complete!", m:""}
+2:{e:"🗣️🔥", t:"Round 2 Complete!", m:"You're shadowing like a pro. Final boss: no text. Just your ears and your voice."}
 };
-const d = msgs[round];
 if(round<3){
+const d = msgs[round];
 document.getElementById('roundEmoji').textContent=d.e;
 document.getElementById('roundTitle').textContent=d.t;
 document.getElementById('roundMsg').textContent=d.m;
