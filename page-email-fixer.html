@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Email Fixer</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#F5F9FA;color:#123C46;line-height:1.6}
+.container{max-width:780px;margin:0 auto;padding:24px}
+.header{text-align:center;margin-bottom:20px}
+h1{color:#026A79;font-size:30px;margin-bottom:8px}
+.subtitle{color:#5a7a82;font-size:16px;max-width:600px;margin:0 auto}
+.howto{background:#fff;border-radius:12px;padding:18px 22px;margin:0 auto 20px;max-width:600px;box-shadow:0 2px 8px rgba(0,0,0,.06);text-align:left}
+.howto h3{color:#026A79;font-size:16px;margin-bottom:10px}
+.howto ol{margin-left:20px;font-size:15px}
+.howto li{margin-bottom:6px}
+.topbar{display:flex;justify-content:space-between;align-items:center;background:#fff;border-radius:12px;padding:12px 20px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.ecount{font-weight:bold;color:#026A79}
+.score{font-size:22px;font-weight:bold;color:#E8AA28}
+.progress{display:flex;gap:8px;justify-content:center;margin-bottom:20px}
+.dot{width:12px;height:12px;border-radius:50%;background:#d0e4e6}
+.dot.done{background:#2E9B4A}.dot.current{background:#E8AA28}
+.card{background:#fff;border-radius:16px;padding:28px;box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.etag{display:inline-block;background:#EAF7F6;color:#026A79;font-size:13px;font-weight:bold;padding:6px 14px;border-radius:20px;margin-bottom:12px;letter-spacing:1px}
+.email-head{background:#F5F9FA;border-radius:10px;padding:14px 18px;margin-bottom:18px;font-size:14.5px}
+.email-head div{margin-bottom:4px}
+.email-head .lbl2{color:#8a9fa5;font-weight:bold;width:70px;display:inline-block}
+.email-body{font-size:16px;line-height:2}
+.blank{display:inline-block;min-width:170px;border-bottom:3px dashed #E8AA28;padding:2px 8px;margin:0 4px;cursor:pointer;text-align:center;font-weight:bold;color:#026A79;background:#FFF9E6;border-radius:6px 6px 0 0}
+.blank.filled{border-bottom:3px solid #026A79;color:#123C46}
+.blank.right{border-bottom:3px solid #2E9B4A;background:#e8f7ee}
+.blank.wrong{border-bottom:3px solid #D9534F;background:#fdeaea}
+.opt-row{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 20px;justify-content:center}
+.opt{background:#fff;border:2px solid #d0e4e6;border-radius:20px;padding:8px 18px;font-size:14.5px;cursor:pointer;font-family:inherit;color:#123C46}
+.opt:hover:not(:disabled){border-color:#026A79;background:#EAF7F6}
+.opt:disabled{opacity:.4;cursor:default}
+.opt.used{opacity:.3}
+.actions{display:flex;gap:12px;margin-top:8px}
+.btn{flex:1;padding:14px;font-size:16px;font-weight:bold;border-radius:12px;border:none;cursor:pointer;font-family:inherit}
+.btn-check{background:#E8AA28;color:#123C46}
+.btn-check:hover:not(:disabled){background:#d1941f}
+.btn-check:disabled{opacity:.4;cursor:default}
+.feedback{margin-top:18px;padding:16px 20px;border-radius:12px;font-size:15px;display:none}
+.feedback.show{display:block}
+.feedback.good{background:#e8f7ee;border:1px solid #2E9B4A}
+.feedback.bad{background:#fdeaea;border:1px solid #D9534F}
+.feedback strong{display:block;margin-bottom:6px}
+.btn-next{display:none;margin-top:16px;background:#026A79;color:#fff;border:none;padding:14px;font-size:16px;font-weight:bold;border-radius:12px;cursor:pointer;font-family:inherit;width:100%}
+.btn-next.show{display:block}
+.final{display:none;text-align:center;background:#fff;border-radius:16px;padding:48px 32px;box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.final.show{display:block}
+.final-score{font-size:60px;font-weight:bold;color:#E8AA28;margin:12px 0}
+.final-rank{font-size:23px;color:#026A79;font-weight:bold;margin-bottom:12px}
+.final-msg{color:#5a7a82;max-width:480px;margin:0 auto 24px}
+.btn-restart{background:#026A79;color:#fff;border:none;padding:14px 40px;font-size:16px;font-weight:bold;border-radius:12px;cursor:pointer;font-family:inherit}
+.sel-blank{outline:2px solid #E8AA28}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<h1>Email Fixer</h1>
+<p class="subtitle">Professional emails with missing chunks. Choose the right one for each blank.</p>
+</div>
+<div class="howto">
+<h3>How to play:</h3>
+<ol>
+<li><strong>Read</strong> the email carefully.</li>
+<li><strong>Tap a blank</strong>, then <strong>tap a chunk</strong> below to fill it.</li>
+<li><strong>Press Check Email</strong> when all blanks are filled.</li>
+</ol>
+</div>
+<div class="topbar">
+<span class="ecount" id="ecount">Email 1 of 5</span>
+<span>⭐ <span class="score" id="score">0</span></span>
+</div>
+<div class="progress" id="progress"></div>
+<div id="game"></div>
+<div class="final" id="final">
+<h1>All Emails Fixed!</h1>
+<div class="final-score" id="final-score">0</div>
+<div class="final-rank" id="final-rank"></div>
+<p class="final-msg" id="final-msg"></p>
+<button class="btn-restart" onclick="location.reload()">Fix Again</button>
+</div>
+</div>
+<script>
+var emails=[
+{tag:"URGENT REQUEST",from:"you@company.com",to:"supplier@materials.co",subject:"Materials needed for Friday deadline",
+parts:[
+{t:"Dear Mr. Chen,"},
+{t:"We need the steel components "},{blank:0},
+{t:" our production line stops on Friday. "},{blank:1},{t:" I wanted to mention that we may increase our order next quarter."},
+{t:"Best regards,"},{t:"Alex Morgan"}
+],
+blanks:[
+{answer:"as soon as possible",options:["as soon as possible","at the end of the day","no matter what"],why:"<strong>As soon as possible</strong> communicates urgency professionally in emails."},
+{answer:"By the way",options:["By the way","In other words","The thing is"],why:"<strong>By the way</strong> smoothly introduces additional information."}
+]},
+{tag:"DIPLOMATIC PUSHBACK",from:"you@company.com",to:"team@company.com",subject:"Re: Platform rebuild proposal",
+parts:[
+{t:"Hi team,"},
+{t:"Thanks for the ambitious proposal. "},{blank:0},{t:", I have concerns about the timeline. "},
+{blank:1},{t:", the current system handles 90% of our needs well."},
+{t:"Let's discuss alternatives tomorrow."},{t:"Alex"}
+],
+blanks:[
+{answer:"For what it's worth",options:["For what it's worth","Spill the beans","Break the ice"],why:"<strong>For what it's worth</strong> softens your opinion diplomatically."},
+{answer:"On the other hand",options:["On the other hand","As soon as possible","Take a break"],why:"<strong>On the other hand</strong> presents a balanced contrasting view."}
+]},
+{tag:"MEETING FOLLOW-UP",from:"you@company.com",to:"all-staff@company.com",subject:"Action items from today's meeting",
+parts:[
+{t:"Hello everyone,"},
+{blank:0},{t:", the budget figures shared earlier were from Q2, not Q3. "},
+{t:"Please use the updated spreadsheet. "},{blank:1},{t:", our priority is the client launch."},
+{t:"Thanks,"},{t:"Alex"}
+],
+blanks:[
+{answer:"As a matter of fact",options:["As a matter of fact","Hit the nail on the head","Strong coffee"],why:"<strong>As a matter of fact</strong> politely corrects information with facts."},
+{answer:"At the end of the day",options:["At the end of the day","Heavy rain","Break the ice"],why:"<strong>At the end of the day</strong> signals your final conclusion or priority."}
+]},
+{tag:"CLIENT UPDATE",from:"you@company.com",to:"client@bigcorp.com",subject:"Project status update",
+parts:[
+{t:"Dear Ms. Rodriguez,"},
+{t:"The integration is more complex than expected. "},{blank:0},{t:", we need two extra weeks. "},
+{blank:1},{t:", the initial estimate didn't account for the legacy system."},
+{t:"I appreciate your understanding."},{t:"Alex Morgan"}
+],
+blanks:[
+{answer:"In other words",options:["In other words","By the way","Cost an arm and a leg"],why:"<strong>In other words</strong> restates something more simply for clarity."},
+{answer:"To be honest",options:["To be honest","Spill the beans","Take a break"],why:"<strong>To be honest</strong> shows transparency with clients."}
+]},
+{tag:"TEAM ANNOUNCEMENT",from:"you@company.com",to:"team@company.com",subject:"Q4 commitments",
+parts:[
+{t:"Team,"},
+{blank:0},{t:", we have a serious challenge ahead. "},
+{t:"The client moved the deadline up by three weeks. "},{blank:1},{t:", we will deliver on time. I need everyone's full commitment."},
+{t:"Let's meet at 9 AM tomorrow to plan."},{t:"Alex"}
+],
+blanks:[
+{answer:"The thing is",options:["The thing is","Break the ice","Strong coffee"],why:"<strong>The thing is</strong> frames the core issue directly."},
+{answer:"No matter what",options:["No matter what","Heavy rain","As soon as possible"],why:"<strong>No matter what</strong> expresses strong determination and leadership."}
+]}
+];
+var cur=0,score=0,selBlank=-1,locked=false;
+function renderProgress(){var p=document.getElementById('progress');p.innerHTML='';for(var i=0;i<emails.length;i++){var d=document.createElement('div');d.className='dot'+(i<cur?' done':i===cur?' current':'');p.appendChild(d);}}
+function render(){
+selBlank=-1;locked=false;renderProgress();
+document.getElementById('ecount').textContent='Email '+(cur+1)+' of '+emails.length;
+var e=emails[cur];
+var h='<div class="card">';
+h+='<div class="etag">'+e.tag+'</div>';
+h+='<div class="email-head"><div><span class="lbl2">From:</span> '+e.from+'</div><div><span class="lbl2">To:</span> '+e.to+'</div><div><span class="lbl2">Subject:</span> <strong>'+e.subject+'</strong></div></div>';
+h+='<div class="email-body" id="ebody"></div>';
+h+='<div class="opt-row" id="optrow"></div>';
+h+='<div class="actions"><button class="btn btn-check" id="btn-check" onclick="check()" disabled>Check Email</button></div>';
+h+='<div class="feedback" id="fb"></div>';
+h+='<button class="btn-next" id="btn-next" onclick="next()">Next Email \u2192</button>';
+h+='</div>';
+document.getElementById('game').innerHTML=h;
+drawEmail();drawOpts();
+}
+function drawEmail(){
+var e=emails[cur],el=document.getElementById('ebody'),h='';
+e.parts.forEach(function(p){
+if(p.t!==undefined){h+='<span>'+p.t+'</span> ';}
+else{
+var b=e.blanks[p.blank];
+var cls='blank'+(b.picked?' filled':'')+(locked?(b.picked===b.answer?' right':' wrong'):'')+(selBlank===p.blank?' sel-blank':'');
+var txt=b.picked?b.picked:'______';
+h+='<span class="'+cls+'" onclick="selB('+p.blank+')">'+txt+'</span> ';
+}
+});
+el.innerHTML=h;
+var allFilled=e.blanks.every(function(b){return b.picked;});
+document.getElementById('btn-check').disabled=!allFilled||locked;
+}
+function drawOpts(){
+var e=emails[cur],el=document.getElementById('optrow'),h='';
+if(selBlank<0){el.innerHTML='<span style="color:#8a9fa5;font-size:14px;">Tap a blank above, then choose a chunk here.</span>';return;}
+var b=e.blanks[selBlank];
+b.options.forEach(function(o){
+var used=e.blanks.some(function(x){return x.picked===o;});
+h+='<button class="opt'+(used?' used':'')+'" '+(used||locked?'disabled':'')+' onclick="pickOpt(\''+o.replace(/'/g,"\\'")+'\')">'+o+'</button>';
+});
+el.innerHTML=h;
+}
+function selB(i){if(locked)return;selBlank=i;drawEmail();drawOpts();}
+function pickOpt(o){if(locked||selBlank<0)return;emails[cur].blanks[selBlank].picked=o;drawEmail();drawOpts();}
+function check(){
+if(locked)return;
+var e=emails[cur];
+var allFilled=e.blanks.every(function(b){return b.picked;});
+if(!allFilled)return;
+locked=true;
+var correct=0,fbHtml='';
+e.blanks.forEach(function(b,i){
+if(b.picked===b.answer){correct++;}
+fbHtml+='<div style="margin-bottom:10px;"><strong>Blank '+(i+1)+': '+b.answer+'</strong><br>'+b.why+'</div>';
+});
+var pts=correct*10;
+score+=pts;document.getElementById('score').textContent=score;
+var fb=document.getElementById('fb');
+if(correct===e.blanks.length){
+fb.className='feedback show good';
+fb.innerHTML='<strong>\u2705 +'+pts+' \u2014 Perfect email!</strong>'+fbHtml;
+}else{
+fb.className='feedback show bad';
+fb.innerHTML='<strong>\u274C '+correct+'/'+e.blanks.length+' correct (+'+pts+').</strong>'+fbHtml;
+}
+document.getElementById('btn-next').classList.add('show');
+drawEmail();drawOpts();
+}
+function next(){cur++;if(cur>=emails.length){showFinal();return;}render();window.scrollTo({top:0,behavior:'smooth'});}
+function showFinal(){
+document.getElementById('game').style.display='none';
+document.getElementById('progress').style.display='none';
+var fs=document.getElementById('final');fs.classList.add('show');
+document.getElementById('final-score').textContent=score;
+var max=emails.length*20,rank,msg;
+if(score>=max*0.9){rank='\ud83c\udfc6 Email Master';msg='Flawless! Your professional emails sound perfectly natural.';}
+else if(score>=max*0.7){rank='\ud83d\udcbc Strong Communicator';msg='Great! Your email instincts are sharp.';}
+else if(score>=max*0.5){rank='\ud83d\udcc8 Developing Writer';msg='Good effort! Pay attention to tone: urgent, diplomatic, or direct.';}
+else{rank='\ud83c\udf31 Keep Practicing';msg='Review the chunks and try again \u2014 email tone takes practice.';}
+document.getElementById('final-rank').textContent=rank;
+document.getElementById('final-msg').textContent=msg;
+window.scrollTo({top:0,behavior:'smooth'});
+}
+render();
+</script>
+</body>
+</html>
