@@ -25,12 +25,12 @@
 <div class="hero-bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
 <div class="wrap hero-grid">
   <div>
-    <h1><span class="typewriter" id="tw"></span></h1>
-    <div class="hero-role">Instructional Designer · LXD</div>
-    <p class="lede">I create <strong>every kind of learning content</strong> — online courses, videos, interactive games, and animated series. Bilingual by design (EN–ES), built on 22+ years in education and a translator's precision.</p>
+    <div class="hero-eyebrow">Hi, I'm <strong>Ricardo Torres</strong> — Instructional Designer · LXD</div>
+    <h1 class="hero-claim">I turn training into <em>experiences</em> people actually finish.</h1>
+    <p class="lede">Bilingual by design (EN–ES): online courses, video microlearning, and gamified simulations — like <strong>The Escalation</strong>, the game that turns you into a bilingual agent. Built on 22+ years in education and a translator's precision.</p>
     <div class="cta-row">
-      <a class="btn btn-primary" href="work.html">View my work</a>
-      <a class="btn btn-ghost" href="about.html">About me</a>
+      <button class="btn btn-primary" onclick="playFromHero()">▶ Play The Escalation</button>
+      <a class="btn btn-ghost" href="work.html">View my work</a>
     </div>
     <div class="creds">
       <span>22+ years teaching</span><span>Translator EN–ES since 1997</span><span>TEFL Certified</span><span>Google Certified Educator</span>
@@ -41,20 +41,16 @@
   </div>
 </div>
 <div class="marquee"><div class="marquee-track">
-  <a class="mini-card" href="work.html#beyond-words"><span class="mini-dot" style="background:var(--teal)">BW</span><span><strong>Beyond Words</strong><small>E-learning course · Language training</small></span></a>
+  <a class="mini-card" href="beyond-words-case.html"><span class="mini-dot" style="background:var(--teal)">BW</span><span><strong>Beyond Words</strong><small>E-learning course · Language training</small></span></a>
   <a class="mini-card" href="samples/spot-the-phish.html"><span class="mini-dot" style="background:var(--amber);color:var(--ink)">SP</span><span><strong>Spot the Phish</strong><small>Branching scenario · Cybersecurity</small></span></a>
   <a class="mini-card" href="feedback-that-works.html"><span class="mini-dot" style="background:#0E9AA7">FT</span><span><strong>Feedback That Works</strong><small>Video microlearning · 2 min</small></span></a>
   <a class="mini-card" href="escalation-case.html"><span class="mini-dot" style="background:#E26D5A">TE</span><span><strong>The Escalation</strong><small>Gamified simulation · BPO training</small></span></a>
-  <a class="mini-card" href="work.html#beyond-words"><span class="mini-dot" style="background:var(--teal)">BW</span><span><strong>Beyond Words</strong><small>E-learning course · Language training</small></span></a>
+  <a class="mini-card" href="beyond-words-case.html"><span class="mini-dot" style="background:var(--teal)">BW</span><span><strong>Beyond Words</strong><small>E-learning course · Language training</small></span></a>
   <a class="mini-card" href="samples/spot-the-phish.html"><span class="mini-dot" style="background:var(--amber);color:var(--ink)">SP</span><span><strong>Spot the Phish</strong><small>Branching scenario · Cybersecurity</small></span></a>
   <a class="mini-card" href="feedback-that-works.html"><span class="mini-dot" style="background:#0E9AA7">FT</span><span><strong>Feedback That Works</strong><small>Video microlearning · 2 min</small></span></a>
   <a class="mini-card" href="escalation-case.html"><span class="mini-dot" style="background:#E26D5A">TE</span><span><strong>The Escalation</strong><small>Gamified simulation · BPO training</small></span></a>
 </div></div>
 </header>
-
-<section class="manifesto reveal"><div class="wrap">
-  <p class="manifesto-line">I turn training into <em>experiences</em> people actually finish.</p>
-</div></section>
 
 <section class="showcase"><div class="wrap">
   <div class="show-grid">
@@ -65,7 +61,7 @@
       <p>You are Alex, a bilingual agent in Bogotá. A furious customer is on the line about a <strong style="color:#fff">$299 charge</strong> he doesn't recognize. Four decisions across the real BPO call flow — every word moves his mood. This is pre-training before the headset goes live.</p>
       <div class="show-meta"><span>📞 Voice-acted</span><span>🎤 Mic input</span><span>⏱ 20s timer</span><span>🧠 AI coach</span></div>
       <div class="cta-row">
-        <a class="btn btn-primary" href="the-escalation.html" target="_blank" rel="noopener">▶ Play now</a>
+        <button class="btn btn-primary" id="playBtn" onclick="toggleGame()">▶ Play now</button>
         <a class="btn btn-ghost" href="escalation-case.html" style="color:#fff;border-color:rgba(255,255,255,.4)">Case study</a>
       </div>
     </div>
@@ -83,7 +79,12 @@
       </div>
     </div>
   </div>
-</div></section>
+    <div class="game-embed" id="gameEmbed">
+      <div class="game-embed-bar"><span>🎮 The Escalation — live demo</span><span><a href="the-escalation.html" target="_blank" rel="noopener">Open fullscreen ⧉</a><button onclick="toggleGame()" aria-label="Close game">✕</button></span></div>
+      <iframe id="gameFrame" title="The Escalation — playable simulation" loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
 
 <section class="section alt reveal"><div class="wrap">
   <h2>What I do best</h2>
@@ -114,7 +115,7 @@
       <div class="tags"><span>E-learning course</span><span>Language training</span><span class="lang">EN</span></div>
       <h3>Beyond Words: English for Latino Professionals</h3>
       <p>A 5-module Rise 360 course that takes Spanish-speaking professionals from hesitant to natural — with 15 custom HTML5 games, AI-cloned voice narration, and a branching capstone.</p>
-      <a class="card-link" href="work.html#beyond-words">Read the case study →</a><br>
+      <a class="card-link" href="beyond-words-case.html">Read the case study →</a><br>
       <a class="card-link" href="https://share.articulate.com/xZzkV9g1tZ764IYzYAKvQ" target="_blank" rel="noopener">View live sample →</a>
     </div></div>
   </div>
@@ -133,19 +134,24 @@
 </div></footer>
 
 <script>
+/* Embedded game */
+function toggleGame(){
+  var e=document.getElementById('gameEmbed'),f=document.getElementById('gameFrame'),b=document.getElementById('playBtn');
+  if(e.classList.contains('open')){e.classList.remove('open');b.innerHTML='▶ Play now';}
+  else{if(!f.getAttribute('src'))f.setAttribute('src','the-escalation.html');e.classList.add('open');b.innerHTML='✕ Close game';setTimeout(function(){e.scrollIntoView({behavior:'smooth',block:'start'})},200);}
+}
 /* Scroll reveal */
 (function(){
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
   document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
 })();
-const text = "Hi, I'm Ricardo Torres.";
-let i = 0;
-(function type(){
-  if(i <= text.length){
-    document.getElementById('tw').textContent = text.slice(0, i++);
-    setTimeout(type, 55);
-  }
-})();
+/* Play from hero: scroll to showcase and open the game */
+function playFromHero(){
+  var s=document.querySelector('.showcase');
+  if(s)s.scrollIntoView({behavior:'smooth'});
+  var e=document.getElementById('gameEmbed');
+  if(e&&!e.classList.contains('open'))setTimeout(toggleGame,650);
+}
 </script>
 </body>
 </html>
