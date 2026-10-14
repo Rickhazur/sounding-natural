@@ -135,7 +135,7 @@ function showQ(){
   const r=R[order[qi]];
   setHUD();
   document.getElementById('pfill').style.width=(qi/R.length*100)+'%';
-  document.getElementById('draft').textContent=r.sit;
+  document.getElementById('draft').textContent=r.ev;
   const idx=shuffle([0,1,2]);
   const box=document.getElementById('opts');box.innerHTML='';
   idx.forEach(k=>{
