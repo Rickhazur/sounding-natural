@@ -1,4 +1,4 @@
-MÓDULO 2 · LECCIÓN 4 — "Using Conditionals Naturally in Conversation"
+MÓDULO 2 · LECCIÓN 5 — "Advanced Modal Verbs for Speculation and Deduction"
 Diseño espectacular mobile + desktop — PARA EL CURSO DE INGLÉS
 Versión PLANA (sin carpetas): todos los archivos van sueltos
 en la RAÍZ del repo sounding-natural
@@ -6,55 +6,54 @@ en la RAÍZ del repo sounding-natural
 
 QUÉ HAY EN ESTE ZIP (27 archivos, todos a la RAÍZ del repo)
 ------------------------------------------------------------
-m2l4-carousel.html     SOLO el carousel de los 10 patrones.
+m2l5-carousel.html     SOLO el carousel de los 10 patrones.
                        Cada tarjeta tiene ▶ natural y 🐢 slow.
                        Para embeber en Rise en "Discover".
 
-m2l4-listen.html       🕵️ SOLO "Ear Detective": juego de discriminación
+m2l5-listen.html       🕵️ SOLO "Ear Detective": juego de discriminación
                        auditiva (10 rondas). Escuchas una frase y
                        adivinas QUÉ patrón es — sin ver tarjetas.
                        Botones 🐇 Natural / 🐢 Slow en cada ronda.
                        Para embeber en Rise en "Listen".
 
-m2l4-play.html         💬 SOLO "What Would You Say?": juego nuevo.
-                       8 rondas — te dan una situación profesional
-                       y eliges la frase MÁS NATURAL (las otras
-                       suenan a libro de texto o tienen el error
-                       típico: "If I would have...").
-                       Para embeber en Rise en "Play".
+m2l5-play.html         📁 SOLO "The Cold Case": juego nuevo.
+                       8 rondas — te dan las EVIDENCIAS (pistas)
+                       y eliges la deducción más lógica.
+                       ("The office is dark..." → "She must have
+                       left already.") Para embeber en Rise en "Play".
 
-m2l4-speak.html        SOLO las 3 misiones de habla con respuesta
+m2l5-speak.html        SOLO las 3 misiones de habla con respuesta
                        modelo (▶ natural y 🐢 slow) + auto-chequeo.
                        Para "Speak".
 
-m2l4-quiz.html        🏆 SOLO el quiz final: 8 preguntas de transferencia
+m2l5-quiz.html        🏆 SOLO el quiz final: 8 preguntas de transferencia
                        con situaciones nuevas. Para "Prove".
 
-m2l4-hero.png          🖼️ Imagen de introducción de la lección
+m2l5-hero.png          🖼️ Imagen de introducción de la lección
                        (título + subtítulo + 3 objetivos).
                        REEMPLAZA el video introductorio en Rise:
                        borra el bloque de video y pon esta imagen.
 
-m2l4-audio-01-first-conditional.mp3  (10 audios VELOCIDAD NATURAL,
+m2l5-audio-01-must-be.mp3  (10 audios VELOCIDAD NATURAL,
    ...                       uno por patrón, con tu voz "me")
-m2l4-audio-10-otherwise.mp3
+m2l5-audio-10-neednt-have.mp3
 
-m2l4-audio-01-first-conditional-slow.mp3  (10 audios LENTOS,
+m2l5-audio-01-must-be-slow.mp3  (10 audios LENTOS,
    ...                       misma voz, 20% más despacio)
-m2l4-audio-10-otherwise-slow.mp3
+m2l5-audio-10-neednt-have-slow.mp3
 
 LOS 10 PATRONES (orden pedagógico validado)
 --------------------------------------------
-1. First conditional — If we sign today, we'll save 10%.
-2. Unless / as long as / provided that — Unless we hear otherwise, we'll proceed.
-3. In case vs. if — Take the contract in case they ask for it.
-4. Second conditional — If I were you, I'd renegotiate the terms.
-5. What if / Supposing — What if the client pulls out at the last minute?
-6. Even if — Even if they agree, we still need legal review.
-7. Third conditional — If we had known, we'd have acted sooner.
-8. Mixed conditional — If we had signed earlier, we'd be saving money now.
-9. Wish / If only + past perfect — I wish we had hired sooner.
-10. Otherwise — We have to launch in June; otherwise, we'll lose the slot.
+1. Must be / can't be — She must be negotiating right now.
+2. Might / may + base — The delay might cost us the contract.
+3. Should be (expectation) — The report should be ready by now.
+4. Must have + participle — They must have signed already.
+5. Can't have + participle — He can't have missed the deadline.
+6. Might / may have + participle — The client might have changed their mind.
+7. Will have + participle — They'll have finished the review by now.
+8. Could have + participle — We could have saved millions.
+9. Should have + participle — We should have called legal first.
+10. Needn't have vs. didn't need to — You needn't have printed everything.
 
 CÓMO SUBIRLO (una sola vez)
 ----------------------------
@@ -69,26 +68,26 @@ CÓMO EMBEBER EN RISE
 En Rise, bloque Multimedia → Embed, pega uno de estos códigos:
 
 Carousel:
-<iframe src="https://rickhazur.github.io/sounding-natural/m2l4-carousel.html" width="100%" height="800" frameborder="0" style="border-radius:16px;" title="Pattern Carousel"></iframe>
+<iframe src="https://rickhazur.github.io/sounding-natural/m2l5-carousel.html" width="100%" height="800" frameborder="0" style="border-radius:16px;" title="Pattern Carousel"></iframe>
 
 Listen (Ear Detective):
-<iframe src="https://rickhazur.github.io/sounding-natural/m2l4-listen.html" width="100%" height="720" frameborder="0" style="border-radius:16px;" title="Ear Detective"></iframe>
+<iframe src="https://rickhazur.github.io/sounding-natural/m2l5-listen.html" width="100%" height="720" frameborder="0" style="border-radius:16px;" title="Ear Detective"></iframe>
 
-Play (What Would You Say?):
-<iframe src="https://rickhazur.github.io/sounding-natural/m2l4-play.html" width="100%" height="750" frameborder="0" style="border-radius:16px;" title="What Would You Say?"></iframe>
+Play (The Cold Case):
+<iframe src="https://rickhazur.github.io/sounding-natural/m2l5-play.html" width="100%" height="750" frameborder="0" style="border-radius:16px;" title="The Cold Case"></iframe>
 
 Speak:
-<iframe src="https://rickhazur.github.io/sounding-natural/m2l4-speak.html" width="100%" height="1060" frameborder="0" style="border-radius:16px;" title="Speaking missions"></iframe>
+<iframe src="https://rickhazur.github.io/sounding-natural/m2l5-speak.html" width="100%" height="1060" frameborder="0" style="border-radius:16px;" title="Speaking missions"></iframe>
 
 Quiz:
-<iframe src="https://rickhazur.github.io/sounding-natural/m2l4-quiz.html" width="100%" height="750" frameborder="0" style="border-radius:16px;" title="Final quiz"></iframe>
+<iframe src="https://rickhazur.github.io/sounding-natural/m2l5-quiz.html" width="100%" height="750" frameborder="0" style="border-radius:16px;" title="Final quiz"></iframe>
 
 IMAGEN INTRODUCTORIA (reemplaza el video)
 -----------------------------------------
 1. En Rise, abre la lección del Módulo 2.
 2. Borra el bloque del video introductorio.
 3. Agrega un bloque Imagen en su lugar.
-4. Sube m2l4-hero.png.
+4. Sube m2l5-hero.png.
 
 LOS AUDIOS
 ----------
