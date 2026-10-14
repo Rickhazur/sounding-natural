@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ear Detective: Final Round — Module 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#026A79;--teal2:#49ADB3;--amber:#E8AA28;--ink:#123C46;--muted:#5b6f75;--bg:#f2f8f8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);padding:30px 14px;min-height:100vh;display:flex;justify-content:center}
+.wrap{width:100%;max-width:640px}
+.hidden{display:none!important}
+.panel{background:#fff;border-radius:26px;padding:44px 34px;text-align:center;box-shadow:0 18px 50px rgba(2,106,121,.16)}
+.emoji-big{font-size:64px;margin-bottom:14px}
+.panel h2{font-family:'Sora';font-weight:800;font-size:clamp(24px,5vw,32px);color:var(--teal);margin-bottom:10px}
+.panel p{color:var(--muted);line-height:1.65;margin-bottom:8px}
+.panel .rules{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:18px 0 26px}
+.panel .rules span{background:#eef6f6;color:var(--teal);font-weight:700;font-size:13px;padding:8px 15px;border-radius:999px}
+.btn{display:inline-block;background:linear-gradient(135deg,var(--teal),#0396a8);color:#fff;font-family:'Sora';font-weight:800;font-size:16px;padding:15px 44px;border:none;border-radius:999px;cursor:pointer;box-shadow:0 10px 26px rgba(2,106,121,.35);transition:transform .2s}
+.btn:hover{transform:translateY(-2px) scale(1.02)}
+.hud{display:flex;gap:10px;margin-bottom:12px}
+.hud-box{flex:1;background:#fff;border-radius:14px;padding:10px;text-align:center;box-shadow:0 4px 14px rgba(2,106,121,.10)}
+.hud-box .label{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.hud-box .value{font-family:'Sora';font-weight:800;font-size:20px;color:var(--teal)}
+.pbar{height:8px;background:#dcebeb;border-radius:99px;overflow:hidden;margin-bottom:16px}
+.pbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal2),var(--amber));border-radius:99px;transition:width .4s}
+.qcard{background:#fff;border-radius:24px;padding:34px 28px;box-shadow:0 18px 50px rgba(2,106,121,.16);text-align:center}
+.bigplay{width:96px;height:96px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--amber),#d1941a);color:#3a2a05;font-size:36px;cursor:pointer;box-shadow:0 12px 30px rgba(232,170,40,.45);margin:6px auto 18px;display:grid;place-items:center;transition:transform .15s}
+.bigplay:active{transform:scale(.93)}
+.bigplay .eq{display:none;align-items:flex-end;gap:4px;height:26px}
+.bigplay .eq i{width:5px;background:#3a2a05;border-radius:3px;animation:eq .7s ease-in-out infinite}
+.bigplay .eq i:nth-child(2){animation-delay:.15s}.bigplay .eq i:nth-child(3){animation-delay:.3s}
+@keyframes eq{0%,100%{height:9px}50%{height:24px}}
+.bigplay.playing .tr{display:none}.bigplay.playing .eq{display:flex}
+.speedrow{display:flex;gap:10px;justify-content:center;margin:0 0 18px}
+.spd{border:2px solid #dcebeb;background:#fff;color:var(--teal);font-weight:700;font-size:13.5px;padding:9px 18px;border-radius:999px;cursor:pointer}
+.spd.active{background:var(--teal);border-color:var(--teal);color:#fff}
+.q{font-family:'Sora';font-weight:800;font-size:19px;margin-bottom:20px}
+.opts{display:grid;gap:10px}
+.opt{background:#f2f8f8;border:2px solid #e2efef;border-radius:14px;padding:15px;font-size:15.5px;font-weight:700;cursor:pointer;transition:all .2s;color:var(--ink)}
+.opt:hover:not(.disabled){border-color:var(--teal2);transform:translateY(-1px)}
+.opt.disabled{cursor:default;opacity:.75}
+.opt.correct{background:#e5f6ec;border-color:#2e9e5b;color:#14532d}
+.opt.wrong{background:#fdecec;border-color:#d64545;color:#7a1f1f}
+.feedback{display:none;margin-top:18px;border-radius:14px;padding:16px;font-size:14.5px;line-height:1.65;text-align:left}
+.feedback.show{display:block}
+.feedback.good{background:#e5f6ec;border:1px solid #bfe6cd}
+.feedback.bad{background:#fdf3e3;border:1px solid #f0d9a8}
+.feedback .sent{display:block;font-size:16.5px;margin:8px 0;color:var(--ink)}
+.feedback .sent mark{background:#ffe9ad;padding:1px 6px;border-radius:6px}
+#nb .btn{margin-top:16px;font-size:15px;padding:13px 36px}
+.replay{margin-top:10px;background:none;border:none;color:var(--teal);font-weight:700;font-size:13.5px;cursor:pointer;text-decoration:underline}
+#stars{font-size:40px;margin:10px 0;letter-spacing:6px}
+#finalScore{font-family:'Sora';font-weight:800;font-size:26px;color:var(--teal);margin:6px 0}
+@media (prefers-reduced-motion:reduce){.bigplay .eq i{animation:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div id="startScreen" class="panel">
+    <div class="emoji-big">🕵️</div>
+    <h2>Ear Detective: Final Round</h2>
+    <p>Hear the pattern. <b>Name the LESSON.</b></p>
+    <p>Fifteen sentences from across Module 2. Was that emphasis, inversion, a conditional — or a modal?</p>
+    <div class="rules"><span>🎧 15 rounds</span><span>🐢 slow version</span><span>🔥 streak bonus</span><span>↻ replay anytime</span></div>
+    <button class="btn" onclick="startGame()">START ▶</button>
+  </div>
+
+  <div id="gameScreen" class="hidden">
+    <div class="hud">
+      <div class="hud-box"><div class="label">Round</div><div class="value" id="qnum">1/15</div></div>
+      <div class="hud-box"><div class="label">Score</div><div class="value" id="score">0</div></div>
+      <div class="hud-box"><div class="label">Streak</div><div class="value" id="streak">0</div></div>
+    </div>
+    <div class="pbar"><i id="pfill"></i></div>
+    <div class="qcard">
+      <button class="bigplay" id="bigplay" aria-label="Play the sentence"><span class="tr">▶</span><span class="eq"><i></i><i></i><i></i></span></button>
+      <div class="speedrow"><button class="spd active" id="spdN" onclick="setSpeed('n')">🐇 Natural</button><button class="spd" id="spdS" onclick="setSpeed('s')">🐢 Slow</button></div>
+      <p class="q">Which lesson does this pattern belong to?</p>
+      <div class="opts" id="opts"></div>
+      <div class="feedback" id="fb"></div>
+      <div id="nb"></div>
+    </div>
+  </div>
+
+  <div id="endScreen" class="panel hidden">
+    <div class="emoji-big" id="endEmoji">🏆</div>
+    <h2>Case closed!</h2>
+    <div id="stars">⭐⭐⭐</div>
+    <div id="finalScore">0 points</div>
+    <p id="endMsg"></p>
+    <button class="btn" onclick="startGame()" style="margin-top:14px">Play again ↻</button>
+  </div>
+
+</div>
+<script>
+const LESSONS=['L1 · Emphasis','L2 · Passive & Reporting','L3 · Inversion','L4 · Conditionals','L5 · Modals'];
+const P=[
+ {a:'m2l1-audio-01-it-cleft.mp3',s:'m2l1-audio-01-it-cleft-slow.mp3',lesson:0,pname:'It-cleft',sent:'It <mark>was Maria</mark> who told me.',key:'“It was X who…” puts maximum emphasis on the person.'},
+ {a:'m2l1-audio-07-never-inversion.mp3',s:'m2l1-audio-07-never-inversion-slow.mp3',lesson:0,pname:'Never-inversion',sent:'Never <mark>have I seen</mark> such dedication.',key:'Negative word first + inversion = dramatic emphasis.'},
+ {a:'m2l1-audio-10-mandative-subjunctive.mp3',s:'m2l1-audio-10-mandative-subjunctive-slow.mp3',lesson:0,pname:'Mandative subjunctive',sent:'I suggest that he <mark>go</mark> immediately.',key:'After suggest / demand / insist: base verb — “he go”, not “he goes”.'},
+ {a:'m2l2-audio-01-agentless-passive.mp3',s:'m2l2-audio-01-agentless-passive-slow.mp3',lesson:1,pname:'Agentless passive',sent:'The results <mark>were published</mark> yesterday.',key:'No agent — the action matters, not who did it.'},
+ {a:'m2l2-audio-06-reported-statements.mp3',s:'m2l2-audio-06-reported-statements-slow.mp3',lesson:1,pname:'Reported statements',sent:'She <mark>said she was</mark> ready.',key:'Say + clause; tell + PERSON + clause. Never “she said me”!'},
+ {a:'m2l2-audio-05-causative-have.mp3',s:'m2l2-audio-05-causative-have-slow.mp3',lesson:1,pname:'Causative have',sent:'We <mark>had the contract reviewed</mark> by legal before signing.',key:'You arrange it, someone else does it — delegation and procurement.'},
+ {a:'m2l3-audio-01-never.mp3',s:'m2l3-audio-01-never-slow.mp3',lesson:2,pname:'Never + inversion',sent:'Never <mark>have I seen</mark> such chaos in a negotiation.',key:'Fronted “never” forces the aux–subject swap.'},
+ {a:'m2l3-audio-04-under-no-circumstances.mp3',s:'m2l3-audio-04-under-no-circumstances-slow.mp3',lesson:2,pname:'Under no circumstances',sent:'Under no circumstances <mark>should client data leave</mark> the office.',key:'Policies and red lines — the professional power pattern.'},
+ {a:'m2l3-audio-08-not-until.mp3',s:'m2l3-audio-08-not-until-slow.mp3',lesson:2,pname:'Not until + inversion',sent:'Not until the audit ended <mark>did we relax</mark>.',key:'Inversion hits the MAIN clause only.'},
+ {a:'m2l4-audio-04-second-conditional.mp3',s:'m2l4-audio-04-second-conditional-slow.mp3',lesson:3,pname:'Second conditional',sent:'If I <mark>were you, I’d renegotiate</mark> the terms.',key:'“Would” lives in the result clause only.'},
+ {a:'m2l4-audio-07-third-conditional.mp3',s:'m2l4-audio-07-third-conditional-slow.mp3',lesson:3,pname:'Third conditional',sent:'If we <mark>had known, we’d have acted</mark> sooner.',key:'Post-mortems — “would” NEVER goes in the if-clause.'},
+ {a:'m2l4-audio-10-otherwise.mp3',s:'m2l4-audio-10-otherwise-slow.mp3',lesson:3,pname:'Otherwise',sent:'We have to launch in June; <mark>otherwise, we’ll lose</mark> the slot.',key:'The if-less conditional — “or” for speech, “otherwise” for writing.'},
+ {a:'m2l5-audio-04-must-have.mp3',s:'m2l5-audio-04-must-have-slow.mp3',lesson:4,pname:'Must have + pp',sent:'They <mark>must have signed</mark> already.',key:'Confident past deduction — never “must of”.'},
+ {a:'m2l5-audio-08-could-have.mp3',s:'m2l5-audio-08-could-have-slow.mp3',lesson:4,pname:'Could have + pp',sent:'We <mark>could have saved</mark> millions.',key:'Missed opportunity — the post-mortem classic.'},
+ {a:'m2l5-audio-09-should-have.mp3',s:'m2l5-audio-09-should-have-slow.mp3',lesson:4,pname:'Should have + pp',sent:'We <mark>should have called</mark> legal first.',key:'Regret and criticism — Spanish “debió” (not “debió de”).'}
+];
+let order,qi,score,streak,answered,aud=null,speed='n';
+const bp=document.getElementById('bigplay');
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function playAud(){
+  const p=P[order[qi]];
+  if(aud)aud.pause();
+  aud=new Audio(speed==='s'?p.s:p.a);bp.classList.add('playing');
+  aud.onended=()=>bp.classList.remove('playing');
+  aud.onerror=()=>bp.classList.remove('playing');
+  aud.play().catch(()=>bp.classList.remove('playing'));
+}
+function setSpeed(x){speed=x;document.getElementById('spdN').classList.toggle('active',x==='n');document.getElementById('spdS').classList.toggle('active',x==='s');}
+bp.onclick=playAud;
+function startGame(){
+  order=shuffle([...Array(P.length).keys()]);qi=0;score=0;streak=0;
+  document.getElementById('startScreen').classList.add('hidden');
+  document.getElementById('endScreen').classList.add('hidden');
+  document.getElementById('gameScreen').classList.remove('hidden');
+  showQ();playAud();
+}
+function showQ(){
+  answered=false;
+  const correct=order[qi];
+  document.getElementById('qnum').textContent=(qi+1)+'/'+P.length;
+  document.getElementById('score').textContent=score;
+  document.getElementById('streak').textContent=streak+(streak>=3?' 🔥':'');
+  document.getElementById('pfill').style.width=(qi/P.length*100)+'%';
+  const opts=shuffle([0,1,2,3,4]);
+  const box=document.getElementById('opts');box.innerHTML='';
+  opts.forEach(i=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=LESSONS[i];
+    b.onclick=()=>answer(i===P[correct].lesson,b);box.appendChild(b);
+  });
+  const fb=document.getElementById('fb');fb.className='feedback';fb.innerHTML='';
+  document.getElementById('nb').innerHTML='';
+}
+function answer(ok,el){
+  if(answered)return;answered=true;
+  const p=P[order[qi]],fb=document.getElementById('fb');
+  document.querySelectorAll('.opt').forEach(o=>o.classList.add('disabled'));
+  if(ok){
+    const pts=10+streak*5;score+=pts;streak++;
+    el.classList.add('correct');
+    fb.className='feedback show good';
+    fb.innerHTML=`✅ <strong>Correct! +${pts} points — ${LESSONS[p.lesson]}: ${p.pname}</strong><span class="sent">“${p.sent}”</span>🔑 ${p.key}`;
+  }else{
+    streak=0;el.classList.add('wrong');
+    document.querySelectorAll('.opt').forEach(o=>{if(o.textContent===LESSONS[p.lesson])o.classList.add('correct');});
+    fb.className='feedback show bad';
+    fb.innerHTML=`❌ Not quite — it was <strong>${LESSONS[p.lesson]}: ${p.pname}</strong><span class="sent">“${p.sent}”</span>🔑 ${p.key}`;
+  }
+  document.getElementById('score').textContent=score;
+  document.getElementById('streak').textContent=streak+(streak>=3?' 🔥':'');
+  document.getElementById('nb').innerHTML=`<button class="replay" onclick="playAud()">↻ hear it again</button><br><button class="btn" onclick="nextQ()">${qi+1<P.length?'Next mystery →':'See results 🏆'}</button>`;
+}
+function nextQ(){qi++;if(qi>=P.length)endGame();else{showQ();playAud();}}
+function endGame(){
+  document.getElementById('gameScreen').classList.add('hidden');
+  document.getElementById('endScreen').classList.remove('hidden');
+  const pct=score/(P.length*10);let stars,emoji,msg;
+  if(pct>=1.2){stars='⭐⭐⭐';emoji='🏆';msg='Outstanding! You can place any pattern in its lesson by ear alone!';}
+  else if(pct>=0.8){stars='⭐⭐⭐';emoji='🎉';msg='Excellent! Your Module 2 ear is razor-sharp!';}
+  else if(pct>=0.5){stars='⭐⭐';emoji='💪';msg='Good! Revisit The Arsenal, then try again!';}
+  else{stars='⭐';emoji='📚';msg='Keep training! Review the lessons and try again.';}
+  document.getElementById('endEmoji').textContent=emoji;
+  document.getElementById('stars').textContent=stars;
+  document.getElementById('finalScore').textContent=score+' points';
+  document.getElementById('endMsg').textContent=msg;
+}
+</script>
+</body>
+</html>

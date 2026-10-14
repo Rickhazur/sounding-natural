@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Arsenal — Module 2 · Capstone</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#026A79;--teal2:#49ADB3;--amber:#E8AA28;--ink:#123C46;--muted:#5b6f75;--bg:#f2f8f8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);padding:30px 14px;min-height:100vh;display:flex;justify-content:center}
+.wrap{width:100%;max-width:980px}
+.head{text-align:center;margin-bottom:6px}
+.head h2{font-family:'Sora';font-weight:800;font-size:clamp(22px,4.5vw,30px);color:var(--teal)}
+.head p{color:var(--muted);font-size:14px;margin-top:6px}
+.toolbar{position:sticky;top:0;z-index:10;background:var(--bg);padding:14px 0 10px}
+.filters{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+.fpill{border:2px solid #dcebeb;background:#fff;color:var(--teal);font-weight:700;font-size:13px;padding:9px 16px;border-radius:999px;cursor:pointer;transition:all .2s}
+.fpill:hover{border-color:var(--teal2)}
+.fpill.active{background:var(--teal);border-color:var(--teal);color:#fff}
+.searchrow{display:flex;justify-content:center}
+.search{width:100%;max-width:440px;border:2px solid #dcebeb;border-radius:999px;padding:12px 20px;font-size:15px;font-family:'Inter';color:var(--ink);background:#fff;outline:none}
+.search:focus{border-color:var(--teal2)}
+.count{text-align:center;color:var(--muted);font-size:13px;font-weight:600;margin:6px 0 16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:14px}
+.card{background:#fff;border-radius:18px;padding:18px;box-shadow:0 8px 24px rgba(2,106,121,.09);border:1px solid #e9f2f2;display:flex;flex-direction:column;gap:10px}
+.tag{align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:.06em;padding:5px 11px;border-radius:999px;text-transform:uppercase}
+.tag.l1{background:#dff0f1;color:#026A79}
+.tag.l2{background:#fdf0d3;color:#8a5a00}
+.tag.l3{background:#e5f3f4;color:#0396a8}
+.tag.l4{background:#f5e9c8;color:#a06a00}
+.tag.l5{background:#123C46;color:#fff}
+.card h4{font-family:'Sora';font-size:16px;color:var(--teal)}
+.card .ex{font-size:14.5px;line-height:1.6;color:var(--ink);background:#f6fbfb;border-left:4px solid var(--amber);border-radius:0 10px 10px 0;padding:10px 12px;flex:1}
+.audiodock{display:flex;align-items:center;gap:10px;background:#eef6f6;border-radius:12px;padding:8px 12px}
+.abtn{width:40px;height:40px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--teal),#0396a8);color:#fff;font-size:15px;cursor:pointer;flex-shrink:0;display:grid;place-items:center}
+.abtn.playing{background:var(--amber);color:#3a2a05}
+.abtn.slowbtn{width:34px;height:34px;font-size:13px;background:linear-gradient(135deg,#49ADB3,#026A79)}
+.audiodock span{font-size:12px;font-weight:600;color:var(--muted)}
+.empty{text-align:center;color:var(--muted);padding:40px 20px;font-size:15px;grid-column:1/-1}
+@media (prefers-reduced-motion:reduce){}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <h2>🗡️ The Arsenal</h2>
+    <p>All <b>50 patterns</b> of Module 2 — your permanent reference. Filter by lesson or search.</p>
+  </div>
+  <div class="toolbar">
+    <div class="filters" id="filters">
+      <button class="fpill active" data-f="all">All 50</button>
+      <button class="fpill" data-f="L1">L1 · Emphasis</button>
+      <button class="fpill" data-f="L2">L2 · Passive &amp; Reporting</button>
+      <button class="fpill" data-f="L3">L3 · Inversion</button>
+      <button class="fpill" data-f="L4">L4 · Conditionals</button>
+      <button class="fpill" data-f="L5">L5 · Modals</button>
+    </div>
+    <div class="searchrow"><input class="search" id="search" type="text" placeholder="🔍 Search a pattern or example…" aria-label="Search patterns"></div>
+  </div>
+  <div class="count" id="count"></div>
+  <div class="grid" id="grid"></div>
+</div>
+<script>
+const P=[
+// [prefix, lessonCode, lessonLabel, slug, name, example]
+['m2l1','L1','L1 · Emphasis','01-it-cleft','It-cleft','It was Maria who told me.'],
+['m2l1','L1','L1 · Emphasis','02-the-reason','The reason','The reason I’m calling is to confirm.'],
+['m2l1','L1','L1 · Emphasis','03-what-cleft','What-cleft','What I need is more time.'],
+['m2l1','L1','L1 · Emphasis','04-fronting','Fronting','This I will never forget.'],
+['m2l1','L1','L1 · Emphasis','05-should-inversion','Should-inversion','Should you need anything, call me.'],
+['m2l1','L1','L1 · Emphasis','06-hardly-inversion','Hardly-inversion','Hardly had we arrived when it started raining.'],
+['m2l1','L1','L1 · Emphasis','07-never-inversion','Never-inversion','Never have I seen such dedication.'],
+['m2l1','L1','L1 · Emphasis','08-were-inversion','Were-inversion','Were I to accept, I’d need guarantees.'],
+['m2l1','L1','L1 · Emphasis','09-impersonal-passive','Impersonal passive','It is said that she speaks five languages.'],
+['m2l1','L1','L1 · Emphasis','10-mandative-subjunctive','Mandative subjunctive','I suggest that he go immediately.'],
+['m2l2','L2','L2 · Passive & Reporting','01-agentless-passive','Agentless passive','The results were published yesterday.'],
+['m2l2','L2','L2 · Passive & Reporting','02-modal-passive','Modal passive','The documents must be signed today.'],
+['m2l2','L2','L2 · Passive & Reporting','03-personal-passive','Personal reporting passive','The CEO is expected to announce the merger next week.'],
+['m2l2','L2','L2 · Passive & Reporting','04-passive-infinitive','Passive infinitive','The proposal needs to be approved by Friday.'],
+['m2l2','L2','L2 · Passive & Reporting','05-causative-have','Causative have','We had the contract reviewed by legal before signing.'],
+['m2l2','L2','L2 · Passive & Reporting','06-reported-statements','Reported statements','She said she was ready.'],
+['m2l2','L2','L2 · Passive & Reporting','07-reported-requests','Reported requests','She told me to wait.'],
+['m2l2','L2','L2 · Passive & Reporting','08-reported-questions','Reported questions','He asked if I needed help.'],
+['m2l2','L2','L2 · Passive & Reporting','09-reporting-infinitive','Reporting verbs + infinitive','They agreed to support us.'],
+['m2l2','L2','L2 · Passive & Reporting','10-reporting-gerund','Reporting verbs + gerund','He admitted missing the deadline.'],
+['m2l3','L3','L3 · Inversion','01-never','Never + inversion','Never have I seen such chaos in a negotiation.'],
+['m2l3','L3','L3 · Inversion','02-seldom-rarely','Seldom / Rarely + inversion','Rarely have we witnessed such growth in a single quarter.'],
+['m2l3','L3','L3 · Inversion','03-not-only','Not only... but also','Not only did she win the contract, but she doubled the revenue.'],
+['m2l3','L3','L3 · Inversion','04-under-no-circumstances','Under no circumstances','Under no circumstances should client data leave the office.'],
+['m2l3','L3','L3 · Inversion','05-nowhere','Nowhere + inversion','Nowhere in the report is the delay explained.'],
+['m2l3','L3','L3 · Inversion','06-hardly','Hardly / Scarcely... when','Hardly had we arrived when the call started.'],
+['m2l3','L3','L3 · Inversion','07-only','Only + time + inversion','Only then did I understand the risk.'],
+['m2l3','L3','L3 · Inversion','08-not-until','Not until + inversion','Not until the audit ended did we relax.'],
+['m2l3','L3','L3 · Inversion','09-so-such','So / Such + inversion','So compelling were the results that the board approved immediately.'],
+['m2l3','L3','L3 · Inversion','10-conditional-inversion','Should / Were / Had','Should you need anything, call me.'],
+['m2l4','L4','L4 · Conditionals','01-first-conditional','First conditional','If we sign today, we’ll save 10%.'],
+['m2l4','L4','L4 · Conditionals','02-unless','Unless / as long as','Unless we hear otherwise, we’ll proceed.'],
+['m2l4','L4','L4 · Conditionals','03-in-case','In case vs. if','Take the contract in case they ask for it.'],
+['m2l4','L4','L4 · Conditionals','04-second-conditional','Second conditional','If I were you, I’d renegotiate the terms.'],
+['m2l4','L4','L4 · Conditionals','05-what-if','What if / Supposing','What if the client pulls out at the last minute?'],
+['m2l4','L4','L4 · Conditionals','06-even-if','Even if','Even if they agree, we still need legal review.'],
+['m2l4','L4','L4 · Conditionals','07-third-conditional','Third conditional','If we had known, we’d have acted sooner.'],
+['m2l4','L4','L4 · Conditionals','08-mixed-conditional','Mixed conditional','If we had signed earlier, we’d be saving money now.'],
+['m2l4','L4','L4 · Conditionals','09-wish-if-only','Wish / If only','I wish we had hired sooner.'],
+['m2l4','L4','L4 · Conditionals','10-otherwise','Otherwise','We have to launch in June; otherwise, we’ll lose the slot.'],
+['m2l5','L5','L5 · Modals','01-must-be','Must be / can’t be','She must be negotiating right now.'],
+['m2l5','L5','L5 · Modals','02-might-may','Might / may + base','The delay might cost us the contract.'],
+['m2l5','L5','L5 · Modals','03-should-be','Should be (expectation)','The report should be ready by now.'],
+['m2l5','L5','L5 · Modals','04-must-have','Must have + pp','They must have signed already.'],
+['m2l5','L5','L5 · Modals','05-cant-have','Can’t have + pp','He can’t have missed the deadline.'],
+['m2l5','L5','L5 · Modals','06-might-have','Might / may have + pp','The client might have changed their mind.'],
+['m2l5','L5','L5 · Modals','07-will-have','Will have + pp','They’ll have finished the review by now.'],
+['m2l5','L5','L5 · Modals','08-could-have','Could have + pp','We could have saved millions.'],
+['m2l5','L5','L5 · Modals','09-should-have','Should have + pp','We should have called legal first.'],
+['m2l5','L5','L5 · Modals','10-neednt-have','Needn’t have vs didn’t need to','You needn’t have printed everything.']
+];
+let curF='all',curQ='';
+let curA=null,curB=null;
+function playFile(file,btn){
+  const label=btn.textContent;
+  if(curA&&!curA.paused&&curB===btn){curA.pause();btn.classList.remove('playing');btn.textContent=label;return;}
+  if(curA){curA.pause();if(curB){curB.classList.remove('playing');curB.textContent=curB._label||'▶';}}
+  curA=new Audio(file);curB=btn;btn._label=label;btn.classList.add('playing');btn.textContent='⏸';
+  curA.onended=()=>{btn.classList.remove('playing');btn.textContent=label;};
+  curA.onerror=()=>{btn.classList.remove('playing');btn.textContent=label;};
+  curA.play().catch(()=>{btn.classList.remove('playing');btn.textContent=label;});
+}
+function render(){
+  const grid=document.getElementById('grid');grid.innerHTML='';
+  const q=curQ.trim().toLowerCase();
+  const list=P.filter(p=>(curF==='all'||p[1]===curF)&&(!q||(p[4]+' '+p[5]).toLowerCase().includes(q)));
+  document.getElementById('count').textContent=list.length+' of 50 patterns';
+  if(!list.length){grid.innerHTML='<div class="empty">No patterns match. Try another search or lesson.</div>';return;}
+  list.forEach(p=>{
+    const nat=p[0]+'-audio-'+p[3]+'.mp3',slow=p[0]+'-audio-'+p[3]+'-slow.mp3';
+    const d=document.createElement('div');d.className='card';
+    d.innerHTML='<span class="tag '+p[1].toLowerCase()+'">'+p[2]+'</span><h4>'+p[4]+'</h4><p class="ex">“'+p[5]+'”</p>'+
+      '<div class="audiodock"><button class="abtn" aria-label="Play '+p[4]+'">▶</button><button class="abtn slowbtn" aria-label="Play '+p[4]+' slowly">🐢</button><span>▶ natural · 🐢 slow</span></div>';
+    const btns=d.querySelectorAll('.abtn');
+    btns[0].onclick=()=>playFile(nat,btns[0]);
+    btns[1].onclick=()=>playFile(slow,btns[1]);
+    grid.appendChild(d);
+  });
+}
+document.getElementById('filters').addEventListener('click',e=>{
+  const b=e.target.closest('.fpill');if(!b)return;
+  document.querySelectorAll('.fpill').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');curF=b.dataset.f;render();
+});
+document.getElementById('search').addEventListener('input',e=>{curQ=e.target.value;render();});
+render();
+</script>
+</body>
+</html>

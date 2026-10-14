@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Boardroom — Module 2 · Capstone</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#026A79;--teal2:#49ADB3;--amber:#E8AA28;--ink:#123C46;--muted:#5b6f75;--bg:#f2f8f8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);padding:30px 14px;min-height:100vh;display:flex;justify-content:center}
+.wrap{width:100%;max-width:640px}
+.hidden{display:none!important}
+.panel{background:#fff;border-radius:26px;padding:44px 34px;text-align:center;box-shadow:0 18px 50px rgba(2,106,121,.16)}
+.emoji-big{font-size:64px;margin-bottom:14px}
+.panel h2{font-family:'Sora';font-weight:800;font-size:clamp(24px,5vw,32px);color:var(--teal);margin-bottom:10px}
+.panel p{color:var(--muted);line-height:1.65;margin-bottom:8px}
+.panel .rules{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:18px 0 26px}
+.panel .rules span{background:#eef6f6;color:var(--teal);font-weight:700;font-size:13px;padding:8px 15px;border-radius:999px}
+.btn{display:inline-block;background:linear-gradient(135deg,var(--teal),#0396a8);color:#fff;font-family:'Sora';font-weight:800;font-size:16px;padding:15px 44px;border:none;border-radius:999px;cursor:pointer;box-shadow:0 10px 26px rgba(2,106,121,.35);transition:transform .2s}
+.btn:hover{transform:translateY(-2px) scale(1.02)}
+.hud{display:flex;gap:10px;margin-bottom:12px}
+.hud-box{flex:1;background:#fff;border-radius:14px;padding:10px;text-align:center;box-shadow:0 4px 14px rgba(2,106,121,.10)}
+.hud-box .label{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.hud-box .value{font-family:'Sora';font-weight:800;font-size:20px;color:var(--teal)}
+.pbar{height:8px;background:#dcebeb;border-radius:99px;overflow:hidden;margin-bottom:16px}
+.pbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal2),var(--amber));border-radius:99px;transition:width .4s}
+.qcard{background:#fff;border-radius:24px;padding:34px 28px;box-shadow:0 18px 50px rgba(2,106,121,.16);text-align:center}
+.story{background:#f6fbfb;border-left:4px solid var(--amber);border-radius:0 12px 12px 0;padding:14px 16px;font-size:16.5px;line-height:1.6;margin-bottom:20px;text-align:left}
+.story .tag{display:block;font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:6px}
+.story .ceo{display:block;margin-top:10px;font-style:italic;color:var(--teal);font-weight:600}
+.storybtn{margin-top:10px;border:none;background:linear-gradient(135deg,var(--teal),#0396a8);color:#fff;font-weight:700;font-size:13px;padding:9px 18px;border-radius:999px;cursor:pointer}
+.storybtn.playing{background:var(--amber);color:#3a2a05}
+.q{font-family:'Sora';font-weight:800;font-size:19px;margin-bottom:20px}
+.opts{display:grid;gap:10px}
+.opt{background:#f2f8f8;border:2px solid #e2efef;border-radius:14px;padding:15px;font-size:15.5px;font-weight:700;cursor:pointer;transition:all .2s;color:var(--ink);text-align:left;line-height:1.5}
+.opt:hover:not(.disabled){border-color:var(--teal2);transform:translateY(-1px)}
+.opt.disabled{cursor:default;opacity:.75}
+.opt.correct{background:#e5f6ec;border-color:#2e9e5b;color:#14532d}
+.opt.wrong{background:#fdecec;border-color:#d64545;color:#7a1f1f}
+.feedback{display:none;margin-top:18px;border-radius:14px;padding:16px;font-size:14.5px;line-height:1.65;text-align:left}
+.feedback.show{display:block}
+.feedback.good{background:#e5f6ec;border:1px solid #bfe6cd}
+.feedback.bad{background:#fdf3e3;border:1px solid #f0d9a8}
+#nb .btn{margin-top:16px;font-size:15px;padding:13px 36px}
+#stars{font-size:40px;margin:10px 0;letter-spacing:6px}
+#finalScore{font-family:'Sora';font-weight:800;font-size:26px;color:var(--teal);margin:6px 0}
+.finale-text{font-size:17px;line-height:1.7;margin:14px 0;color:var(--ink)}
+@media (prefers-reduced-motion:reduce){}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div id="startScreen" class="panel">
+    <div class="emoji-big">🏛️</div>
+    <h2>The Boardroom</h2>
+    <p>You are the regional director. <b>Save the account.</b></p>
+    <p>Key client Andina Foods threatens to leave after a shipment failure. Seven moments decide everything — choose what to say like a true professional. Your choices write the ending.</p>
+    <div class="rules"><span>🏛️ 7 scenes</span><span>🎧 voiced story</span><span>🎯 your words matter</span></div>
+    <button class="btn" onclick="startGame()">ENTER ▶</button>
+  </div>
+
+  <div id="gameScreen" class="hidden">
+    <div class="hud">
+      <div class="hud-box"><div class="label">Scene</div><div class="value" id="qnum">1/7</div></div>
+      <div class="hud-box"><div class="label">Score</div><div class="value" id="score">0</div></div>
+      <div class="hud-box"><div class="label">Streak</div><div class="value" id="streak">0</div></div>
+    </div>
+    <div class="pbar"><i id="pfill"></i></div>
+    <div class="qcard">
+      <div class="story"><span class="tag" id="stag">🏛️ Scene 1</span><span id="story"></span><span class="ceo hidden" id="ceoline"></span><div id="storyaud"></div></div>
+      <p class="q">What do you say?</p>
+      <div class="opts" id="opts"></div>
+      <div class="feedback" id="fb"></div>
+      <div id="nb"></div>
+    </div>
+  </div>
+
+  <div id="endScreen" class="panel hidden">
+    <div class="emoji-big" id="endEmoji">🏆</div>
+    <h2 id="endTitle">The verdict</h2>
+    <div class="story" style="text-align:left"><span class="tag">📞 Friday morning — your phone rings</span><span class="ceo" id="finaleLine" style="margin-top:0"></span><div><button class="storybtn" id="finaleBtn">▶ hear it</button></div></div>
+    <p class="finale-text" id="finaleText"></p>
+    <div id="stars">⭐⭐⭐</div>
+    <div id="finalScore">0 points</div>
+    <p id="endMsg"></p>
+    <button class="btn" onclick="startGame()" style="margin-top:14px">Play again ↻</button>
+  </div>
+
+</div>
+<script>
+const S=[
+ {story:'Monday, 9 AM. The client is already seated when you walk in. Their CEO looks furious.',audio:'m2l6-audio-01-boardroom-intro.mp3',ceo:null,
+  opts:['It was our logistics team who failed you, and I take full responsibility.','Our logistics team failed, sorry.','Never I have seen such a problem.'],ok:0,
+  pat:'It-cleft',lesson:'L1 · Emphasis',key:'Emphasis on who takes responsibility — “It was X who…”.'},
+ {story:'The CEO snaps:',audio:'m2l6-audio-02-ceo-angry.mp3',ceo:'“This is the third delay this quarter!”',
+  opts:['The shipments were delayed by port strikes, but that doesn’t excuse us.','Port strikes delayed the shipments.','The shipments got delayed by the strikes.'],ok:0,
+  pat:'Agentless passive',lesson:'L2 · Passive & Reporting',key:'No agent — the action matters, not who did it.'},
+ {story:'The CEO demands:',audio:'m2l6-audio-03-ceo-why.mp3',ceo:'“Why should we stay?”',
+  opts:['Not only will we fix the process, but we’ll cut your costs by 15%.','We will fix the process and cut your costs.','Not only we will fix the process, but we’ll cut costs.'],ok:0,
+  pat:'Not only... but also',lesson:'L3 · Inversion',key:'Invert the FIRST clause only — “but also” stays normal.'},
+ {story:'The CEO asks:',audio:'m2l6-audio-04-ceo-guarantees.mp3',ceo:'“What guarantees do we have?”',
+  opts:['Under no circumstances will this happen again.','This won’t happen again, I promise.','Under no circumstances this will happen again.'],ok:0,
+  pat:'Under no circumstances',lesson:'L3 · Inversion',key:'Opener + modal + subject — then the base verb.'},
+ {story:'The CEO pushes:',audio:'m2l6-audio-05-ceo-whatif.mp3',ceo:'“What if your team fails again?”',
+  opts:['If we fail again, you pay nothing that month.','If we would fail again, you pay nothing.','If we fail again, you shall pay nothing.'],ok:0,
+  pat:'First conditional',lesson:'L4 · Conditionals',key:'Real future — contractions keep it natural; “would” never enters the if-clause.'},
+ {story:'You review the tracking data before answering.',audio:null,ceo:null,
+  opts:['The delay must have started at the port — we’re investigating.','The delay must of started at the port.','The delay started at the port, maybe.'],ok:0,
+  pat:'Must have + pp',lesson:'L5 · Modals',key:'Confident past deduction — and it’s “must HAVE”, never “must of”.'},
+ {story:'The CEO softens:',audio:'m2l6-audio-06-ceo-softens.mp3',ceo:'“We need to think about it.”',
+  opts:['Should you need anything before Friday, call me directly.','If you need anything, call me.','Should you needed anything, call me.'],ok:0,
+  pat:'Should-inversion',lesson:'L3 · Inversion',key:'“Should + subject + verb” — formal closings that keep the door open.'}
+];
+const FINALE={
+ win:{audio:'m2l6-audio-07-finale-win.mp3',line:'“We’re staying. That meeting changed everything.”',text:'🎉 The account is saved. The board will hear about this meeting.',emoji:'🏆',stars:'⭐⭐⭐',msg:'Flawless. You spoke like a true executive in all seven scenes.'},
+ mid:{audio:'m2l6-audio-08-finale-mid.mp3',line:'“We’ll give you one more quarter. Don’t waste it.”',text:'A second chance. The account survives — barely.',emoji:'🎉',stars:'⭐⭐',msg:'Good — but a sharper voice would have closed it cleanly. Replay the scenes you missed.'},
+ lose:{audio:'m2l6-audio-09-finale-lose.mp3',line:'“We’ve signed with your competitor.”',text:'The boardroom is silent. The account is gone.',emoji:'📚',stars:'⭐',msg:'The client walked away. Review The Arsenal and try the meeting again.'}
+};
+let qi,score,streak,correctCount,answered,aud=null;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function stopAud(){if(aud){aud.pause();aud=null;}}
+function startGame(){
+  qi=0;score=0;streak=0;correctCount=0;stopAud();
+  document.getElementById('startScreen').classList.add('hidden');
+  document.getElementById('endScreen').classList.add('hidden');
+  document.getElementById('gameScreen').classList.remove('hidden');
+  showScene();
+}
+function playStory(file,btn){
+  const label=btn.textContent;
+  if(aud&&!aud.paused){stopAud();btn.classList.remove('playing');btn.textContent=label;return;}
+  stopAud();
+  aud=new Audio(file);btn.classList.add('playing');btn.textContent='⏸ hear it';
+  aud.onended=()=>{btn.classList.remove('playing');btn.textContent=label;aud=null;};
+  aud.onerror=()=>{btn.classList.remove('playing');btn.textContent=label;aud=null;};
+  aud.play().catch(()=>{btn.classList.remove('playing');btn.textContent=label;});
+}
+function showScene(){
+  answered=false;stopAud();
+  const s=S[qi];
+  document.getElementById('qnum').textContent=(qi+1)+'/'+S.length;
+  document.getElementById('score').textContent=score;
+  document.getElementById('streak').textContent=streak+(streak>=3?' 🔥':'');
+  document.getElementById('pfill').style.width=(qi/S.length*100)+'%';
+  document.getElementById('stag').textContent='🏛️ Scene '+(qi+1);
+  document.getElementById('story').textContent=s.story;
+  const ceo=document.getElementById('ceoline');
+  if(s.ceo){ceo.textContent=s.ceo;ceo.classList.remove('hidden');}else{ceo.classList.add('hidden');ceo.textContent='';}
+  const sa=document.getElementById('storyaud');sa.innerHTML='';
+  if(s.audio){
+    const b=document.createElement('button');b.className='storybtn';b.textContent='▶ hear the scene';
+    b.onclick=()=>playStory(s.audio,b);sa.appendChild(b);
+  }
+  const idx=shuffle([0,1,2]);
+  const box=document.getElementById('opts');box.innerHTML='';
+  idx.forEach(k=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=s.opts[k];
+    b.onclick=()=>answer(k===s.ok,b);box.appendChild(b);
+  });
+  const fb=document.getElementById('fb');fb.className='feedback';fb.innerHTML='';
+  document.getElementById('nb').innerHTML='';
+}
+function answer(ok,el){
+  if(answered)return;answered=true;
+  const s=S[qi],fb=document.getElementById('fb');
+  document.querySelectorAll('.opt').forEach(o=>o.classList.add('disabled'));
+  if(ok){
+    const pts=10+streak*5;score+=pts;streak++;correctCount++;
+    el.classList.add('correct');
+    fb.className='feedback show good';
+    fb.innerHTML=`✅ <strong>Perfect choice! +${pts} points</strong><br>🔑 ${s.pat} (${s.lesson}): ${s.key}`;
+  }else{
+    streak=0;el.classList.add('wrong');
+    document.querySelectorAll('.opt').forEach(o=>{if(o.textContent===s.opts[s.ok])o.classList.add('correct');});
+    fb.className='feedback show bad';
+    fb.innerHTML=`❌ The professional move was <strong>“${s.opts[s.ok]}”</strong><br>🔑 ${s.pat} (${s.lesson}): ${s.key}`;
+  }
+  document.getElementById('score').textContent=score;
+  document.getElementById('streak').textContent=streak+(streak>=3?' 🔥':'');
+  document.getElementById('nb').innerHTML=`<button class="btn" onclick="nextScene()">${qi+1<S.length?'Next scene →':'See the finale 📞'}</button>`;
+}
+function nextScene(){qi++;if(qi>=S.length)endGame();else showScene();}
+function endGame(){
+  stopAud();
+  document.getElementById('gameScreen').classList.add('hidden');
+  document.getElementById('endScreen').classList.remove('hidden');
+  const f=correctCount===7?FINALE.win:(correctCount>=4?FINALE.mid:FINALE.lose);
+  document.getElementById('endEmoji').textContent=f.emoji;
+  document.getElementById('finaleLine').textContent=f.line;
+  document.getElementById('finaleText').textContent=f.text;
+  document.getElementById('stars').textContent=f.stars;
+  document.getElementById('finalScore').textContent=score+' points';
+  document.getElementById('endMsg').textContent=f.msg;
+  const fb=document.getElementById('finaleBtn');fb.textContent='▶ hear it';
+  fb.onclick=()=>playStory(f.audio,fb);
+}
+</script>
+</body>
+</html>

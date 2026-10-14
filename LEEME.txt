@@ -1,59 +1,55 @@
-MÓDULO 2 · LECCIÓN 5 — "Advanced Modal Verbs for Speculation and Deduction"
+MÓDULO 2 · LECCIÓN 6 (FINAL) — "Your Advanced Voice: Putting It All Together"
 Diseño espectacular mobile + desktop — PARA EL CURSO DE INGLÉS
 Versión PLANA (sin carpetas): todos los archivos van sueltos
 en la RAÍZ del repo sounding-natural
 ================================================================
+ESTA LECCIÓN ES DIFERENTE: no enseña patrones nuevos.
+Integra los 50 patrones de las 5 lecciones en una misión final.
 
 QUÉ HAY EN ESTE ZIP (27 archivos, todos a la RAÍZ del repo)
 ------------------------------------------------------------
-m2l5-carousel.html     SOLO el carousel de los 10 patrones.
-                       Cada tarjeta tiene ▶ natural y 🐢 slow.
+m2l6-arsenal.html      🗡️ SOLO "The Arsenal": galería maestra con los
+                       50 patrones del módulo, con filtro por lección
+                       y buscador. Cada tarjeta tiene ▶ natural y 🐢 slow
+                       (reutiliza los audios ya publicados).
                        Para embeber en Rise en "Discover".
 
-m2l5-listen.html       🕵️ SOLO "Ear Detective": juego de discriminación
-                       auditiva (10 rondas). Escuchas una frase y
-                       adivinas QUÉ patrón es — sin ver tarjetas.
-                       Botones 🐇 Natural / 🐢 Slow en cada ronda.
+m2l6-listen.html       🕵️ SOLO "Ear Detective: Final Round": 15 rondas
+                       mezcladas. Escuchas una frase y adivinas de QUÉ
+                       LECCIÓN es el patrón. Botones 🐇/🐢.
                        Para embeber en Rise en "Listen".
 
-m2l5-play.html         📁 SOLO "The Cold Case": juego nuevo.
-                       8 rondas — te dan las EVIDENCIAS (pistas)
-                       y eliges la deducción más lógica.
-                       ("The office is dark..." → "She must have
-                       left already.") Para embeber en Rise en "Play".
+m2l6-play.html         🏛️ SOLO "The Boardroom": LA PIEZA ESTRELLA.
+                       Simulación narrativa en 8 escenas: salvas la cuenta
+                       de un cliente clave eligiendo QUÉ DECIR en cada
+                       momento. Tus decisiones cambian el final: el cliente
+                       firma... o se va. Para embeber en Rise en "Play".
 
-m2l5-speak.html        SOLO las 3 misiones de habla con respuesta
-                       modelo (▶ natural y 🐢 slow) + auto-chequeo.
-                       Para "Speak".
+m2l6-speak.html        🎤 SOLO "The Keynote": UNA gran misión — abre una
+                       presentación de 2 minutos usando al menos 5 patrones
+                       de lecciones diferentes, con checklist y respuesta
+                       modelo (▶/🐢). Para "Speak".
 
-m2l5-quiz.html        🏆 SOLO el quiz final: 8 preguntas de transferencia
-                       con situaciones nuevas. Para "Prove".
+m2l6-quiz.html        🏆 SOLO "The Final Exam": 15 preguntas mezcladas de
+                       las 5 lecciones + pantalla de graduación con badge
+                       "Module 2 Complete". Para "Prove".
 
-m2l5-hero.png          🖼️ Imagen de introducción de la lección
-                       (título + subtítulo + 3 objetivos).
+m2l6-hero.png          🖼️ Imagen de introducción de la misión final.
                        REEMPLAZA el video introductorio en Rise:
                        borra el bloque de video y pon esta imagen.
 
-m2l5-audio-01-must-be.mp3  (10 audios VELOCIDAD NATURAL,
-   ...                       uno por patrón, con tu voz "me")
-m2l5-audio-10-neednt-have.mp3
+m2l6-audio-01-boardroom-intro.mp3  (10 audios NUEVOS en velocidad
+   ...                       natural, con tu voz "me": las líneas de
+m2l6-audio-10-keynote-model.mp3    la historia del Boardroom + el modelo
+                               del Keynote)
 
-m2l5-audio-01-must-be-slow.mp3  (10 audios LENTOS,
+m2l6-audio-01-boardroom-intro-slow.mp3  (10 audios LENTOS,
    ...                       misma voz, 20% más despacio)
-m2l5-audio-10-neednt-have-slow.mp3
+m2l6-audio-10-keynote-model-slow.mp3
 
-LOS 10 PATRONES (orden pedagógico validado)
---------------------------------------------
-1. Must be / can't be — She must be negotiating right now.
-2. Might / may + base — The delay might cost us the contract.
-3. Should be (expectation) — The report should be ready by now.
-4. Must have + participle — They must have signed already.
-5. Can't have + participle — He can't have missed the deadline.
-6. Might / may have + participle — The client might have changed their mind.
-7. Will have + participle — They'll have finished the review by now.
-8. Could have + participle — We could have saved millions.
-9. Should have + participle — We should have called legal first.
-10. Needn't have vs. didn't need to — You needn't have printed everything.
+NOTA: el Arsenal y el Detective Final reutilizan los 100 audios
+de las lecciones 1-5 que YA están publicados en el repo.
+No hay que subir nada más.
 
 CÓMO SUBIRLO (una sola vez)
 ----------------------------
@@ -67,27 +63,27 @@ CÓMO EMBEBER EN RISE
 ---------------------
 En Rise, bloque Multimedia → Embed, pega uno de estos códigos:
 
-Carousel:
-<iframe src="https://rickhazur.github.io/sounding-natural/m2l5-carousel.html" width="100%" height="800" frameborder="0" style="border-radius:16px;" title="Pattern Carousel"></iframe>
+Arsenal:
+<iframe src="https://rickhazur.github.io/sounding-natural/m2l6-arsenal.html" width="100%" height="900" frameborder="0" style="border-radius:16px;" title="The Arsenal"></iframe>
 
-Listen (Ear Detective):
-<iframe src="https://rickhazur.github.io/sounding-natural/m2l5-listen.html" width="100%" height="720" frameborder="0" style="border-radius:16px;" title="Ear Detective"></iframe>
+Listen (Ear Detective: Final Round):
+<iframe src="https://rickhazur.github.io/sounding-natural/m2l6-listen.html" width="100%" height="720" frameborder="0" style="border-radius:16px;" title="Ear Detective Final Round"></iframe>
 
-Play (The Cold Case):
-<iframe src="https://rickhazur.github.io/sounding-natural/m2l5-play.html" width="100%" height="750" frameborder="0" style="border-radius:16px;" title="The Cold Case"></iframe>
+Play (The Boardroom):
+<iframe src="https://rickhazur.github.io/sounding-natural/m2l6-play.html" width="100%" height="850" frameborder="0" style="border-radius:16px;" title="The Boardroom"></iframe>
 
-Speak:
-<iframe src="https://rickhazur.github.io/sounding-natural/m2l5-speak.html" width="100%" height="1060" frameborder="0" style="border-radius:16px;" title="Speaking missions"></iframe>
+Speak (The Keynote):
+<iframe src="https://rickhazur.github.io/sounding-natural/m2l6-speak.html" width="100%" height="1060" frameborder="0" style="border-radius:16px;" title="The Keynote"></iframe>
 
-Quiz:
-<iframe src="https://rickhazur.github.io/sounding-natural/m2l5-quiz.html" width="100%" height="750" frameborder="0" style="border-radius:16px;" title="Final quiz"></iframe>
+Quiz (The Final Exam):
+<iframe src="https://rickhazur.github.io/sounding-natural/m2l6-quiz.html" width="100%" height="850" frameborder="0" style="border-radius:16px;" title="The Final Exam"></iframe>
 
 IMAGEN INTRODUCTORIA (reemplaza el video)
 -----------------------------------------
-1. En Rise, abre la lección del Módulo 2.
+1. En Rise, abre la lección final del Módulo 2.
 2. Borra el bloque del video introductorio.
 3. Agrega un bloque Imagen en su lugar.
-4. Sube m2l5-hero.png.
+4. Sube m2l6-hero.png.
 
 LOS AUDIOS
 ----------
