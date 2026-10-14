@@ -42,19 +42,19 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);paddin
   <div class="mission"><span class="mnum">1</span><div>
     <h4>Emphasize → your boss asks who finished the report</h4>
     <p>Answer with an it-cleft: <code>It was __ who __</code></p>
-    <div class="model"><button data-a="m2l1-audio-01-it-cleft.mp3" aria-label="Play model answer">▶</button><span>🔊 Model answer — tap to compare</span></div>
+    <div class="model"><button data-a="m2l1-audio-01-it-cleft.mp3" aria-label="Play model answer">▶</button><button data-a="m2l1-audio-01-it-cleft-slow.mp3" aria-label="Play model answer slowly">🐢</button><span>🔊 Model answer — tap to compare</span></div>
   </div></div>
 
   <div class="mission"><span class="mnum">2</span><div>
     <h4>Tell a story → your worst trip delay</h4>
     <p>Use inversion: <code>Never have I __</code> or <code>Hardly had we __ when __</code></p>
-    <div class="model"><button data-a="m2l1-audio-06-hardly-inversion.mp3" aria-label="Play model answer">▶</button><span>🔊 Model answer — tap to compare</span></div>
+    <div class="model"><button data-a="m2l1-audio-06-hardly-inversion.mp3" aria-label="Play model answer">▶</button><button data-a="m2l1-audio-06-hardly-inversion-slow.mp3" aria-label="Play model answer slowly">🐢</button><span>🔊 Model answer — tap to compare</span></div>
   </div></div>
 
   <div class="mission"><span class="mnum">3</span><div>
     <h4>Suggest formally → propose an idea in a meeting</h4>
     <p>Use the subjunctive: <code>I suggest that he __</code> / <code>It's vital that we __</code></p>
-    <div class="model"><button data-a="m2l1-audio-10-mandative-subjunctive.mp3" aria-label="Play model answer">▶</button><span>🔊 Model answer — tap to compare</span></div>
+    <div class="model"><button data-a="m2l1-audio-10-mandative-subjunctive.mp3" aria-label="Play model answer">▶</button><button data-a="m2l1-audio-10-mandative-subjunctive-slow.mp3" aria-label="Play model answer slowly">🐢</button><span>🔊 Model answer — tap to compare</span></div>
   </div></div>
 
   <div class="check">
@@ -67,12 +67,13 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);paddin
 <script>
 let curA=null,curB=null;
 document.querySelectorAll('.model button').forEach(b=>{
+  const label=b.textContent;
   b.onclick=()=>{
-    if(curA&&!curA.paused&&curB===b){curA.pause();b.classList.remove('playing');b.textContent='▶';return;}
-    if(curA){curA.pause();if(curB){curB.classList.remove('playing');curB.textContent='▶';}}
-    curA=new Audio(b.dataset.a);curB=b;b.classList.add('playing');b.textContent='⏸';
-    curA.onended=()=>{b.classList.remove('playing');b.textContent='▶';};
-    curA.play().catch(()=>{b.classList.remove('playing');b.textContent='▶';});
+    if(curA&&!curA.paused&&curB===b){curA.pause();b.classList.remove('playing');b.textContent=label;return;}
+    if(curA){curA.pause();if(curB){curB.classList.remove('playing');curB.textContent=curB._label||'▶';}}
+    curA=new Audio(b.dataset.a);curB=b;b._label=label;b.classList.add('playing');b.textContent='⏸';
+    curA.onended=()=>{b.classList.remove('playing');b.textContent=label;};
+    curA.play().catch(()=>{b.classList.remove('playing');b.textContent=label;});
   };
 });
 </script>

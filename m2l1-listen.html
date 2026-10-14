@@ -3,68 +3,185 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Listen &amp; Shadow — Module 2 · Lesson 1</title>
+<title>Ear Detective — Module 2 · Lesson 1</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--teal:#026A79;--teal2:#49ADB3;--amber:#E8AA28;--ink:#123C46;--muted:#5b6f75;--bg:#f2f8f8}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);padding:34px 16px}
-.wrap{max-width:860px;margin:0 auto}
-h2{font-family:'Sora';font-weight:800;font-size:clamp(20px,4vw,28px);color:var(--teal);text-align:center}
-.sub{text-align:center;color:var(--muted);font-size:14px;margin:8px 0 26px;line-height:1.6}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
-.acard{background:#fff;border-radius:18px;padding:18px;box-shadow:0 8px 24px rgba(2,106,121,.10);border:1px solid #e6f0f0;display:flex;gap:14px;align-items:center}
-.acard .n{flex-shrink:0;width:34px;height:34px;border-radius:50%;background:#fdf0d3;color:#8a5a00;font-family:'Sora';font-weight:800;font-size:13px;display:grid;place-items:center}
-.acard .mid{flex:1;min-width:0}
-.acard h4{font-family:'Sora';font-size:14.5px;margin-bottom:3px}
-.acard p{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.abtn{width:50px;height:50px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--teal),#0396a8);color:#fff;font-size:18px;cursor:pointer;flex-shrink:0;box-shadow:0 5px 14px rgba(2,106,121,.35);display:grid;place-items:center}
-.abtn .eq{display:none;align-items:flex-end;gap:2.5px;height:18px}
-.abtn .eq i{width:3.5px;background:#fff;border-radius:2px;animation:eq .7s ease-in-out infinite}
-.abtn .eq i:nth-child(2){animation-delay:.15s}.abtn .eq i:nth-child(3){animation-delay:.3s}.abtn .eq i:nth-child(4){animation-delay:.45s}
-@keyframes eq{0%,100%{height:6px}50%{height:17px}}
-.abtn.playing .tr{display:none}.abtn.playing .eq{display:flex}
-.tip{margin-top:24px;background:#e9f5f5;border-radius:16px;padding:18px 20px;font-size:14px;line-height:1.65;color:var(--ink)}
-.tip b{color:var(--teal)}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);padding:30px 14px;min-height:100vh;display:flex;justify-content:center}
+.wrap{width:100%;max-width:640px}
+.hidden{display:none!important}
+/* start + end screens */
+.panel{background:#fff;border-radius:26px;padding:44px 34px;text-align:center;box-shadow:0 18px 50px rgba(2,106,121,.16)}
+.emoji-big{font-size:64px;margin-bottom:14px}
+.panel h2{font-family:'Sora';font-weight:800;font-size:clamp(24px,5vw,32px);color:var(--teal);margin-bottom:10px}
+.panel p{color:var(--muted);line-height:1.65;margin-bottom:8px}
+.panel .rules{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:18px 0 26px}
+.panel .rules span{background:#eef6f6;color:var(--teal);font-weight:700;font-size:13px;padding:8px 15px;border-radius:999px}
+.btn{display:inline-block;background:linear-gradient(135deg,var(--teal),#0396a8);color:#fff;font-family:'Sora';font-weight:800;font-size:16px;padding:15px 44px;border:none;border-radius:999px;cursor:pointer;box-shadow:0 10px 26px rgba(2,106,121,.35);transition:transform .2s}
+.btn:hover{transform:translateY(-2px) scale(1.02)}
+/* HUD */
+.hud{display:flex;gap:10px;margin-bottom:12px}
+.hud-box{flex:1;background:#fff;border-radius:14px;padding:10px;text-align:center;box-shadow:0 4px 14px rgba(2,106,121,.10)}
+.hud-box .label{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.hud-box .value{font-family:'Sora';font-weight:800;font-size:20px;color:var(--teal)}
+.pbar{height:8px;background:#dcebeb;border-radius:99px;overflow:hidden;margin-bottom:16px}
+.pbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal2),var(--amber));border-radius:99px;transition:width .4s}
+/* question card */
+.qcard{background:#fff;border-radius:24px;padding:34px 28px;box-shadow:0 18px 50px rgba(2,106,121,.16);text-align:center}
+.bigplay{width:96px;height:96px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--amber),#d1941a);color:#3a2a05;font-size:36px;cursor:pointer;box-shadow:0 12px 30px rgba(232,170,40,.45);margin:6px auto 18px;display:grid;place-items:center;transition:transform .15s}
+.bigplay:active{transform:scale(.93)}
+.bigplay .eq{display:none;align-items:flex-end;gap:4px;height:26px}
+.bigplay .eq i{width:5px;background:#3a2a05;border-radius:3px;animation:eq .7s ease-in-out infinite}
+.bigplay .eq i:nth-child(2){animation-delay:.15s}.bigplay .eq i:nth-child(3){animation-delay:.3s}
+@keyframes eq{0%,100%{height:9px}50%{height:24px}}
+.bigplay.playing .tr{display:none}.bigplay.playing .eq{display:flex}
+.speedrow{display:flex;gap:10px;justify-content:center;margin:0 0 18px}
+.spd{border:2px solid #dcebeb;background:#fff;color:var(--teal);font-weight:700;font-size:13.5px;padding:9px 18px;border-radius:999px;cursor:pointer}
+.spd.active{background:var(--teal);border-color:var(--teal);color:#fff}
+.q{font-family:'Sora';font-weight:800;font-size:19px;margin-bottom:20px}
+.opts{display:grid;gap:10px}
+.opt{background:#f2f8f8;border:2px solid #e2efef;border-radius:14px;padding:15px;font-size:15.5px;font-weight:700;cursor:pointer;transition:all .2s;color:var(--ink)}
+.opt:hover:not(.disabled){border-color:var(--teal2);transform:translateY(-1px)}
+.opt.disabled{cursor:default;opacity:.75}
+.opt.correct{background:#e5f6ec;border-color:#2e9e5b;color:#14532d}
+.opt.wrong{background:#fdecec;border-color:#d64545;color:#7a1f1f}
+.feedback{display:none;margin-top:18px;border-radius:14px;padding:16px;font-size:14.5px;line-height:1.65;text-align:left}
+.feedback.show{display:block}
+.feedback.good{background:#e5f6ec;border:1px solid #bfe6cd}
+.feedback.bad{background:#fdf3e3;border:1px solid #f0d9a8}
+.feedback .sent{display:block;font-size:16.5px;margin:8px 0;color:var(--ink)}
+.feedback .sent mark{background:#ffe9ad;padding:1px 6px;border-radius:6px}
+#nb .btn{margin-top:16px;font-size:15px;padding:13px 36px}
+.replay{margin-top:10px;background:none;border:none;color:var(--teal);font-weight:700;font-size:13.5px;cursor:pointer;text-decoration:underline}
+/* end */
+#stars{font-size:40px;margin:10px 0;letter-spacing:6px}
+#finalScore{font-family:'Sora';font-weight:800;font-size:26px;color:var(--teal);margin:6px 0}
+@media (prefers-reduced-motion:reduce){.bigplay .eq i{animation:none}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <h2>🎧 Listen &amp; shadow</h2>
-  <p class="sub">Hear each pattern in your instructor's voice. Repeat out loud — steal the rhythm, the stress, the music of the sentence.</p>
-  <div class="grid" id="grid"></div>
-  <div class="tip">💡 <b>Shadowing drill:</b> play a card, repeat <i>at the same time</i> as the voice, then once more alone. Three rounds per pattern — your mouth learns what your brain already knows.</div>
+
+  <div id="startScreen" class="panel">
+    <div class="emoji-big">🕵️</div>
+    <h2>Ear Detective</h2>
+    <p>Hear the pattern. <b>Name the pattern.</b></p>
+    <p>No cards, no text, no formulas — just your ears. Ten sentences, ten mysteries to solve.</p>
+    <div class="rules"><span>🎧 10 rounds</span><span>🐢 slow version</span><span>🔥 streak bonus</span><span>↻ replay anytime</span></div>
+    <button class="btn" onclick="startGame()">START ▶</button>
+  </div>
+
+  <div id="gameScreen" class="hidden">
+    <div class="hud">
+      <div class="hud-box"><div class="label">Round</div><div class="value" id="qnum">1/10</div></div>
+      <div class="hud-box"><div class="label">Score</div><div class="value" id="score">0</div></div>
+      <div class="hud-box"><div class="label">Streak</div><div class="value" id="streak">0</div></div>
+    </div>
+    <div class="pbar"><i id="pfill"></i></div>
+    <div class="qcard">
+      <button class="bigplay" id="bigplay" aria-label="Play the sentence"><span class="tr">▶</span><span class="eq"><i></i><i></i><i></i></span></button>
+      <div class="speedrow"><button class="spd active" id="spdN" onclick="setSpeed('n')">🐇 Natural</button><button class="spd" id="spdS" onclick="setSpeed('s')">🐢 Slow</button></div>
+      <p class="q">Which pattern did you just hear?</p>
+      <div class="opts" id="opts"></div>
+      <div class="feedback" id="fb"></div>
+      <div id="nb"></div>
+    </div>
+  </div>
+
+  <div id="endScreen" class="panel hidden">
+    <div class="emoji-big" id="endEmoji">🏆</div>
+    <h2>Case closed!</h2>
+    <div id="stars">⭐⭐⭐</div>
+    <div id="finalScore">0 points</div>
+    <p id="endMsg"></p>
+    <button class="btn" onclick="startGame()" style="margin-top:14px">Play again ↻</button>
+  </div>
+
 </div>
 <script>
 const P=[
- ['01-it-cleft','It-cleft','“It was Maria who told me.”'],
- ['02-the-reason','The reason','“The reason I’m calling is to confirm.”'],
- ['03-what-cleft','What-cleft','“What I need is more time.”'],
- ['04-fronting','Fronting','“This I will never forget.”'],
- ['05-should-inversion','Should-inversion','“Should you need anything, call me.”'],
- ['06-hardly-inversion','Hardly-inversion','“Hardly had we arrived…”'],
- ['07-never-inversion','Never-inversion','“Never have I seen such dedication.”'],
- ['08-were-inversion','Were-inversion','“Were I to accept…”'],
- ['09-impersonal-passive','Impersonal passive','“It is said that she speaks…”'],
- ['10-mandative-subjunctive','Mandative subjunctive','“I suggest that he go…”']
+ {a:'m2l1-audio-01-it-cleft.mp3',s:'m2l1-audio-01-it-cleft-slow.mp3',name:'It-cleft',sent:'It <mark>was Maria</mark> who told me.',key:'“It was X who…” puts maximum emphasis on the person.'},
+ {a:'m2l1-audio-02-the-reason.mp3',s:'m2l1-audio-02-the-reason-slow.mp3',name:'The reason',sent:'<mark>The reason</mark> I’m calling <mark>is</mark> to confirm.',key:'“The reason + clause + be + purpose” — formal and clear.'},
+ {a:'m2l1-audio-03-what-cleft.mp3',s:'m2l1-audio-03-what-cleft-slow.mp3',name:'What-cleft',sent:'<mark>What</mark> I need <mark>is</mark> more time.',key:'“What + clause + be + key info” — emphasizes what matters most.'},
+ {a:'m2l1-audio-04-fronting.mp3',s:'m2l1-audio-04-fronting-slow.mp3',name:'Fronting',sent:'<mark>This</mark> I will never forget.',key:'Moving the object to the front adds emotional power.'},
+ {a:'m2l1-audio-05-should-inversion.mp3',s:'m2l1-audio-05-should-inversion-slow.mp3',name:'Should-inversion',sent:'<mark>Should you need</mark> anything, call me.',key:'“Should + subject + verb” — a formal way to say “if”.'},
+ {a:'m2l1-audio-06-hardly-inversion.mp3',s:'m2l1-audio-06-hardly-inversion-slow.mp3',name:'Hardly-inversion',sent:'<mark>Hardly had we arrived</mark> when it started raining.',key:'“Hardly + inversion + when” — drama, right on time.'},
+ {a:'m2l1-audio-07-never-inversion.mp3',s:'m2l1-audio-07-never-inversion-slow.mp3',name:'Never-inversion',sent:'<mark>Never have I seen</mark> such dedication.',key:'Negative word first + inversion = dramatic emphasis.'},
+ {a:'m2l1-audio-08-were-inversion.mp3',s:'m2l1-audio-08-were-inversion-slow.mp3',name:'Were-inversion',sent:'<mark>Were I to accept,</mark> I’d need guarantees.',key:'“Were + subject + to + verb” — formal hypotheticals.'},
+ {a:'m2l1-audio-09-impersonal-passive.mp3',s:'m2l1-audio-09-impersonal-passive-slow.mp3',name:'Impersonal passive',sent:'It <mark>is said that</mark> she speaks five languages.',key:'“It is said / believed / reported that…” — nobody specific says it.'},
+ {a:'m2l1-audio-10-mandative-subjunctive.mp3',s:'m2l1-audio-10-mandative-subjunctive-slow.mp3',name:'Mandative subjunctive',sent:'I suggest that he <mark>go</mark> immediately.',key:'After suggest / demand / insist: base verb — “he go”, not “he goes”.'}
 ];
-const grid=document.getElementById('grid');
-let curA=null,curB=null;
-P.forEach((p,i)=>{
-  const d=document.createElement('div');d.className='acard';
-  d.innerHTML=`<span class="n">${i+1}</span><div class="mid"><h4>${p[1]}</h4><p>${p[2]}</p></div>
-   <button class="abtn" aria-label="Play ${p[1]}"><span class="tr">▶</span><span class="eq"><i></i><i></i><i></i><i></i></span></button>`;
-  const btn=d.querySelector('.abtn');
-  btn.onclick=()=>{
-    if(curA&&!curA.paused&&curB===btn){curA.pause();btn.classList.remove('playing');return;}
-    if(curA){curA.pause();if(curB)curB.classList.remove('playing');}
-    curA=new Audio('m2l1-audio-'+p[0]+'.mp3');curB=btn;btn.classList.add('playing');
-    curA.onended=()=>btn.classList.remove('playing');
-    curA.play().catch(()=>btn.classList.remove('playing'));
-  };
-  grid.appendChild(d);
-});
+let order,qi,score,streak,answered,aud=null,speed='n';
+const bp=document.getElementById('bigplay');
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function playAud(){
+  const p=P[order[qi]];
+  if(aud)aud.pause();
+  aud=new Audio(speed==='s'?p.s:p.a);bp.classList.add('playing');
+  aud.onended=()=>bp.classList.remove('playing');
+  aud.play().catch(()=>bp.classList.remove('playing'));
+}
+function setSpeed(x){speed=x;document.getElementById('spdN').classList.toggle('active',x==='n');document.getElementById('spdS').classList.toggle('active',x==='s');}
+bp.onclick=playAud;
+function startGame(){
+  order=shuffle([...Array(P.length).keys()]);qi=0;score=0;streak=0;
+  document.getElementById('startScreen').classList.add('hidden');
+  document.getElementById('endScreen').classList.add('hidden');
+  document.getElementById('gameScreen').classList.remove('hidden');
+  showQ();playAud();
+}
+function showQ(){
+  answered=false;
+  const correct=order[qi];
+  document.getElementById('qnum').textContent=(qi+1)+'/'+P.length;
+  document.getElementById('score').textContent=score;
+  document.getElementById('streak').textContent=streak+(streak>=3?' 🔥':'');
+  document.getElementById('pfill').style.width=(qi/P.length*100)+'%';
+  const others=shuffle([...Array(P.length).keys()].filter(i=>i!==correct)).slice(0,2);
+  const opts=shuffle([correct,...others]);
+  const box=document.getElementById('opts');box.innerHTML='';
+  opts.forEach(i=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=P[i].name;
+    b.onclick=()=>answer(i===correct,b);box.appendChild(b);
+  });
+  const fb=document.getElementById('fb');fb.className='feedback';fb.innerHTML='';
+  document.getElementById('nb').innerHTML='';
+}
+function answer(ok,el){
+  if(answered)return;answered=true;
+  const p=P[order[qi]],fb=document.getElementById('fb');
+  document.querySelectorAll('.opt').forEach(o=>o.classList.add('disabled'));
+  if(ok){
+    const pts=10+streak*5;score+=pts;streak++;
+    el.classList.add('correct');
+    fb.className='feedback show good';
+    fb.innerHTML=`✅ <strong>Correct! +${pts} points — ${p.name}</strong><span class="sent">“${p.sent}”</span>🔑 ${p.key}`;
+  }else{
+    streak=0;el.classList.add('wrong');
+    document.querySelectorAll('.opt').forEach(o=>{if(o.textContent===p.name)o.classList.add('correct');});
+    fb.className='feedback show bad';
+    fb.innerHTML=`❌ Not quite — it was <strong>${p.name}</strong><span class="sent">“${p.sent}”</span>🔑 ${p.key}`;
+  }
+  document.getElementById('score').textContent=score;
+  document.getElementById('streak').textContent=streak+(streak>=3?' 🔥':'');
+  document.getElementById('nb').innerHTML=`<button class="replay" onclick="playAud()">↻ hear it again</button><br><button class="btn" onclick="nextQ()">${qi+1<P.length?'Next mystery →':'See results 🏆'}</button>`;
+}
+function nextQ(){qi++;if(qi>=P.length)endGame();else{showQ();playAud();}}
+function endGame(){
+  document.getElementById('gameScreen').classList.add('hidden');
+  document.getElementById('endScreen').classList.remove('hidden');
+  const pct=score/(P.length*10);let stars,emoji,msg;
+  if(pct>=1.2){stars='⭐⭐⭐';emoji='🏆';msg='Outstanding! You can identify advanced structures by ear alone!';}
+  else if(pct>=0.8){stars='⭐⭐⭐';emoji='🎉';msg='Excellent! Your ear is getting sophisticated!';}
+  else if(pct>=0.5){stars='⭐⭐';emoji='💪';msg='Good! Replay the carousel, then try again!';}
+  else{stars='⭐';emoji='📚';msg='Keep training! Review the patterns and try again.';}
+  document.getElementById('endEmoji').textContent=emoji;
+  document.getElementById('stars').textContent=stars;
+  document.getElementById('finalScore').textContent=score+' points';
+  document.getElementById('endMsg').textContent=msg;
+}
 </script>
 </body>
 </html>
