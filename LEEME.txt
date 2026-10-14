@@ -1,0 +1,54 @@
+MÓDULO 2 · LECCIÓN 1 — "Speak Like an Advanced Speaker"
+Diseño espectacular mobile + desktop — PARA EL CURSO DE INGLÉS
+Versión PLANA (sin carpetas): todos los archivos van sueltos
+en la RAÍZ del repo sounding-natural
+================================================================
+
+QUÉ HAY EN ESTE ZIP (14 archivos, todos a la RAÍZ del repo)
+------------------------------------------------------------
+m2l1-index.html        La lección completa (hero, viaje, carousel,
+                       listen, juego, speak, quiz final).
+
+m2l1-carousel.html     SOLO el carousel de los 10 patrones.
+                       Para embeber en Rise en "Discover".
+
+m2l1-listen.html       SOLO "Listen & shadow" (10 audios).
+                       Para embeber en Rise en "Listen".
+
+m2l1-speak.html        SOLO las 3 misiones de habla con respuesta
+                       modelo + auto-chequeo. Para "Speak".
+
+m2l1-audio-01-it-cleft.mp3  (10 audios, uno por patrón,
+   ...                       con tu voz "me" aprobada)
+m2l1-audio-10-mandative-subjunctive.mp3
+
+El juego y el quiz NO vienen incluidos porque YA ESTÁN en tu
+repo: page-pattern-picker-v2.html y page-lesson4-quiz.html.
+La lección completa los enlaza directamente.
+
+CÓMO SUBIRLO (una sola vez)
+----------------------------
+1. Descomprime el ZIP.
+2. Ve a github.com/Rickhazur/sounding-natural
+3. Add file → Upload files.
+4. Arrastra LOS 14 ARCHIVOS sueltos (no en carpeta).
+5. Commit changes. Espera 2 minutos.
+
+CÓMO EMBEBER EN RISE
+---------------------
+En Rise, bloque Multimedia → Embed, pega uno de estos códigos:
+
+Carousel:
+<iframe src="https://rickhazur.github.io/sounding-natural/m2l1-carousel.html" width="100%" height="800" frameborder="0" style="border-radius:16px;" title="Pattern Carousel"></iframe>
+
+Listen:
+<iframe src="https://rickhazur.github.io/sounding-natural/m2l1-listen.html" width="100%" height="780" frameborder="0" style="border-radius:16px;" title="Listen and shadow"></iframe>
+
+Speak:
+<iframe src="https://rickhazur.github.io/sounding-natural/m2l1-speak.html" width="100%" height="1060" frameborder="0" style="border-radius:16px;" title="Speaking missions"></iframe>
+
+LOS AUDIOS
+----------
+Son v1, generados con tu voz "me" ya aprobada para el curso.
+Si quieres otra entonación en alguno, o la versión lenta
+("slow & stressed") de cada patrón, dime y los produzco.

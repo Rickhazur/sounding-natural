@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 2 · Lesson 1 — Speak Like an Advanced Speaker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#026A79;--teal2:#49ADB3;--amber:#E8AA28;--amber2:#F5C04C;--ink:#123C46;--muted:#5b6f75;--bg:#f2f8f8;--dark1:#0a2830;--dark2:#0e3a44}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink)}
+/* HERO */
+.lhero{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--dark1),var(--dark2) 60%,#0f4a56);color:#fff;padding:70px 6% 78px;text-align:center}
+.lhero .float{position:absolute;font-family:'Sora';font-weight:700;font-size:13px;color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.22);padding:7px 14px;border-radius:999px;background:rgba(255,255,255,.06);animation:drift 9s ease-in-out infinite}
+@keyframes drift{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-16px) rotate(2deg)}}
+.eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.22em;color:var(--amber2);text-transform:uppercase;margin-bottom:16px}
+.lhero h1{font-family:'Sora';font-weight:800;font-size:clamp(30px,6vw,58px);line-height:1.08;margin-bottom:14px}
+.lhero h1 em{font-style:normal;background:linear-gradient(90deg,var(--amber2),#ffdf8e);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lhero p.sub{color:#cfe3e6;max-width:620px;margin:0 auto 26px;font-size:clamp(14px,2vw,18px);line-height:1.6}
+.statpills{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:30px}
+.statpills span{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);padding:10px 18px;border-radius:999px;font-weight:700;font-size:14px}
+.statpills b{color:var(--amber2)}
+.cta{display:inline-block;background:linear-gradient(135deg,var(--amber),#d1941a);color:#3a2a05;font-family:'Sora';font-weight:800;font-size:16px;padding:15px 38px;border-radius:999px;text-decoration:none;box-shadow:0 10px 26px rgba(232,170,40,.4);transition:transform .2s}
+.cta:hover{transform:translateY(-2px) scale(1.02)}
+/* JOURNEY */
+.journey{background:#fff;padding:18px 6%;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;border-bottom:1px solid #e2ecec;position:sticky;top:0;z-index:40}
+.journey a{text-decoration:none}
+.jstep{display:flex;align-items:center;gap:9px;padding:9px 16px;border-radius:999px;font-size:13px;font-weight:700;color:var(--muted);background:#f2f7f7;transition:all .2s}
+.jstep i{width:26px;height:26px;border-radius:50%;background:var(--teal);color:#fff;display:grid;place-items:center;font-style:normal;font-size:13px;font-weight:800}
+.jstep:hover{background:var(--teal);color:#fff}
+/* SECTIONS */
+.sec{padding:60px 6%}
+.sec h2{font-family:'Sora';font-weight:800;font-size:clamp(22px,4vw,34px);text-align:center;margin-bottom:8px;color:var(--ink)}
+.sec .lede{text-align:center;color:var(--muted);max-width:640px;margin:0 auto 34px;line-height:1.6}
+.sec.alt{background:#fff}
+/* CAROUSEL */
+.counter{text-align:center;font-family:'Sora';font-weight:800;color:var(--teal);font-size:14px;letter-spacing:.12em;margin:14px 0 4px}
+.counter b{color:var(--amber);font-size:18px}
+.car{position:relative;max-width:920px;margin:0 auto;min-height:470px;touch-action:pan-y}
+.car-track{position:relative;height:430px;perspective:1400px}
+.pcard{position:absolute;top:0;left:50%;width:min(400px,88%);margin-left:min(-200px,-44%);background:#fff;border-radius:24px;padding:32px 28px 26px;box-shadow:0 18px 50px rgba(2,106,121,.18);border-top:6px solid var(--teal);transition:transform .55s cubic-bezier(.34,1.3,.5,1),opacity .45s;will-change:transform}
+.pcard .num{position:absolute;top:-19px;left:24px;background:var(--amber);color:#3a2a05;font-family:'Sora';font-weight:800;font-size:14px;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;box-shadow:0 4px 12px rgba(232,170,40,.5)}
+.pcard h3{font-family:'Sora';font-size:22px;font-weight:800;margin:8px 0 12px;color:var(--teal)}
+.formula{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.formula b{background:#e8f4f5;color:var(--teal);font-size:12.5px;padding:6px 11px;border-radius:8px;font-weight:700}
+.formula b.hot{background:#fdf0d3;color:#8a5a00}
+.ex{background:#f6fbfb;border-left:4px solid var(--amber);border-radius:0 12px 12px 0;padding:12px 14px;font-size:16px;line-height:1.55;margin-bottom:12px}
+.ex mark{background:#ffe9ad;padding:1px 5px;border-radius:5px;font-weight:700}
+.key{font-size:13.5px;color:var(--muted);line-height:1.6;margin-bottom:16px}
+.audiodock{display:flex;align-items:center;gap:12px;background:#eef6f6;border-radius:14px;padding:10px 14px}
+.abtn{width:48px;height:48px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--teal),#0396a8);color:#fff;font-size:18px;cursor:pointer;flex-shrink:0;box-shadow:0 5px 14px rgba(2,106,121,.35);display:grid;place-items:center}
+.abtn .eq{display:none;align-items:flex-end;gap:2.5px;height:18px}
+.abtn .eq i{width:3.5px;background:#fff;border-radius:2px;animation:eq .7s ease-in-out infinite}
+.abtn .eq i:nth-child(2){animation-delay:.15s}.abtn .eq i:nth-child(3){animation-delay:.3s}.abtn .eq i:nth-child(4){animation-delay:.45s}
+@keyframes eq{0%,100%{height:6px}50%{height:17px}}
+.abtn.playing .tr{display:none}.abtn.playing .eq{display:flex}
+.audiodock span{font-size:13px;font-weight:600;color:var(--muted)}
+.car-nav{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:8px}
+.arrow{width:52px;height:52px;border-radius:50%;border:none;background:#fff;box-shadow:0 6px 18px rgba(2,106,121,.18);font-size:20px;cursor:pointer;color:var(--teal);transition:all .2s}
+.arrow:hover{background:var(--teal);color:#fff;transform:scale(1.08)}
+.dots{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-width:320px}
+.dots button{width:11px;height:11px;border-radius:50%;border:none;background:#c4d8da;cursor:pointer;transition:all .25s;padding:0}
+.dots button.on{background:var(--amber);transform:scale(1.4)}
+.hint{text-align:center;color:var(--muted);font-size:12.5px;margin-top:12px}
+/* LISTEN GRID */
+.lgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;max-width:900px;margin:0 auto}
+.acard{background:#fff;border-radius:18px;padding:18px;box-shadow:0 8px 24px rgba(2,106,121,.10);border:1px solid #e6f0f0;display:flex;gap:14px;align-items:center}
+.acard .n{flex-shrink:0;width:34px;height:34px;border-radius:50%;background:#fdf0d3;color:#8a5a00;font-family:'Sora';font-weight:800;font-size:13px;display:grid;place-items:center}
+.acard .mid{flex:1;min-width:0}
+.acard h4{font-family:'Sora';font-size:14.5px;margin-bottom:3px}
+.acard p{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.acard .abtn{width:50px;height:50px}
+/* FEATURE CARDS */
+.feature{max-width:900px;margin:0 auto;border-radius:26px;overflow:hidden;box-shadow:0 20px 55px rgba(2,106,121,.20);padding:46px 8%;text-align:center;position:relative;color:#fff}
+.feature.game{background:linear-gradient(135deg,#0e3a44,#155e6b)}
+.feature.game::before{content:'⚡';position:absolute;font-size:120px;opacity:.08;top:10px;right:30px;transform:rotate(12deg)}
+.feature.boss{background:linear-gradient(135deg,#1c1440,#3a2a6e)}
+.feature.boss::before{content:'🏆';position:absolute;font-size:110px;opacity:.10;top:14px;left:34px;transform:rotate(-10deg)}
+.feature h3{font-family:'Sora';font-size:clamp(22px,3.5vw,30px);font-weight:800;margin-bottom:10px}
+.feature p{color:#d7e8ea;max-width:560px;margin:0 auto 24px;line-height:1.65}
+.feature .meta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:26px}
+.feature .meta span{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);padding:8px 16px;border-radius:999px;font-size:13px;font-weight:700}
+.btn-light{display:inline-block;background:#fff;color:var(--teal);font-family:'Sora';font-weight:800;font-size:15px;padding:14px 36px;border-radius:999px;text-decoration:none;transition:transform .2s}
+.btn-light:hover{transform:translateY(-2px)}
+/* SPEAK */
+.missions{display:grid;gap:14px;max-width:860px;margin:0 auto}
+.mission{background:#fff;border-radius:18px;padding:22px;display:flex;gap:18px;align-items:flex-start;box-shadow:0 8px 26px rgba(2,106,121,.09);border:1px solid #e9f2f2}
+.mnum{flex-shrink:0;width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--amber),#d1941a);color:#3a2a05;font-family:'Sora';font-weight:800;font-size:19px;display:grid;place-items:center}
+.mission h4{font-family:'Sora';font-size:16px;margin-bottom:6px}
+.mission p{font-size:14.5px;color:var(--muted);line-height:1.65;margin-bottom:12px}
+.mission code{background:#eef6f6;color:var(--teal);padding:2px 8px;border-radius:6px;font-weight:700;font-size:13.5px}
+.model{display:flex;align-items:center;gap:10px;background:#eef6f6;border-radius:12px;padding:9px 14px}
+.model button{width:40px;height:40px;border-radius:50%;border:none;background:var(--teal);color:#fff;font-size:15px;cursor:pointer;flex-shrink:0;display:grid;place-items:center}
+.model button.playing{background:var(--amber);color:#3a2a05}
+.model span{font-size:13px;font-weight:600;color:var(--muted)}
+.check{background:#e9f5f5;border-radius:18px;padding:24px;max-width:860px;margin:20px auto 0}
+.check h4{font-family:'Sora';margin-bottom:14px;text-align:center;font-size:16px}
+.check label{display:flex;gap:12px;align-items:flex-start;background:#fff;border-radius:12px;padding:13px 16px;margin-bottom:10px;font-size:14.5px;cursor:pointer;box-shadow:0 3px 10px rgba(2,106,121,.07)}
+.check input{width:20px;height:20px;accent-color:var(--teal);margin-top:1px;flex-shrink:0}
+.lfoot{background:var(--dark1);color:#9fc3c8;text-align:center;padding:26px;font-size:13px}
+@media (max-width:560px){.car{min-height:500px}.car-track{height:460px}.mission{flex-direction:column;gap:12px}.journey{position:static}}
+@media (prefers-reduced-motion:reduce){.lhero .float{animation:none}.pcard{transition:none}}
+</style>
+</head>
+<body>
+
+<div class="lhero">
+  <span class="float" style="top:18%;left:7%">It-cleft</span>
+  <span class="float" style="top:64%;left:11%;animation-delay:1.4s">Inversion</span>
+  <span class="float" style="top:26%;right:8%;animation-delay:.7s">Subjunctive</span>
+  <span class="float" style="top:70%;right:12%;animation-delay:2.1s">What-cleft</span>
+  <span class="float" style="top:44%;left:4%;animation-delay:2.8s">Fronting</span>
+  <span class="eyebrow">Module 2 · Lesson 1</span>
+  <h1>Speak Like an <em>Advanced</em> Speaker</h1>
+  <p class="sub">Ten grammar patterns that make professionals sound sharp, confident, and natural — not like a textbook.</p>
+  <div class="statpills"><span>⚡ <b>10</b> patterns</span><span>🎯 <b>4</b> challenge types</span><span>🏆 <b>1</b> final boss</span></div>
+  <a class="cta" href="#discover">Start the mission ↓</a>
+</div>
+
+<div class="journey">
+  <a href="#discover"><span class="jstep"><i>1</i> Discover</span></a>
+  <a href="#listen"><span class="jstep"><i>2</i> Listen</span></a>
+  <a href="#play"><span class="jstep"><i>3</i> Play</span></a>
+  <a href="#speak"><span class="jstep"><i>4</i> Speak</span></a>
+  <a href="#prove"><span class="jstep"><i>5</i> Prove it</span></a>
+</div>
+
+<section class="sec" id="discover">
+  <h2>1 · Discover the 10 patterns</h2>
+  <p class="lede">Swipe through the arsenal. Each card shows the formula, a real example, and the key idea — tap 🔊 to hear it.</p>
+  <div class="counter"><b id="cnum">1</b> / 10</div>
+  <div class="car"><div class="car-track" id="track"></div></div>
+  <div class="car-nav">
+    <button class="arrow" onclick="move(-1)" aria-label="Previous pattern">←</button>
+    <div class="dots" id="dots"></div>
+    <button class="arrow" onclick="move(1)" aria-label="Next pattern">→</button>
+  </div>
+  <p class="hint">👆 drag or swipe &nbsp;·&nbsp; ← → keys work too</p>
+</section>
+
+<section class="sec alt" id="listen">
+  <h2>2 · Listen &amp; shadow</h2>
+  <p class="lede">Hear each pattern in your instructor's voice. Repeat out loud — steal the rhythm, the stress, the music.</p>
+  <div class="lgrid" id="lgrid"></div>
+</section>
+
+<section class="sec" id="play">
+  <h2>3 · Play the game</h2>
+  <p class="lede">Real professional situations. Pick the advanced structure a sophisticated speaker would use.</p>
+  <div class="feature game">
+    <h3>⚡ Pattern Picker Pro</h3>
+    <p>Ten patterns, real situations, streaks that multiply your score. Miss one and the coach shows you why.</p>
+    <div class="meta"><span>⚡ 10 patterns</span><span>🔥 streak bonus</span><span>🧠 instant coaching</span></div>
+    <a class="btn-light" href="page-pattern-picker-v2.html" target="_blank" rel="noopener">▶ Play now</a>
+  </div>
+</section>
+
+<section class="sec alt" id="speak">
+  <h2>4 · Your turn — speak</h2>
+  <p class="lede">Three missions. Record yourself, then compare with the model answer.</p>
+  <div class="missions">
+    <div class="mission"><span class="mnum">1</span><div>
+      <h4>Emphasize → your boss asks who finished the report</h4>
+      <p>Answer with an it-cleft: <code>It was __ who __</code></p>
+      <div class="model"><button data-a="m2l1-audio-01-it-cleft.mp3" aria-label="Play model answer">▶</button><span>🔊 Model answer — tap to compare</span></div>
+    </div></div>
+    <div class="mission"><span class="mnum">2</span><div>
+      <h4>Tell a story → your worst trip delay</h4>
+      <p>Use inversion: <code>Never have I __</code> or <code>Hardly had we __ when __</code></p>
+      <div class="model"><button data-a="m2l1-audio-06-hardly-inversion.mp3" aria-label="Play model answer">▶</button><span>🔊 Model answer — tap to compare</span></div>
+    </div></div>
+    <div class="mission"><span class="mnum">3</span><div>
+      <h4>Suggest formally → propose an idea in a meeting</h4>
+      <p>Use the subjunctive: <code>I suggest that he __</code> / <code>It's vital that we __</code></p>
+      <div class="model"><button data-a="m2l1-audio-10-mandative-subjunctive.mp3" aria-label="Play model answer">▶</button><span>🔊 Model answer — tap to compare</span></div>
+    </div></div>
+  </div>
+  <div class="check">
+    <h4>Then listen back and check yourself:</h4>
+    <label><input type="checkbox"> Did I use the advanced structure — not the basic version?</label>
+    <label><input type="checkbox"> Did the inversion / cleft sound natural, not forced?</label>
+    <label><input type="checkbox"> Would a native speaker say it this way?</label>
+  </div>
+</section>
+
+<section class="sec" id="prove">
+  <h2>5 · Prove it — final boss</h2>
+  <p class="lede">Ten questions. Four challenge types. Show you can use advanced structures like a professional.</p>
+  <div class="feature boss">
+    <h3>🏆 Final Quiz</h3>
+    <p>No more practice wheels. Real transfer: new situations, same structures. Beat the boss to unlock the next lesson.</p>
+    <div class="meta"><span>❓ 10 questions</span><span>🎲 4 challenge types</span><span>🔓 unlocks next lesson</span></div>
+    <a class="btn-light" href="page-lesson4-quiz.html" target="_blank" rel="noopener">▶ Start ▶</a>
+  </div>
+</section>
+
+<div class="lfoot">Beyond Words · Module 2 · Lesson 1 — Speak Like an Advanced Speaker</div>
+
+<script>
+const PATTERNS=[
+ {slug:'01-it-cleft',name:'It-cleft',f:['It','+','be','+','emphasized element','+','relative clause'],hot:[3],ex:'It <mark>was Maria</mark> who told me.',key:'“It was X who…” puts maximum emphasis on the person.',short:'“It was Maria who told me.”'},
+ {slug:'02-the-reason',name:'The reason',f:['The reason','+','clause','+','be','+','purpose'],hot:[0],ex:'<mark>The reason</mark> I’m calling <mark>is</mark> to confirm.',key:'Formal and clear — states your motive like a professional.',short:'“The reason I’m calling is to confirm.”'},
+ {slug:'03-what-cleft',name:'What-cleft',f:['What','+','clause','+','be','+','key info'],hot:[0],ex:'<mark>What</mark> I need <mark>is</mark> more time.',key:'Emphasizes what matters most.',short:'“What I need is more time.”'},
+ {slug:'04-fronting',name:'Fronting',f:['fronted element','+','rest of sentence'],hot:[0],ex:'<mark>This</mark> I will never forget.',key:'Moving the object to the front adds emotional power.',short:'“This I will never forget.”'},
+ {slug:'05-should-inversion',name:'Should-inversion',f:['Should','+','subject','+','base verb'],hot:[0],ex:'<mark>Should you need</mark> anything, call me.',key:'A formal way to say “if” — pure boardroom English.',short:'“Should you need anything, call me.”'},
+ {slug:'06-hardly-inversion',name:'Hardly-inversion',f:['Hardly','+','had','+','subject','+','when…'],hot:[0],ex:'<mark>Hardly had we arrived</mark> when it started raining.',key:'Barely had time before the next event — instant drama.',short:'“Hardly had we arrived…”'},
+ {slug:'07-never-inversion',name:'Never-inversion',f:['Never','+','have','+','subject','+','past participle'],hot:[0],ex:'<mark>Never have I seen</mark> such dedication.',key:'Negative word first + inversion = dramatic emphasis.',short:'“Never have I seen such dedication.”'},
+ {slug:'08-were-inversion',name:'Were-inversion',f:['Were','+','subject','+','to + verb'],hot:[0],ex:'<mark>Were I to accept,</mark> I’d need guarantees.',key:'Formal hypotheticals — negotiations love this.',short:'“Were I to accept…”'},
+ {slug:'09-impersonal-passive',name:'Impersonal passive',f:['It','+','be','+','past participle','+','that-clause'],hot:[2],ex:'It <mark>is said that</mark> she speaks five languages.',key:'No one specific says it — objective, report-style.',short:'“It is said that she speaks…”'},
+ {slug:'10-mandative-subjunctive',name:'Mandative subjunctive',f:['suggest / demand','+','that','+','subject','+','base verb'],hot:[0],ex:'I suggest that he <mark>go</mark> immediately.',key:'After suggest / demand / insist: base verb — “he go”, not “he goes”.',short:'“I suggest that he go…”'}
+];
+/* ---- shared audio (one at a time) ---- */
+let curA=null,curB=null;
+function playSlug(slug,btn,onCls){
+  if(curA&&!curA.paused&&curB===btn){curA.pause();btn.classList.remove(onCls);return;}
+  if(curA){curA.pause();if(curB)curB.classList.remove(onCls);}
+  curA=new Audio('m2l1-audio-'+slug+'.mp3');curB=btn;btn.classList.add(onCls);
+  curA.onended=()=>btn.classList.remove(onCls);
+  curA.play().catch(()=>btn.classList.remove(onCls));
+}
+/* ---- carousel ---- */
+const track=document.getElementById('track'),dots=document.getElementById('dots'),cnum=document.getElementById('cnum');
+let cur=0;
+PATTERNS.forEach((p,i)=>{
+  const d=document.createElement('div');d.className='pcard';
+  d.innerHTML=`<span class="num">${i+1}</span><h3>${p.name}</h3>
+   <div class="formula">${p.f.map((x,j)=>`<b class="${p.hot.includes(j)?'hot':''}">${x}</b>`).join('')}</div>
+   <div class="ex">“${p.ex}”</div><p class="key">🔑 ${p.key}</p>
+   <div class="audiodock"><button class="abtn" aria-label="Hear ${p.name}"><span class="tr">▶</span><span class="eq"><i></i><i></i><i></i><i></i></span></button><span>Tap to hear it in your instructor's voice</span></div>`;
+  d.querySelector('.abtn').onclick=(e)=>{e.stopPropagation();playSlug(p.slug,d.querySelector('.abtn'),'playing');};
+  track.appendChild(d);
+  const b=document.createElement('button');b.setAttribute('aria-label','Go to pattern '+(i+1));b.onclick=()=>go(i);dots.appendChild(b);
+});
+function layout(){
+  const cards=track.children;
+  for(let i=0;i<cards.length;i++){
+    const off=i-cur,c=cards[i],ax=Math.min(Math.abs(off),3);
+    c.style.transform=`translateX(${off*62}%) scale(${1-ax*0.14}) translateZ(${-ax*160}px) rotateY(${off===0?0:(off>0?-14:14)}deg)`;
+    c.style.opacity=ax>2?0:(1-ax*0.28);
+    c.style.zIndex=20-ax;
+    c.style.pointerEvents=Math.abs(off)>2?'none':'auto';
+  }
+  [...dots.children].forEach((d,i)=>d.classList.toggle('on',i===cur));
+  cnum.textContent=cur+1;
+}
+function go(i){cur=(i+PATTERNS.length)%PATTERNS.length;layout();}
+function move(d){go(cur+d);}
+layout();
+let sx=null;
+track.addEventListener('pointerdown',e=>{sx=e.clientX;});
+window.addEventListener('pointerup',e=>{if(sx===null)return;const dx=e.clientX-sx;sx=null;if(Math.abs(dx)>40)move(dx<0?1:-1);});
+window.addEventListener('keydown',e=>{if(e.key==='ArrowRight')move(1);if(e.key==='ArrowLeft')move(-1);});
+/* ---- listen grid ---- */
+const lg=document.getElementById('lgrid');
+PATTERNS.forEach((p,i)=>{
+  const d=document.createElement('div');d.className='acard';
+  d.innerHTML=`<span class="n">${i+1}</span><div class="mid"><h4>${p.name}</h4><p>${p.short}</p></div>
+   <button class="abtn" aria-label="Play ${p.name}"><span class="tr">▶</span><span class="eq"><i></i><i></i><i></i><i></i></span></button>`;
+  d.querySelector('.abtn').onclick=()=>playSlug(p.slug,d.querySelector('.abtn'),'playing');
+  lg.appendChild(d);
+});
+/* ---- speak model answers ---- */
+document.querySelectorAll('.model button').forEach(b=>{
+  b.onclick=()=>{
+    if(curA&&!curA.paused&&curB===b){curA.pause();b.classList.remove('playing');b.textContent='▶';return;}
+    if(curA){curA.pause();if(curB){curB.classList.remove('playing');if(curB.textContent==='⏸')curB.textContent='▶';}}
+    curA=new Audio(b.dataset.a);curB=b;b.classList.add('playing');b.textContent='⏸';
+    curA.onended=()=>{b.classList.remove('playing');b.textContent='▶';};
+    curA.play().catch(()=>{b.classList.remove('playing');b.textContent='▶';});
+  };
+});
+</script>
+</body>
+</html>
