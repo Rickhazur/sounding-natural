@@ -4,41 +4,41 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Storyteller — Final Exam</title>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0b0b0d;--card:#151518;--gold:#E8AA28;--gold2:#f5c542;--ink:#f2f2f0;--mut:#9a9aa0;--line:#26262b;--ok:#3ecf6e;--bad:#ff6b6b;}
+:root{--teal:#026A79;--teal2:#49ADB3;--amber:#E8AA28;--ink:#123C46;--muted:#5b6f75;--bg:#f2f8f8;--ok:#2e9e5b;--bad:#d64545;}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{background:radial-gradient(1200px 600px at 50% -10%,#1a1408 0%,var(--bg) 60%);color:var(--ink);font-family:'Inter',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:28px 16px;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:28px 16px;}
 header{text-align:center;max-width:680px;}
-.kicker{color:var(--gold);letter-spacing:4px;font-size:12px;font-weight:600;text-transform:uppercase;}
-h1{font-family:'Sora';font-size:clamp(26px,5vw,40px);font-weight:800;margin:10px 0 4px;}
-h1 .g{color:var(--gold);}
-.sub{color:var(--mut);font-size:14.5px;}
+.kicker{color:var(--teal);letter-spacing:4px;font-size:12px;font-weight:700;text-transform:uppercase;}
+h1{font-family:'Sora',sans-serif;font-size:clamp(26px,5vw,40px);font-weight:800;margin:10px 0 4px;color:var(--ink);}
+h1 .g{color:var(--teal);}
+.sub{color:var(--muted);font-size:14.5px;line-height:1.6;}
 .hud{display:flex;gap:12px;margin:20px 0 4px;}
-.hud .box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 18px;font-size:14px;font-weight:600;}
-.hud .box b{color:var(--gold2);}
+.hud .box{background:#fff;border:1px solid #e2efef;border-radius:12px;padding:10px 18px;font-size:14px;font-weight:600;box-shadow:0 4px 14px rgba(2,106,121,.08);}
+.hud .box b{color:var(--teal);}
 #game{width:100%;max-width:640px;margin-top:14px;}
-.panel{background:linear-gradient(160deg,#1b1b20,#151518);border:1px solid var(--line);border-radius:20px;padding:30px 26px;}
-.qnum{color:var(--gold);font-family:'Sora';font-weight:700;font-size:13px;letter-spacing:3px;margin-bottom:10px;}
+.panel{background:#fff;border-radius:20px;padding:30px 26px;box-shadow:0 18px 50px rgba(2,106,121,.16);}
+.qnum{color:var(--teal);font-family:'Sora';font-weight:700;font-size:13px;letter-spacing:3px;margin-bottom:10px;}
 .qtext{font-size:16.5px;line-height:1.65;margin-bottom:20px;}
-.qtext .sit{color:var(--mut);font-style:italic;display:block;margin-bottom:10px;font-size:14.5px;}
+.qtext .sit{color:var(--muted);font-style:italic;display:block;margin-bottom:10px;font-size:14.5px;}
 .opts{display:grid;gap:10px;}
-.opt{background:#101013;border:1px solid var(--line);color:var(--ink);border-radius:14px;padding:15px 16px;font-size:15.5px;cursor:pointer;font-family:'Inter';text-align:left;line-height:1.55;transition:.2s;}
-.opt:hover:not(:disabled){border-color:var(--gold);}
+.opt{background:#f2f8f8;border:2px solid #e2efef;color:var(--ink);border-radius:14px;padding:15px 16px;font-size:15.5px;cursor:pointer;font-family:'Inter';text-align:left;line-height:1.5;transition:.2s;font-weight:500;}
+.opt:hover:not(:disabled){border-color:var(--teal2);}
 .opt:disabled{cursor:default;}
-.opt.right{border-color:var(--ok);background:rgba(62,207,110,.1);}
-.opt.wrong{border-color:var(--bad);background:rgba(255,107,107,.08);}
+.opt.right{border-color:var(--ok);background:#e5f6ec;color:#14532d;font-weight:700;}
+.opt.wrong{border-color:var(--bad);background:#fdecec;color:#7a1f1f;}
 .opt.dim{opacity:.45;}
-.why{margin-top:18px;background:rgba(232,170,40,.07);border:1px solid rgba(232,170,40,.35);border-radius:14px;padding:16px;font-size:14.5px;line-height:1.65;color:#e8dcc0;display:none;}
-.why b{color:var(--gold2);}
-.nextbtn{margin-top:18px;display:none;width:100%;background:var(--gold);color:#111;border:none;border-radius:14px;padding:15px;font-size:16px;font-weight:700;cursor:pointer;font-family:'Sora';}
-.nextbtn:hover{background:var(--gold2);}
+.why{margin-top:18px;background:#fdf0d3;border:1px solid #f0d9a8;border-radius:14px;padding:16px;font-size:14.5px;line-height:1.65;color:#7a5200;display:none;}
+.why b{color:var(--teal);}
+.nextbtn{margin-top:18px;display:none;width:100%;background:linear-gradient(135deg,var(--teal),#0396a8);color:#fff;border:none;border-radius:14px;padding:15px;font-size:16px;font-weight:700;cursor:pointer;font-family:'Sora';box-shadow:0 5px 14px rgba(2,106,121,.25);}
+.nextbtn:hover{transform:translateY(-1px);}
 .final{text-align:center;padding:20px 0;}
 .final .big{font-size:64px;margin-bottom:10px;}
-.final h2{font-family:'Sora';font-size:28px;margin-bottom:8px;}
-.final p{color:var(--mut);line-height:1.7;}
+.final h2{font-family:'Sora';font-size:28px;margin-bottom:8px;color:var(--teal);}
+.final p{color:var(--muted);line-height:1.7;}
 .stars{font-size:44px;letter-spacing:8px;margin:12px 0;}
-.replay{margin-top:18px;background:transparent;border:1px solid var(--gold);color:var(--gold2);border-radius:14px;padding:13px 30px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Inter';}
+.replay{margin-top:18px;background:#fff;border:2px solid var(--teal);color:var(--teal);border-radius:14px;padding:13px 30px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Inter';}
 @media(max-width:520px){.panel{padding:24px 18px;}}
 </style>
 </head>

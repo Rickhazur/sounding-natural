@@ -4,44 +4,46 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Storyteller — Chunk Carousel</title>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0b0b0d;--card:#151518;--card2:#1b1b20;--gold:#E8AA28;--gold2:#f5c542;--ink:#f2f2f0;--mut:#9a9aa0;--line:#26262b;}
+:root{--teal:#026A79;--teal2:#49ADB3;--amber:#E8AA28;--ink:#123C46;--muted:#5b6f75;--bg:#f2f8f8;--ok:#2e9e5b;--bad:#d64545;}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{background:radial-gradient(1200px 600px at 50% -10%,#1a1408 0%,var(--bg) 60%);color:var(--ink);font-family:'Inter',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:28px 16px;}
-header{text-align:center;max-width:720px;margin-bottom:8px;}
-.kicker{color:var(--gold);letter-spacing:4px;font-size:12px;font-weight:600;text-transform:uppercase;}
-h1{font-family:'Sora',sans-serif;font-size:clamp(28px,5vw,44px);font-weight:800;margin:10px 0 4px;}
-h1 .g{color:var(--gold);}
-.sub{color:var(--mut);font-size:15px;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:28px 16px;}
+header{text-align:center;max-width:720px;}
+.kicker{color:var(--teal);letter-spacing:4px;font-size:12px;font-weight:700;text-transform:uppercase;}
+h1{font-family:'Sora',sans-serif;font-size:clamp(28px,5vw,44px);font-weight:800;margin:10px 0 4px;color:var(--ink);}
+h1 .g{color:var(--teal);}
+.sub{color:var(--muted);font-size:14.5px;line-height:1.6;}
 .stage{width:100%;max-width:640px;position:relative;margin-top:22px;}
 .viewport{overflow:hidden;border-radius:20px;}
 .track{display:flex;transition:transform .45s cubic-bezier(.22,.8,.3,1);}
-.card{flex:0 0 100%;background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:20px;padding:34px 30px 28px;min-height:430px;display:flex;flex-direction:column;}
-.card .num{color:var(--gold);font-family:'Sora';font-weight:700;font-size:13px;letter-spacing:3px;}
-.card h2{font-family:'Sora';font-size:clamp(24px,4.5vw,34px);font-weight:800;margin:10px 0 6px;color:#fff;}
-.card h2 .hl{color:var(--gold2);}
+.card{flex:0 0 100%;background:#fff;border-radius:20px;padding:34px 30px 28px;min-height:430px;display:flex;flex-direction:column;box-shadow:0 18px 50px rgba(2,106,121,.16);border-top:6px solid var(--teal);}
+.card .num{color:var(--teal);font-family:'Sora';font-weight:700;font-size:13px;letter-spacing:3px;}
+.card h2{font-family:'Sora';font-size:clamp(24px,4.5vw,34px);font-weight:800;margin:10px 0 6px;color:var(--teal);}
+.card h2 .hl{color:#8a5a00;}
 .pills{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;}
-.pill{font-size:12px;font-weight:600;padding:6px 12px;border-radius:999px;border:1px solid var(--line);color:var(--mut);background:#101013;}
-.pill.moment{border-color:var(--gold);color:var(--gold2);}
-.ex{font-size:17px;line-height:1.6;color:#e8e8e8;background:#0e0e11;border-left:3px solid var(--gold);border-radius:0 12px 12px 0;padding:14px 16px;margin:8px 0 4px;}
-.note{font-size:14px;line-height:1.65;color:var(--mut);margin-top:12px;}
-.note b{color:var(--gold2);}
-.warn{background:rgba(232,170,40,.08);border:1px solid rgba(232,170,40,.4);border-radius:12px;padding:12px 14px;font-size:13.5px;line-height:1.6;color:#e8d9b0;margin-top:12px;}
+.pill{font-size:12px;font-weight:700;padding:6px 12px;border-radius:999px;color:var(--teal);background:#e8f4f5;}
+.pill.moment{color:#fff;background:linear-gradient(135deg,var(--teal),#0396a8);}
+.ex{font-size:17px;line-height:1.6;color:var(--ink);background:#f6fbfb;border-left:3px solid var(--amber);border-radius:0 12px 12px 0;padding:14px 16px;margin:8px 0 4px;}
+.ex .hl{background:#ffe9ad;padding:1px 5px;border-radius:5px;font-weight:700;}
+.note{font-size:14px;line-height:1.65;color:var(--muted);margin-top:12px;}
+.note b{color:var(--teal);}
+.warn{background:#fdf0d3;border:1px solid #f0d9a8;border-radius:12px;padding:12px 14px;font-size:13.5px;line-height:1.6;color:#7a5200;margin-top:12px;}
+.tense{background:#eaf6ff;border:1px solid #bcdcf5;border-radius:12px;padding:12px 14px;font-size:13.5px;line-height:1.65;color:#0d4a63;margin-top:12px;}
+.tense b{color:var(--teal);}
 .audio-row{display:flex;gap:10px;margin-top:auto;padding-top:20px;}
-.abtn{flex:1;border:1px solid var(--line);background:#101013;color:var(--ink);border-radius:12px;padding:12px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Inter';transition:.2s;}
-.abtn:hover{border-color:var(--gold);color:var(--gold2);}
+.abtn{flex:1;border:none;background:linear-gradient(135deg,var(--teal),#0396a8);color:#fff;border-radius:12px;padding:12px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Inter';transition:.2s;box-shadow:0 5px 14px rgba(2,106,121,.25);}
+.abtn:hover{transform:translateY(-1px);}
 .nav{display:flex;align-items:center;justify-content:space-between;margin-top:16px;}
-.arrow{background:#151518;border:1px solid var(--line);color:var(--gold);width:48px;height:48px;border-radius:50%;font-size:20px;cursor:pointer;transition:.2s;}
-.arrow:hover:not(:disabled){border-color:var(--gold);background:#1d1a12;}
+.arrow{background:#fff;border:none;color:var(--teal);width:48px;height:48px;border-radius:50%;font-size:20px;cursor:pointer;transition:.2s;box-shadow:0 6px 18px rgba(2,106,121,.18);}
+.arrow:hover:not(:disabled){background:var(--teal);color:#fff;}
 .arrow:disabled{opacity:.25;cursor:default;}
-.count{color:var(--mut);font-size:14px;font-weight:600;letter-spacing:1px;}
+.count{color:var(--muted);font-size:14px;font-weight:600;letter-spacing:1px;}
 .dots{display:flex;gap:7px;justify-content:center;margin-top:14px;flex-wrap:wrap;}
-.dot{width:9px;height:9px;border-radius:50%;background:#2c2c32;cursor:pointer;transition:.2s;border:none;padding:0;}
-.dot.on{background:var(--gold);transform:scale(1.25);}
-.tense{background:#0e1420;border:1px solid #2b3f5f;border-radius:12px;padding:12px 14px;font-size:13.5px;line-height:1.65;color:#c3d3ea;margin-top:12px;}
-.tense b{color:#8fb4ff;}
-footer{margin-top:26px;color:#55555c;font-size:12px;text-align:center;max-width:640px;line-height:1.6;}
+.dot{width:9px;height:9px;border-radius:50%;background:#c4d8da;cursor:pointer;transition:.2s;border:none;padding:0;}
+.dot.on{background:var(--amber);transform:scale(1.25);}
+footer{margin-top:26px;color:var(--muted);font-size:12px;text-align:center;max-width:640px;line-height:1.6;}
+footer b{color:var(--teal);}
 @media(max-width:520px){.card{padding:26px 20px;min-height:460px;}}
 </style>
 </head>
@@ -62,7 +64,7 @@ footer{margin-top:26px;color:#55555c;font-size:12px;text-align:center;max-width:
 <div class="dots" id="dots"></div>
 </div>
 
-<footer>English stories run on <b style="color:#8fb4ff">two tenses</b>: past continuous sets the background (<i>was/were + -ing</i>), past simple moves the action forward.</footer>
+<footer>English stories run on <b style="color:var(--teal)">two tenses</b>: past continuous sets the background (<i>was/were + -ing</i>), past simple moves the action forward.</footer>
 
 <script>
 const CHUNKS=[

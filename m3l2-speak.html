@@ -4,36 +4,36 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Storyteller — Speaking Missions</title>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0b0b0d;--card:#151518;--gold:#E8AA28;--gold2:#f5c542;--ink:#f2f2f0;--mut:#9a9aa0;--line:#26262b;}
+:root{--teal:#026A79;--teal2:#49ADB3;--amber:#E8AA28;--ink:#123C46;--muted:#5b6f75;--bg:#f2f8f8;--ok:#2e9e5b;--bad:#d64545;}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{background:radial-gradient(1200px 600px at 50% -10%,#1a1408 0%,var(--bg) 60%);color:var(--ink);font-family:'Inter',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:28px 16px;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:28px 16px;}
 header{text-align:center;max-width:700px;margin-bottom:6px;}
-.kicker{color:var(--gold);letter-spacing:4px;font-size:12px;font-weight:600;text-transform:uppercase;}
-h1{font-family:'Sora';font-size:clamp(26px,5vw,40px);font-weight:800;margin:10px 0 4px;}
-h1 .g{color:var(--gold);}
-.sub{color:var(--mut);font-size:14.5px;line-height:1.6;}
+.kicker{color:var(--teal);letter-spacing:4px;font-size:12px;font-weight:700;text-transform:uppercase;}
+h1{font-family:'Sora',sans-serif;font-size:clamp(26px,5vw,40px);font-weight:800;margin:10px 0 4px;color:var(--ink);}
+h1 .g{color:var(--teal);}
+.sub{color:var(--muted);font-size:14.5px;line-height:1.6;}
 .wrap{width:100%;max-width:680px;margin-top:18px;display:grid;gap:18px;}
-.mission{background:linear-gradient(160deg,#1b1b20,#151518);border:1px solid var(--line);border-radius:20px;padding:28px 26px;}
-.mission .mnum{color:var(--gold);font-family:'Sora';font-weight:700;font-size:12px;letter-spacing:3px;}
-.mission h2{font-family:'Sora';font-size:21px;margin:8px 0 4px;}
-.scene{color:var(--mut);font-size:14.5px;line-height:1.7;margin:10px 0;background:#0e0e11;border-radius:12px;padding:14px 16px;border-left:3px solid var(--gold);}
-.scene b{color:#e8e8e8;}
+.mission{background:#fff;border-radius:20px;padding:28px 26px;box-shadow:0 18px 50px rgba(2,106,121,.16);border-top:6px solid var(--teal);}
+.mission .mnum{color:var(--teal);font-family:'Sora';font-weight:700;font-size:12px;letter-spacing:3px;}
+.mission h2{font-family:'Sora';font-size:21px;margin:8px 0 4px;color:var(--ink);}
+.scene{color:var(--muted);font-size:14.5px;line-height:1.7;margin:10px 0;background:#f6fbfb;border-radius:12px;padding:14px 16px;border-left:3px solid var(--amber);}
+.scene b{color:var(--ink);}
 .task{font-size:15px;line-height:1.7;margin:12px 0;}
-.task b{color:var(--gold2);}
+.task b{color:var(--teal);}
 .model{margin-top:14px;}
-.model .lbl{font-size:12px;font-weight:700;letter-spacing:2px;color:var(--mut);text-transform:uppercase;margin-bottom:8px;}
-.model .txt{background:#0d0d10;border:1px solid var(--line);border-radius:12px;padding:15px 16px;font-size:15px;line-height:1.7;color:#e2e2e6;}
-.model .txt b{color:var(--gold2);}
+.model .lbl{font-size:12px;font-weight:700;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;}
+.model .txt{background:#f6fbfb;border:1px solid #e2efef;border-radius:12px;padding:15px 16px;font-size:15px;line-height:1.7;color:var(--ink);}
+.model .txt b{color:var(--teal);}
 .abtns{display:flex;gap:10px;margin-top:12px;}
-.abtn{flex:1;border:1px solid var(--line);background:#101013;color:var(--ink);border-radius:12px;padding:12px;font-size:14.5px;font-weight:600;cursor:pointer;font-family:'Inter';transition:.2s;}
-.abtn:hover{border-color:var(--gold);color:var(--gold2);}
-.check{margin-top:16px;background:rgba(232,170,40,.06);border:1px solid rgba(232,170,40,.3);border-radius:14px;padding:16px;}
-.check .lbl{font-size:12px;font-weight:700;letter-spacing:2px;color:var(--gold2);text-transform:uppercase;margin-bottom:10px;}
-.check label{display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.6;color:#d5d5da;margin:8px 0;cursor:pointer;}
-.check input{margin-top:4px;accent-color:var(--gold);width:16px;height:16px;flex-shrink:0;}
-.tip{font-size:13px;color:var(--mut);margin-top:10px;line-height:1.6;font-style:italic;}
+.abtn{flex:1;border:none;background:linear-gradient(135deg,var(--teal),#0396a8);color:#fff;border-radius:12px;padding:12px;font-size:14.5px;font-weight:600;cursor:pointer;font-family:'Inter';transition:.2s;box-shadow:0 5px 14px rgba(2,106,121,.25);}
+.abtn:hover{transform:translateY(-1px);}
+.check{margin-top:16px;background:#fdf0d3;border:1px solid #f0d9a8;border-radius:14px;padding:16px;}
+.check .lbl{font-size:12px;font-weight:700;letter-spacing:2px;color:#8a5a00;text-transform:uppercase;margin-bottom:10px;}
+.check label{display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.6;color:var(--ink);margin:8px 0;cursor:pointer;}
+.check input{margin-top:4px;accent-color:var(--teal);width:16px;height:16px;flex-shrink:0;}
+.tip{font-size:13px;color:var(--muted);margin-top:10px;line-height:1.6;font-style:italic;}
 @media(max-width:520px){.mission{padding:22px 18px;}}
 </style>
 </head>

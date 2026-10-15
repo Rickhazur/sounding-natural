@@ -4,54 +4,54 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Storyteller — The Anecdote</title>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0b0b0d;--card:#151518;--gold:#E8AA28;--gold2:#f5c542;--ink:#f2f2f0;--mut:#9a9aa0;--line:#26262b;--ok:#3ecf6e;--bad:#ff6b6b;}
+:root{--teal:#026A79;--teal2:#49ADB3;--amber:#E8AA28;--ink:#123C46;--muted:#5b6f75;--bg:#f2f8f8;--ok:#2e9e5b;--bad:#d64545;}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{background:radial-gradient(1200px 600px at 50% -10%,#1a1408 0%,var(--bg) 60%);color:var(--ink);font-family:'Inter',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:28px 16px;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:28px 16px;}
 header{text-align:center;max-width:700px;}
-.kicker{color:var(--gold);letter-spacing:4px;font-size:12px;font-weight:600;text-transform:uppercase;}
-h1{font-family:'Sora';font-size:clamp(26px,5vw,40px);font-weight:800;margin:10px 0 4px;}
-h1 .g{color:var(--gold);}
-.sub{color:var(--mut);font-size:14.5px;line-height:1.6;}
+.kicker{color:var(--teal);letter-spacing:4px;font-size:12px;font-weight:700;text-transform:uppercase;}
+h1{font-family:'Sora',sans-serif;font-size:clamp(26px,5vw,40px);font-weight:800;margin:10px 0 4px;color:var(--ink);}
+h1 .g{color:var(--teal);}
+.sub{color:var(--muted);font-size:14.5px;line-height:1.6;}
 .hud{display:flex;gap:12px;margin:20px 0 4px;flex-wrap:wrap;justify-content:center;}
-.hud .box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 18px;font-size:14px;font-weight:600;}
-.hud .box b{color:var(--gold2);}
+.hud .box{background:#fff;border:1px solid #e2efef;border-radius:12px;padding:10px 18px;font-size:14px;font-weight:600;box-shadow:0 4px 14px rgba(2,106,121,.08);}
+.hud .box b{color:var(--teal);}
 #game{width:100%;max-width:680px;margin-top:14px;}
-.panel{background:linear-gradient(160deg,#1b1b20,#151518);border:1px solid var(--line);border-radius:20px;padding:28px 24px;}
+.panel{background:#fff;border-radius:20px;padding:28px 24px;box-shadow:0 18px 50px rgba(2,106,121,.16);}
 .rhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;flex-wrap:wrap;gap:8px;}
-.rtitle{font-family:'Sora';font-weight:700;font-size:18px;color:var(--gold2);}
-.rnum{color:var(--gold);font-size:12px;font-weight:700;letter-spacing:2px;}
-.ctx{color:var(--mut);font-size:14px;margin:8px 0 18px;line-height:1.6;font-style:italic;}
-.sec{font-size:12px;font-weight:700;letter-spacing:2px;color:var(--mut);text-transform:uppercase;margin:14px 0 8px;}
+.rtitle{font-family:'Sora';font-weight:700;font-size:18px;color:var(--teal);}
+.rnum{color:var(--teal);font-size:12px;font-weight:700;letter-spacing:2px;}
+.ctx{color:var(--muted);font-size:14px;margin:8px 0 18px;line-height:1.6;font-style:italic;}
+.sec{font-size:12px;font-weight:700;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin:14px 0 8px;}
 .pool{display:grid;gap:8px;}
-.frag{background:#101013;border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:13px 15px;font-size:15px;cursor:pointer;font-family:'Inter';text-align:left;line-height:1.5;transition:.18s;width:100%;}
-.frag:hover:not(:disabled){border-color:var(--gold);}
+.frag{background:#f2f8f8;border:2px solid #e2efef;color:var(--ink);border-radius:12px;padding:13px 15px;font-size:15px;cursor:pointer;font-family:'Inter';text-align:left;line-height:1.5;transition:.18s;width:100%;}
+.frag:hover:not(:disabled){border-color:var(--teal2);}
 .frag:disabled{opacity:.28;cursor:default;}
-.frag b{color:var(--gold2);}
-.story{background:#0d0d10;border:1px dashed #3a3a42;border-radius:12px;padding:14px;min-height:120px;display:grid;gap:8px;}
-.slot{background:#141419;border:1px solid var(--line);border-radius:10px;padding:11px 13px;font-size:14.5px;line-height:1.5;color:#d8d8dc;}
-.slot .n{color:var(--gold);font-weight:700;margin-right:8px;font-family:'Sora';font-size:13px;}
-.slot b{color:var(--gold2);}
-.slot.wrong{border-color:var(--bad);background:rgba(255,107,107,.07);}
-.empty{color:#4a4a52;font-size:14px;text-align:center;padding:20px 0;}
+.frag b{color:var(--teal);}
+.story{background:#f2f8f8;border:2px dashed #c4d8da;border-radius:12px;padding:14px;min-height:120px;display:grid;gap:8px;}
+.slot{background:#fff;border:1px solid #e2efef;border-radius:10px;padding:11px 13px;font-size:14.5px;line-height:1.5;color:var(--ink);}
+.slot .n{color:var(--teal);font-weight:700;margin-right:8px;font-family:'Sora';font-size:13px;}
+.slot b{color:var(--teal);}
+.slot.wrong{border-color:var(--bad);background:#fdecec;}
+.empty{color:var(--muted);font-size:14px;text-align:center;padding:20px 0;}
 .btnrow{display:flex;gap:10px;margin-top:18px;}
 .btn{flex:1;border:none;border-radius:14px;padding:15px;font-size:15.5px;font-weight:700;cursor:pointer;font-family:'Sora';transition:.2s;}
-.btn.go{background:var(--gold);color:#111;}
-.btn.go:hover:not(:disabled){background:var(--gold2);}
+.btn.go{background:linear-gradient(135deg,var(--teal),#0396a8);color:#fff;box-shadow:0 5px 14px rgba(2,106,121,.25);}
+.btn.go:hover:not(:disabled){transform:translateY(-1px);}
 .btn.go:disabled{opacity:.35;cursor:default;}
-.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--mut);}
-.btn.ghost:hover{color:var(--ink);border-color:var(--mut);}
+.btn.ghost{background:#fff;border:2px solid #e2efef;color:var(--muted);}
+.btn.ghost:hover{color:var(--teal);border-color:var(--teal2);}
 .feed{margin-top:16px;border-radius:14px;padding:16px;font-size:14.5px;line-height:1.65;display:none;}
-.feed.ok{display:block;background:rgba(62,207,110,.08);border:1px solid rgba(62,207,110,.4);color:#c9ecd4;}
-.feed.no{display:block;background:rgba(255,107,107,.07);border:1px solid rgba(255,107,107,.4);color:#f3c9c9;}
-.feed b{color:#fff;}
-.final{text-align:center;padding:24px 6px;}
+.feed.ok{display:block;background:#e5f6ec;border:1px solid #bfe6cd;color:#14532d;}
+.feed.no{display:block;background:#fdecec;border:1px solid #f0c0c0;color:#7a1f1f;}
+.feed b{color:var(--teal);}
+.final{text-align:center;padding:20px 0;}
 .final .big{font-size:64px;margin-bottom:10px;}
-.final h2{font-family:'Sora';font-size:28px;margin-bottom:8px;}
-.final p{color:var(--mut);line-height:1.7;}
+.final h2{font-family:'Sora';font-size:28px;margin-bottom:8px;color:var(--teal);}
+.final p{color:var(--muted);line-height:1.7;}
 .stars{font-size:44px;letter-spacing:8px;margin:12px 0;}
-.replay{margin-top:18px;background:transparent;border:1px solid var(--gold);color:var(--gold2);border-radius:14px;padding:13px 30px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Inter';}
+.replay{margin-top:18px;background:#fff;border:2px solid var(--teal);color:var(--teal);border-radius:14px;padding:13px 30px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Inter';}
 @media(max-width:520px){.panel{padding:22px 16px;}}
 </style>
 </head>
@@ -59,7 +59,7 @@ h1 .g{color:var(--gold);}
 <header>
 <div class="kicker">Module 3 · Lesson 2 · Play</div>
 <h1>📖 The <span class="g">Anecdote</span></h1>
-<div class="sub">A professional story, scrambled. Tap the fragments in story order: <b style="color:var(--gold2)">set the scene → build → land the point</b>. A story in the wrong order makes no sense.</div>
+<div class="sub">A professional story, scrambled. Tap the fragments in story order: <b style="color:var(--teal)">set the scene → build → land the point</b>. A story in the wrong order makes no sense.</div>
 </header>
 <div class="hud">
 <div class="box">Story <b id="hr">1</b> / 8</div>
