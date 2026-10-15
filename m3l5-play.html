@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🏛️ The Executive Day — Module 3 · Final Mission</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#026A79;--teal2:#49ADB3;--amber:#E8AA28;--ink:#123C46;--muted:#5b6f75;--bg:#f2f8f8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);padding:30px 14px;min-height:100vh;display:flex;justify-content:center}
+.wrap{width:100%;max-width:640px}
+.hidden{display:none!important}
+.eyebrow{text-align:center;font-family:'Sora';font-weight:800;font-size:12px;letter-spacing:.28em;color:var(--teal2);margin-bottom:14px}
+.panel{background:#fff;border-radius:26px;padding:44px 34px;text-align:center;box-shadow:0 18px 50px rgba(2,106,121,.16)}
+.emoji-big{font-size:64px;margin-bottom:14px}
+.panel h2{font-family:'Sora';font-weight:800;font-size:clamp(24px,5vw,32px);color:var(--teal);margin-bottom:10px}
+.panel p{color:var(--muted);line-height:1.65;margin-bottom:8px}
+.panel .rules{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:18px 0 26px}
+.panel .rules span{background:#eef6f6;color:var(--teal);font-weight:700;font-size:13px;padding:8px 15px;border-radius:999px}
+.btn{display:inline-block;background:linear-gradient(135deg,var(--teal),#0396a8);color:#fff;font-family:'Sora';font-weight:800;font-size:16px;padding:15px 44px;border:none;border-radius:999px;cursor:pointer;box-shadow:0 10px 26px rgba(2,106,121,.35);transition:transform .2s}
+.btn:hover{transform:translateY(-2px) scale(1.02)}
+.hud{display:flex;gap:10px;margin-bottom:12px}
+.hud-box{flex:1;background:#fff;border-radius:14px;padding:10px;text-align:center;box-shadow:0 4px 14px rgba(2,106,121,.10)}
+.hud-box .label{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.hud-box .value{font-family:'Sora';font-weight:800;font-size:20px;color:var(--teal)}
+.pbar{height:8px;background:#dcebeb;border-radius:99px;overflow:hidden;margin-bottom:16px}
+.pbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal2),var(--amber));border-radius:99px;transition:width .4s}
+.qcard{background:#fff;border-radius:24px;padding:34px 28px;box-shadow:0 18px 50px rgba(2,106,121,.16)}
+.draft{display:flex;gap:10px;align-items:flex-start;background:#eef6f6;border-radius:14px;padding:14px 16px;margin-bottom:14px;font-size:14.5px;line-height:1.6;color:var(--ink)}
+.draft .tag{flex-shrink:0;background:var(--teal);color:#fff;font-size:11.5px;font-weight:800;letter-spacing:.06em;padding:5px 12px;border-radius:999px;margin-top:1px}
+.audiodock{display:flex;align-items:center;gap:12px;background:#eef6f6;border-radius:14px;padding:10px 14px;margin-bottom:18px}
+.abtn{width:46px;height:46px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--teal),#0396a8);color:#fff;font-size:17px;cursor:pointer;flex-shrink:0;box-shadow:0 5px 14px rgba(2,106,121,.35);display:grid;place-items:center;transition:transform .15s}
+.abtn:active{transform:scale(.92)}
+.abtn .eq{display:none;align-items:flex-end;gap:2.5px;height:17px}
+.abtn .eq i{width:3.5px;background:#fff;border-radius:2px;animation:eq .7s ease-in-out infinite}
+.abtn .eq i:nth-child(2){animation-delay:.15s}.abtn .eq i:nth-child(3){animation-delay:.3s}.abtn .eq i:nth-child(4){animation-delay:.45s}
+@keyframes eq{0%,100%{height:6px}50%{height:16px}}
+.abtn.playing .tr{display:none}.abtn.playing .eq{display:flex}
+.abtn.slowbtn{width:38px;height:38px;font-size:15px;background:linear-gradient(135deg,#49ADB3,#026A79)}
+.abtn.slowbtn.playing{outline:3px solid var(--amber);outline-offset:2px}
+.audiodock span{font-size:13px;font-weight:600;color:var(--muted)}
+.q{font-family:'Sora';font-weight:800;font-size:19px;margin-bottom:20px;text-align:center}
+.opts{display:grid;gap:10px}
+.opt{background:#f2f8f8;border:2px solid #e2efef;border-radius:14px;padding:15px;font-size:15.5px;font-weight:600;cursor:pointer;transition:all .2s;color:var(--ink);line-height:1.5;text-align:left}
+.opt:hover:not(.disabled){border-color:var(--teal2);transform:translateY(-1px)}
+.opt.disabled{cursor:default;opacity:.8}
+.opt.correct{background:#e5f6ec;border-color:#2e9e5b;color:#14532d;font-weight:700}
+.opt.wrong{background:#fdecec;border-color:#d64545;color:#7a1f1f}
+.feedback{display:none;margin-top:18px;border-radius:14px;padding:16px;font-size:14.5px;line-height:1.65;text-align:left}
+.feedback.show{display:block}
+.feedback.good{background:#e5f6ec;border:1px solid #bfe6cd}
+.feedback.bad{background:#fdf3e3;border:1px solid #f0d9a8}
+#nb{text-align:center}
+#nb .btn{margin-top:16px;font-size:15px;padding:13px 36px}
+#stars{font-size:40px;margin:10px 0;letter-spacing:6px}
+#finalScore{font-family:'Sora';font-weight:800;font-size:26px;color:var(--teal);margin:6px 0}
+@media (prefers-reduced-motion:reduce){.pbar i{transition:none}.abtn .eq i{animation:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div id="startScreen" class="panel">
+    <div class="eyebrow">MODULE 3 · FINAL MISSION</div>
+    <div class="emoji-big">🏛️</div>
+    <h2>The Executive Day</h2>
+    <p>One day, four rooms, eight decisions. <b>Your score writes your ending.</b></p>
+    <p>Nine A.M. boardroom → client lunch → difficult call → cocktail. Pick the chunk each moment demands — the distractors are grammatically perfect, but belong in the wrong room.</p>
+    <div class="rules"><span>🏛️ 8 scenes</span><span>🔊 scene audio</span><span>+10 per decision</span><span>🔥 streak bonus</span></div>
+    <button class="btn" onclick="startGame()">START ▶</button>
+  </div>
+
+  <div id="gameScreen" class="hidden">
+    <div class="eyebrow">MODULE 3 · FINAL MISSION</div>
+    <div class="hud">
+      <div class="hud-box"><div class="label">Scene</div><div class="value" id="qnum">1/8</div></div>
+      <div class="hud-box"><div class="label">Score</div><div class="value" id="score">0</div></div>
+      <div class="hud-box"><div class="label">Streak</div><div class="value" id="streak">0</div></div>
+    </div>
+    <div class="pbar"><i id="pfill"></i></div>
+    <div class="qcard">
+      <div class="draft"><span class="tag" id="scenetag">🎬 Scene 1</span><span id="draft"></span></div>
+      <div class="audiodock" id="dock"></div>
+      <p class="q">What do you say?</p>
+      <div class="opts" id="opts"></div>
+      <div class="feedback" id="fb"></div>
+      <div id="nb"></div>
+    </div>
+  </div>
+
+  <div id="endScreen" class="panel hidden">
+    <div class="eyebrow">MODULE 3 · FINAL MISSION</div>
+    <div class="emoji-big" id="endEmoji">🏆</div>
+    <h2 id="endTitle">The day is done.</h2>
+    <div id="stars">⭐⭐⭐</div>
+    <div id="finalScore">0/8</div>
+    <p id="endMsg"></p>
+    <button class="btn" onclick="startGame()" style="margin-top:14px">Run the day again ↻</button>
+  </div>
+
+</div>
+<script>
+const SCENES=[
+ {time:"9:00 AM — The Boardroom",sit:"You're pitching your proposal to expand into the Mexican market. The CFO watches you with folded arms. You open your presentation — how do you frame your position?",audio:"m3l5-play-audio-01",opts:["From my perspective,","Let me set the scene:","I need to be honest with you:"],ok:"From my perspective,",why:"An opinion opener frames your position. A story opener belongs at lunch; a candor opener would alarm the room."},
+ {time:"9:40 AM — The Pushback",sit:"The operations director interrupts: 'This expansion will strain our logistics.' Acknowledge the concern, then redirect everyone to what really matters.",audio:"m3l5-play-audio-02",opts:["What it comes down to is…","To cut a long story short,","Let's take a step back."],ok:"What it comes down to is…",why:"Name the core issue to refocus the room. Nothing is being skipped (no story), and nothing is overheated (no de-escalation needed)."},
+ {time:"1:00 PM — The Client Lunch",sit:"Mrs. Chen leans in: 'Tell me — how did your company handle that crisis last year?' Time to tell the story. How do you open?",audio:"m3l5-play-audio-03",opts:["Let me set the scene:","From my perspective,","What brings you here?"],ok:"Let me set the scene:",why:"A story needs a story opener. An opinion opener argues; a mixer opener only works with strangers."},
+ {time:"1:25 PM — The Turning Point",sit:"Mrs. Chen is hooked — the team working through the night, the client threatening to walk away. Now the moment everything shifted.",audio:"m3l5-play-audio-04",opts:["And that's when everything changed.","The bottom line is…","Here's what I propose:"],ok:"And that's when everything changed.",why:"The turning point gets the turning-point chunk. Conclusions and proposals come later."},
+ {time:"3:00 PM — The Difficult Call",sit:"A key project is delayed three weeks. You call the client, Mr. Okafor. This call will not be comfortable. How do you open?",audio:"m3l5-play-audio-05",opts:["I need to be honest with you:","How's your week going?","The way I see it,"],ok:"I need to be honest with you:",why:"Bad news needs candor, not small talk (which would feel fake) and not soft opinion."},
+ {time:"3:10 PM — The Furious Client",sit:"Mr. Okafor raises his voice: 'This delay will cost us the launch!' Calm the situation — without giving away everything.",audio:"m3l5-play-audio-06",opts:["I completely understand your frustration.","I'm inclined to believe…","Did you come far?"],ok:"I completely understand your frustration.",why:"Validate first: name the emotion. Hedging sounds weak under fire; small talk in a crisis is absurd — know your moment."},
+ {time:"7:00 PM — The Cocktail",sit:"Industry cocktail event. A stranger approaches with a warm smile. You want a real conversation, not just exchanged titles.",audio:"m3l5-play-audio-07",opts:["What brings you here?","If you ask me,","This isn't easy to say, but…"],ok:"What brings you here?",why:"An open, warm invitation. Leading with opinions kills curiosity; a heavy preface would terrify a stranger."},
+ {time:"7:45 PM — The Graceful Exit",sit:"Great conversation — you exchanged cards with a retail VP. But forty people are in this room, and you need to keep moving.",audio:"m3l5-play-audio-08",opts:["I won't keep you any longer —","In the end,","I'm afraid that's not possible."],ok:"I won't keep you any longer —",why:"Conversations close with the exit signal. Story closers close stories; refusals refuse — you're doing neither."}
+];
+let order,qi,score,streak,answered,correctCount;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function setHUD(){
+  document.getElementById('qnum').textContent=(qi+1)+'/'+SCENES.length;
+  document.getElementById('score').textContent=score;
+  document.getElementById('streak').textContent=streak+(streak>=3?' 🔥':'');
+}
+/* scene audio: one at a time */
+let curA=null,curB=null;
+function toggleAudio(file,btn){
+  if(curA&&!curA.paused&&curB===btn){curA.pause();btn.classList.remove('playing');return;}
+  if(curA){curA.pause();if(curB)curB.classList.remove('playing');}
+  curA=new Audio(file);curB=btn;btn.classList.add('playing');
+  curA.onended=()=>btn.classList.remove('playing');
+  curA.onerror=()=>btn.classList.remove('playing');
+  curA.play().catch(()=>btn.classList.remove('playing'));
+}
+function startGame(){
+  order=shuffle([...Array(SCENES.length).keys()]);qi=0;score=0;streak=0;correctCount=0;
+  document.getElementById('startScreen').classList.add('hidden');
+  document.getElementById('endScreen').classList.add('hidden');
+  document.getElementById('gameScreen').classList.remove('hidden');
+  showQ();
+}
+function showQ(){
+  answered=false;
+  const r=SCENES[order[qi]];
+  setHUD();
+  document.getElementById('pfill').style.width=(qi/SCENES.length*100)+'%';
+  document.getElementById('scenetag').textContent='🎬 Scene '+(qi+1)+' · '+r.time;
+  document.getElementById('draft').textContent=r.sit;
+  const dock=document.getElementById('dock');dock.innerHTML='';
+  const bn=document.createElement('button');bn.className='abtn';bn.setAttribute('aria-label','Play scene audio');
+  bn.innerHTML='<span class="tr">🐇</span><span class="eq"><i></i><i></i><i></i><i></i></span>';
+  const bs=document.createElement('button');bs.className='abtn slowbtn';bs.setAttribute('aria-label','Play scene audio slowly');
+  bs.innerHTML='<span class="tr">🐢</span><span class="eq"><i></i><i></i><i></i><i></i></span>';
+  const lb=document.createElement('span');lb.textContent='🔊 Scene audio — 🐇 natural · 🐢 slow';
+  bn.onclick=()=>toggleAudio(r.audio+'.mp3',bn);
+  bs.onclick=()=>toggleAudio(r.audio+'-slow.mp3',bs);
+  dock.appendChild(bn);dock.appendChild(bs);dock.appendChild(lb);
+  const idx=shuffle([0,1,2]);
+  const box=document.getElementById('opts');box.innerHTML='';
+  idx.forEach(k=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=r.opts[k];
+    b.onclick=()=>pick(r.opts[k]===r.ok,b);box.appendChild(b);
+  });
+  const fb=document.getElementById('fb');fb.className='feedback';fb.innerHTML='';
+  document.getElementById('nb').innerHTML='';
+}
+function pick(ok,el){
+  if(answered)return;answered=true;
+  const r=SCENES[order[qi]],fb=document.getElementById('fb');
+  document.querySelectorAll('.opt').forEach(o=>o.classList.add('disabled'));
+  if(ok){
+    const pts=10+streak*5;score+=pts;streak++;correctCount++;el.classList.add('correct');
+    fb.className='feedback show good';
+    fb.innerHTML=`✅ <strong>+${pts} — the room is yours.</strong><br>🔑 ${r.why}`;
+  }else{
+    streak=0;el.classList.add('wrong');
+    document.querySelectorAll('.opt').forEach(o=>{if(o.textContent===r.ok)o.classList.add('correct');});
+    fb.className='feedback show bad';
+    fb.innerHTML=`❌ The pro choice: <strong>“${r.ok}”</strong><br>🔑 ${r.why}`;
+  }
+  setHUD();
+  document.getElementById('nb').innerHTML=`<button class="btn" onclick="nextQ()">${qi+1<SCENES.length?'Next scene →':'End the day 🏆'}</button>`;
+}
+function nextQ(){qi++;if(qi>=SCENES.length)endGame();else showQ();}
+function endGame(){
+  document.getElementById('gameScreen').classList.add('hidden');
+  document.getElementById('endScreen').classList.remove('hidden');
+  let stars,emoji,title,msg;
+  if(correctCount>=7){stars='⭐⭐⭐';emoji='🏆';title='🏆 The Closer';msg='You owned every room today — the boardroom, the lunch table, the difficult call, and the cocktail. That is an executive voice.';}
+  else if(correctCount>=4){stars='⭐⭐';emoji='🌟';title='🌟 The Rising Star';msg='A strong day with room to sharpen. Each miss points to a lesson worth revisiting.';}
+  else{stars='⭐';emoji='🌱';title='🌱 The Apprentice';msg='The day exposed gaps — exactly what this assessment is for. Revisit the lessons, then run the day again.';}
+  document.getElementById('endEmoji').textContent=emoji;
+  document.getElementById('endTitle').textContent=title;
+  document.getElementById('stars').textContent=stars;
+  document.getElementById('finalScore').textContent=correctCount+'/8 scenes · '+score+' points';
+  document.getElementById('endMsg').textContent=msg;
+}
+</script>
+</body>
+</html>

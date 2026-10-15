@@ -1,20 +1,33 @@
-BEYOND WORDS — Módulo 3, Lección 4: "The Mixer"
-Chunks for Small Talk and Building Rapport
-====================================================
+MÓDULO 3 — LECCIÓN FINAL: "The Executive Day"
+(Final Fluency Assessment and Personalized Feedback)
 
-CONTENIDO DEL PAQUETE (27 archivos, todos sueltos en la raíz):
-- 5 HTML (actividades): m3l4-carousel.html, m3l4-listen.html, m3l4-play.html, m3l4-speak.html, m3l4-quiz.html
-- 1 imagen: m3l4-hero.png (bloque de imagen al inicio de la lección)
-- 20 audios: m3l4-audio-01.mp3 ... m3l4-audio-10.mp3 + versiones lentas (-slow)
+QUÉ ES: el capstone del Módulo 3. No enseña chunks nuevos: integra los
+40 chunks de las lecciones 1–4 en un día ejecutivo completo.
 
-CÓMO SUBIR A GITHUB (repositorio Rickhazur/sounding-natural, raíz):
-TANDA 1 — primero los 6 archivos pequeños (5 HTML + hero).
-Espera a que estén en vivo (pueden tardar ~5-20 minutos en GitHub Pages).
-TANDA 2 — después los 20 audios.
+ARCHIVOS EN ESTE PAQUETE (25):
+- 5 HTML: m3l5-carousel.html (🗡️ The Arsenal — galería filtrable de los 40 chunks)
+          m3l5-listen.html  (🕵️ Ear Detective: Final Round — 15 rondas, adivina la lección)
+          m3l5-play.html    (🏛️ The Executive Day — 8 escenas, 3 finales según puntaje)
+          m3l5-speak.html   (🎤 The Keynote — presentación de 2 minutos + autoevaluación)
+          m3l5-quiz.html    (🏆 Final Fluency Assessment — 15 preguntas + feedback personalizado por lección)
+- 1 imagen: m3l5-hero.png (hero negro/dorado, bloque de imagen al inicio de la lección)
+- 18 audios NUEVOS: m3l5-play-audio-01…08.mp3 (+ versiones -slow) — narración de las 8 escenas
+                    m3l5-keynote.mp3 (+ versión -slow) — modelo de la presentación
+- Este LEEME.txt
 
-EMBEDS PARA RISE (orden: imagen hero primero, luego las actividades):
-1. Discover (carousel):   <iframe src="https://rickhazur.github.io/sounding-natural/m3l4-carousel.html" width="100%" height="800" frameborder="0" style="border-radius:16px;" title="Chunk Carousel"></iframe>
-2. Listen (Ear Detective): <iframe src="https://rickhazur.github.io/sounding-natural/m3l4-listen.html" width="100%" height="720" frameborder="0" style="border-radius:16px;" title="Ear Detective"></iframe>
-3. Play (The Mixer):       <iframe src="https://rickhazur.github.io/sounding-natural/m3l4-play.html" width="100%" height="800" frameborder="0" style="border-radius:16px;" title="The Mixer"></iframe>
-4. Speak (Work the Room):  <iframe src="https://rickhazur.github.io/sounding-natural/m3l4-speak.html" width="100%" height="1060" frameborder="0" style="border-radius:16px;" title="Speaking missions"></iframe>
-5. Quiz (Final Exam):      <iframe src="https://rickhazur.github.io/sounding-natural/m3l4-quiz.html" width="100%" height="750" frameborder="0" style="border-radius:16px;" title="Final quiz"></iframe>
+IMPORTANTE — AUDIOS REUTILIZADOS (NO están en este ZIP):
+Las actividades Discover y Listen reutilizan los 80 audios de las
+lecciones 1–4 (m3l1-audio-*, m3l2-audio-*, m3l3-audio-*, m3l4-audio-*),
+que YA están en vivo en el repositorio. No hay que subirlos de nuevo.
+
+CÓMO SUBIR (una sola tanda, todo junto):
+1. En https://github.com/Rickhazur/sounding-natural, subir los 25 archivos
+   sueltos a la RAÍZ del repositorio (sin carpetas).
+2. Avisar "ya" para verificar que todo quedó en vivo.
+
+EMBEDS PARA RISE (después de la verificación):
+- Discover: <iframe src="https://rickhazur.github.io/sounding-natural/m3l5-carousel.html" width="100%" height="800" frameborder="0" style="border-radius:16px;" title="The Arsenal"></iframe>
+- Listen:   <iframe src="https://rickhazur.github.io/sounding-natural/m3l5-listen.html" width="100%" height="720" frameborder="0" style="border-radius:16px;" title="Ear Detective Final Round"></iframe>
+- Play:     <iframe src="https://rickhazur.github.io/sounding-natural/m3l5-play.html" width="100%" height="800" frameborder="0" style="border-radius:16px;" title="The Executive Day"></iframe>
+- Speak:    <iframe src="https://rickhazur.github.io/sounding-natural/m3l5-speak.html" width="100%" height="1060" frameborder="0" style="border-radius:16px;" title="The Keynote"></iframe>
+- Quiz:     <iframe src="https://rickhazur.github.io/sounding-natural/m3l5-quiz.html" width="100%" height="750" frameborder="0" style="border-radius:16px;" title="Final Fluency Assessment"></iframe>
