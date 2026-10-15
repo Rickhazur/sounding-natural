@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🤝 The Meeting — Module 1 · Lesson 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#026A79;--teal2:#49ADB3;--amber:#E8AA28;--ink:#123C46;--muted:#5b6f75;--bg:#f2f8f8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);padding:30px 14px;min-height:100vh;display:flex;justify-content:center}
+.wrap{width:100%;max-width:640px}
+.hidden{display:none!important}
+.panel{background:#fff;border-radius:26px;padding:44px 34px;text-align:center;box-shadow:0 18px 50px rgba(2,106,121,.16)}
+.emoji-big{font-size:64px;margin-bottom:14px}
+.panel h2{font-family:'Sora';font-weight:800;font-size:clamp(24px,5vw,32px);color:var(--teal);margin-bottom:10px}
+.panel p{color:var(--muted);line-height:1.65;margin-bottom:8px}
+.panel .rules{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:18px 0 26px}
+.panel .rules span{background:#eef6f6;color:var(--teal);font-weight:700;font-size:13px;padding:8px 15px;border-radius:999px}
+.btn{display:inline-block;background:linear-gradient(135deg,var(--teal),#0396a8);color:#fff;font-family:'Sora';font-weight:800;font-size:16px;padding:15px 44px;border:none;border-radius:999px;cursor:pointer;box-shadow:0 10px 26px rgba(2,106,121,.35);transition:transform .2s}
+.btn:hover{transform:translateY(-2px) scale(1.02)}
+.hud{display:flex;gap:10px;margin-bottom:12px}
+.hud-box{flex:1;background:#fff;border-radius:14px;padding:10px;text-align:center;box-shadow:0 4px 14px rgba(2,106,121,.10)}
+.hud-box .label{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.hud-box .value{font-family:'Sora';font-weight:800;font-size:20px;color:var(--teal)}
+.pbar{height:8px;background:#dcebeb;border-radius:99px;overflow:hidden;margin-bottom:16px}
+.pbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal2),var(--amber));border-radius:99px;transition:width .4s}
+.qcard{background:#fff;border-radius:24px;padding:34px 28px;box-shadow:0 18px 50px rgba(2,106,121,.16)}
+.draft{display:flex;gap:10px;align-items:flex-start;background:#eef6f6;border-radius:14px;padding:14px 16px;margin-bottom:18px;font-size:14.5px;line-height:1.6;color:var(--ink)}
+.draft .tag{flex-shrink:0;background:var(--teal);color:#fff;font-size:11.5px;font-weight:800;letter-spacing:.06em;padding:5px 12px;border-radius:999px;margin-top:1px}
+.q{font-family:'Sora';font-weight:800;font-size:19px;margin-bottom:20px;text-align:center}
+.opts{display:grid;gap:10px}
+.opt{background:#f2f8f8;border:2px solid #e2efef;border-radius:14px;padding:15px;font-size:15.5px;font-weight:600;cursor:pointer;transition:all .2s;color:var(--ink);line-height:1.5;text-align:left}
+.opt:hover:not(.disabled){border-color:var(--teal2);transform:translateY(-1px)}
+.opt.disabled{cursor:default;opacity:.8}
+.opt.correct{background:#e5f6ec;border-color:#2e9e5b;color:#14532d;font-weight:700}
+.opt.wrong{background:#fdecec;border-color:#d64545;color:#7a1f1f}
+.feedback{display:none;margin-top:18px;border-radius:14px;padding:16px;font-size:14.5px;line-height:1.65;text-align:left}
+.feedback.show{display:block}
+.feedback.good{background:#e5f6ec;border:1px solid #bfe6cd}
+.feedback.bad{background:#fdf3e3;border:1px solid #f0d9a8}
+#nb{text-align:center}
+#nb .btn{margin-top:16px;font-size:15px;padding:13px 36px}
+#stars{font-size:40px;margin:10px 0;letter-spacing:6px}
+#finalScore{font-family:'Sora';font-weight:800;font-size:26px;color:var(--teal);margin:6px 0}
+@media (prefers-reduced-motion:reduce){.pbar i{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div id="startScreen" class="panel">
+    <div class="emoji-big">🤝</div>
+    <h2>The Meeting</h2>
+    <p>You are IN the meeting. <b>Choose the RIGHT chunk for the moment.</b></p>
+    <p>Eight scenes, one meeting arc: open → join → align → steer → close. The distractors are grammatically fine — the trap is <b>judgment</b>: too blunt, too passive, or the right chunk at the WRONG moment.</p>
+    <div class="rules"><span>🤝 8 scenes</span><span>+10 per round</span><span>🔥 streak bonus</span></div>
+    <button class="btn" onclick="startGame()">START ▶</button>
+  </div>
+
+  <div id="gameScreen" class="hidden">
+    <div class="hud">
+      <div class="hud-box"><div class="label">Round</div><div class="value" id="qnum">1/8</div></div>
+      <div class="hud-box"><div class="label">Score</div><div class="value" id="score">0</div></div>
+      <div class="hud-box"><div class="label">Streak</div><div class="value" id="streak">0</div></div>
+    </div>
+    <div class="pbar"><i id="pfill"></i></div>
+    <div class="qcard">
+      <div class="draft"><span class="tag">⚡ Situation</span><span id="draft"></span></div>
+      <p class="q">Choose the right chunk for the moment:</p>
+      <div class="opts" id="opts"></div>
+      <div class="feedback" id="fb"></div>
+      <div id="nb"></div>
+    </div>
+  </div>
+
+  <div id="endScreen" class="panel hidden">
+    <div class="emoji-big" id="endEmoji">🏆</div>
+    <h2>Meeting adjourned!</h2>
+    <div id="stars">⭐⭐⭐</div>
+    <div id="finalScore">0 points</div>
+    <p id="endMsg"></p>
+    <button class="btn" onclick="startGame()" style="margin-top:14px">Play again ↻</button>
+  </div>
+
+</div>
+<script>
+const R=[
+ {sit:'🎬 Scene 1 — You chair the 9 AM meeting. Five people are seated, laptops open, all looking at you. Open it.',
+  opts:["Let's get started.",'Hello everyone. Let\u2019s start the meeting now, please.','So… shall we begin, maybe?'],ok:0,
+  pat:"Let's get started.",key:'The default spoken opener. "Let\u2019s start the meeting" is textbooky; the trailing "maybe?" sounds unsure. Confidence opens the room.'},
+ {sit:'🎬 Scene 2 — You opened. Now walk the room to the first topic: the sales numbers.',
+  opts:['First on the agenda, the sales numbers.',"Let's circle back to the sales numbers.",'So, action items: sales numbers.'],ok:0,
+  pat:'First on the agenda,',key:'Wrong-moment chunks: "circle back" PARKS a topic that already came up — it can\u2019t open one. "Action items" is the CLOSE, not the opener.'},
+ {sit:'🎬 Scene 3 — Two colleagues are trading ideas fast, with small pauses. You want to ADD a quick fact — not stop the flow.',
+  opts:['Can I jump in here?','Sorry to interrupt, but…','(say nothing — wait for someone to ask you)'],ok:0,
+  pat:'Can I jump in here?',key:'#3 ASKS PERMISSION to add — the right tone when pauses exist. #4 apologizes for cutting in: with a pause available, the apology sounds dramatic. And silence? That\u2019s the Spanish-L1 trap.'},
+ {sit:'🎬 Scene 4 — A senior manager is speaking WITHOUT pausing. You just spotted an urgent error she missed — flag it NOW.',
+  opts:['Sorry to interrupt, but…','Can I jump in here?','Wait — that\u2019s wrong!'],ok:0,
+  pat:'Sorry to interrupt, but…',key:'No pause = no permission to ask. #4 apologizes for CUTTING IN — the middle path: not silence, not the blunt "wait, that\u2019s wrong!". Two tones, not synonyms.'},
+ {sit:'🎬 Scene 5 — You just explained a complex new process. Half the room looks lost. What do you check FIRST?',
+  opts:['Any questions so far?','Are we aligned on this?','Does that make sense?'],ok:0,
+  pat:'Any questions so far?',key:'Comprehension ≠ agreement. Check they FOLLOWED (#5) before checking they AGREE (#6) — nobody can agree on what they didn\u2019t follow. And never "does that make sense?": 54% of professionals hear it as condescending.'},
+ {sit:'🎬 Scene 6 — Your proposal landed: everyone followed it and asked smart questions. Now you need a DECISION before the room empties.',
+  opts:['Are we aligned on this?','Any questions so far?','So we\u2019re good, right?'],ok:0,
+  pat:'Are we aligned on this?',key:'#6 checks AGREEMENT — do we agree? #5 was the comprehension check; we\u2019re past that. And "so we\u2019re good, right?" locks in nothing — the professional agreement check does.'},
+ {sit:'🎬 Scene 7 — Topic one is done. Time to move to the budget.',
+  opts:['Moving on to the budget.',"Let's circle back to the budget.",'To wrap up, the budget.'],ok:0,
+  pat:'Moving on to…',key:'#7 moves FORWARD to a new topic. "Circle back" needs a PARKED topic — you can\u2019t circle back to something that never came up. "To wrap up" closes the meeting, not a topic.'},
+ {sit:'🎬 Scene 8 — The meeting is ending. Decisions were made. Land it so nothing evaporates.',
+  opts:['So, action items: Ana sends the report by Friday.','To wrap up, great progress today. Thanks, bye!','Okay everyone, that\u2019s everything — bye!'],ok:0,
+  pat:'So, action items:',key:'The landing sequence is "To wrap up," + "So, action items:". A signal alone lets the meeting evaporate. The unwritten rule: every item gets an OWNER and a DEADLINE — Ana · report · Friday.'}
+];
+const MAXSCORE=80; /* 8 rounds ×10 */
+let order,qi,score,streak,answered;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function setHUD(){
+  document.getElementById('qnum').textContent=(qi+1)+'/'+R.length;
+  document.getElementById('score').textContent=score;
+  document.getElementById('streak').textContent=streak+(streak>=3?' 🔥':'');
+}
+function startGame(){
+  order=shuffle([...Array(R.length).keys()]);qi=0;score=0;streak=0;
+  document.getElementById('startScreen').classList.add('hidden');
+  document.getElementById('endScreen').classList.add('hidden');
+  document.getElementById('gameScreen').classList.remove('hidden');
+  showQ();
+}
+function showQ(){
+  answered=false;
+  const r=R[order[qi]];
+  setHUD();
+  document.getElementById('pfill').style.width=(qi/R.length*100)+'%';
+  document.getElementById('draft').textContent=r.sit;
+  const idx=shuffle([0,1,2]);
+  const box=document.getElementById('opts');box.innerHTML='';
+  idx.forEach(k=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=r.opts[k];
+    b.onclick=()=>pick(k===r.ok,b);box.appendChild(b);
+  });
+  const fb=document.getElementById('fb');fb.className='feedback';fb.innerHTML='';
+  document.getElementById('nb').innerHTML='';
+}
+function pick(ok,el){
+  if(answered)return;answered=true;
+  const r=R[order[qi]],fb=document.getElementById('fb');
+  document.querySelectorAll('.opt').forEach(o=>o.classList.add('disabled'));
+  if(ok){
+    const pts=10+streak*5;score+=pts;streak++;el.classList.add('correct');
+    fb.className='feedback show good';
+    fb.innerHTML=`✅ <strong>+${pts} — pro choice!</strong><br>🔑 <strong>${r.pat}:</strong> ${r.key}`;
+  }else{
+    streak=0;el.classList.add('wrong');
+    document.querySelectorAll('.opt').forEach(o=>{if(o.textContent===r.opts[r.ok])o.classList.add('correct');});
+    fb.className='feedback show bad';
+    fb.innerHTML=`❌ The pro choice: <strong>“${r.opts[r.ok]}”</strong><br>🔑 <strong>${r.pat}:</strong> ${r.key}`;
+  }
+  setHUD();
+  document.getElementById('nb').innerHTML=`<button class="btn" onclick="nextQ()">${qi+1<R.length?'Next situation →':'See results 🏆'}</button>`;
+}
+function nextQ(){qi++;if(qi>=R.length)endGame();else showQ();}
+function endGame(){
+  document.getElementById('gameScreen').classList.add('hidden');
+  document.getElementById('endScreen').classList.remove('hidden');
+  const pct=score/MAXSCORE;let stars,emoji,msg;
+  if(pct>=1.2){stars='⭐⭐⭐';emoji='🏆';msg='Outstanding! You run a meeting like a native facilitator!';}
+  else if(pct>=0.8){stars='⭐⭐⭐';emoji='🎉';msg='Excellent! Your meeting instincts are getting sharp!';}
+  else if(pct>=0.5){stars='⭐⭐';emoji='💪';msg='Good! Replay the playbook, then run the meeting again!';}
+  else{stars='⭐';emoji='📚';msg='Keep training! Review the chunks and try again.';}
+  document.getElementById('endEmoji').textContent=emoji;
+  document.getElementById('stars').textContent=stars;
+  document.getElementById('finalScore').textContent=score+' points';
+  document.getElementById('endMsg').textContent=msg;
+}
+</script>
+</body>
+</html>

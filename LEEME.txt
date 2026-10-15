@@ -1,94 +1,91 @@
-MÓDULO 1 · LECCIÓN 1 — "Think in Chunks"
-Chunks for Managing Professional Discourse Flow
+MÓDULO 1 · LECCIÓN 2 — "The Meeting"
+Chunks for Active Meeting Participation (ELEGIR)
 Diseño espectacular mobile + desktop — PARA EL CURSO DE INGLÉS
 Versión PLANA (sin carpetas): todos los archivos van sueltos
 en la RAÍZ del repo sounding-natural
 ================================================================
 
-LOS 10 CHUNKS (validados pedagógicamente — reporte:
-workspace/research_notes/m1l1-revalidation-20261015/report.md.
-Veredicto: 10 KEEP, 0 REPLACE):
+LOS 10 CHUNKS (validados pedagógicamente, 2026-10-15 —
+reporte en research_notes/m1l2-meetings-validation-20261015/):
 
-🔀 OPEN & SHIFT (cambiar de tema)
-1. By the way,            "By the way, the client call was moved to Thursday."          [spoken]
-2. Speaking of which,     "Speaking of which, the budget was approved this morning."   [spoken]
-3. That reminds me,       "That reminds me, I need to send you the revised timeline." [spoken]
+🟢 OPEN — "start the meeting"
+1. Let's get started.          "Let's get started. Good morning, everyone."      [spoken]
+2. First on the agenda,        "First on the agenda, the sales numbers."        [spoken]
 
-🔍 CLARIFY (aclarar / reparar)
-4. In other words,        "In other words, we deliver the first phase by Friday."      [both]
-5. As a matter of fact,   "As a matter of fact, we have already started the rollout."  [spoken]
-6. As I was saying,       "As I was saying, the proposal needs one more review."      [spoken — repair/resumption move]
+🟢 JOIN IN — "enter the conversation" (🧭 portable: fires ANYWHERE)
+3. Can I jump in here?         "Can I jump in here?"                            [spoken — ask to ADD]
+4. Sorry to interrupt, but…    "Sorry to interrupt, but this is urgent."        [spoken — apologize, CUT IN]
 
-⚖️ WEIGH IN (posicionarse antes de opinar)
-7. On the other hand,     "On the other hand, the risks are real and worth weighing."  [both — 🔁 spiral]
-8. To be honest,          "To be honest, I think the deadline is too tight."           [spoken — 🔁 spiral]
-9. For what it's worth,   "For what it's worth, the competitor launched a new product."[spoken — 🔁 spiral]
+🟡 CHECK ALIGNMENT — "the judgment call" (🧭 portable)
+5. Any questions so far?       "Any questions so far?"                          [spoken — checks COMPREHENSION]
+6. Are we aligned on this?     "Are we aligned on this?"                        [spoken — checks AGREEMENT]
 
-🏁 CLOSE (cerrar)
-10. At the end of the day, "At the end of the day, the client decides."                [spoken — ONE per conversation]
+🟢 STEER — "direct the flow"
+7. Moving on to…               "Moving on to the budget."                       [spoken]
+8. Let's circle back to that.  "Let's circle back to that after lunch."        [spoken — promise the return]
 
-PEDAGOGÍA DE LA LECCIÓN (está dentro de las tarjetas):
-· Función primero, traducción después: cada tarjeta dice QUÉ HACE
-  (shift / reformulate / hedge / close) antes de la glosa.
-· Frequency = safety: sin estos marcadores, el inglés suena
-  telegráfico — la ubicuidad es la licencia del registro.
-· El clúster weigh-in (7/8/9) es la habilidad central + nota
-  🔁 SPIRAL-FORWARD en cada tarjeta: "L1 builds the positioning
-  reflex — Module 3's opinion chunks supply the payloads."
-· #10 lleva nota de cliché: uno por conversación, nunca apilados.
-· #6 etiquetado como repair/resumption move.
+🟢 CLOSE — "land with actions"
+9. To wrap up,                 "To wrap up, great progress today."              [spoken]
+10. So, action items:          "So, action items: Ana sends the report by Friday."  [spoken — owner + deadline]
+
+CLAVES PEDAGÓGICAS DE LA LECCIÓN:
+- #5 ≠ #6: "comprehension ≠ agreement" — verifica que ENTENDIERON (#5)
+  antes de verificar que ESTÁN DE ACUERDO (#6). Nunca "Does that
+  make sense?" (el 54% de profesionales lo percibe condescendiente).
+- #3 ≠ #4: dos TONOS, no sinónimos — #3 pide permiso para AGREGAR,
+  #4 se disculpa por CORTAR. El camino medio entre el silencio
+  (trampa del hispanohablante) y la interrupción brusca.
+- Cierre con acción: secuencia "To wrap up," + "So, action items:"
+  y la regla no escrita: cada item lleva DUEÑO + FECHA, o se evapora.
 
 QUÉ HAY EN EL PAQUETE (27 archivos: 5 HTML + hero + 20 MP3 + LEEME)
 ------------------------------------------------------------
-m1l1-hero.png          🖼️ Imagen de introducción de la lección
-                       ("Think in Chunks", negro/oro premium).
+m1l2-hero.png          🖼️ Imagen de introducción de la lección
+                       ("The Meeting", negro/dorado premium).
                        REEMPLAZA el video introductorio en Rise:
                        borra el bloque de video y pon esta imagen.
 
-m1l1-carousel.html     🎤 Discover: coverflow de los 10 chunks.
-                       Cada tarjeta lidera con la FUNCIÓN
-                       (⚡ DOES), pastillas de momento
-                       (🔀 🔍 ⚖️ 🏁), ejemplo + glosa, ▶ natural
-                       y 🐢 slow, notas 🔁 spiral en 7/8/9 y caja
-                       de cliché en el chunk 10.
-                       Para embeber en Rise en "Discover".
+m1l2-carousel.html     🤝 Discover: coverflow de los 10 chunks.
+                       Cada tarjeta tiene ▶ natural y 🐢 slow,
+                       etiqueta de momento (🟢/🟡), 🧭 portable
+                       moves en 3/4/5/6, caja de advertencia en 5
+                       ("does that make sense?") y en 8 (promete
+                       el retorno). Para embeber en Rise en "Discover".
 
-m1l1-listen.html       🕵️ Ear Detective: 10 rondas. Escuchas una
+m1l2-listen.html       🕵️ Ear Detective: 10 rondas. Escuchas una
                        frase e identificas QUÉ chunk es.
-                       Botones 🐇 Natural / 🐢 Slow, puntaje + racha,
-                       pantalla de estrellas.
+                       Botones 🐇 Natural / 🐢 Slow, puntaje + racha.
                        Para embeber en Rise en "Listen".
 
-m1l1-play.html         🌊 "The Flow": el juego insignia (8 mini-
-                       diálogos profesionales con un hueco o un
-                       chunk mal usado). Eliges el chunk que mantiene
-                       el flujo. Los distractores rotan: chunk de
-                       función equivocada / modismo casual / versión
-                       telegráfica sin marcador. Las explicaciones
-                       enseñan la FUNCIÓN.
+m1l2-play.html         🤝 "The Meeting": el juego insignia (8 escenas,
+                       un arco de reunión real: open → join → align →
+                       steer → close). Eliges el chunk con el JUICIO
+                       exacto. Los distractores son gramaticalmente
+                       perfectos — la trampa es el momento: demasiado
+                       brusco, demasiado pasivo o el chunk correcto
+                       en el MOMENTO incorrecto (#5 vs #6, #3 vs #4).
                        Para embeber en Rise en "Play".
 
-m1l1-speak.html        🎙️ 3 misiones con TEMPORIZADOR (60s / 75s /
-                       90s): (1) update con shifts, (2) reformular +
-                       reparar tras interrupción, (3) posicionarse y
-                       cerrar con el veredicto. Respuestas modelo
-                       VERBATIM (▶/🐢) + checklist de flujo.
+m1l2-speak.html        🎙️ 3 misiones con cronómetro (60s/60s/90s):
+                       (1) abrir la reunión, (2) intervenir + chequear
+                       alineación, (3) cerrar con acciones. Respuestas
+                       modelo (▶/🐢) + checklist de judgment calls.
                        Para "Speak".
 
-m1l1-quiz.html         🏆 The Final Exam: 8 preguntas de transferencia
-                       (identificación de función, wrong-function
-                       spot, calibración del weigh-in, conciencia del
-                       cliché, repair move, telegram-like spot,
-                       spiral-forward). Pantalla de estrellas.
-                       Para embeber en Rise en "Prove".
+m1l2-quiz.html         🏆 The Final Exam: 8 preguntas de transferencia
+                       (situaciones nuevas). Ataca: el tono de
+                       interrupción (#3 vs #4), comprensión-vs-acuerdo
+                       (#5 vs #6), el cierre con acción y el chunk
+                       correcto en el momento incorrecto.
+                       Pantalla de estrellas. Para embeber en Rise en "Prove".
 
-m1l1-audio-01.mp3  (10 audios VELOCIDAD NATURAL,
-   ...              uno por chunk, con tu voz "me" aprobada)
-m1l1-audio-10.mp3
+m1l2-audio-01.mp3  (10 audios VELOCIDAD NATURAL,
+   ...              uno por chunk, con tu voz "me")
+m1l2-audio-10.mp3
 
-m1l1-audio-01-slow.mp3  (10 audios LENTOS,
+m1l2-audio-01-slow.mp3  (10 audios LENTOS,
    ...                   misma voz, 20% más despacio)
-m1l1-audio-10-slow.mp3
+m1l2-audio-10-slow.mp3
 
 CÓMO SUBIRLO — EN DOS TANDAS (no las mezcles)
 ----------------------------------------------
@@ -96,14 +93,14 @@ TANDA 1 (archivos pequeños — si algo falla, se ve aquí):
 1. Ve a github.com/Rickhazur/sounding-natural
 2. Add file → Upload files.
 3. Arrastra estos 7 sueltos (no en carpeta):
-   m1l1-carousel.html, m1l1-listen.html, m1l1-play.html,
-   m1l1-speak.html, m1l1-quiz.html, m1l1-hero.png, LEEME.txt
+   m1l2-carousel.html, m1l2-listen.html, m1l2-play.html,
+   m1l2-speak.html, m1l2-quiz.html, m1l2-hero.png, LEEME.txt
 4. Commit changes.
 
 TANDA 2 (los 20 audios):
 5. Repite Add file → Upload files.
-6. Arrastra los 20 MP3 sueltos (m1l1-audio-01.mp3 …
-   m1l1-audio-10-slow.mp3).
+6. Arrastra los 20 MP3 sueltos (m1l2-audio-01.mp3 …
+   m1l2-audio-10-slow.mp3).
 7. Commit changes. Espera 2 minutos.
 
 CÓMO EMBEBER EN RISE
@@ -111,23 +108,22 @@ CÓMO EMBEBER EN RISE
 En Rise, bloque Multimedia → Embed, pega uno de estos códigos:
 
 Carousel (Discover):
-<iframe src="https://rickhazur.github.io/sounding-natural/m1l1-carousel.html" width="100%" height="800" frameborder="0" style="border-radius:16px;" title="Think in Chunks — Discover"></iframe>
+<iframe src="https://rickhazur.github.io/sounding-natural/m1l2-carousel.html" width="100%" height="800" frameborder="0" style="border-radius:16px;" title="The Meeting — Discover"></iframe>
 
 Listen (Ear Detective):
-<iframe src="https://rickhazur.github.io/sounding-natural/m1l1-listen.html" width="100%" height="720" frameborder="0" style="border-radius:16px;" title="Ear Detective — Think in Chunks"></iframe>
+<iframe src="https://rickhazur.github.io/sounding-natural/m1l2-listen.html" width="100%" height="720" frameborder="0" style="border-radius:16px;" title="Ear Detective — The Meeting"></iframe>
 
-Play (The Flow):
-<iframe src="https://rickhazur.github.io/sounding-natural/m1l1-play.html" width="100%" height="800" frameborder="0" style="border-radius:16px;" title="The Flow game"></iframe>
+Play (The Meeting):
+<iframe src="https://rickhazur.github.io/sounding-natural/m1l2-play.html" width="100%" height="800" frameborder="0" style="border-radius:16px;" title="The Meeting game"></iframe>
 
-Speak (90-second update):
-<iframe src="https://rickhazur.github.io/sounding-natural/m1l1-speak.html" width="100%" height="1060" frameborder="0" style="border-radius:16px;" title="Your 90-second update"></iframe>
+Speak (Run the meeting):
+<iframe src="https://rickhazur.github.io/sounding-natural/m1l2-speak.html" width="100%" height="1060" frameborder="0" style="border-radius:16px;" title="Run the meeting — speak"></iframe>
 
 Quiz (The Final Exam):
-<iframe src="https://rickhazur.github.io/sounding-natural/m1l1-quiz.html" width="100%" height="750" frameborder="0" style="border-radius:16px;" title="Final quiz — Think in Chunks"></iframe>
+<iframe src="https://rickhazur.github.io/sounding-natural/m1l2-quiz.html" width="100%" height="750" frameborder="0" style="border-radius:16px;" title="Final quiz — The Meeting"></iframe>
 
 LOS AUDIOS
 ----------
 20 audios con tu voz "me" aprobada: 10 en velocidad natural
 y 10 lentos (misma voz, 20% más despacio, mismo tono).
 El estudiante elige: 🐇 Natural o 🐢 Slow.
-Los 10 naturales fueron transcritos y verificados 10/10.
