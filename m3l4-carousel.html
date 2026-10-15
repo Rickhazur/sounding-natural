@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pattern Carousel — Module 3 · Lesson 4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#026A79;--teal2:#49ADB3;--amber:#E8AA28;--ink:#123C46;--muted:#5b6f75;--bg:#f2f8f8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);padding:34px 12px;min-height:100vh}
+.head{text-align:center;margin-bottom:8px;max-width:720px;margin-left:auto;margin-right:auto}
+.eyebrow{font-family:'Sora';font-weight:800;font-size:13px;letter-spacing:.22em;color:var(--amber);margin-bottom:8px}
+.head h2{font-family:'Sora';font-weight:800;font-size:clamp(24px,5vw,34px);color:var(--teal)}
+.head .sub{font-size:16px;font-weight:600;color:var(--ink);margin-top:6px}
+.head .thread{color:var(--muted);font-size:14px;margin-top:6px;font-style:italic}
+.rulebox{max-width:720px;margin:14px auto 6px;background:#fdf0d3;border:2px solid var(--amber);border-radius:16px;padding:14px 18px;font-size:14.5px;line-height:1.6;color:#6b4a00;text-align:center;box-shadow:0 6px 18px rgba(232,170,40,.20)}
+.counter{text-align:center;font-family:'Sora';font-weight:800;color:var(--teal);font-size:14px;letter-spacing:.12em;margin:14px 0 4px}
+.counter b{color:var(--amber);font-size:18px}
+.car{position:relative;max-width:920px;margin:0 auto;min-height:500px;touch-action:pan-y}
+.car-track{position:relative;height:460px;perspective:1400px}
+.pcard{position:absolute;top:0;left:50%;width:min(400px,88%);margin-left:min(-200px,-44%);background:#fff;border-radius:24px;padding:30px 28px 26px;box-shadow:0 18px 50px rgba(2,106,121,.18);border-top:6px solid var(--teal);transition:transform .55s cubic-bezier(.34,1.3,.5,1),opacity .45s;will-change:transform}
+.pcard .num{position:absolute;top:-19px;left:24px;background:var(--amber);color:#3a2a05;font-family:'Sora';font-weight:800;font-size:14px;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;box-shadow:0 4px 12px rgba(232,170,40,.5)}
+.pcard h3{font-family:'Sora';font-size:22px;font-weight:800;margin:8px 0 4px;color:var(--teal)}
+.reg{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);background:#e8f4f5;border-radius:999px;padding:4px 12px;margin-bottom:12px}
+.reg.warn{color:#8a5a00;background:#fdf0d3}
+.grp{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;color:#fff;background:linear-gradient(135deg,var(--teal),#0396a8);border-radius:999px;padding:4px 12px;margin:0 6px 12px 0}
+.bridge{background:#eaf6ff;border:1px solid #bcdcf5;border-radius:12px;padding:10px 13px;font-size:13px;line-height:1.55;color:#0d4a63;margin-bottom:12px}
+.warnbox{background:#fdf0d3;border:1px solid #f0d9a8;border-radius:12px;padding:10px 13px;font-size:13px;line-height:1.55;color:#7a5200;margin-bottom:12px}
+.portable{background:#e6f5f4;border:1px solid #bfe3e2;border-radius:12px;padding:10px 13px;font-size:13px;line-height:1.55;color:#026A79;margin-bottom:12px}
+.formula{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.formula b{background:#e8f4f5;color:var(--teal);font-size:12.5px;padding:6px 11px;border-radius:8px;font-weight:700}
+.formula b.hot{background:#fdf0d3;color:#8a5a00}
+.ex{background:#f6fbfb;border-left:4px solid var(--amber);border-radius:0 12px 12px 0;padding:12px 14px;font-size:16px;line-height:1.55;margin-bottom:12px}
+.ex mark{background:#ffe9ad;padding:1px 5px;border-radius:5px;font-weight:700}
+.key{font-size:13.5px;color:var(--muted);line-height:1.6;margin-bottom:16px}
+.audiodock{display:flex;align-items:center;gap:12px;background:#eef6f6;border-radius:14px;padding:10px 14px}
+.abtn{width:48px;height:48px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--teal),#0396a8);color:#fff;font-size:18px;cursor:pointer;flex-shrink:0;box-shadow:0 5px 14px rgba(2,106,121,.35);display:grid;place-items:center;transition:transform .15s}
+.abtn:active{transform:scale(.92)}
+.abtn .eq{display:none;align-items:flex-end;gap:2.5px;height:18px}
+.abtn .eq i{width:3.5px;background:#fff;border-radius:2px;animation:eq .7s ease-in-out infinite}
+.abtn .eq i:nth-child(2){animation-delay:.15s}.abtn .eq i:nth-child(3){animation-delay:.3s}.abtn .eq i:nth-child(4){animation-delay:.45s}
+@keyframes eq{0%,100%{height:6px}50%{height:17px}}
+.abtn.playing .tr{display:none}.abtn.playing .eq{display:flex}
+.abtn.slowbtn{width:40px;height:40px;font-size:16px;background:linear-gradient(135deg,#49ADB3,#026A79)}
+.abtn.slowbtn.playing{outline:3px solid var(--amber);outline-offset:2px}
+.audiodock span{font-size:13px;font-weight:600;color:var(--muted)}
+.car-nav{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:8px}
+.arrow{width:52px;height:52px;border-radius:50%;border:none;background:#fff;box-shadow:0 6px 18px rgba(2,106,121,.18);font-size:20px;cursor:pointer;color:var(--teal);transition:all .2s}
+.arrow:hover{background:var(--teal);color:#fff;transform:scale(1.08)}
+.dots{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-width:320px}
+.dots button{width:11px;height:11px;border-radius:50%;border:none;background:#c4d8da;cursor:pointer;transition:all .25s;padding:0}
+.dots button.on{background:var(--amber);transform:scale(1.4)}
+.hint{text-align:center;color:var(--muted);font-size:12.5px;margin-top:12px}
+@media (max-width:560px){.car{min-height:540px}.car-track{height:500px}.arrow{width:44px;height:44px}}
+@media (prefers-reduced-motion:reduce){.pcard{transition:none}.abtn .eq i{animation:none}}
+</style>
+</head>
+<body>
+<div class="head">
+  <div class="eyebrow">MODULE 3 · LESSON 4 · DISCOVER</div>
+  <h2>🎉 The Mixer</h2>
+  <p class="sub">Chunks for Small Talk and Building Rapport</p>
+  <p class="thread">Warmth is a skill — open with genuine curiosity, keep the music playing, and leave every conversation on a high.</p>
+</div>
+<div class="rulebox">🤝 <b>The Mixer rule:</b> react before you ask — warmth lives in the reaction, and open questions keep the conversation flowing.</div>
+<div class="counter"><b id="cnum">1</b> / 10</div>
+<div class="car"><div class="car-track" id="track"></div></div>
+<div class="car-nav">
+  <button class="arrow" onclick="move(-1)" aria-label="Previous pattern">←</button>
+  <div class="dots" id="dots"></div>
+  <button class="arrow" onclick="move(1)" aria-label="Next pattern">→</button>
+</div>
+<p class="hint">👆 drag or swipe &nbsp;·&nbsp; ← → keys work too</p>
+
+<script>
+const PATTERNS=[
+ {n:'01',name:'How’s your week going?',grp:'BREAK THE ICE',reg:'🗣️ Spoken',warn:false,bridge:null,portable:null,warnbox:null,f:['How’s','+','your week going?'],hot:[0],ex:'Hey, Sara — how’s your week going?',key:'The professional upgrade over dead “How are you? / Fine” — bounded warmth: it invites a real answer without demanding one.'},
+ {n:'02',name:'What brings you here?',grp:'BREAK THE ICE',reg:'🗣️ Spoken',warn:false,bridge:null,portable:null,warnbox:null,f:['What brings','+','you here?'],hot:[0],ex:'Hi, I’m Daniel — what brings you here?',key:'Warm TONE matters — delivered flat, this sounds interrogative; delivered soft, with a smile, it becomes a genuine invitation.'},
+ {n:'03',name:'Did you come far?',grp:'BREAK THE ICE',reg:'🗣️ Spoken',warn:false,bridge:null,portable:null,warnbox:null,f:['Did you come','+','far?'],hot:[1],ex:'Did you come far? I flew in from Medellín this morning.',key:'OPEN BEATS CLOSED — a yes/no question is a conversation-killer; this one invites a whole travel story.'},
+ {n:'04',name:'How long have you been at…?',grp:'FIND COMMON GROUND',reg:'🗣️ Spoken',warn:false,bridge:null,portable:null,warnbox:null,f:['How long have you been','+','at…?'],hot:[0],ex:'How long have you been at Nortel?',key:'An open career question — interest in the PERSON, not just the title. Works for companies, cities, hobbies, anything.'},
+ {n:'05',name:'That sounds fascinating — how did you get into it?',grp:'KEEP IT FLOWING',reg:'🗣️ Spoken',warn:false,bridge:null,portable:null,warnbox:null,f:['That sounds fascinating','+','—','+','how did you get into it?'],hot:[0,3],ex:'You run a podcast studio? That sounds fascinating — how did you get into it?',key:'REACT BEFORE YOU ASK — warmth lives in the reaction. Statement + question beats bare interrogation every time.'},
+ {n:'06',name:'What do you enjoy most about…?',grp:'KEEP IT FLOWING',reg:'🗣️ Spoken',warn:false,bridge:null,portable:null,warnbox:null,f:['What do you enjoy','+','most about…?'],hot:[0],ex:'What do you enjoy most about teaching?',key:'The model open question — positive, and unanswerable with yes/no. Impossible to kill the conversation with it.'},
+ {n:'07',name:'It’s great to finally meet you in person.',grp:'CREATE WARMTH',reg:'🗣️ Spoken',warn:false,bridge:null,portable:'🧭 Portable move — fires at the GREETING moment, not mid-conversation. “Finally” implies prior emails or calls: only for people you’ve interacted with remotely, never strangers.',warnbox:null,f:['It’s great to','+','finally meet you','+','in person.'],hot:[1],ex:'Lucía, it’s great to finally meet you in person!',key:'Instant warmth at hello — the word “finally” says this meeting mattered to you. Spend it in the first ten seconds, then let it do its work.'},
+ {n:'08',name:'I’ve been looking forward to meeting you.',grp:'CREATE WARMTH',reg:'⚖️ Both — spoken & written',warn:false,bridge:null,portable:null,warnbox:null,f:['I’ve been','+','looking forward to','+','meeting you.'],hot:[1],ex:'I’ve been looking forward to meeting you — your team’s work is impressive.',key:'Warm, sincere, and impossible to get caught out on — unlike empty flattery, this one is always true when you say it.'},
+ {n:'09',name:'I won’t keep you any longer —',grp:'EXIT GRACEFULLY',reg:'🗣️ Spoken',warn:false,bridge:null,portable:null,warnbox:null,f:['I won’t keep you','+','any longer —','+','it was great chatting.'],hot:[0,2],ex:'Well, I know you’re busy, so I won’t keep you any longer — it was great chatting.',key:'THE THREE-PART EXIT — signal (“I know you’re busy”) + transition (“I won’t keep you any longer”) + forward look (“it was great chatting”). Leave every conversation on a high.'},
+ {n:'10',name:'Let’s grab a coffee sometime.',grp:'EXIT GRACEFULLY',reg:'🗣️ Spoken',warn:true,bridge:null,portable:null,warnbox:'⚠️ “Sometime” with no follow-up is an empty ritual. The pro move is concreteness: “Are you free next week?” — or don’t say it.',f:['Let’s grab','+','a coffee','+','sometime.'],hot:[1],ex:'This was lovely — let’s grab a coffee sometime.',key:'The friendly closer — honest only when you mean it. Without a concrete follow-up it’s just politeness on autopilot.'}
+];
+const track=document.getElementById('track'),dots=document.getElementById('dots'),cnum=document.getElementById('cnum');
+let cur=0;
+PATTERNS.forEach((p,i)=>{
+  const d=document.createElement('div');d.className='pcard';
+  d.innerHTML=`<span class="num">${i+1}</span><h3>${p.name}</h3>
+   <span class="grp">${p.grp}</span><span class="reg${p.warn?' warn':''}">${p.reg}</span>
+   ${p.bridge?`<div class="bridge">${p.bridge}</div>`:''}${p.warnbox?`<div class="warnbox">${p.warnbox}</div>`:''}${p.portable?`<div class="portable">${p.portable}</div>`:''}
+   <div class="formula">${p.f.map((x,j)=>`<b class="${p.hot.includes(j)?'hot':''}">${x}</b>`).join('')}</div>
+   <div class="ex">“${p.ex}”</div><p class="key">🔑 ${p.key}</p>
+   <div class="audiodock"><button class="abtn" aria-label="Hear ${p.name}"><span class="tr">▶</span><span class="eq"><i></i><i></i><i></i><i></i></span></button><button class="abtn slowbtn" aria-label="Hear ${p.name} slowly">🐢</button><span>▶ natural · 🐢 slow</span></div>`;
+  d.querySelector('.abtn').onclick=(e)=>{e.stopPropagation();toggleAudio('m3l4-audio-'+p.n+'.mp3',d.querySelector('.abtn'));};
+  d.querySelector('.slowbtn').onclick=(e)=>{e.stopPropagation();toggleAudio('m3l4-audio-'+p.n+'-slow.mp3',d.querySelector('.slowbtn'))};
+  track.appendChild(d);
+  const b=document.createElement('button');b.setAttribute('aria-label','Go to pattern '+(i+1));b.onclick=()=>go(i);dots.appendChild(b);
+});
+/* audio: one at a time */
+let curA=null,curB=null;
+function toggleAudio(file,btn){
+  if(curA&&!curA.paused&&curB===btn){curA.pause();btn.classList.remove('playing');return;}
+  if(curA){curA.pause();if(curB)curB.classList.remove('playing');}
+  curA=new Audio(file);curB=btn;btn.classList.add('playing');
+  curA.onended=()=>btn.classList.remove('playing');
+  curA.onerror=()=>{btn.classList.remove('playing');};
+  curA.play().catch(()=>btn.classList.remove('playing'));
+}
+/* coverflow */
+function layout(){
+  const cards=track.children;
+  for(let i=0;i<cards.length;i++){
+    const off=i-cur,c=cards[i],ax=Math.min(Math.abs(off),3);
+    c.style.transform=`translateX(${off*62}%) scale(${1-ax*0.14}) translateZ(${-ax*160}px) rotateY(${off===0?0:(off>0?-14:14)}deg)`;
+    c.style.opacity=ax>2?0:(1-ax*0.28);
+    c.style.zIndex=20-ax;
+    c.style.pointerEvents=Math.abs(off)>2?'none':'auto';
+  }
+  [...dots.children].forEach((d,i)=>d.classList.toggle('on',i===cur));
+  cnum.textContent=cur+1;
+}
+function go(i){cur=(i+PATTERNS.length)%PATTERNS.length;layout();}
+function move(d){go(cur+d);}
+layout();
+/* swipe + keys */
+let sx=null;
+track.addEventListener('pointerdown',e=>{sx=e.clientX;});
+window.addEventListener('pointerup',e=>{if(sx===null)return;const dx=e.clientX-sx;sx=null;if(Math.abs(dx)>40)move(dx<0?1:-1);});
+window.addEventListener('keydown',e=>{if(e.key==='ArrowRight')move(1);if(e.key==='ArrowLeft')move(-1);});
+</script>
+</body>
+</html>

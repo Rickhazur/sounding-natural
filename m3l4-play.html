@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🍸 The Mixer — Module 3 · Lesson 4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#026A79;--teal2:#49ADB3;--amber:#E8AA28;--ink:#123C46;--muted:#5b6f75;--bg:#f2f8f8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);padding:30px 14px;min-height:100vh;display:flex;justify-content:center}
+.wrap{width:100%;max-width:640px}
+.hidden{display:none!important}
+.panel{background:#fff;border-radius:26px;padding:44px 34px;text-align:center;box-shadow:0 18px 50px rgba(2,106,121,.16)}
+.emoji-big{font-size:64px;margin-bottom:14px}
+.panel h2{font-family:'Sora';font-weight:800;font-size:clamp(24px,5vw,32px);color:var(--teal);margin-bottom:10px}
+.panel p{color:var(--muted);line-height:1.65;margin-bottom:8px}
+.panel .rules{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:18px 0 26px}
+.panel .rules span{background:#eef6f6;color:var(--teal);font-weight:700;font-size:13px;padding:8px 15px;border-radius:999px}
+.btn{display:inline-block;background:linear-gradient(135deg,var(--teal),#0396a8);color:#fff;font-family:'Sora';font-weight:800;font-size:16px;padding:15px 44px;border:none;border-radius:999px;cursor:pointer;box-shadow:0 10px 26px rgba(2,106,121,.35);transition:transform .2s}
+.btn:hover{transform:translateY(-2px) scale(1.02)}
+.hud{display:flex;gap:10px;margin-bottom:12px}
+.hud-box{flex:1;background:#fff;border-radius:14px;padding:10px;text-align:center;box-shadow:0 4px 14px rgba(2,106,121,.10)}
+.hud-box .label{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.hud-box .value{font-family:'Sora';font-weight:800;font-size:20px;color:var(--teal)}
+.pbar{height:8px;background:#dcebeb;border-radius:99px;overflow:hidden;margin-bottom:16px}
+.pbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal2),var(--amber));border-radius:99px;transition:width .4s}
+.qcard{background:#fff;border-radius:24px;padding:34px 28px;box-shadow:0 18px 50px rgba(2,106,121,.16)}
+.draft{display:flex;gap:10px;align-items:flex-start;background:#eef6f6;border-radius:14px;padding:14px 16px;margin-bottom:18px;font-size:14.5px;line-height:1.6;color:var(--ink)}
+.draft .tag{flex-shrink:0;background:var(--teal);color:#fff;font-size:11.5px;font-weight:800;letter-spacing:.06em;padding:5px 12px;border-radius:999px;margin-top:1px}
+.q{font-family:'Sora';font-weight:800;font-size:19px;margin-bottom:20px;text-align:center}
+.opts{display:grid;gap:10px}
+.opt{background:#f2f8f8;border:2px solid #e2efef;border-radius:14px;padding:15px;font-size:15.5px;font-weight:600;cursor:pointer;transition:all .2s;color:var(--ink);line-height:1.5;text-align:left}
+.opt:hover:not(.disabled){border-color:var(--teal2);transform:translateY(-1px)}
+.opt.disabled{cursor:default;opacity:.8}
+.opt.correct{background:#e5f6ec;border-color:#2e9e5b;color:#14532d;font-weight:700}
+.opt.wrong{background:#fdecec;border-color:#d64545;color:#7a1f1f}
+.feedback{display:none;margin-top:18px;border-radius:14px;padding:16px;font-size:14.5px;line-height:1.65;text-align:left}
+.feedback.show{display:block}
+.feedback.good{background:#e5f6ec;border:1px solid #bfe6cd}
+.feedback.bad{background:#fdf3e3;border:1px solid #f0d9a8}
+.kitpill{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid #dbe9e9;border-radius:999px;padding:5px 8px 5px 12px;font-size:12.5px;font-weight:600;color:var(--ink);margin-top:10px}
+.kitpill .n{color:var(--teal);font-weight:800}
+.kitpill button{width:30px;height:30px;border-radius:50%;border:none;background:var(--teal);color:#fff;font-size:12px;cursor:pointer;display:grid;place-items:center}
+.kitpill button.playing{background:var(--amber);color:#3a2a05}
+#nb{text-align:center}
+#nb .btn{margin-top:16px;font-size:15px;padding:13px 36px}
+#stars{font-size:40px;margin:10px 0;letter-spacing:6px}
+#finalScore{font-family:'Sora';font-weight:800;font-size:26px;color:var(--teal);margin:6px 0}
+@media (prefers-reduced-motion:reduce){.pbar i{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div id="startScreen" class="panel">
+    <div class="emoji-big">🍸</div>
+    <h2>The Mixer</h2>
+    <p>Eight conference-mixer moments. Your job: <b>OPEN</b> the conversation, <b>WARM</b> it up, and <b>KEEP</b> it flowing — then exit like a pro.</p>
+    <p>Each round gives you 3 chunks. Only one keeps the conversation alive. The traps: <b>too personal/intrusive</b> (you pry), <b>too business-y too soon</b> (you pitch), or <b>conversation-killer</b> (a closed yes/no question).</p>
+    <div class="rules"><span>🍸 8 rounds</span><span>+10 per round</span><span>🔥 streak bonus</span></div>
+    <button class="btn" onclick="startGame()">START ▶</button>
+  </div>
+
+  <div id="gameScreen" class="hidden">
+    <div class="hud">
+      <div class="hud-box"><div class="label">Round</div><div class="value" id="qnum">1/8</div></div>
+      <div class="hud-box"><div class="label">Score</div><div class="value" id="score">0</div></div>
+      <div class="hud-box"><div class="label">Streak</div><div class="value" id="streak">0</div></div>
+    </div>
+    <div class="pbar"><i id="pfill"></i></div>
+    <div class="qcard">
+      <div class="draft"><span class="tag">🍸 Mixer moment</span><span id="draft"></span></div>
+      <p class="q">Pick the chunk that opens, warms, or keeps the conversation going:</p>
+      <div class="opts" id="opts"></div>
+      <div class="feedback" id="fb"></div>
+      <div id="nb"></div>
+    </div>
+  </div>
+
+  <div id="endScreen" class="panel hidden">
+    <div class="emoji-big" id="endEmoji">🏆</div>
+    <h2>You worked the room!</h2>
+    <div id="stars">⭐⭐⭐</div>
+    <div id="finalScore">0 points</div>
+    <p id="endMsg"></p>
+    <button class="btn" onclick="startGame()" style="margin-top:14px">Play again ↻</button>
+  </div>
+
+</div>
+<script>
+const R=[
+ {sit:'🍸 Round 1 — Conference coffee break. Maya, a fellow attendee from Toronto, is standing alone by the coffee table looking around the room. Nobody has talked to her yet. Break the ice warmly — zero pressure.',
+  opts:["How's your week going?","Are you here for the morning sessions?","What's your company's headcount this year?"],ok:0,c:1,
+  pat:'How\u2019s your week going?',key:'OPEN vs CLOSED: a good opener gives the conversation OXYGEN. \u201cHow\u2019s your week going?\u201d is warm, low-stakes, and invites a real answer. \u201cAre you here for the morning sessions?\u201d (conversation-killer) dies with a \u201cyes.\u201d \u201cWhat\u2019s your headcount?\u201d (too business-y) turns hello into a spreadsheet.'},
+ {sit:'🍸 Round 2 — James, the keynote speaker on digital supply chains, is grabbing a coffee before his session. He looks relaxed and approachable. Show curiosity about what drew him here.',
+  opts:["What brings you here?","How old were you when you got your first executive job?","What's your speaker fee?"],ok:0,c:2,
+  pat:'What brings you here?',key:'OPEN vs CLOSED + curiosity: \u201cWhat brings you here?\u201d invites his story and motive — and it flatters gently (someone wants to hear him). \u201cHow old were you\u2026?\u201d (too personal/intrusive) is prying to a stranger. \u201cWhat\u2019s your speaker fee?\u201d (too business-y) turns a human moment into a transaction.'},
+ {sit:'🍸 Round 3 — Sofia, standing by the window with her coffee, mentions she flew in this morning. The conversation needs a friendly, easy question that can lead somewhere.',
+  opts:["Did you come far?","Do you live alone in your apartment here?","Is this your first conference?"],ok:0,c:3,
+  pat:'Did you come far?',key:'OPEN vs CLOSED: travel talk is the safest currency at a mixer — \u201cdid you come far?\u201d naturally leads to travel stories and jet-lag jokes. \u201cDo you live alone?\u201d (too personal/intrusive) is creepy to a near-stranger. \u201cIs this your first conference?\u201d (conversation-killer) is another yes/no dead end.'},
+ {sit:'🍸 Round 4 — You meet David, who works in product at a fintech startup. Show genuine interest in HIM — personal enough to be warm, professional enough to be safe.',
+  opts:["How long have you been at\u2026?","What are your revenue numbers this quarter?","Do you like your job?"],ok:0,c:4,
+  pat:'How long have you been at\u2026?',key:'WARMTH WITH BOUNDARIES: asking about his world (his tenure, his team) says \u201cI\u2019m interested in you\u201d without crossing any line. \u201cWhat are your revenue numbers?\u201d (too business-y) interrogates the company, not the person. \u201cDo you like your job?\u201d (conversation-killer) is a yes/no question — nowhere to go.'},
+ {sit:'🍸 Round 5 — Roberto just told you he left marine biology to become a UX designer. That\u2019s a story worth chasing — react to what he said BEFORE you ask anything.',
+  opts:["That sounds fascinating \u2014 how did you get into it?","How much did you earn as a marine biologist?","Can you introduce me to your CEO?"],ok:0,c:5,
+  pat:'That sounds fascinating \u2014 how did you get into it?',key:'REACT-BEFORE-ASK: the reaction (\u201cthat sounds fascinating\u201d) validates him first — it proves you were LISTENING. Then the open question invites his story. A question with no reaction feels like an interrogation. \u201cHow much did you earn?\u201d (too personal) prys at his wallet. \u201cIntroduce me to your CEO\u201d (too business-y) uses him as a ladder.'},
+ {sit:'🍸 Round 6 — Elena, the event host, mentions she organizes community hackathons on weekends. Go deeper — ask the kind of question that unlocks someone\u2019s passion, not just a fact.',
+  opts:["What do you enjoy most about\u2026?","Do you have kids? Who watches them while you're here?","Is it hard to organize them?"],ok:0,c:6,
+  pat:'What do you enjoy most about\u2026?',key:'OPEN vs CLOSED: \u201cwhat do you enjoy most\u2026?\u201d invites passion and stories — people light up when you ask what they LOVE. \u201cDo you have kids? Who watches them?\u201d (too personal/intrusive) is a boundary invasion disguised as small talk. \u201cIs it hard to organize?\u201d (conversation-killer) gets \u201ca bit\u201d and dies.'},
+ {sit:'🍸 Round 7 — Priya, your client\u2019s account lead, walks up. You\u2019ve exchanged emails for months but never met. Warmth first, business LATER.',
+  opts:["It's great to finally meet you in person.","So, about the contract renewal \u2014 can we discuss terms now?","Did you get my email?"],ok:0,c:7,
+  pat:'It\u2019s great to finally meet you in person.',key:'WARMTH WITH BOUNDARIES: naming the moment (\u201cfinally meet you in person\u201d) says the relationship matters beyond the deal. Business can wait five minutes. \u201cCan we discuss terms now?\u201d (too business-y too soon) burns the human moment for a contract. \u201cDid you get my email?\u201d (conversation-killer) is transactional and closed.'},
+ {sit:'🍸 Round 8 — Your chat with Tom, a fellow attendee, is winding down. He\u2019s glancing around the room. Leave the conversation open-ended — never vanish, never hold him hostage.',
+  opts:["I won't keep you any longer \u2014","Are you staying at the Hilton too? Maybe we could get a drink later\u2026","Okay then. Bye."],ok:0,c:9,
+  pat:'I won\u2019t keep you any longer \u2014',key:'THE EXIT AS SKILL: a graceful exit honors BOTH people — naming it (\u201cI won\u2019t keep you any longer\u201d) means nobody feels ditched, and the open ending leaves the door ajar for later. \u201cMaybe we could get a drink later\u2026\u201d (too personal) puts pressure on a polite goodbye. \u201cOkay then. Bye.\u201d (conversation-killer) slams the door — abrupt and cold.'}
+];
+const MAXSCORE=80; /* 8 rounds ×10 */
+let order,qi,score,streak,answered;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function setHUD(){
+  document.getElementById('qnum').textContent=(qi+1)+'/'+R.length;
+  document.getElementById('score').textContent=score;
+  document.getElementById('streak').textContent=streak+(streak>=3?' 🔥':'');
+}
+function startGame(){
+  order=shuffle([...Array(R.length).keys()]);qi=0;score=0;streak=0;
+  document.getElementById('startScreen').classList.add('hidden');
+  document.getElementById('endScreen').classList.add('hidden');
+  document.getElementById('gameScreen').classList.remove('hidden');
+  showQ();
+}
+function showQ(){
+  answered=false;
+  const r=R[order[qi]];
+  setHUD();
+  document.getElementById('pfill').style.width=(qi/R.length*100)+'%';
+  document.getElementById('draft').textContent=r.sit;
+  const idx=shuffle([0,1,2]);
+  const box=document.getElementById('opts');box.innerHTML='';
+  idx.forEach(k=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=r.opts[k];
+    b.onclick=()=>pick(k===r.ok,b);box.appendChild(b);
+  });
+  const fb=document.getElementById('fb');fb.className='feedback';fb.innerHTML='';
+  document.getElementById('nb').innerHTML='';
+}
+function pick(ok,el){
+  if(answered)return;answered=true;
+  const r=R[order[qi]],fb=document.getElementById('fb');
+  const nn='0'+r.c;
+  const audioRow='<span class="kitpill"><span class="n">#'+r.c+'</span> model audio <button data-a="m3l4-audio-'+nn+'.mp3" aria-label="Play chunk '+r.c+'">▶</button><button data-a="m3l4-audio-'+nn+'-slow.mp3" aria-label="Play chunk '+r.c+' slowly">🐢</button></span>';
+  document.querySelectorAll('.opt').forEach(o=>o.classList.add('disabled'));
+  if(ok){
+    const pts=10+streak*5;score+=pts;streak++;el.classList.add('correct');
+    fb.className='feedback show good';
+    fb.innerHTML='✅ <strong>+'+pts+' — pro choice!</strong><br>🔑 <strong>'+r.pat+':</strong> '+r.key+'<br>'+audioRow;
+  }else{
+    streak=0;el.classList.add('wrong');
+    document.querySelectorAll('.opt').forEach(o=>{if(o.textContent===r.opts[r.ok])o.classList.add('correct');});
+    fb.className='feedback show bad';
+    fb.innerHTML='❌ The pro choice: <strong>“'+r.opts[r.ok]+'”</strong><br>🔑 <strong>'+r.pat+':</strong> '+r.key+'<br>'+audioRow;
+  }
+  setHUD();
+  document.getElementById('nb').innerHTML='<button class="btn" onclick="nextQ()">'+(qi+1<R.length?'Next round →':'See results 🏆')+'</button>';
+}
+function nextQ(){qi++;if(qi>=R.length)endGame();else showQ();}
+function endGame(){
+  document.getElementById('gameScreen').classList.add('hidden');
+  document.getElementById('endScreen').classList.remove('hidden');
+  const pct=score/MAXSCORE;let stars,emoji,msg;
+  if(pct>=1.2){stars='⭐⭐⭐';emoji='🏆';msg='Outstanding! You work the room like a natural networker!';}
+  else if(pct>=0.8){stars='⭐⭐⭐';emoji='🎉';msg='Excellent! Warm, curious, and never awkward!';}
+  else if(pct>=0.5){stars='⭐⭐';emoji='💪';msg='Good! Replay the mixer and sharpen your small talk!';}
+  else{stars='⭐';emoji='📚';msg='Keep training! Review the chunks and mingle again.';}
+  document.getElementById('endEmoji').textContent=emoji;
+  document.getElementById('stars').textContent=stars;
+  document.getElementById('finalScore').textContent=score+' points';
+  document.getElementById('endMsg').textContent=msg;
+}
+/* ▶ natural / 🐢 slow — audio filenames generated dynamically */
+let curA=null,curB=null;
+function playBtn(b){
+  const label=b.textContent;
+  if(curA&&!curA.paused&&curB===b){curA.pause();b.classList.remove('playing');b.textContent=label;return;}
+  if(curA){curA.pause();if(curB){curB.classList.remove('playing');curB.textContent=curB._label;}}
+  curA=new Audio(b.dataset.a);curB=b;b._label=label;b.classList.add('playing');b.textContent='⏸';
+  curA.onended=()=>{b.classList.remove('playing');b.textContent=label;};
+  curA.play().catch(()=>{b.classList.remove('playing');b.textContent=label;});
+}
+document.addEventListener('click',e=>{const b=e.target.closest('button[data-a]');if(b)playBtn(b);});
+</script>
+</body>
+</html>

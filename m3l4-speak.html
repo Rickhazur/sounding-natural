@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Work the Room — Speak · Module 3 · Lesson 4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#026A79;--teal2:#49ADB3;--amber:#E8AA28;--ink:#123C46;--muted:#5b6f75;--bg:#f2f8f8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);padding:34px 16px}
+.wrap{max-width:820px;margin:0 auto}
+.banner{background:linear-gradient(135deg,#0b5560,#026A79);color:#fff;border-radius:20px;padding:26px;text-align:center;margin-bottom:8px}
+.banner h2{font-family:'Sora';font-weight:800;font-size:clamp(19px,4vw,26px)}
+.banner p{color:#cfe3e6;font-size:14px;margin-top:6px}
+.sub{text-align:center;color:var(--muted);font-size:14px;margin:18px 0;font-weight:600}
+.bank{background:#e9f5f5;border-radius:14px;padding:16px;margin-bottom:18px}
+.bank p.bt{font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;text-align:center}
+.bank ol{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:6px 14px}
+.bank li{font-size:13px;color:var(--ink);background:#fff;border-radius:8px;padding:7px 10px}
+.bank li b.n{color:var(--teal);margin-right:6px}
+.mission{background:#fff;border-radius:18px;padding:22px;border:1px solid #e9f2f2;border-top:4px solid var(--teal);box-shadow:0 8px 26px rgba(2,106,121,.09);margin-bottom:18px}
+.mhead{display:flex;gap:16px;align-items:flex-start;margin-bottom:12px}
+.mnum{flex-shrink:0;width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--amber),#d1941a);color:#3a2a05;font-family:'Sora';font-weight:800;font-size:19px;display:grid;place-items:center}
+.mhead h4{font-family:'Sora';font-size:16px;margin-bottom:4px}
+.mhead .tag{font-size:13px;color:var(--muted);font-weight:600}
+.scenebox{background:#e9f5f5;border-left:4px solid var(--teal2);border-radius:0 12px 12px 0;padding:12px 14px;font-size:14px;line-height:1.65;color:var(--ink);margin-bottom:12px}
+.prep{margin-bottom:12px}
+.prep p.ph{font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
+.prep ul{list-style:none}
+.prep li{font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:7px;padding-left:22px;position:relative}
+.prep li::before{content:'\2713';position:absolute;left:0;color:var(--teal);font-weight:700}
+.prep code{background:#eef6f6;color:var(--teal);padding:2px 8px;border-radius:6px;font-weight:700;font-size:13px}
+.modelbox{background:#eef6f6;border-radius:12px;padding:14px;margin-bottom:12px}
+.modelbox .mlab{font-size:12.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
+.modelbox .mtext{font-size:14.5px;line-height:1.75;color:var(--ink);font-style:italic;margin-bottom:10px}
+.modelbox .mtext b.chunk{color:var(--teal);font-style:normal}
+.kit{display:flex;flex-wrap:wrap;gap:8px}
+.kitpill{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid #dbe9e9;border-radius:999px;padding:5px 8px 5px 12px;font-size:12.5px;font-weight:600;color:var(--ink)}
+.kitpill .n{color:var(--teal);font-weight:800}
+.kitpill button{width:30px;height:30px;border-radius:50%;border:none;background:var(--teal);color:#fff;font-size:12px;cursor:pointer;display:grid;place-items:center}
+.kitpill button.playing{background:var(--amber);color:#3a2a05}
+.turn{border:2px dashed var(--teal2);border-radius:12px;padding:14px;margin-bottom:12px;background:#fff}
+.turn p{font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:10px}
+.turn p b{color:var(--ink)}
+.timerrow{display:flex;align-items:center;gap:14px}
+.tbtn{background:var(--teal);color:#fff;border:none;border-radius:999px;padding:10px 20px;font-family:'Sora';font-weight:700;font-size:14px;cursor:pointer}
+.tbtn:active{transform:scale(.97)}
+.tdisp{font-family:'Sora';font-weight:800;font-size:22px;color:var(--teal)}
+.minicheck{background:#fdf3e3;border:1px solid #f0d9a8;border-radius:12px;padding:14px}
+.minicheck p{font-size:13px;font-weight:700;color:#7a5a1a;margin-bottom:10px}
+.minicheck label{display:flex;gap:10px;align-items:flex-start;background:#fff;border-radius:10px;padding:10px 13px;margin-bottom:8px;font-size:13.5px;cursor:pointer;color:var(--ink)}
+.minicheck label:last-child{margin-bottom:0}
+.minicheck input{width:19px;height:19px;accent-color:var(--teal);margin-top:1px;flex-shrink:0}
+.final{background:linear-gradient(135deg,#0b5560,#026A79);color:#fff;border-radius:20px;padding:26px;margin-top:20px}
+.final h3{font-family:'Sora';font-size:18px;margin-bottom:10px}
+.final p{color:#dff0f2;font-size:14.5px;line-height:1.7}
+.final p b{color:#fff}
+@media (max-width:560px){.mhead{flex-direction:column;gap:10px}.bank ol{grid-template-columns:1fr}.timerrow{flex-direction:column;align-items:flex-start}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="banner">
+    <h2>🎙️ Work the Room — your turn to speak</h2>
+    <p>Three mixer moments. Record yourself (phone voice memo is fine), then compare with the model. Warmth is the grade.</p>
+  </div>
+  <p class="sub">Open with warmth, keep it flowing with curiosity, exit like a pro — that's the whole lesson in one line.</p>
+
+  <div class="bank">
+    <p class="bt">Your 10 chunks — the only tools you may use</p>
+    <ol>
+      <li><b class="n">#1</b> How's your week going?</li>
+      <li><b class="n">#2</b> What brings you here?</li>
+      <li><b class="n">#3</b> Did you come far?</li>
+      <li><b class="n">#4</b> How long have you been at…?</li>
+      <li><b class="n">#5</b> That sounds fascinating — how did you get into it?</li>
+      <li><b class="n">#6</b> What do you enjoy most about…?</li>
+      <li><b class="n">#7</b> It's great to finally meet you in person.</li>
+      <li><b class="n">#8</b> I've been looking forward to meeting you.</li>
+      <li><b class="n">#9</b> I won't keep you any longer —</li>
+      <li><b class="n">#10</b> Let's grab a coffee sometime.</li>
+    </ol>
+  </div>
+
+  <!-- MISSION 1 -->
+  <div class="mission">
+    <div class="mhead"><span class="mnum">1</span><div>
+      <h4>🎯 The Opener — break the ice</h4>
+      <p class="tag">60 seconds · conference coffee break</p>
+    </div></div>
+    <div class="scenebox"><b>The scene.</b> You're at the pre-conference coffee break. A stranger stands alone by the coffee table, name badge half-hidden. Nobody has talked to her yet. Your job: walk up, break the ice, find <b>common ground</b>, and leave her glad you came over. Use chunks <b>#1–#4</b>.</div>
+    <div class="prep">
+      <p class="ph">Prepare — your chunk plan</p>
+      <ul>
+        <li>Open light, never loaded — <code>#1 How's your week going?</code> is warm and pressure-free; it invites a real answer.</li>
+        <li>Invite their story — <code>#2 What brings you here?</code> beats any yes/no question.</li>
+        <li>Find shared ground — <code>#3 Did you come far?</code> and <code>#4 How long have you been at…?</code> — travel and tenure are universal, never intrusive.</li>
+        <li>Your goal is common ground, not their life story. Two minutes of warmth beats ten minutes of questions.</li>
+      </ul>
+    </div>
+    <div class="modelbox">
+      <p class="mlab">📖 Model answer — 60 seconds</p>
+      <p class="mtext">“Excuse me — <b class="chunk">How's your week going?</b> I hope the coffee's better than yesterday's. I'm Ricardo — I'm on the digital side. <b class="chunk">What brings you here?</b> Are you following the marketing track or the product one? <b class="chunk">Did you come far?</b> I flew in from Bogotá, so the jet lag and I are best friends this week. And <b class="chunk">How long have you been at…?</b> — sorry, I didn't catch where you work! Ah — fantastic. Which session are you most excited about this afternoon?”</p>
+      <div class="kit">
+        <span class="kitpill" data-n="01"><span class="n">#1</span> icebreaker</span>
+        <span class="kitpill" data-n="02"><span class="n">#2</span> invitation</span>
+        <span class="kitpill" data-n="03"><span class="n">#3</span> travel talk</span>
+        <span class="kitpill" data-n="04"><span class="n">#4</span> tenure</span>
+      </div>
+    </div>
+    <div class="turn">
+      <p><b>🎯 Your turn.</b> Hit the timer, say your 60-second opener out loud — walk up, break the ice, find common ground. Then listen back.</p>
+      <div class="timerrow"><button class="tbtn" data-secs="60">⏱ Start 60s</button><span class="tdisp">1:00</span></div>
+    </div>
+    <div class="minicheck">
+      <p>✅ Self-check — did I…</p>
+      <label><input type="checkbox"> open light (#1) — no interrogation, no pitch, no yes/no question?</label>
+      <label><input type="checkbox"> invite their story (#2) instead of talking about myself?</label>
+      <label><input type="checkbox"> find at least one shared ground — travel (#3) or tenure (#4)?</label>
+      <label><input type="checkbox"> react to what they said before asking the next thing?</label>
+      <label><input type="checkbox"> sound genuinely curious — not like I'm scanning the room for someone better?</label>
+    </div>
+  </div>
+
+  <!-- MISSION 2 -->
+  <div class="mission">
+    <div class="mhead"><span class="mnum">2</span><div>
+      <h4>🎯 Keep It Flowing — genuine interest</h4>
+      <p class="tag">60 seconds · the conversation is rolling</p>
+    </div></div>
+    <div class="scenebox"><b>The scene.</b> The ice is broken. Your new acquaintance, Roberto, just mentioned he <b>left marine biology to become a UX designer</b>. The conversation has oxygen — your job: keep it flowing with <b>react-before-ask</b> and open questions. Use chunks <b>#5–#6</b>.</div>
+    <div class="prep">
+      <p class="ph">Prepare — your chunk plan</p>
+      <ul>
+        <li>React BEFORE you ask — <code>#5 That sounds fascinating — how did you get into it?</code> The reaction proves you were listening; the question invites his story.</li>
+        <li>Never fire a cold question — reaction first, curiosity second. Questions without reaction feel like interrogations.</li>
+        <li>Go deeper with <code>#6 What do you enjoy most about…?</code> — passion questions beat fact questions.</li>
+        <li>Chase THEIR interesting detail — don't change the subject to you.</li>
+      </ul>
+    </div>
+    <div class="modelbox">
+      <p class="mlab">📖 Model answer — 60 seconds</p>
+      <p class="mtext">“Wait — marine biology to UX design? <b class="chunk">That sounds fascinating — how did you get into it?</b> I mean, from studying whales to studying users — there has to be a story there. And <b class="chunk">What do you enjoy most about…?</b> — sorry, about the design work — there must be a favorite part that makes the career switch worth it. See, that's what I love about these mixers: everyone has a story behind the job title. What's the one thing from the ocean that you still miss?”</p>
+      <div class="kit">
+        <span class="kitpill" data-n="05"><span class="n">#5</span> react-before-ask</span>
+        <span class="kitpill" data-n="06"><span class="n">#6</span> passion question</span>
+      </div>
+    </div>
+    <div class="turn">
+      <p><b>🎯 Your turn.</b> Hit the timer, keep the conversation flowing out loud — react, then ask. Sixty seconds of genuine interest.</p>
+      <div class="timerrow"><button class="tbtn" data-secs="60">⏱ Start 60s</button><span class="tdisp">1:00</span></div>
+    </div>
+    <div class="minicheck">
+      <p>✅ Self-check — did I…</p>
+      <label><input type="checkbox"> react (#5) BEFORE asking — not jump straight to the question?</label>
+      <label><input type="checkbox"> ask an open question (#6) that invites a story, not a fact?</label>
+      <label><input type="checkbox"> follow THEIR interesting detail instead of steering to me?</label>
+      <label><input type="checkbox"> avoid yes/no questions entirely?</label>
+      <label><input type="checkbox"> make them feel heard — would they enjoy answering?</label>
+    </div>
+  </div>
+
+  <!-- MISSION 3 -->
+  <div class="mission">
+    <div class="mhead"><span class="mnum">3</span><div>
+      <h4>🎯 The Full Encounter — capstone</h4>
+      <p class="tag">90 seconds · warm intro → common ground → graceful exit</p>
+    </div></div>
+    <div class="scenebox"><b>The scene.</b> Last coffee break of the day. By the window stands Priya — your client's account lead, someone you've emailed for <b>months but never met</b>. Your job: the full encounter in 90 seconds — a warm intro, common ground, genuine interest, and a <b>graceful three-part exit</b>: <i>signal</i> (#9) → <i>positive close</i> → <i>future bridge</i> (#10). Use chunks across all five moments.</div>
+    <div class="prep">
+      <p class="ph">Prepare — your chunk plan</p>
+      <ul>
+        <li>Intro with warmth — <code>#7 It's great to finally meet you in person.</code> or <code>#8 I've been looking forward to meeting you.</code> Name the moment.</li>
+        <li>Common ground — <code>#2 What brings you here?</code>, <code>#3 Did you come far?</code>, <code>#4 How long have you been at…?</code></li>
+        <li>Keep it flowing — <code>#5 That sounds fascinating — how did you get into it?</code> (react-before-ask) or <code>#6</code>.</li>
+        <li>Exit in three parts: <b>signal</b> (<code>#9 I won't keep you any longer —</code>) + <b>positive close</b> + <b>bridge</b> (<code>#10 Let's grab a coffee sometime.</code>). Never vanish mid-conversation, never hold them hostage.</li>
+      </ul>
+    </div>
+    <div class="modelbox">
+      <p class="mlab">📖 Model answer — 90 seconds</p>
+      <p class="mtext">“Hi, I'm Ricardo — <b class="chunk">It's great to finally meet you in person.</b> We've been on the same session mailing list for months, and I always wanted to put a face to the name. <b class="chunk">What brings you here?</b> Which track caught your eye? <b class="chunk">Did you come far?</b> And <b class="chunk">How long have you been at…?</b> — right, of course, the fintech world. <b class="chunk">That sounds fascinating — how did you get into it?</b> Product to client success is a rare move. Honestly, <b class="chunk">I've been looking forward to meeting you.</b> This has been great — but <b class="chunk">I won't keep you any longer —</b> I can see the next session is about to start. <b class="chunk">Let's grab a coffee sometime.</b> I'd love to hear how that launch turns out.”</p>
+      <div class="kit">
+        <span class="kitpill" data-n="07"><span class="n">#7</span> warmth</span>
+        <span class="kitpill" data-n="08"><span class="n">#8</span> anticipation</span>
+        <span class="kitpill" data-n="09"><span class="n">#9</span> exit signal</span>
+        <span class="kitpill" data-n="10"><span class="n">#10</span> bridge</span>
+      </div>
+    </div>
+    <div class="turn">
+      <p><b>🎯 Your turn.</b> This is the capstone — 90 seconds, all five moments, ending with the three-part exit. Hit the timer and work the room.</p>
+      <div class="timerrow"><button class="tbtn" data-secs="90">⏱ Start 90s</button><span class="tdisp">1:30</span></div>
+    </div>
+    <div class="minicheck">
+      <p>✅ Self-check — did I…</p>
+      <label><input type="checkbox"> introduce myself with warmth (#7 or #8) — naming the moment?</label>
+      <label><input type="checkbox"> find common ground (#2 / #3 / #4) before pitching anything?</label>
+      <label><input type="checkbox"> show genuine interest (#5 or #6) — react before ask?</label>
+      <label><input type="checkbox"> exit in all three parts — signal (#9), positive close, bridge (#10)?</label>
+      <label><input type="checkbox"> leave them smiling — would they say yes to that coffee?</label>
+    </div>
+  </div>
+
+  <div class="final">
+    <h3>🏆 Mission complete — small talk is a skill</h3>
+    <p>Three moments of the mixer, one thread running through all of them: <b>open with warmth</b> (<b>#1 · #2 · #3 · #4</b>), <b>keep it flowing with curiosity</b> (<b>#5 · #6</b>), and <b>exit like a pro — signal, close, bridge</b> (<b>#9 · #10</b>). Openers invite, questions deepen, exits preserve. The room is full of strangers until someone walks up warm. That's working the room — and now it's yours.</p>
+  </div>
+</div>
+<script>
+/* ▶ natural / 🐢 slow — audio filenames generated dynamically in JS */
+document.querySelectorAll('.kitpill[data-n]').forEach(p=>{
+  const n=p.dataset.n;
+  [['▶','m3l4-audio-'+n+'.mp3','Play chunk '+n],['🐢','m3l4-audio-'+n+'-slow.mp3','Play chunk '+n+' slowly']].forEach(([t,src,lab])=>{
+    const b=document.createElement('button');b.textContent=t;b.dataset.a=src;b.setAttribute('aria-label',lab);
+    p.appendChild(b);
+  });
+});
+let curA=null,curB=null;
+function playBtn(b){
+  const label=b.textContent;
+  if(curA&&!curA.paused&&curB===b){curA.pause();b.classList.remove('playing');b.textContent=label;return;}
+  if(curA){curA.pause();if(curB){curB.classList.remove('playing');curB.textContent=curB._label;}}
+  curA=new Audio(b.dataset.a);curB=b;b._label=label;b.classList.add('playing');b.textContent='⏸';
+  curA.onended=()=>{b.classList.remove('playing');b.textContent=label;};
+  curA.play().catch(()=>{b.classList.remove('playing');b.textContent=label;});
+}
+document.addEventListener('click',e=>{const b=e.target.closest('button[data-a]');if(b)playBtn(b);});
+document.querySelectorAll('.tbtn').forEach(btn=>{
+  const secs=parseInt(btn.dataset.secs,10);
+  const disp=btn.closest('.timerrow').querySelector('.tdisp');
+  const base='\u23f1 Start '+secs+'s';
+  const fmt=s=>Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
+  let iv=null,left=secs;disp.textContent=fmt(secs);
+  btn.onclick=()=>{
+    if(iv){clearInterval(iv);iv=null;btn.textContent=base;disp.textContent=fmt(secs);return;}
+    left=secs;btn.textContent='\u25a0 Stop';disp.textContent=fmt(left);
+    iv=setInterval(()=>{
+      left--;disp.textContent=fmt(left);
+      if(left<=0){clearInterval(iv);iv=null;disp.textContent='Done \u2705';btn.textContent='\u21ba Again';}
+    },1000);
+  };
+});
+</script>
+</body>
+</html>

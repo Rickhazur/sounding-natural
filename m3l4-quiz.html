@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Final Exam — The Mixer · Module 3 · Lesson 4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#026A79;--teal2:#49ADB3;--amber:#E8AA28;--ink:#123C46;--muted:#5b6f75;--bg:#f2f8f8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);padding:30px 14px;min-height:100vh;display:flex;justify-content:center}
+.wrap{width:100%;max-width:640px}
+.hidden{display:none!important}
+.panel{background:#fff;border-radius:26px;padding:44px 34px;text-align:center;box-shadow:0 18px 50px rgba(2,106,121,.16)}
+.emoji-big{font-size:64px;margin-bottom:14px}
+.panel h2{font-family:'Sora';font-weight:800;font-size:clamp(24px,5vw,32px);color:var(--teal);margin-bottom:10px}
+.panel p{color:var(--muted);line-height:1.65;margin-bottom:8px}
+.panel .rules{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:18px 0 26px}
+.panel .rules span{background:#eef6f6;color:var(--teal);font-weight:700;font-size:13px;padding:8px 15px;border-radius:999px}
+.btn{display:inline-block;background:linear-gradient(135deg,var(--teal),#0396a8);color:#fff;font-family:'Sora';font-weight:800;font-size:16px;padding:15px 44px;border:none;border-radius:999px;cursor:pointer;box-shadow:0 10px 26px rgba(2,106,121,.35);transition:transform .2s}
+.btn:hover{transform:translateY(-2px) scale(1.02)}
+.hud{display:flex;gap:10px;margin-bottom:12px}
+.hud-box{flex:1;background:#fff;border-radius:14px;padding:10px;text-align:center;box-shadow:0 4px 14px rgba(2,106,121,.10)}
+.hud-box .label{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.hud-box .value{font-family:'Sora';font-weight:800;font-size:20px;color:var(--teal)}
+.pbar{height:8px;background:#dcebeb;border-radius:99px;overflow:hidden;margin-bottom:16px}
+.pbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal2),var(--amber));border-radius:99px;transition:width .4s}
+.qcard{background:#fff;border-radius:24px;padding:34px 28px;box-shadow:0 18px 50px rgba(2,106,121,.16)}
+.draft{display:flex;gap:10px;align-items:flex-start;background:#eef6f6;border-radius:14px;padding:14px 16px;margin-bottom:18px;font-size:14.5px;line-height:1.6;color:var(--ink)}
+.draft .tag{flex-shrink:0;background:var(--teal);color:#fff;font-size:11.5px;font-weight:800;letter-spacing:.06em;padding:5px 12px;border-radius:999px;margin-top:1px}
+.opts{display:grid;gap:10px}
+.opt{background:#f2f8f8;border:2px solid #e2efef;border-radius:14px;padding:15px;font-size:15.5px;font-weight:600;cursor:pointer;transition:all .2s;color:var(--ink);line-height:1.5;text-align:left}
+.opt:hover:not(.disabled){border-color:var(--teal2);transform:translateY(-1px)}
+.opt.disabled{cursor:default;opacity:.8}
+.opt.correct{background:#e5f6ec;border-color:#2e9e5b;color:#14532d;font-weight:700}
+.opt.wrong{background:#fdecec;border-color:#d64545;color:#7a1f1f}
+.feedback{display:none;margin-top:18px;border-radius:14px;padding:16px;font-size:14.5px;line-height:1.65;text-align:left}
+.feedback.show{display:block}
+.feedback.good{background:#e5f6ec;border:1px solid #bfe6cd}
+.feedback.bad{background:#fdf3e3;border:1px solid #f0d9a8}
+#nb{text-align:center}
+#nb .btn{margin-top:16px;font-size:15px;padding:13px 36px}
+#stars{font-size:40px;margin:10px 0;letter-spacing:6px}
+#finalScore{font-family:'Sora';font-weight:800;font-size:26px;color:var(--teal);margin:6px 0}
+@media (prefers-reduced-motion:reduce){.pbar i{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div id="startScreen" class="panel">
+    <div class="emoji-big">🏆</div>
+    <h2>The Final Exam</h2>
+    <p>No more practice wheels. <b>New situations, same chunks — and the traps are all about WARMTH.</b></p>
+    <p>Eight transfer questions on small talk and rapport: open the conversation, keep it flowing with genuine reactions, and exit every chat gracefully. Beat the exam to unlock the next lesson.</p>
+    <div class="rules"><span>🏆 8 questions</span><span>+10 per answer</span><span>🔥 streak</span></div>
+    <button class="btn" onclick="startGame()">START ▶</button>
+  </div>
+
+  <div id="gameScreen" class="hidden">
+    <div class="hud">
+      <div class="hud-box"><div class="label">Question</div><div class="value" id="qnum">1/8</div></div>
+      <div class="hud-box"><div class="label">Score</div><div class="value" id="score">0</div></div>
+      <div class="hud-box"><div class="label">Streak</div><div class="value" id="streak">0</div></div>
+    </div>
+    <div class="pbar"><i id="pfill"></i></div>
+    <div class="qcard">
+      <div class="draft"><span class="tag">🏆 Situation</span><span id="draft"></span></div>
+      <div class="opts" id="opts"></div>
+      <div class="feedback" id="fb"></div>
+      <div id="nb"></div>
+    </div>
+  </div>
+
+  <div id="endScreen" class="panel hidden">
+    <div class="emoji-big" id="endEmoji">🏆</div>
+    <h2>Exam complete!</h2>
+    <div id="stars">⭐⭐⭐</div>
+    <div id="finalScore">0 points</div>
+    <p id="endMsg"></p>
+    <button class="btn" onclick="startGame()" style="margin-top:14px">Try again ↻</button>
+  </div>
+
+</div>
+<script>
+const Q=[
+ {sit:'You’re at a conference and want the conversation to FLOW. Which question OPENS it?',
+  opts:["How long have you been at Techno?","Do you work at Techno?","Is this your first conference?"],ok:0,
+  pat:"Open beats closed",key:'OPEN BEATS CLOSED: a yes/no question is a conversation-killer. “How long have you been at…?” can’t be answered with one word — it invites a story.'},
+ {sit:'Your new contact just said she designs board games. Give your follow-up REACT-FIRST warmth:',
+  opts:["That sounds fascinating — how did you get into it?","How did you get into board games?","So what do you do exactly?"],ok:0,
+  pat:"React before you ask",key:'REACT BEFORE YOU ASK: warmth lives in the reaction. “That sounds fascinating” first, THEN the question. Statement + question beats bare interrogation.'},
+ {sit:'Build the THREE-PART EXIT: signal + transition + forward look. Which line has all three?',
+  opts:["Well, I know you’re busy, so I won’t keep you any longer — it was great chatting.","Okay, I’ve got to run. Bye.","Sorry, I need to go. See you around."],ok:0,
+  pat:"The three-part exit",key:'Signal (“I know you’re busy”) + transition (“I won’t keep you any longer”) + forward look (“it was great chatting”). A clean exit leaves the door open — a rushed one slams it.'},
+ {sit:'You want to greet a new client WARM without empty flattery. Pick the safe line:',
+  opts:["I’ve been looking forward to meeting you.","Your company is the most incredible company on the planet.","Wow — you look nothing like your LinkedIn photo!"],ok:0,
+  pat:"Warmth without flattery",key:'“I’ve been looking forward to meeting you” is warm, sincere, and impossible to get caught out on. Exaggeration (“the most incredible on the planet”) rings hollow the second they test it.'},
+ {sit:'Where in the conversation does “It’s great to finally meet you in person” belong?',
+  opts:["The greeting moment — the first ten seconds.","Mid-conversation, when there’s a silence.","Right before you say goodbye."],ok:0,
+  pat:"Greeting-moment placement",key:'🧭 It’s a greeting move: it fires in the first ten seconds, not mid-conversation. Used later, “finally” sounds like you forgot you’d already met.'},
+ {sit:'You want to meet a contact again. Which follow-up is HONEST?',
+  opts:["Let’s grab a coffee sometime — are you free next week?","Let’s grab a coffee sometime.","We should totally hang out sometime."],ok:0,
+  pat:"“Sometime” honesty",key:'“Sometime” with no follow-up is an empty ritual. The pro move is concreteness: a real time turns small talk into a real meeting.'},
+ {sit:'Who can you say “It’s great to finally meet you in person” to?',
+  opts:["A client you’ve emailed with for months.","A stranger at the buffet line.","Someone whose name you just heard."],ok:0,
+  pat:"The “finally” constraint",key:'“Finally” implies prior emails or calls — it’s only for people you’ve interacted with remotely. Said to a stranger, it’s a bluff that collapses the moment they ask “have we spoken before?”'},
+ {sit:'You say “What brings you here?” to a guest. What makes it warm instead of interrogative?',
+  opts:["A warm tone and a smile — delivery is everything.","Saying it louder so they hear you clearly.","Adding “exactly” at the end: “What brings you here, exactly?”"],ok:0,
+  pat:"Tone of the question",key:'Warm TONE matters: delivered flat, “What brings you here?” sounds like a border interview. Soft, with a smile, it becomes a genuine invitation to share.'}
+];
+const MAXSCORE=80; /* 8 questions ×10 */
+let order,qi,score,streak,answered;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function setHUD(){
+  document.getElementById('qnum').textContent=(qi+1)+'/'+Q.length;
+  document.getElementById('score').textContent=score;
+  document.getElementById('streak').textContent=streak+(streak>=3?' 🔥':'');
+}
+function startGame(){
+  order=shuffle([...Array(Q.length).keys()]);qi=0;score=0;streak=0;
+  document.getElementById('startScreen').classList.add('hidden');
+  document.getElementById('endScreen').classList.add('hidden');
+  document.getElementById('gameScreen').classList.remove('hidden');
+  showQ();
+}
+function showQ(){
+  answered=false;
+  const r=Q[order[qi]];
+  setHUD();
+  document.getElementById('pfill').style.width=(qi/Q.length*100)+'%';
+  document.getElementById('draft').textContent=r.sit;
+  const idx=shuffle([0,1,2]);
+  const box=document.getElementById('opts');box.innerHTML='';
+  idx.forEach(k=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=r.opts[k];
+    b.onclick=()=>pick(k===r.ok,b);box.appendChild(b);
+  });
+  const fb=document.getElementById('fb');fb.className='feedback';fb.innerHTML='';
+  document.getElementById('nb').innerHTML='';
+}
+function pick(ok,el){
+  if(answered)return;answered=true;
+  const r=Q[order[qi]],fb=document.getElementById('fb');
+  document.querySelectorAll('.opt').forEach(o=>o.classList.add('disabled'));
+  if(ok){
+    const pts=10+streak*5;score+=pts;streak++;el.classList.add('correct');
+    fb.className='feedback show good';
+    fb.innerHTML=`✅ <strong>+${pts} — nailed it!</strong><br>🔑 <strong>${r.pat}:</strong> ${r.key}`;
+  }else{
+    streak=0;el.classList.add('wrong');
+    document.querySelectorAll('.opt').forEach(o=>{if(o.textContent===r.opts[r.ok])o.classList.add('correct');});
+    fb.className='feedback show bad';
+    fb.innerHTML=`❌ The correct answer: <strong>“${r.opts[r.ok]}”</strong><br>🔑 <strong>${r.pat}:</strong> ${r.key}`;
+  }
+  setHUD();
+  document.getElementById('nb').innerHTML=`<button class="btn" onclick="nextQ()">${qi+1<Q.length?'Next question →':'See results 🏆'}</button>`;
+}
+function nextQ(){qi++;if(qi>=Q.length)endGame();else showQ();}
+function endGame(){
+  document.getElementById('gameScreen').classList.add('hidden');
+  document.getElementById('endScreen').classList.remove('hidden');
+  const pct=score/MAXSCORE;let stars,emoji,msg;
+  if(pct>=1.2){stars='⭐⭐⭐';emoji='🏆';msg='Outstanding! You work a room like a professional!';}
+  else if(pct>=0.8){stars='⭐⭐⭐';emoji='🎉';msg='Excellent! Warm, open, and always graceful!';}
+  else if(pct>=0.5){stars='⭐⭐';emoji='💪';msg='Good! Review the chunks, then take the exam again!';}
+  else{stars='⭐';emoji='📚';msg='Keep training! Replay the mixer and try again.';}
+  document.getElementById('endEmoji').textContent=emoji;
+  document.getElementById('endMsg').textContent=msg;
+  document.getElementById('stars').textContent=stars;
+  document.getElementById('finalScore').textContent=score+' points';
+}
+</script>
+</body>
+</html>
