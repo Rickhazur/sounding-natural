@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Storyteller — Chunk Carousel</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0b0d;--card:#151518;--card2:#1b1b20;--gold:#E8AA28;--gold2:#f5c542;--ink:#f2f2f0;--mut:#9a9aa0;--line:#26262b;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:radial-gradient(1200px 600px at 50% -10%,#1a1408 0%,var(--bg) 60%);color:var(--ink);font-family:'Inter',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:28px 16px;}
+header{text-align:center;max-width:720px;margin-bottom:8px;}
+.kicker{color:var(--gold);letter-spacing:4px;font-size:12px;font-weight:600;text-transform:uppercase;}
+h1{font-family:'Sora',sans-serif;font-size:clamp(28px,5vw,44px);font-weight:800;margin:10px 0 4px;}
+h1 .g{color:var(--gold);}
+.sub{color:var(--mut);font-size:15px;}
+.stage{width:100%;max-width:640px;position:relative;margin-top:22px;}
+.viewport{overflow:hidden;border-radius:20px;}
+.track{display:flex;transition:transform .45s cubic-bezier(.22,.8,.3,1);}
+.card{flex:0 0 100%;background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:20px;padding:34px 30px 28px;min-height:430px;display:flex;flex-direction:column;}
+.card .num{color:var(--gold);font-family:'Sora';font-weight:700;font-size:13px;letter-spacing:3px;}
+.card h2{font-family:'Sora';font-size:clamp(24px,4.5vw,34px);font-weight:800;margin:10px 0 6px;color:#fff;}
+.card h2 .hl{color:var(--gold2);}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;}
+.pill{font-size:12px;font-weight:600;padding:6px 12px;border-radius:999px;border:1px solid var(--line);color:var(--mut);background:#101013;}
+.pill.moment{border-color:var(--gold);color:var(--gold2);}
+.ex{font-size:17px;line-height:1.6;color:#e8e8e8;background:#0e0e11;border-left:3px solid var(--gold);border-radius:0 12px 12px 0;padding:14px 16px;margin:8px 0 4px;}
+.note{font-size:14px;line-height:1.65;color:var(--mut);margin-top:12px;}
+.note b{color:var(--gold2);}
+.warn{background:rgba(232,170,40,.08);border:1px solid rgba(232,170,40,.4);border-radius:12px;padding:12px 14px;font-size:13.5px;line-height:1.6;color:#e8d9b0;margin-top:12px;}
+.audio-row{display:flex;gap:10px;margin-top:auto;padding-top:20px;}
+.abtn{flex:1;border:1px solid var(--line);background:#101013;color:var(--ink);border-radius:12px;padding:12px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Inter';transition:.2s;}
+.abtn:hover{border-color:var(--gold);color:var(--gold2);}
+.nav{display:flex;align-items:center;justify-content:space-between;margin-top:16px;}
+.arrow{background:#151518;border:1px solid var(--line);color:var(--gold);width:48px;height:48px;border-radius:50%;font-size:20px;cursor:pointer;transition:.2s;}
+.arrow:hover:not(:disabled){border-color:var(--gold);background:#1d1a12;}
+.arrow:disabled{opacity:.25;cursor:default;}
+.count{color:var(--mut);font-size:14px;font-weight:600;letter-spacing:1px;}
+.dots{display:flex;gap:7px;justify-content:center;margin-top:14px;flex-wrap:wrap;}
+.dot{width:9px;height:9px;border-radius:50%;background:#2c2c32;cursor:pointer;transition:.2s;border:none;padding:0;}
+.dot.on{background:var(--gold);transform:scale(1.25);}
+.tense{background:#0e1420;border:1px solid #2b3f5f;border-radius:12px;padding:12px 14px;font-size:13.5px;line-height:1.65;color:#c3d3ea;margin-top:12px;}
+.tense b{color:#8fb4ff;}
+footer{margin-top:26px;color:#55555c;font-size:12px;text-align:center;max-width:640px;line-height:1.6;}
+@media(max-width:520px){.card{padding:26px 20px;min-height:460px;}}
+</style>
+</head>
+<body>
+<header>
+<div class="kicker">Module 3 · Lesson 2 · Discover</div>
+<h1>📖 The <span class="g">Storyteller</span></h1>
+<div class="sub">10 chunks for storytelling and anecdotes — tap through, listen, notice the structure.</div>
+</header>
+
+<div class="stage">
+<div class="viewport"><div class="track" id="track"></div></div>
+<div class="nav">
+<button class="arrow" id="prev" aria-label="Previous">←</button>
+<div class="count" id="count">1 / 10</div>
+<button class="arrow" id="next" aria-label="Next">→</button>
+</div>
+<div class="dots" id="dots"></div>
+</div>
+
+<footer>English stories run on <b style="color:#8fb4ff">two tenses</b>: past continuous sets the background (<i>was/were + -ing</i>), past simple moves the action forward.</footer>
+
+<script>
+const CHUNKS=[
+{n:1,chunk:"Let me set the scene:",ex:"Let me set the scene: it's 2019, and we're losing clients.",moment:"🎬 SET THE SCENE",reg:"⚖️ Both",note:"The professional opener — presentations, case studies, interviews. It signals: <b>a story is starting, listen up.</b>"},
+{n:2,chunk:"A little background first:",ex:"A little background first: we had just merged two teams.",moment:"🎬 SET THE SCENE",reg:"⚖️ Both",note:"The everyday meeting version of the opener. Low-risk, high-frequency — use it before any story at work."},
+{n:3,chunk:"So there we were,",ex:"So there we were, in a room with the board.",moment:"📖 BUILD THE STORY",reg:"🗣️ Spoken",note:"Classic oral-narrative opener — drops the listener straight into the action.",tense:"<b>TWO TENSES, ONE STORY.</b> Background runs on past continuous: <i>we <b>were losing</b> clients</i>. Action runs on past simple: <i>the system <b>crashed</b></i>. Never flatten a story into 'and then… and then…'."},
+{n:4,chunk:"It all started when…",ex:"It all started when the system crashed on launch day.",moment:"📖 BUILD THE STORY",reg:"⚖️ Both",note:"Launches the complication. Keep the verb in <b>past simple</b> — this is the action, not the background."},
+{n:5,chunk:"And that's when everything changed.",ex:"And that's when everything changed.",moment:"📖 BUILD THE STORY",reg:"⚖️ Both",note:"The turning-point marker. Every business story has this shape: <b>normal → explosion → new normal.</b>"},
+{n:6,chunk:"And then, out of nowhere,",ex:"And then, out of nowhere, our biggest client called.",moment:"📖 BUILD THE STORY",reg:"🗣️ Spoken",note:"The suspense beat — the unexpected turn. Spoken register: perfect for anecdotes, never for formal reports."},
+{n:7,chunk:"To cut a long story short,",ex:"To cut a long story short, we shipped in three weeks.",moment:"📖 BUILD THE STORY",reg:"🗣️ Spoken",note:"<b>THE COMPRESSION TOOL.</b> Business stories need brevity — skip the middle, land the result. The cure for over-explaining."},
+{n:8,chunk:"In the end,",ex:"In the end, we doubled our revenue.",moment:"🎯 LAND THE POINT",reg:"⚖️ Both",note:"Standard result language. <b>Vague results sink strong stories</b> — a story that just stops is a story wasted."},
+{n:9,chunk:"Looking back,",ex:"Looking back, the crisis was the best thing that happened to us.",moment:"🎯 LAND THE POINT",reg:"⚖️ Both",note:"<b>THE INTERVIEW MOVE.</b> Reflection shows maturity: <i>'Looking back, what I learned was…'</i> — interviewers love this sentence."},
+{n:10,chunk:"The moral of the story?",ex:"The moral of the story? Never skip the backup plan.",moment:"🎯 LAND THE POINT",reg:"🗣️ Spoken",note:"The punchy takeaway marker — alive in business media and bold presentations.",warn:"⚠️ Spoken &amp; punchy presentations <b>only</b> — never in formal reports. In writing, it reads as informal."}
+];
+const track=document.getElementById('track'),dots=document.getElementById('dots'),count=document.getElementById('count');
+let i=0;
+function hl(ex,chunk){
+  const core=chunk.replace(/:$/,'').replace(/…$/,'');
+  const idx=ex.toLowerCase().indexOf(core.toLowerCase().replace(/…/,''));
+  if(idx<0) return ex;
+  return ex.slice(0,idx)+'<span class="hl">'+ex.slice(idx,idx+core.length)+'</span>'+ex.slice(idx+core.length);
+}
+CHUNKS.forEach((c,k)=>{
+  const d=document.createElement('div');d.className='card';
+  d.innerHTML='<div class="num">CHUNK '+String(c.n).padStart(2,'0')+' / 10</div>'
+  +'<h2>'+c.chunk.replace(/:$/,'<span class="hl">:</span>')+'</h2>'
+  +'<div class="pills"><span class="pill moment">'+c.moment+'</span><span class="pill">'+c.reg+'</span></div>'
+  +'<div class="ex">“'+hl(c.ex,c.chunk)+'”</div>'
+  +'<div class="note">'+c.note+'</div>'
+  +(c.tense?'<div class="tense">'+c.tense+'</div>':'')
+  +(c.warn?'<div class="warn">'+c.warn+'</div>':'')
+  +'<div class="audio-row"><button class="abtn" onclick="playAudio('+c.n+',false)">🐇 Natural</button><button class="abtn" onclick="playAudio('+c.n+',true)">🐢 Slow</button></div>';
+  track.appendChild(d);
+  const dot=document.createElement('button');dot.className='dot'+(k===0?' on':'');dot.setAttribute('aria-label','Go to card '+(k+1));
+  dot.onclick=()=>go(k);dots.appendChild(dot);
+});
+function go(k){
+  i=Math.max(0,Math.min(CHUNKS.length-1,k));
+  track.style.transform='translateX(-'+(i*100)+'%)';
+  count.textContent=(i+1)+' / '+CHUNKS.length;
+  document.querySelectorAll('.dot').forEach((d,k2)=>d.classList.toggle('on',k2===i));
+  document.getElementById('prev').disabled=i===0;
+  document.getElementById('next').disabled=i===CHUNKS.length-1;
+}
+function playAudio(n,slow){
+  const f='m3l2-audio-'+String(n).padStart(2,'0')+(slow?'-slow':'')+'.mp3';
+  new Audio(f).play().catch(()=>{});
+}
+document.getElementById('prev').onclick=()=>go(i-1);
+document.getElementById('next').onclick=()=>go(i+1);
+document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')go(i-1);if(e.key==='ArrowRight')go(i+1);});
+let sx=null;
+track.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;},{passive:true});
+track.addEventListener('touchend',e=>{if(sx===null)return;const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>50)go(i+(dx<0?1:-1));sx=null;},{passive:true});
+go(0);
+</script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Storyteller — Ear Detective</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0b0d;--card:#151518;--gold:#E8AA28;--gold2:#f5c542;--ink:#f2f2f0;--mut:#9a9aa0;--line:#26262b;--ok:#3ecf6e;--bad:#ff6b6b;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:radial-gradient(1200px 600px at 50% -10%,#1a1408 0%,var(--bg) 60%);color:var(--ink);font-family:'Inter',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:28px 16px;}
+header{text-align:center;max-width:680px;}
+.kicker{color:var(--gold);letter-spacing:4px;font-size:12px;font-weight:600;text-transform:uppercase;}
+h1{font-family:'Sora';font-size:clamp(26px,5vw,40px);font-weight:800;margin:10px 0 4px;}
+h1 .g{color:var(--gold);}
+.sub{color:var(--mut);font-size:14.5px;}
+.hud{display:flex;gap:12px;margin:20px 0 4px;flex-wrap:wrap;justify-content:center;}
+.hud .box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 18px;font-size:14px;font-weight:600;}
+.hud .box b{color:var(--gold2);}
+#game{width:100%;max-width:640px;margin-top:14px;}
+.panel{background:linear-gradient(160deg,#1b1b20,#151518);border:1px solid var(--line);border-radius:20px;padding:30px 26px;text-align:center;}
+.round{color:var(--gold);font-family:'Sora';font-weight:700;font-size:13px;letter-spacing:3px;margin-bottom:6px;}
+.q{font-size:17px;color:var(--mut);margin-bottom:20px;}
+.playrow{display:flex;gap:10px;justify-content:center;margin-bottom:22px;}
+.abtn{border:1px solid var(--line);background:#101013;color:var(--ink);border-radius:12px;padding:14px 22px;font-size:16px;font-weight:600;cursor:pointer;font-family:'Inter';transition:.2s;}
+.abtn:hover{border-color:var(--gold);color:var(--gold2);}
+.opts{display:grid;gap:10px;}
+.opt{background:#101013;border:1px solid var(--line);color:var(--ink);border-radius:14px;padding:15px 16px;font-size:16px;font-weight:500;cursor:pointer;font-family:'Inter';text-align:left;transition:.2s;line-height:1.45;}
+.opt:hover:not(:disabled){border-color:var(--gold);}
+.opt:disabled{cursor:default;}
+.opt.right{border-color:var(--ok);background:rgba(62,207,110,.1);}
+.opt.wrong{border-color:var(--bad);background:rgba(255,107,107,.08);}
+.opt.dim{opacity:.45;}
+.coach{margin-top:18px;text-align:left;background:rgba(232,170,40,.07);border:1px solid rgba(232,170,40,.35);border-radius:14px;padding:16px;font-size:14.5px;line-height:1.65;color:#e8dcc0;display:none;}
+.coach b{color:var(--gold2);}
+.nextbtn{margin-top:18px;display:none;width:100%;background:var(--gold);color:#111;border:none;border-radius:14px;padding:15px;font-size:16px;font-weight:700;cursor:pointer;font-family:'Sora';}
+.nextbtn:hover{background:var(--gold2);}
+.final{text-align:center;padding:20px 0;}
+.final .big{font-size:64px;margin-bottom:10px;}
+.final h2{font-family:'Sora';font-size:28px;margin-bottom:8px;}
+.final p{color:var(--mut);line-height:1.7;}
+.stars{font-size:44px;letter-spacing:8px;margin:12px 0;}
+.replay{margin-top:18px;background:transparent;border:1px solid var(--gold);color:var(--gold2);border-radius:14px;padding:13px 30px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Inter';}
+@media(max-width:520px){.panel{padding:24px 18px;}}
+</style>
+</head>
+<body>
+<header>
+<div class="kicker">Module 3 · Lesson 2 · Listen</div>
+<h1>🕵️ Ear <span class="g">Detective</span></h1>
+<div class="sub">Hear a sentence. Identify the storytelling chunk — no reading, just your ears.</div>
+</header>
+<div class="hud">
+<div class="box">Round <b id="hr">1</b> / 10</div>
+<div class="box">Score <b id="hs">0</b></div>
+<div class="box">Streak 🔥 <b id="ht">0</b></div>
+</div>
+<div id="game"></div>
+
+<script>
+const DATA=[
+{n:1,chunk:"Let me set the scene:",coach:"<b>Let me set the scene:</b> — the professional story opener. Presentations, case studies, interviews."},
+{n:2,chunk:"A little background first:",coach:"<b>A little background first:</b> — the everyday meeting version. Gives context before the action."},
+{n:3,chunk:"So there we were,",coach:"<b>So there we were,</b> — classic oral-narrative opener. Drops you straight into the action. Spoken register."},
+{n:4,chunk:"It all started when…",coach:"<b>It all started when…</b> — launches the complication, in past simple: the action, not the background."},
+{n:5,chunk:"And that's when everything changed.",coach:"<b>And that's when everything changed.</b> — the turning-point marker: normal → explosion → new normal."},
+{n:6,chunk:"And then, out of nowhere,",coach:"<b>And then, out of nowhere,</b> — the suspense beat, the unexpected turn. Spoken."},
+{n:7,chunk:"To cut a long story short,",coach:"<b>To cut a long story short,</b> — the compression tool. Skip the middle, land the result."},
+{n:8,chunk:"In the end,",coach:"<b>In the end,</b> — standard result language. Land the result, don't just stop."},
+{n:9,chunk:"Looking back,",coach:"<b>Looking back,</b> — the interview reflection move. Reflection shows maturity."},
+{n:10,chunk:"The moral of the story?",coach:"<b>The moral of the story?</b> — the punchy takeaway. Spoken &amp; bold presentations only — never formal reports."}
+];
+function shuffle(a){for(let k=a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));const t=a[k];a[k]=a[j];a[j]=t;}return a;}
+const order=shuffle(DATA.map((d,k)=>k));
+let ri=0,score=0,streak=0,best=0,answered=false;
+const game=document.getElementById('game');
+function audio(n,slow){return 'm3l2-audio-'+String(n).padStart(2,'0')+(slow?'-slow':'')+'.mp3';}
+function render(){
+  answered=false;
+  const d=DATA[order[ri]];
+  document.getElementById('hr').textContent=ri+1;
+  const distract=shuffle(DATA.map((x,k)=>k).filter(k=>k!==order[ri])).slice(0,3);
+  const opts=shuffle([order[ri]].concat(distract));
+  game.innerHTML='<div class="panel">'
+  +'<div class="round">ROUND '+(ri+1)+'</div>'
+  +'<div class="q">Which storytelling chunk do you hear?</div>'
+  +'<div class="playrow"><button class="abtn" id="pN">🐇 Natural</button><button class="abtn" id="pS">🐢 Slow</button></div>'
+  +'<div class="opts" id="opts">'+opts.map(k=>'<button class="opt" data-k="'+k+'">“'+DATA[k].chunk+'”</button>').join('')+'</div>'
+  +'<div class="coach" id="coach"></div>'
+  +'<button class="nextbtn" id="nx">'+(ri===9?'See results →':'Next round →')+'</button></div>';
+  document.getElementById('pN').onclick=()=>new Audio(audio(d.n,false)).play().catch(()=>{});
+  document.getElementById('pS').onclick=()=>new Audio(audio(d.n,true)).play().catch(()=>{});
+  new Audio(audio(d.n,false)).play().catch(()=>{});
+  document.querySelectorAll('.opt').forEach(b=>{b.onclick=()=>answer(b,d);});
+  document.getElementById('nx').onclick=()=>{ri++;ri<10?render():finish();};
+}
+function answer(btn,d){
+  if(answered)return;answered=true;
+  const k=parseInt(btn.getAttribute('data-k'),10);
+  const ok=k===order[ri];
+  document.querySelectorAll('.opt').forEach(b=>{
+    b.disabled=true;
+    const bk=parseInt(b.getAttribute('data-k'),10);
+    if(bk===order[ri])b.classList.add('right');else b.classList.add('dim');
+  });
+  if(ok){score++;streak++;best=Math.max(best,streak);}else{btn.classList.remove('dim');btn.classList.add('wrong');streak=0;}
+  document.getElementById('hs').textContent=score;
+  document.getElementById('ht').textContent=streak;
+  const c=document.getElementById('coach');
+  c.innerHTML=(ok?'✅ <b>Correct!</b> ':'❌ <b>Not quite.</b> ')+d.coach;
+  c.style.display='block';
+  document.getElementById('nx').style.display='block';
+}
+function finish(){
+  const stars=score>=9?'⭐⭐⭐':score>=7?'⭐⭐':'⭐';
+  const msg=score>=9?"Detective ears! You catch every storytelling move."
+    :score>=7?"Strong listening — a couple of chunks slipped past you."
+    :"Good start — replay the carousel, then try again.";
+  game.innerHTML='<div class="panel final"><div class="big">🕵️</div><h2>'+score+' / 10</h2>'
+  +'<div class="stars">'+stars+'</div><p>'+msg+'<br>Best streak: 🔥 '+best+'</p>'
+  +'<button class="replay" onclick="location.reload()">Play again</button></div>';
+}
+render();
+</script>
+</body>
+</html>

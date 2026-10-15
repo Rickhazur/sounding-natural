@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Storyteller — The Anecdote</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0b0d;--card:#151518;--gold:#E8AA28;--gold2:#f5c542;--ink:#f2f2f0;--mut:#9a9aa0;--line:#26262b;--ok:#3ecf6e;--bad:#ff6b6b;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:radial-gradient(1200px 600px at 50% -10%,#1a1408 0%,var(--bg) 60%);color:var(--ink);font-family:'Inter',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:28px 16px;}
+header{text-align:center;max-width:700px;}
+.kicker{color:var(--gold);letter-spacing:4px;font-size:12px;font-weight:600;text-transform:uppercase;}
+h1{font-family:'Sora';font-size:clamp(26px,5vw,40px);font-weight:800;margin:10px 0 4px;}
+h1 .g{color:var(--gold);}
+.sub{color:var(--mut);font-size:14.5px;line-height:1.6;}
+.hud{display:flex;gap:12px;margin:20px 0 4px;flex-wrap:wrap;justify-content:center;}
+.hud .box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 18px;font-size:14px;font-weight:600;}
+.hud .box b{color:var(--gold2);}
+#game{width:100%;max-width:680px;margin-top:14px;}
+.panel{background:linear-gradient(160deg,#1b1b20,#151518);border:1px solid var(--line);border-radius:20px;padding:28px 24px;}
+.rhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;flex-wrap:wrap;gap:8px;}
+.rtitle{font-family:'Sora';font-weight:700;font-size:18px;color:var(--gold2);}
+.rnum{color:var(--gold);font-size:12px;font-weight:700;letter-spacing:2px;}
+.ctx{color:var(--mut);font-size:14px;margin:8px 0 18px;line-height:1.6;font-style:italic;}
+.sec{font-size:12px;font-weight:700;letter-spacing:2px;color:var(--mut);text-transform:uppercase;margin:14px 0 8px;}
+.pool{display:grid;gap:8px;}
+.frag{background:#101013;border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:13px 15px;font-size:15px;cursor:pointer;font-family:'Inter';text-align:left;line-height:1.5;transition:.18s;width:100%;}
+.frag:hover:not(:disabled){border-color:var(--gold);}
+.frag:disabled{opacity:.28;cursor:default;}
+.frag b{color:var(--gold2);}
+.story{background:#0d0d10;border:1px dashed #3a3a42;border-radius:12px;padding:14px;min-height:120px;display:grid;gap:8px;}
+.slot{background:#141419;border:1px solid var(--line);border-radius:10px;padding:11px 13px;font-size:14.5px;line-height:1.5;color:#d8d8dc;}
+.slot .n{color:var(--gold);font-weight:700;margin-right:8px;font-family:'Sora';font-size:13px;}
+.slot b{color:var(--gold2);}
+.slot.wrong{border-color:var(--bad);background:rgba(255,107,107,.07);}
+.empty{color:#4a4a52;font-size:14px;text-align:center;padding:20px 0;}
+.btnrow{display:flex;gap:10px;margin-top:18px;}
+.btn{flex:1;border:none;border-radius:14px;padding:15px;font-size:15.5px;font-weight:700;cursor:pointer;font-family:'Sora';transition:.2s;}
+.btn.go{background:var(--gold);color:#111;}
+.btn.go:hover:not(:disabled){background:var(--gold2);}
+.btn.go:disabled{opacity:.35;cursor:default;}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--mut);}
+.btn.ghost:hover{color:var(--ink);border-color:var(--mut);}
+.feed{margin-top:16px;border-radius:14px;padding:16px;font-size:14.5px;line-height:1.65;display:none;}
+.feed.ok{display:block;background:rgba(62,207,110,.08);border:1px solid rgba(62,207,110,.4);color:#c9ecd4;}
+.feed.no{display:block;background:rgba(255,107,107,.07);border:1px solid rgba(255,107,107,.4);color:#f3c9c9;}
+.feed b{color:#fff;}
+.final{text-align:center;padding:24px 6px;}
+.final .big{font-size:64px;margin-bottom:10px;}
+.final h2{font-family:'Sora';font-size:28px;margin-bottom:8px;}
+.final p{color:var(--mut);line-height:1.7;}
+.stars{font-size:44px;letter-spacing:8px;margin:12px 0;}
+.replay{margin-top:18px;background:transparent;border:1px solid var(--gold);color:var(--gold2);border-radius:14px;padding:13px 30px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Inter';}
+@media(max-width:520px){.panel{padding:22px 16px;}}
+</style>
+</head>
+<body>
+<header>
+<div class="kicker">Module 3 · Lesson 2 · Play</div>
+<h1>📖 The <span class="g">Anecdote</span></h1>
+<div class="sub">A professional story, scrambled. Tap the fragments in story order: <b style="color:var(--gold2)">set the scene → build → land the point</b>. A story in the wrong order makes no sense.</div>
+</header>
+<div class="hud">
+<div class="box">Story <b id="hr">1</b> / 8</div>
+<div class="box">Solved <b id="hs">0</b> / 8</div>
+</div>
+<div id="game"></div>
+
+<script>
+const ROUNDS=[
+{title:"The Failed Launch",
+ context:"A colleague asks what happened last quarter. Put the story in order.",
+ frags:["<b>Let me set the scene:</b> it's Q1, and our app keeps crashing.","<b>It all started when</b> the system crashed on launch day.","<b>And then, out of nowhere,</b> our biggest client called.","<b>To cut a long story short,</b> we shipped in three weeks.","<b>In the end,</b> we doubled our revenue."],
+ why:"The scene must come first — and <b>In the end</b> can only land after the action is told. Takeaways close stories; they never open them."},
+{title:"The Difficult Client",
+ context:"You're telling your mentor about a tough account. Order the anecdote.",
+ frags:["<b>A little background first:</b> we had just merged two teams.","<b>So there we were,</b> in a room with the board.","<b>And that's when everything changed</b> — the client stood up and left.","<b>Looking back,</b> the crisis was the best thing that happened to us."],
+ why:"Background before action: the merger explains the tension. And <b>Looking back</b> is reflection — it belongs at the end, after the result."},
+{title:"The Interview Story",
+ context:"'Tell me about a time you solved a problem.' Order your STAR answer.",
+ frags:["<b>Let me set the scene:</b> it's 2019, and we're losing clients.","<b>It all started when</b> the system crashed on launch day.","<b>To cut a long story short,</b> we shipped in three weeks.","<b>Looking back,</b> the crisis was the best thing that happened to us."],
+ why:"Interviewers expect STAR order: situation, complication, result, reflection. <b>Looking back</b> shows maturity — but only as the closing move."},
+{title:"The Networking Anecdote",
+ context:"Coffee break at a conference. Someone asks about your company. Keep it short.",
+ frags:["<b>So there we were,</b> in a room with the board.","<b>And then, out of nowhere,</b> our biggest client called.","<b>To cut a long story short,</b> we shipped in three weeks.","<b>The moral of the story?</b> Never skip the backup plan."],
+ why:"A networking anecdote is a sprint: hook, twist, compress, punchline. <b>The moral of the story?</b> is the mic drop — it goes last."},
+{title:"The Missed Deadline",
+ context:"Your manager wants the full story. Build it properly.",
+ frags:["<b>A little background first:</b> we had just merged two teams.","<b>It all started when</b> the system crashed on launch day.","<b>And that's when everything changed.</b>","<b>In the end,</b> we doubled our revenue."],
+ why:"Set the scene, launch the complication, mark the turning point, land the result. <b>In the end</b> without a middle is an empty ending."},
+{title:"The Budget Cut",
+ context:"Leadership offsite: tell the story of the toughest quarter.",
+ frags:["<b>Let me set the scene:</b> it's 2019, and we're losing clients.","<b>So there we were,</b> in a room with the board.","<b>And then, out of nowhere,</b> our biggest client called.","<b>In the end,</b> we doubled our revenue."],
+ why:"Scene → action → twist → result. The twist (<b>out of nowhere</b>) only surprises if the scene is already set."},
+{title:"The Presentation Disaster",
+ context:"Funny story for the team lunch. Order it for maximum effect.",
+ frags:["<b>So there we were,</b> in a room with the board.","<b>It all started when</b> the system crashed on launch day.","<b>To cut a long story short,</b> we shipped in three weeks.","<b>The moral of the story?</b> Never skip the backup plan."],
+ why:"Comedy is timing: the disaster must come before the compression, and the moral lands only after the pain is felt."},
+{title:"The New Market",
+ context:"Board update: how we entered the region. Keep it executive-tight.",
+ frags:["<b>Let me set the scene:</b> it's 2019, and we're losing clients.","<b>And that's when everything changed.</b>","<b>To cut a long story short,</b> we shipped in three weeks.","<b>Looking back,</b> the crisis was the best thing that happened to us."],
+ why:"Executives want arc, not detail: context, pivot, compressed result, reflection. <b>Looking back</b> turns a report into a lesson."}
+];
+function shuffle(a){a=a.slice();for(let k=a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));const t=a[k];a[k]=a[j];a[j]=t;}return a;}
+let ri=0,solved=0;
+const game=document.getElementById('game');
+function render(){
+  const R=ROUNDS[ri];
+  document.getElementById('hr').textContent=ri+1;
+  const shown=shuffle(R.frags.map((f,k)=>k));
+  let picked=[];
+  game.innerHTML='<div class="panel">'
+  +'<div class="rhead"><div class="rtitle">'+R.title+'</div><div class="rnum">STORY '+(ri+1)+' / 8</div></div>'
+  +'<div class="ctx">'+R.context+'</div>'
+  +'<div class="sec">Tap in story order</div><div class="pool" id="pool"></div>'
+  +'<div class="sec">Your story</div><div class="story" id="story"><div class="empty">Tap fragments above to build the story…</div></div>'
+  +'<div class="btnrow"><button class="btn ghost" id="reset">↺ Reset</button><button class="btn go" id="check" disabled>Check order</button></div>'
+  +'<div class="feed" id="feed"></div></div>';
+  const pool=document.getElementById('pool'),story=document.getElementById('story'),
+        check=document.getElementById('check'),feed=document.getElementById('feed');
+  shown.forEach(k=>{
+    const b=document.createElement('button');b.className='frag';b.innerHTML=R.frags[k];
+    b.onclick=()=>{b.disabled=true;picked.push(k);drawStory();check.disabled=false;feed.className='feed';};
+    pool.appendChild(b);
+  });
+  function drawStory(){
+    story.innerHTML=picked.length?picked.map((k,pos)=>'<div class="slot" data-pos="'+pos+'"><span class="n">'+(pos+1)+'</span>'+R.frags[k]+'</div>').join(''):'<div class="empty">Tap fragments above to build the story…</div>';
+  }
+  document.getElementById('reset').onclick=()=>render();
+  check.onclick=()=>{
+    const correct=picked.length===R.frags.length&&picked.every((k,pos)=>k===pos);
+    if(correct){
+      solved++;document.getElementById('hs').textContent=solved;
+      feed.className='feed ok';
+      feed.innerHTML='<b>✅ Perfect order.</b> Scene → build → land — the story breathes.<br><br><button class="btn go" id="nx" style="width:100%">'+(ri===7?'See results →':'Next story →')+'</button>';
+      check.disabled=true;
+      document.getElementById('nx').onclick=()=>{ri++;ri<8?render():finish();};
+    }else{
+      let firstBad=picked.findIndex((k,pos)=>k!==pos);
+      if(firstBad<0)firstBad=picked.length;
+      feed.className='feed no';
+      feed.innerHTML='<b>❌ Position '+(firstBad+1)+' breaks the story.</b><br>'+R.why+'<br><br>Tap <b>↺ Reset</b> and try again.';
+      const slots=story.querySelectorAll('.slot');
+      if(slots[firstBad])slots[firstBad].classList.add('wrong');
+    }
+  };
+}
+function finish(){
+  const stars=solved>=7?'⭐⭐⭐':solved>=5?'⭐⭐':'⭐';
+  const msg=solved>=7?"Master storyteller! Every anecdote lands in perfect order."
+    :solved>=5?"Strong sense of story — a couple of arcs slipped."
+    :"Good effort — remember the arc: scene → build → land.";
+  game.innerHTML='<div class="panel final"><div class="big">📖</div><h2>'+solved+' / 8 stories</h2>'
+  +'<div class="stars">'+stars+'</div><p>'+msg+'</p>'
+  +'<button class="replay" onclick="location.reload()">Play again</button></div>';
+}
+render();
+</script>
+</body>
+</html>

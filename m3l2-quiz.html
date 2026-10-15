@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Storyteller — Final Exam</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0b0d;--card:#151518;--gold:#E8AA28;--gold2:#f5c542;--ink:#f2f2f0;--mut:#9a9aa0;--line:#26262b;--ok:#3ecf6e;--bad:#ff6b6b;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:radial-gradient(1200px 600px at 50% -10%,#1a1408 0%,var(--bg) 60%);color:var(--ink);font-family:'Inter',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:28px 16px;}
+header{text-align:center;max-width:680px;}
+.kicker{color:var(--gold);letter-spacing:4px;font-size:12px;font-weight:600;text-transform:uppercase;}
+h1{font-family:'Sora';font-size:clamp(26px,5vw,40px);font-weight:800;margin:10px 0 4px;}
+h1 .g{color:var(--gold);}
+.sub{color:var(--mut);font-size:14.5px;}
+.hud{display:flex;gap:12px;margin:20px 0 4px;}
+.hud .box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 18px;font-size:14px;font-weight:600;}
+.hud .box b{color:var(--gold2);}
+#game{width:100%;max-width:640px;margin-top:14px;}
+.panel{background:linear-gradient(160deg,#1b1b20,#151518);border:1px solid var(--line);border-radius:20px;padding:30px 26px;}
+.qnum{color:var(--gold);font-family:'Sora';font-weight:700;font-size:13px;letter-spacing:3px;margin-bottom:10px;}
+.qtext{font-size:16.5px;line-height:1.65;margin-bottom:20px;}
+.qtext .sit{color:var(--mut);font-style:italic;display:block;margin-bottom:10px;font-size:14.5px;}
+.opts{display:grid;gap:10px;}
+.opt{background:#101013;border:1px solid var(--line);color:var(--ink);border-radius:14px;padding:15px 16px;font-size:15.5px;cursor:pointer;font-family:'Inter';text-align:left;line-height:1.55;transition:.2s;}
+.opt:hover:not(:disabled){border-color:var(--gold);}
+.opt:disabled{cursor:default;}
+.opt.right{border-color:var(--ok);background:rgba(62,207,110,.1);}
+.opt.wrong{border-color:var(--bad);background:rgba(255,107,107,.08);}
+.opt.dim{opacity:.45;}
+.why{margin-top:18px;background:rgba(232,170,40,.07);border:1px solid rgba(232,170,40,.35);border-radius:14px;padding:16px;font-size:14.5px;line-height:1.65;color:#e8dcc0;display:none;}
+.why b{color:var(--gold2);}
+.nextbtn{margin-top:18px;display:none;width:100%;background:var(--gold);color:#111;border:none;border-radius:14px;padding:15px;font-size:16px;font-weight:700;cursor:pointer;font-family:'Sora';}
+.nextbtn:hover{background:var(--gold2);}
+.final{text-align:center;padding:20px 0;}
+.final .big{font-size:64px;margin-bottom:10px;}
+.final h2{font-family:'Sora';font-size:28px;margin-bottom:8px;}
+.final p{color:var(--mut);line-height:1.7;}
+.stars{font-size:44px;letter-spacing:8px;margin:12px 0;}
+.replay{margin-top:18px;background:transparent;border:1px solid var(--gold);color:var(--gold2);border-radius:14px;padding:13px 30px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Inter';}
+@media(max-width:520px){.panel{padding:24px 18px;}}
+</style>
+</head>
+<body>
+<header>
+<div class="kicker">Module 3 · Lesson 2 · Prove</div>
+<h1>🏆 The <span class="g">Final Exam</span></h1>
+<div class="sub">8 new situations. Transfer what you learned — don't just repeat the examples.</div>
+</header>
+<div class="hud"><div class="box">Question <b id="hq">1</b> / 8</div><div class="box">Score <b id="hs">0</b></div></div>
+<div id="game"></div>
+<script>
+const QS=[
+{q:"<span class='sit'>You're telling a colleague about a chaotic product launch. Which version sounds like a storyteller?</span>Pick the best opening.",
+ opts:["Let me set the scene: it's March, and the servers are melting.","And then we had a meeting, and then the servers melted, and then…","In my opinion the servers melted in March.","The servers melted. That is my story."],
+ a:0,
+ why:"<b>Let me set the scene</b> opens the story and the background runs on continuous (<i>are melting</i>). The flat <i>and-then… and-then…</i> version has no scene and no tenses — it reports, it doesn't narrate."},
+{q:"<span class='sit'>You're describing a habit from your old job: every Friday the team played football after work.</span>Which is correct?",
+ opts:["We were playing football every Friday after work.","We used to play football every Friday after work.","We played football every Friday after work always.","We would play football every Friday after work usually."],
+ a:1,
+ why:"<b>Used to + base</b> marks a finished habit. Past continuous (<i>were playing</i>) sets a background scene, not a routine — a classic Spanish-L1 confusion."},
+{q:"<span class='sit'>Your update to the director is getting long: three minutes of detail and she checks her watch.</span>What saves you?",
+ opts:["Keep going — detail shows hard work.","To cut a long story short, we hit the target on Friday.","So there we were, and then, and then, and then…","The moral of the story? Patience."],
+ a:1,
+ why:"<b>To cut a long story short</b> is the compression tool — skip the middle, land the result. Over-explaining background is the #1 story killer in business."},
+{q:"<span class='sit'>You finish telling the team how the project was saved… and just stop. Silence.</span>What went wrong?",
+ opts:["Nothing — the facts speak for themselves.","I should have added more background detail.","I never landed the takeaway — vague results sink strong stories.","I should have spoken faster."],
+ a:2,
+ why:"A story that just stops is a story wasted. <b>Land it:</b> <i>In the end… / Looking back… / The moral of the story?</i> — the takeaway is the whole point."},
+{q:"<span class='sit'>You're writing the formal written case study for the company website.</span>Which opener fits?",
+ opts:["So there we were, in a room with the board.","Let me set the scene: in 2019, demand tripled in one quarter.","You won't believe what happened next.","Funny story, right?"],
+ a:1,
+ why:"<b>Let me set the scene</b> is safe in both registers. <i>So there we were</i> is spoken-only — in a formal case study it reads as unprofessional."},
+{q:"<span class='sit'>Coffee break at a conference. A stranger asks what your startup does.</span>Which keeps it alive?",
+ opts:["The moral of the story? Never skip the backup plan.","In conclusion, our value proposition leverages synergies.","It all started when the system crashed on launch day.","Please see our website for details."],
+ a:2,
+ why:"A networking anecdote needs a <b>hook</b>: <i>It all started when…</i> launches the story. Corporate filler (<i>leverages synergies</i>) kills curiosity on contact."},
+{q:"<span class='sit'>You're closing the quarterly report (formal document) with the lesson learned.</span>Which takeaway is safe?",
+ opts:["The moral of the story? Ship faster.","Looking back, the delay taught us to test earlier.","So there we were, shipping at midnight!","To cut a long story short, whatever."],
+ a:1,
+ why:"<b>Looking back</b> works in both registers — reflective and professional. <i>The moral of the story?</i> is punchy-spoken only: never in formal reports."},
+{q:"<span class='sit'>Job interview: 'Tell me about a time you handled conflict.'</span>Which closing shows maturity?",
+ opts:["In the end, we shipped. That's it.","Looking back, the conflict taught me to listen first.","And then, out of nowhere, it worked out.","Whatever, it's in the past."],
+ a:1,
+ why:"<b>Looking back + lesson</b> is the interview reflection move — it shows maturity, which is exactly what interviewers score. Facts alone don't."}
+];
+let qi=0,score=0,answered=false;
+const game=document.getElementById('game');
+function render(){
+  answered=false;
+  const Q=QS[qi];
+  document.getElementById('hq').textContent=qi+1;
+  game.innerHTML='<div class="panel"><div class="qnum">QUESTION '+(qi+1)+'</div>'
+  +'<div class="qtext">'+Q.q+'</div>'
+  +'<div class="opts">'+Q.opts.map((o,k)=>'<button class="opt" data-k="'+k+'">'+o+'</button>').join('')+'</div>'
+  +'<div class="why" id="why"></div>'
+  +'<button class="nextbtn" id="nx">'+(qi===7?'See results →':'Next →')+'</button></div>';
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>answer(b,Q));
+  document.getElementById('nx').onclick=()=>{qi++;qi<8?render():finish();};
+}
+function answer(btn,Q){
+  if(answered)return;answered=true;
+  const k=parseInt(btn.getAttribute('data-k'),10),ok=k===Q.a;
+  document.querySelectorAll('.opt').forEach(b=>{
+    b.disabled=true;const bk=parseInt(b.getAttribute('data-k'),10);
+    if(bk===Q.a)b.classList.add('right');else b.classList.add('dim');
+  });
+  if(ok){score++;}else{btn.classList.remove('dim');btn.classList.add('wrong');}
+  document.getElementById('hs').textContent=score;
+  const w=document.getElementById('why');
+  w.innerHTML=(ok?'✅ <b>Correct.</b> ':'❌ <b>Not quite.</b> ')+Q.why;
+  w.style.display='block';
+  document.getElementById('nx').style.display='block';
+}
+function finish(){
+  const stars=score>=7?'⭐⭐⭐':score>=5?'⭐⭐':'⭐';
+  const msg=score>=7?"Storyteller certified! You transfer the chunks to new situations."
+    :score>=5?"Solid — review the two-tense rule and try again."
+    :"Replay the carousel and the anecdote game, then retake it.";
+  game.innerHTML='<div class="panel final"><div class="big">🏆</div><h2>'+score+' / 8</h2>'
+  +'<div class="stars">'+stars+'</div><p>'+msg+'</p>'
+  +'<button class="replay" onclick="location.reload()">Retake</button></div>';
+}
+render();
+</script>
+</body>
+</html>

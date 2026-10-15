@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Storyteller — Speaking Missions</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0b0d;--card:#151518;--gold:#E8AA28;--gold2:#f5c542;--ink:#f2f2f0;--mut:#9a9aa0;--line:#26262b;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:radial-gradient(1200px 600px at 50% -10%,#1a1408 0%,var(--bg) 60%);color:var(--ink);font-family:'Inter',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:28px 16px;}
+header{text-align:center;max-width:700px;margin-bottom:6px;}
+.kicker{color:var(--gold);letter-spacing:4px;font-size:12px;font-weight:600;text-transform:uppercase;}
+h1{font-family:'Sora';font-size:clamp(26px,5vw,40px);font-weight:800;margin:10px 0 4px;}
+h1 .g{color:var(--gold);}
+.sub{color:var(--mut);font-size:14.5px;line-height:1.6;}
+.wrap{width:100%;max-width:680px;margin-top:18px;display:grid;gap:18px;}
+.mission{background:linear-gradient(160deg,#1b1b20,#151518);border:1px solid var(--line);border-radius:20px;padding:28px 26px;}
+.mission .mnum{color:var(--gold);font-family:'Sora';font-weight:700;font-size:12px;letter-spacing:3px;}
+.mission h2{font-family:'Sora';font-size:21px;margin:8px 0 4px;}
+.scene{color:var(--mut);font-size:14.5px;line-height:1.7;margin:10px 0;background:#0e0e11;border-radius:12px;padding:14px 16px;border-left:3px solid var(--gold);}
+.scene b{color:#e8e8e8;}
+.task{font-size:15px;line-height:1.7;margin:12px 0;}
+.task b{color:var(--gold2);}
+.model{margin-top:14px;}
+.model .lbl{font-size:12px;font-weight:700;letter-spacing:2px;color:var(--mut);text-transform:uppercase;margin-bottom:8px;}
+.model .txt{background:#0d0d10;border:1px solid var(--line);border-radius:12px;padding:15px 16px;font-size:15px;line-height:1.7;color:#e2e2e6;}
+.model .txt b{color:var(--gold2);}
+.abtns{display:flex;gap:10px;margin-top:12px;}
+.abtn{flex:1;border:1px solid var(--line);background:#101013;color:var(--ink);border-radius:12px;padding:12px;font-size:14.5px;font-weight:600;cursor:pointer;font-family:'Inter';transition:.2s;}
+.abtn:hover{border-color:var(--gold);color:var(--gold2);}
+.check{margin-top:16px;background:rgba(232,170,40,.06);border:1px solid rgba(232,170,40,.3);border-radius:14px;padding:16px;}
+.check .lbl{font-size:12px;font-weight:700;letter-spacing:2px;color:var(--gold2);text-transform:uppercase;margin-bottom:10px;}
+.check label{display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.6;color:#d5d5da;margin:8px 0;cursor:pointer;}
+.check input{margin-top:4px;accent-color:var(--gold);width:16px;height:16px;flex-shrink:0;}
+.tip{font-size:13px;color:var(--mut);margin-top:10px;line-height:1.6;font-style:italic;}
+@media(max-width:520px){.mission{padding:22px 18px;}}
+</style>
+</head>
+<body>
+<header>
+<div class="kicker">Module 3 · Lesson 2 · Speak</div>
+<h1>🎤 Your <span class="g">90 seconds</span></h1>
+<div class="sub">Three missions. Say each one out loud — then check yourself against the list. Recording yourself on your phone is the fastest way to improve.</div>
+</header>
+<div class="wrap">
+
+<div class="mission">
+<div class="mnum">MISSION 1 · 🎬 SET THE SCENE</div>
+<h2>🎬 Open the case study</h2>
+<div class="scene">You're opening a case-study presentation for new hires. <b>First 20 seconds:</b> set the scene so they care about what comes next.</div>
+<div class="task">Say it out loud: open with chunk <b>1</b> or <b>2</b>, then add one line of background. Under 20 seconds.</div>
+<div class="model"><div class="lbl">🔊 Model answer</div>
+<div class="txt">"<b>Let me set the scene:</b> it's 2019, and we're losing clients. <b>A little background first:</b> we had just merged two teams."</div>
+<div class="abtns"><button class="abtn" onclick="playA(1,false)">🐇 Natural</button><button class="abtn" onclick="playA(1,true)">🐢 Slow</button></div></div>
+<div class="check"><div class="lbl">✓ Self-check</div>
+<label><input type="checkbox"> I opened with a scene-setter, not with the action.</label>
+<label><input type="checkbox"> I used past continuous for the background (<i>we're losing / we had merged</i>).</label></div>
+</div>
+
+<div class="mission">
+<div class="mnum">MISSION 2 · 📖 COMPRESS IT</div>
+<h2>🗜️ Kill the ramble</h2>
+<div class="scene">Your status update is rambling: <i>"So first we had the meeting, and then Carlos said the API was down, and then we called support, and then…"</i> Your manager's eyes are glazing over.</div>
+<div class="task">Say it out loud: compress the whole ramble into <b>two sentences</b> using <b>"To cut a long story short,"</b>.</div>
+<div class="model"><div class="lbl">🔊 Model answer</div>
+<div class="txt">"The API went down on launch morning. <b>To cut a long story short,</b> we shipped in three weeks."</div>
+<div class="abtns"><button class="abtn" onclick="playA(7,false)">🐇 Natural</button><button class="abtn" onclick="playA(7,true)">🐢 Slow</button></div></div>
+<div class="check"><div class="lbl">✓ Self-check</div>
+<label><input type="checkbox"> Two sentences maximum — I skipped the middle.</label>
+<label><input type="checkbox"> The result is in the second sentence, not buried.</label></div>
+<div class="tip">💡 Compression is a senior skill. Juniors explain everything; seniors land the result.</div>
+</div>
+
+<div class="mission">
+<div class="mnum">MISSION 3 · 🎯 THE 90-SECOND STORY</div>
+<h2>🏆 Tell your story</h2>
+<div class="scene">"Tell me about a time you overcame a professional challenge." <b>You have 90 seconds.</b> Use chunks from <b>all three moments</b> 🎬 📖 🎯.</div>
+<div class="task">Say it out loud: set the scene, build with a turning point, land the takeaway. Time yourself.</div>
+<div class="model"><div class="lbl">🔊 Model answer (listen, then make it yours)</div>
+<div class="txt">"<b>So there we were,</b> in a room with the board. <b>It all started when</b> the system crashed on launch day. <b>And that's when everything changed</b> — we stopped blaming and started shipping. <b>In the end,</b> we doubled our revenue. <b>Looking back,</b> the crisis was the best thing that happened to us."</div>
+<div class="abtns"><button class="abtn" onclick="playA(3,false)">🐇 Chunk 3</button><button class="abtn" onclick="playA(9,false)">🐇 Chunk 9</button></div></div>
+<div class="check"><div class="lbl">✓ Self-check</div>
+<label><input type="checkbox"> I used chunks from all three moments (🎬 scene, 📖 build, 🎯 land).</label>
+<label><input type="checkbox"> Two tenses: <i>was/were + -ing</i> for background, past simple for action.</label>
+<label><input type="checkbox"> I landed the takeaway — I didn't trail off.</label>
+<label><input type="checkbox"> Register check: no "moral of the story" if this were a formal report.</label></div>
+</div>
+
+</div>
+<script>
+function playA(n,slow){
+  const f='m3l2-audio-'+String(n).padStart(2,'0')+(slow?'-slow':'')+'.mp3';
+  new Audio(f).play().catch(()=>{});
+}
+</script>
+</body>
+</html>
