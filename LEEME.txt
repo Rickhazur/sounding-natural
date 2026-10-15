@@ -1,33 +1,133 @@
-MÓDULO 3 — LECCIÓN FINAL: "The Executive Day"
-(Final Fluency Assessment and Personalized Feedback)
+MÓDULO 1 · LECCIÓN 1 — "Think in Chunks"
+Chunks for Managing Professional Discourse Flow
+Diseño espectacular mobile + desktop — PARA EL CURSO DE INGLÉS
+Versión PLANA (sin carpetas): todos los archivos van sueltos
+en la RAÍZ del repo sounding-natural
+================================================================
 
-QUÉ ES: el capstone del Módulo 3. No enseña chunks nuevos: integra los
-40 chunks de las lecciones 1–4 en un día ejecutivo completo.
+LOS 10 CHUNKS (validados pedagógicamente — reporte:
+workspace/research_notes/m1l1-revalidation-20261015/report.md.
+Veredicto: 10 KEEP, 0 REPLACE):
 
-ARCHIVOS EN ESTE PAQUETE (25):
-- 5 HTML: m3l5-carousel.html (🗡️ The Arsenal — galería filtrable de los 40 chunks)
-          m3l5-listen.html  (🕵️ Ear Detective: Final Round — 15 rondas, adivina la lección)
-          m3l5-play.html    (🏛️ The Executive Day — 8 escenas, 3 finales según puntaje)
-          m3l5-speak.html   (🎤 The Keynote — presentación de 2 minutos + autoevaluación)
-          m3l5-quiz.html    (🏆 Final Fluency Assessment — 15 preguntas + feedback personalizado por lección)
-- 1 imagen: m3l5-hero.png (hero negro/dorado, bloque de imagen al inicio de la lección)
-- 18 audios NUEVOS: m3l5-play-audio-01…08.mp3 (+ versiones -slow) — narración de las 8 escenas
-                    m3l5-keynote.mp3 (+ versión -slow) — modelo de la presentación
-- Este LEEME.txt
+🔀 OPEN & SHIFT (cambiar de tema)
+1. By the way,            "By the way, the client call was moved to Thursday."          [spoken]
+2. Speaking of which,     "Speaking of which, the budget was approved this morning."   [spoken]
+3. That reminds me,       "That reminds me, I need to send you the revised timeline." [spoken]
 
-IMPORTANTE — AUDIOS REUTILIZADOS (NO están en este ZIP):
-Las actividades Discover y Listen reutilizan los 80 audios de las
-lecciones 1–4 (m3l1-audio-*, m3l2-audio-*, m3l3-audio-*, m3l4-audio-*),
-que YA están en vivo en el repositorio. No hay que subirlos de nuevo.
+🔍 CLARIFY (aclarar / reparar)
+4. In other words,        "In other words, we deliver the first phase by Friday."      [both]
+5. As a matter of fact,   "As a matter of fact, we have already started the rollout."  [spoken]
+6. As I was saying,       "As I was saying, the proposal needs one more review."      [spoken — repair/resumption move]
 
-CÓMO SUBIR (una sola tanda, todo junto):
-1. En https://github.com/Rickhazur/sounding-natural, subir los 25 archivos
-   sueltos a la RAÍZ del repositorio (sin carpetas).
-2. Avisar "ya" para verificar que todo quedó en vivo.
+⚖️ WEIGH IN (posicionarse antes de opinar)
+7. On the other hand,     "On the other hand, the risks are real and worth weighing."  [both — 🔁 spiral]
+8. To be honest,          "To be honest, I think the deadline is too tight."           [spoken — 🔁 spiral]
+9. For what it's worth,   "For what it's worth, the competitor launched a new product."[spoken — 🔁 spiral]
 
-EMBEDS PARA RISE (después de la verificación):
-- Discover: <iframe src="https://rickhazur.github.io/sounding-natural/m3l5-carousel.html" width="100%" height="800" frameborder="0" style="border-radius:16px;" title="The Arsenal"></iframe>
-- Listen:   <iframe src="https://rickhazur.github.io/sounding-natural/m3l5-listen.html" width="100%" height="720" frameborder="0" style="border-radius:16px;" title="Ear Detective Final Round"></iframe>
-- Play:     <iframe src="https://rickhazur.github.io/sounding-natural/m3l5-play.html" width="100%" height="800" frameborder="0" style="border-radius:16px;" title="The Executive Day"></iframe>
-- Speak:    <iframe src="https://rickhazur.github.io/sounding-natural/m3l5-speak.html" width="100%" height="1060" frameborder="0" style="border-radius:16px;" title="The Keynote"></iframe>
-- Quiz:     <iframe src="https://rickhazur.github.io/sounding-natural/m3l5-quiz.html" width="100%" height="750" frameborder="0" style="border-radius:16px;" title="Final Fluency Assessment"></iframe>
+🏁 CLOSE (cerrar)
+10. At the end of the day, "At the end of the day, the client decides."                [spoken — ONE per conversation]
+
+PEDAGOGÍA DE LA LECCIÓN (está dentro de las tarjetas):
+· Función primero, traducción después: cada tarjeta dice QUÉ HACE
+  (shift / reformulate / hedge / close) antes de la glosa.
+· Frequency = safety: sin estos marcadores, el inglés suena
+  telegráfico — la ubicuidad es la licencia del registro.
+· El clúster weigh-in (7/8/9) es la habilidad central + nota
+  🔁 SPIRAL-FORWARD en cada tarjeta: "L1 builds the positioning
+  reflex — Module 3's opinion chunks supply the payloads."
+· #10 lleva nota de cliché: uno por conversación, nunca apilados.
+· #6 etiquetado como repair/resumption move.
+
+QUÉ HAY EN EL PAQUETE (27 archivos: 5 HTML + hero + 20 MP3 + LEEME)
+------------------------------------------------------------
+m1l1-hero.png          🖼️ Imagen de introducción de la lección
+                       ("Think in Chunks", negro/oro premium).
+                       REEMPLAZA el video introductorio en Rise:
+                       borra el bloque de video y pon esta imagen.
+
+m1l1-carousel.html     🎤 Discover: coverflow de los 10 chunks.
+                       Cada tarjeta lidera con la FUNCIÓN
+                       (⚡ DOES), pastillas de momento
+                       (🔀 🔍 ⚖️ 🏁), ejemplo + glosa, ▶ natural
+                       y 🐢 slow, notas 🔁 spiral en 7/8/9 y caja
+                       de cliché en el chunk 10.
+                       Para embeber en Rise en "Discover".
+
+m1l1-listen.html       🕵️ Ear Detective: 10 rondas. Escuchas una
+                       frase e identificas QUÉ chunk es.
+                       Botones 🐇 Natural / 🐢 Slow, puntaje + racha,
+                       pantalla de estrellas.
+                       Para embeber en Rise en "Listen".
+
+m1l1-play.html         🌊 "The Flow": el juego insignia (8 mini-
+                       diálogos profesionales con un hueco o un
+                       chunk mal usado). Eliges el chunk que mantiene
+                       el flujo. Los distractores rotan: chunk de
+                       función equivocada / modismo casual / versión
+                       telegráfica sin marcador. Las explicaciones
+                       enseñan la FUNCIÓN.
+                       Para embeber en Rise en "Play".
+
+m1l1-speak.html        🎙️ 3 misiones con TEMPORIZADOR (60s / 75s /
+                       90s): (1) update con shifts, (2) reformular +
+                       reparar tras interrupción, (3) posicionarse y
+                       cerrar con el veredicto. Respuestas modelo
+                       VERBATIM (▶/🐢) + checklist de flujo.
+                       Para "Speak".
+
+m1l1-quiz.html         🏆 The Final Exam: 8 preguntas de transferencia
+                       (identificación de función, wrong-function
+                       spot, calibración del weigh-in, conciencia del
+                       cliché, repair move, telegram-like spot,
+                       spiral-forward). Pantalla de estrellas.
+                       Para embeber en Rise en "Prove".
+
+m1l1-audio-01.mp3  (10 audios VELOCIDAD NATURAL,
+   ...              uno por chunk, con tu voz "me" aprobada)
+m1l1-audio-10.mp3
+
+m1l1-audio-01-slow.mp3  (10 audios LENTOS,
+   ...                   misma voz, 20% más despacio)
+m1l1-audio-10-slow.mp3
+
+CÓMO SUBIRLO — EN DOS TANDAS (no las mezcles)
+----------------------------------------------
+TANDA 1 (archivos pequeños — si algo falla, se ve aquí):
+1. Ve a github.com/Rickhazur/sounding-natural
+2. Add file → Upload files.
+3. Arrastra estos 7 sueltos (no en carpeta):
+   m1l1-carousel.html, m1l1-listen.html, m1l1-play.html,
+   m1l1-speak.html, m1l1-quiz.html, m1l1-hero.png, LEEME.txt
+4. Commit changes.
+
+TANDA 2 (los 20 audios):
+5. Repite Add file → Upload files.
+6. Arrastra los 20 MP3 sueltos (m1l1-audio-01.mp3 …
+   m1l1-audio-10-slow.mp3).
+7. Commit changes. Espera 2 minutos.
+
+CÓMO EMBEBER EN RISE
+---------------------
+En Rise, bloque Multimedia → Embed, pega uno de estos códigos:
+
+Carousel (Discover):
+<iframe src="https://rickhazur.github.io/sounding-natural/m1l1-carousel.html" width="100%" height="800" frameborder="0" style="border-radius:16px;" title="Think in Chunks — Discover"></iframe>
+
+Listen (Ear Detective):
+<iframe src="https://rickhazur.github.io/sounding-natural/m1l1-listen.html" width="100%" height="720" frameborder="0" style="border-radius:16px;" title="Ear Detective — Think in Chunks"></iframe>
+
+Play (The Flow):
+<iframe src="https://rickhazur.github.io/sounding-natural/m1l1-play.html" width="100%" height="800" frameborder="0" style="border-radius:16px;" title="The Flow game"></iframe>
+
+Speak (90-second update):
+<iframe src="https://rickhazur.github.io/sounding-natural/m1l1-speak.html" width="100%" height="1060" frameborder="0" style="border-radius:16px;" title="Your 90-second update"></iframe>
+
+Quiz (The Final Exam):
+<iframe src="https://rickhazur.github.io/sounding-natural/m1l1-quiz.html" width="100%" height="750" frameborder="0" style="border-radius:16px;" title="Final quiz — Think in Chunks"></iframe>
+
+LOS AUDIOS
+----------
+20 audios con tu voz "me" aprobada: 10 en velocidad natural
+y 10 lentos (misma voz, 20% más despacio, mismo tono).
+El estudiante elige: 🐇 Natural o 🐢 Slow.
+Los 10 naturales fueron transcritos y verificados 10/10.

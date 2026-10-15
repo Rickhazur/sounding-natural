@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your 90-Second Update — Speak · Module 1 · Lesson 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#026A79;--teal2:#49ADB3;--amber:#E8AA28;--ink:#123C46;--muted:#5b6f75;--bg:#f2f8f8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);padding:34px 16px}
+.wrap{max-width:820px;margin:0 auto}
+.banner{background:linear-gradient(135deg,#0b5560,#026A79);color:#fff;border-radius:20px;padding:26px;text-align:center;margin-bottom:8px}
+.banner h2{font-family:'Sora';font-weight:800;font-size:clamp(19px,4vw,26px)}
+.banner p{color:#cfe3e6;font-size:14px;margin-top:6px}
+.sub{text-align:center;color:var(--muted);font-size:14px;margin:18px 0;font-weight:600}
+.mission{background:#fff;border-radius:18px;padding:22px;display:flex;gap:18px;align-items:flex-start;box-shadow:0 8px 26px rgba(2,106,121,.09);border:1px solid #e9f2f2;margin-bottom:14px}
+.mnum{flex-shrink:0;width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--amber),#d1941a);color:#3a2a05;font-family:'Sora';font-weight:800;font-size:19px;display:grid;place-items:center}
+.mission h4{font-family:'Sora';font-size:16px;margin-bottom:6px}
+.mission p{font-size:14.5px;color:var(--muted);line-height:1.65;margin-bottom:12px}
+.mission code{background:#eef6f6;color:var(--teal);padding:2px 8px;border-radius:6px;font-weight:700;font-size:13.5px}
+.warnbox{background:#fdf3e3;border:1px solid #f0d9a8;border-radius:12px;padding:12px 14px;font-size:13.5px;line-height:1.6;color:#7a5a1a;margin-bottom:12px}
+.model{display:flex;align-items:center;gap:10px;background:#eef6f6;border-radius:12px;padding:9px 14px;flex-wrap:wrap;margin-bottom:8px}
+.model button{width:40px;height:40px;border-radius:50%;border:none;background:var(--teal);color:#fff;font-size:15px;cursor:pointer;flex-shrink:0;display:grid;place-items:center}
+.model button.playing{background:var(--amber);color:#3a2a05}
+.model span{font-size:13px;font-weight:600;color:var(--muted)}
+.model .sent{flex-basis:100%;font-size:14.5px;color:var(--ink);font-weight:600;font-style:italic}
+.model .sent mark{background:#ffe9ad;padding:1px 5px;border-radius:5px}
+.timer{display:flex;align-items:center;gap:12px;background:#f2fbfb;border:1px dashed var(--teal2);border-radius:12px;padding:10px 14px;margin-top:10px}
+.tbtn{background:#fff;border:2px solid var(--teal2);color:var(--teal);font-weight:700;font-size:14px;padding:8px 20px;border-radius:999px;cursor:pointer}
+.tbtn:hover{background:#e8f4f5}
+.tdisp{font-family:'Sora';font-weight:800;font-size:24px;color:var(--teal);min-width:76px}
+.tdisp.done{color:#2e9e5b}
+.timer small{color:var(--muted);font-size:12.5px}
+.check{background:#e9f5f5;border-radius:18px;padding:24px;margin-top:20px}
+.check h4{font-family:'Sora';margin-bottom:14px;text-align:center;font-size:16px}
+.check label{display:flex;gap:12px;align-items:flex-start;background:#fff;border-radius:12px;padding:13px 16px;margin-bottom:10px;font-size:14.5px;cursor:pointer;box-shadow:0 3px 10px rgba(2,106,121,.07)}
+.check input{width:20px;height:20px;accent-color:var(--teal);margin-top:1px;flex-shrink:0}
+@media (max-width:560px){.mission{flex-direction:column;gap:12px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="banner">
+    <h2>🎙️ Your turn — the 90-second professional update</h2>
+    <p>Record yourself (phone voice memo is fine). Then compare with the model. Flow is the grade.</p>
+  </div>
+  <p class="sub">Use chunks from <b>at least 3 different moments</b> (🔀 · 🔍 · ⚖️ · 🏁). The timer keeps you honest:</p>
+
+  <div class="mission"><span class="mnum">1</span><div>
+    <h4>🔀 Open & shift → the stand-up update</h4>
+    <p>The team is waiting. Give your update and jump to a new topic using <b>🔀 shift</b> markers — no apology, no “I change topic now”: <code>By the way, / Speaking of which, / That reminds me, __</code>.</p>
+    <div class="model"><span class="sent">“<mark>By the way,</mark> the client call was moved to Thursday.”</span><button data-a="m1l1-audio-01.mp3" aria-label="Play model answer">▶</button><button data-a="m1l1-audio-01-slow.mp3" aria-label="Play model answer slowly">🐢</button><span>🔊 Model answer — tap to compare</span></div>
+    <div class="model"><span class="sent">“<mark>Speaking of which,</mark> the budget was approved this morning.”</span><button data-a="m1l1-audio-02.mp3" aria-label="Play model answer">▶</button><button data-a="m1l1-audio-02-slow.mp3" aria-label="Play model answer slowly">🐢</button><span>🔊 Shift #2 — link to a word just said</span></div>
+    <div class="timer" data-secs="60"><button class="tbtn" onclick="startTimer(this)">⏱ Start 60s</button><span class="tdisp">01:00</span><small>record your update — two shifts minimum</small></div>
+  </div></div>
+
+  <div class="mission"><span class="mnum">2</span><div>
+    <h4>🔍 Clarify & repair → the confusing point</h4>
+    <p>Your proposal confused the room. Reformulate it with <b>🔍 clarify</b>, then repair after a “colleague interrupts” — pick the thread back up: <code>In other words, __</code> · <code>As I was saying, __</code>. Never trail off.</p>
+    <div class="model"><span class="sent">“<mark>In other words,</mark> we deliver the first phase by Friday.”</span><button data-a="m1l1-audio-04.mp3" aria-label="Play model answer">▶</button><button data-a="m1l1-audio-04-slow.mp3" aria-label="Play model answer slowly">🐢</button><span>🔊 Reformulate — same idea, clearer</span></div>
+    <div class="model"><span class="sent">“<mark>As I was saying,</mark> the proposal needs one more review.”</span><button data-a="m1l1-audio-06.mp3" aria-label="Play model answer">▶</button><button data-a="m1l1-audio-06-slow.mp3" aria-label="Play model answer slowly">🐢</button><span>🔊 Repair — resume after the interruption</span></div>
+    <div class="timer" data-secs="75"><button class="tbtn" onclick="startTimer(this)">⏱ Start 75s</button><span class="tdisp">01:15</span><small>reformulate once, repair once</small></div>
+  </div></div>
+
+  <div class="mission"><span class="mnum">3</span><div>
+    <h4>⚖️ Weigh in & close → your verdict</h4>
+    <p>Full arc in 90 seconds: <b>position before you state</b> (⚖️), then <b>close with the verdict</b> (🏁). Say both out loud, then listen back. Model kit below — stance first, verdict last:</p>
+    <div class="model"><span class="sent">“<mark>To be honest,</mark> I think the deadline is too tight.”</span><button data-a="m1l1-audio-08.mp3" aria-label="Play model answer">▶</button><button data-a="m1l1-audio-08-slow.mp3" aria-label="Play model answer slowly">🐢</button><span>🔊 ⚖️ weigh in — stance preface</span></div>
+    <div class="model"><span class="sent">“<mark>At the end of the day,</mark> the client decides.”</span><button data-a="m1l1-audio-10.mp3" aria-label="Play model answer">▶</button><button data-a="m1l1-audio-10-slow.mp3" aria-label="Play model answer slowly">🐢</button><span>🔊 🏁 close — ONE per conversation</span></div>
+    <div class="timer" data-secs="90"><button class="tbtn" onclick="startTimer(this)">⏱ Start 90s</button><span class="tdisp">01:30</span><small>weigh in, then land the verdict</small></div>
+  </div></div>
+
+  <div class="check">
+    <h4>🌊 Then listen back — flow checklist:</h4>
+    <label><input type="checkbox"> Did every topic jump have a marker? (nothing dropped in with no warning)</label>
+    <label><input type="checkbox"> Did I position before I stated? (weigh-in before the opinion)</label>
+    <label><input type="checkbox"> Did the reformulation actually simplify — or just repeat?</label>
+    <label><input type="checkbox"> Did I use chunks from at least 3 different moments (🔀 · 🔍 · ⚖️ · 🏁)?</label>
+    <label><input type="checkbox"> Did “at the end of the day” appear exactly ONCE — and did it close?</label>
+  </div>
+</div>
+<script>
+let curA=null,curB=null;
+document.querySelectorAll('.model button').forEach(b=>{
+  const label=b.textContent;
+  b.onclick=()=>{
+    if(curA&&!curA.paused&&curB===b){curA.pause();b.classList.remove('playing');b.textContent=label;return;}
+    if(curA){curA.pause();if(curB){curB.classList.remove('playing');curB.textContent=curB._label||'▶';}}
+    curA=new Audio(b.dataset.a);curB=b;b._label=label;b.classList.add('playing');b.textContent='⏸';
+    curA.onended=()=>{b.classList.remove('playing');b.textContent=label;};
+    curA.play().catch(()=>{b.classList.remove('playing');b.textContent=label;});
+  };
+});
+/* countdown timers */
+function fmt(t){return String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0');}
+function startTimer(btn){
+  const box=btn.closest('.timer'),disp=box.querySelector('.tdisp'),total=+box.dataset.secs;
+  if(box._iv){clearInterval(box._iv);box._iv=null;}
+  let t=total;disp.classList.remove('done');disp.textContent=fmt(t);btn.textContent='⏹ Stop — tap to reset';
+  box._iv=setInterval(()=>{
+    t--;disp.textContent=fmt(Math.max(t,0));
+    if(t<=0){clearInterval(box._iv);box._iv=null;disp.classList.add('done');btn.textContent='⏱ Restart '+total+'s';}
+  },1000);
+}
+</script>
+</body>
+</html>
