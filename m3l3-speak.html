@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Difficult Call — Speak · Module 3 · Lesson 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#026A79;--teal2:#49ADB3;--amber:#E8AA28;--ink:#123C46;--muted:#5b6f75;--bg:#f2f8f8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);padding:34px 16px}
+.wrap{max-width:820px;margin:0 auto}
+.banner{background:linear-gradient(135deg,#0b5560,#026A79);color:#fff;border-radius:20px;padding:26px;text-align:center;margin-bottom:8px}
+.banner h2{font-family:'Sora';font-weight:800;font-size:clamp(19px,4vw,26px)}
+.banner p{color:#cfe3e6;font-size:14px;margin-top:6px}
+.sub{text-align:center;color:var(--muted);font-size:14px;margin:18px 0;font-weight:600}
+.bank{background:#e9f5f5;border-radius:14px;padding:16px;margin-bottom:18px}
+.bank p.bt{font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;text-align:center}
+.bank ol{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:6px 14px}
+.bank li{font-size:13px;color:var(--ink);background:#fff;border-radius:8px;padding:7px 10px}
+.bank li b.n{color:var(--teal);margin-right:6px}
+.mission{background:#fff;border-radius:18px;padding:22px;border:1px solid #e9f2f2;border-top:4px solid var(--teal);box-shadow:0 8px 26px rgba(2,106,121,.09);margin-bottom:18px}
+.mhead{display:flex;gap:16px;align-items:flex-start;margin-bottom:12px}
+.mnum{flex-shrink:0;width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--amber),#d1941a);color:#3a2a05;font-family:'Sora';font-weight:800;font-size:19px;display:grid;place-items:center}
+.mhead h4{font-family:'Sora';font-size:16px;margin-bottom:4px}
+.mhead .tag{font-size:13px;color:var(--muted);font-weight:600}
+.scenebox{background:#e9f5f5;border-left:4px solid var(--teal2);border-radius:0 12px 12px 0;padding:12px 14px;font-size:14px;line-height:1.65;color:var(--ink);margin-bottom:12px}
+.prep{margin-bottom:12px}
+.prep p.ph{font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
+.prep ul{list-style:none}
+.prep li{font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:7px;padding-left:22px;position:relative}
+.prep li::before{content:'\2713';position:absolute;left:0;color:var(--teal);font-weight:700}
+.prep code{background:#eef6f6;color:var(--teal);padding:2px 8px;border-radius:6px;font-weight:700;font-size:13px}
+.modelbox{background:#eef6f6;border-radius:12px;padding:14px;margin-bottom:12px}
+.modelbox .mlab{font-size:12.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
+.modelbox .mtext{font-size:14.5px;line-height:1.75;color:var(--ink);font-style:italic;margin-bottom:10px}
+.modelbox .mtext b.chunk{color:var(--teal);font-style:normal}
+.kit{display:flex;flex-wrap:wrap;gap:8px}
+.kitpill{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid #dbe9e9;border-radius:999px;padding:5px 8px 5px 12px;font-size:12.5px;font-weight:600;color:var(--ink)}
+.kitpill .n{color:var(--teal);font-weight:800}
+.kitpill button{width:30px;height:30px;border-radius:50%;border:none;background:var(--teal);color:#fff;font-size:12px;cursor:pointer;display:grid;place-items:center}
+.kitpill button.playing{background:var(--amber);color:#3a2a05}
+.turn{border:2px dashed var(--teal2);border-radius:12px;padding:14px;margin-bottom:12px;background:#fff}
+.turn p{font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:10px}
+.turn p b{color:var(--ink)}
+.timerrow{display:flex;align-items:center;gap:14px}
+.tbtn{background:var(--teal);color:#fff;border:none;border-radius:999px;padding:10px 20px;font-family:'Sora';font-weight:700;font-size:14px;cursor:pointer}
+.tbtn:active{transform:scale(.97)}
+.tdisp{font-family:'Sora';font-weight:800;font-size:22px;color:var(--teal)}
+.minicheck{background:#fdf3e3;border:1px solid #f0d9a8;border-radius:12px;padding:14px}
+.minicheck p{font-size:13px;font-weight:700;color:#7a5a1a;margin-bottom:10px}
+.minicheck label{display:flex;gap:10px;align-items:flex-start;background:#fff;border-radius:10px;padding:10px 13px;margin-bottom:8px;font-size:13.5px;cursor:pointer;color:var(--ink)}
+.minicheck label:last-child{margin-bottom:0}
+.minicheck input{width:19px;height:19px;accent-color:var(--teal);margin-top:1px;flex-shrink:0}
+.final{background:linear-gradient(135deg,#0b5560,#026A79);color:#fff;border-radius:20px;padding:26px;margin-top:20px}
+.final h3{font-family:'Sora';font-size:18px;margin-bottom:10px}
+.final p{color:#dff0f2;font-size:14.5px;line-height:1.7}
+.final p b{color:#fff}
+@media (max-width:560px){.mhead{flex-direction:column;gap:10px}.bank ol{grid-template-columns:1fr}.timerrow{flex-direction:column;align-items:flex-start}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="banner">
+    <h2>🎙️ The Difficult Call — your turn to speak</h2>
+    <p>Three hard conversations. Record yourself (phone voice memo is fine), then compare with the model. Tone is the grade.</p>
+  </div>
+  <p class="sub">Firmness without aggression — that's the whole lesson in one line.</p>
+
+  <div class="bank">
+    <p class="bt">Your 10 chunks — the only tools you may use</p>
+    <ol>
+      <li><b class="n">#1</b> I need to be honest with you:</li>
+      <li><b class="n">#2</b> This isn't easy to say, but…</li>
+      <li><b class="n">#3</b> I see where you're coming from, but…</li>
+      <li><b class="n">#4</b> That's a fair point, but…</li>
+      <li><b class="n">#5</b> I'm afraid that's not possible.</li>
+      <li><b class="n">#6</b> What I can do is…</li>
+      <li><b class="n">#7</b> I completely understand your frustration.</li>
+      <li><b class="n">#8</b> Let's take a step back.</li>
+      <li><b class="n">#9</b> Here's what I propose:</li>
+      <li><b class="n">#10</b> How can we make this work?</li>
+    </ol>
+  </div>
+
+  <!-- MISSION 1 -->
+  <div class="mission">
+    <div class="mhead"><span class="mnum">1</span><div>
+      <h4>🎯 Deliver bad news — the 2-week delay</h4>
+      <p class="tag">60 seconds · the client call you don't want to make</p>
+    </div></div>
+    <div class="scenebox"><b>The scene.</b> You're the project lead. The new ordering system was supposed to go live on the 15th — your client's biggest launch of the year depends on it. Testing found a data risk you can't ship with. You have to call the client today and tell them: the project will be <b>2 weeks late</b>. They are not going to be happy. Your job: say it straight, hold the line, and keep the relationship.</div>
+    <div class="prep">
+      <p class="ph">Prepare — your chunk plan</p>
+      <ul>
+        <li>Open with the preface — <code>#1 I need to be honest with you:</code> (or <code>#2</code>) — it softens the blow before the news lands.</li>
+        <li>Deliver the fact fast: the date, the 2 weeks. Don't bury it in small talk.</li>
+        <li>Say no cleanly — <code>#5 I'm afraid that's not possible.</code> One "sorry", not five. No over-apologizing.</li>
+        <li>Pivot immediately to what you CAN do: <code>#6 What I can do is…</code> — own the fix.</li>
+      </ul>
+    </div>
+    <div class="modelbox">
+      <p class="mlab">📖 Model answer — 60 seconds</p>
+      <p class="mtext">“<b class="chunk">I need to be honest with you:</b> this isn't the update I wanted to give you. The new ordering system won't go live on the 15th — we're looking at a two-week delay. I know this affects your launch plans, and I take that seriously. <b class="chunk">I'm afraid that's not possible</b> to shorten the testing phase; we've seen what happens when we skip it, and I won't risk your data on day one. <b class="chunk">What I can do is</b> move your team to the front of the support queue, send you a daily progress report, and confirm the new go-live date in writing by Friday. I'll own this personally until we're live.”</p>
+      <div class="kit">
+        <span class="kitpill"><span class="n">#1</span> preface <button data-a="m3l3-audio-01.mp3" aria-label="Play chunk 1">▶</button><button data-a="m3l3-audio-01-slow.mp3" aria-label="Play chunk 1 slowly">🐢</button></span>
+        <span class="kitpill"><span class="n">#2</span> alt preface <button data-a="m3l3-audio-02.mp3" aria-label="Play chunk 2">▶</button><button data-a="m3l3-audio-02-slow.mp3" aria-label="Play chunk 2 slowly">🐢</button></span>
+        <span class="kitpill"><span class="n">#5</span> clean no <button data-a="m3l3-audio-05.mp3" aria-label="Play chunk 5">▶</button><button data-a="m3l3-audio-05-slow.mp3" aria-label="Play chunk 5 slowly">🐢</button></span>
+        <span class="kitpill"><span class="n">#6</span> alternative <button data-a="m3l3-audio-06.mp3" aria-label="Play chunk 6">▶</button><button data-a="m3l3-audio-06-slow.mp3" aria-label="Play chunk 6 slowly">🐢</button></span>
+      </div>
+    </div>
+    <div class="turn">
+      <p><b>🎯 Your turn.</b> Hit the timer, say your 60-second version out loud, then listen back and compare with the model. Tone is the grade.</p>
+      <div class="timerrow"><button class="tbtn" data-secs="60">⏱ Start 60s</button><span class="tdisp">1:00</span></div>
+    </div>
+    <div class="minicheck">
+      <p>✅ Self-check — did I…</p>
+      <label><input type="checkbox"> open with a preface (#1 or #2), not a blunt drop?</label>
+      <label><input type="checkbox"> state the delay clearly — 2 weeks, with a new date?</label>
+      <label><input type="checkbox"> say no without over-apologizing ("sorry" once, max)?</label>
+      <label><input type="checkbox"> offer a concrete alternative (#6) I actually own?</label>
+      <label><input type="checkbox"> keep my tone calm and owned — no blaming, no begging?</label>
+    </div>
+  </div>
+
+  <!-- MISSION 2 -->
+  <div class="mission">
+    <div class="mhead"><span class="mnum">2</span><div>
+      <h4>🎯 Disagree upward — the plan that will fail</h4>
+      <p class="tag">60 seconds · your director's meeting</p>
+    </div></div>
+    <div class="scenebox"><b>The scene.</b> Your director just presented her plan to the team: launch the new service in <b>three markets at once</b>, next month. Everyone is nodding. You ran the numbers last night — support is already at capacity, and a triple launch will break response times. You believe the plan will fail. You also know you can't afford to burn this bridge. Your job: disagree with your boss, in the room, without becoming the problem.</div>
+    <div class="prep">
+      <p class="ph">Prepare — your chunk plan</p>
+      <ul>
+        <li>Validate first — <code>#3 I see where you're coming from, but…</code> or <code>#4 That's a fair point, but…</code></li>
+        <li>Attack the plan, never the person. "The plan risks X" beats "You're wrong."</li>
+        <li>Keep hard chunks OUT of upward conversations — never "as far as I'm concerned" to your director.</li>
+        <li>Close by co-owning the solution: <code>#10 How can we make this work?</code></li>
+      </ul>
+    </div>
+    <div class="modelbox">
+      <p class="mlab">📖 Model answer — 60 seconds</p>
+      <p class="mtext">“<b class="chunk">I see where you're coming from, but</b> I need to share a concern before we commit. Launching in three markets at once would give us huge momentum — <b class="chunk">that's a fair point, but</b> our support team is already at capacity. If we go live everywhere on day one, response times will drop, and fast response is the one thing our best clients praise us for. I know the board wants speed, and I respect that — but speed that breaks service will cost us more than waiting. <b class="chunk">How can we make this work?</b> What if we pilot in one market, prove the model, then roll out the other two with the lessons learned? You'd get the win you want — just sequenced.”</p>
+      <div class="kit">
+        <span class="kitpill"><span class="n">#3</span> validate <button data-a="m3l3-audio-03.mp3" aria-label="Play chunk 3">▶</button><button data-a="m3l3-audio-03-slow.mp3" aria-label="Play chunk 3 slowly">🐢</button></span>
+        <span class="kitpill"><span class="n">#4</span> validate <button data-a="m3l3-audio-04.mp3" aria-label="Play chunk 4">▶</button><button data-a="m3l3-audio-04-slow.mp3" aria-label="Play chunk 4 slowly">🐢</button></span>
+        <span class="kitpill"><span class="n">#10</span> co-own <button data-a="m3l3-audio-10.mp3" aria-label="Play chunk 10">▶</button><button data-a="m3l3-audio-10-slow.mp3" aria-label="Play chunk 10 slowly">🐢</button></span>
+      </div>
+    </div>
+    <div class="turn">
+      <p><b>🎯 Your turn.</b> Hit the timer, say your 60-second disagreement out loud — firm, respectful, with a way forward. Then listen back.</p>
+      <div class="timerrow"><button class="tbtn" data-secs="60">⏱ Start 60s</button><span class="tdisp">1:00</span></div>
+    </div>
+    <div class="minicheck">
+      <p>✅ Self-check — did I…</p>
+      <label><input type="checkbox"> validate before disagreeing (#3 or #4)?</label>
+      <label><input type="checkbox"> attack the plan, not the person?</label>
+      <label><input type="checkbox"> keep hard chunks out — nothing that sounds like insubordination?</label>
+      <label><input type="checkbox"> close with a shared question (#10) instead of a verdict?</label>
+      <label><input type="checkbox"> sound like an ally with a concern — not a critic with an agenda?</label>
+    </div>
+  </div>
+
+  <!-- MISSION 3 -->
+  <div class="mission">
+    <div class="mhead"><span class="mnum">3</span><div>
+      <h4>🎯 The furious client call — capstone</h4>
+      <p class="tag">90 seconds · the billing error your team made</p>
+    </div></div>
+    <div class="scenebox"><b>The scene.</b> The phone rings. It's your biggest client — and he is <b>furious</b>. Your team double-charged his March renewal and added a late fee on top of their own mistake. He's talking about leaving. Your job: take the full 90 seconds, use <b>at least 5 chunks</b> — validate (#7), reset (#8), one clean no (#5), an alternative (#6), and a proposal (#9) — and turn this call into the reason he stays.</div>
+    <div class="prep">
+      <p class="ph">Prepare — your chunk plan</p>
+      <ul>
+        <li>Validate before you redirect — <code>#7 I completely understand your frustration.</code> An angry client who feels heard calms down.</li>
+        <li>Reset the temperature: <code>#8 Let's take a step back.</code></li>
+        <li>Own the error first — your team made it — then say one clean no: <code>#5 I'm afraid that's not possible.</code> No caving, no groveling.</li>
+        <li>Pivot and propose: <code>#6 What I can do is…</code> + <code>#9 Here's what I propose:</code> — end with a plan, not an apology.</li>
+      </ul>
+    </div>
+    <div class="modelbox">
+      <p class="mlab">📖 Model answer — 90 seconds</p>
+      <p class="mtext">“<b class="chunk">I completely understand your frustration.</b> A billing error on an invoice this size would upset anyone — you have every right to call. <b class="chunk">Let's take a step back.</b> I've pulled up your account, and I can see exactly what happened: our system charged you twice for the March renewal. You're right, and I'm sorry — that one's on us. Now, <b class="chunk">I'm afraid that's not possible</b> to reverse the duplicate charge today itself; finance needs one business day to process it. But <b class="chunk">what I can do is</b> flag it as urgent personally, email you the correction confirmation tonight, and credit the late fee our error caused. <b class="chunk">Here's what I propose:</b> we fix the invoice, I put a double-check on your account so this never happens again, and I call you tomorrow to confirm the refund reached you. Fair?”</p>
+      <div class="kit">
+        <span class="kitpill"><span class="n">#7</span> validate <button data-a="m3l3-audio-07.mp3" aria-label="Play chunk 7">▶</button><button data-a="m3l3-audio-07-slow.mp3" aria-label="Play chunk 7 slowly">🐢</button></span>
+        <span class="kitpill"><span class="n">#8</span> reset <button data-a="m3l3-audio-08.mp3" aria-label="Play chunk 8">▶</button><button data-a="m3l3-audio-08-slow.mp3" aria-label="Play chunk 8 slowly">🐢</button></span>
+        <span class="kitpill"><span class="n">#5</span> clean no <button data-a="m3l3-audio-05.mp3" aria-label="Play chunk 5">▶</button><button data-a="m3l3-audio-05-slow.mp3" aria-label="Play chunk 5 slowly">🐢</button></span>
+        <span class="kitpill"><span class="n">#6</span> alternative <button data-a="m3l3-audio-06.mp3" aria-label="Play chunk 6">▶</button><button data-a="m3l3-audio-06-slow.mp3" aria-label="Play chunk 6 slowly">🐢</button></span>
+        <span class="kitpill"><span class="n">#9</span> proposal <button data-a="m3l3-audio-09.mp3" aria-label="Play chunk 9">▶</button><button data-a="m3l3-audio-09-slow.mp3" aria-label="Play chunk 9 slowly">🐢</button></span>
+      </div>
+    </div>
+    <div class="turn">
+      <p><b>🎯 Your turn.</b> This is the capstone — 90 seconds, at least 5 chunks, full arc from fury to fix. Hit the timer and give the call of your career.</p>
+      <div class="timerrow"><button class="tbtn" data-secs="90">⏱ Start 90s</button><span class="tdisp">1:30</span></div>
+    </div>
+    <div class="minicheck">
+      <p>✅ Self-check — did I…</p>
+      <label><input type="checkbox"> validate BEFORE redirecting (#7 came first)?</label>
+      <label><input type="checkbox"> reset the call's temperature (#8) instead of matching his anger?</label>
+      <label><input type="checkbox"> own the team's error before negotiating?</label>
+      <label><input type="checkbox"> say no without caving or groveling (#5 — clean, once)?</label>
+      <label><input type="checkbox"> offer an alternative (#6) AND close with a proposal (#9)?</label>
+      <label><input type="checkbox"> use at least 5 chunks — and end with a plan, not an apology?</label>
+    </div>
+  </div>
+
+  <div class="final">
+    <h3>🏆 Mission complete — firmness without aggression</h3>
+    <p>Three hard conversations, one thread running through all of them: <b>you can hold your ground without raising your voice</b>. The preface softens the blow (<b>#1 · #2</b>), validation disarms (<b>#3 · #4 · #7</b>), a clean no protects you (<b>#5</b>), and an alternative plus a proposal turns conflict into collaboration (<b>#6 · #9 · #10</b>). Bad news, disagreement, fury — handled. That's the difficult call, and now it's yours.</p>
+  </div>
+</div>
+<script>
+let curA=null,curB=null;
+document.querySelectorAll('button[data-a]').forEach(b=>{
+  const label=b.textContent;
+  b.onclick=()=>{
+    if(curA&&!curA.paused&&curB===b){curA.pause();b.classList.remove('playing');b.textContent=label;return;}
+    if(curA){curA.pause();if(curB){curB.classList.remove('playing');curB.textContent=curB._label;}}
+    curA=new Audio(b.dataset.a);curB=b;b._label=label;b.classList.add('playing');b.textContent='⏸';
+    curA.onended=()=>{b.classList.remove('playing');b.textContent=label;};
+    curA.play().catch(()=>{b.classList.remove('playing');b.textContent=label;});
+  };
+});
+document.querySelectorAll('.tbtn').forEach(btn=>{
+  const secs=parseInt(btn.dataset.secs,10);
+  const disp=btn.closest('.timerrow').querySelector('.tdisp');
+  const base='\u23f1 Start '+secs+'s';
+  const fmt=s=>Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
+  let iv=null,left=secs;disp.textContent=fmt(secs);
+  btn.onclick=()=>{
+    if(iv){clearInterval(iv);iv=null;btn.textContent=base;disp.textContent=fmt(secs);return;}
+    left=secs;btn.textContent='\u25a0 Stop';disp.textContent=fmt(left);
+    iv=setInterval(()=>{
+      left--;disp.textContent=fmt(left);
+      if(left<=0){clearInterval(iv);iv=null;disp.textContent='Done \u2705';btn.textContent='\u21ba Again';}
+    },1000);
+  };
+});
+</script>
+</body>
+</html>

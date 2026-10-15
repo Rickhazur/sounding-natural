@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pattern Carousel — Module 3 · Lesson 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#026A79;--teal2:#49ADB3;--amber:#E8AA28;--ink:#123C46;--muted:#5b6f75;--bg:#f2f8f8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);padding:34px 12px;min-height:100vh}
+.head{text-align:center;margin-bottom:8px;max-width:720px;margin-left:auto;margin-right:auto}
+.eyebrow{font-family:'Sora';font-weight:800;font-size:13px;letter-spacing:.22em;color:var(--amber);margin-bottom:8px}
+.head h2{font-family:'Sora';font-weight:800;font-size:clamp(24px,5vw,34px);color:var(--teal)}
+.head .sub{font-size:16px;font-weight:600;color:var(--ink);margin-top:6px}
+.head .thread{color:var(--muted);font-size:14px;margin-top:6px;font-style:italic}
+.rulebox{max-width:720px;margin:14px auto 6px;background:#fdf0d3;border:2px solid var(--amber);border-radius:16px;padding:14px 18px;font-size:14.5px;line-height:1.6;color:#6b4a00;text-align:center;box-shadow:0 6px 18px rgba(232,170,40,.20)}
+.counter{text-align:center;font-family:'Sora';font-weight:800;color:var(--teal);font-size:14px;letter-spacing:.12em;margin:14px 0 4px}
+.counter b{color:var(--amber);font-size:18px}
+.car{position:relative;max-width:920px;margin:0 auto;min-height:500px;touch-action:pan-y}
+.car-track{position:relative;height:460px;perspective:1400px}
+.pcard{position:absolute;top:0;left:50%;width:min(400px,88%);margin-left:min(-200px,-44%);background:#fff;border-radius:24px;padding:30px 28px 26px;box-shadow:0 18px 50px rgba(2,106,121,.18);border-top:6px solid var(--teal);transition:transform .55s cubic-bezier(.34,1.3,.5,1),opacity .45s;will-change:transform}
+.pcard .num{position:absolute;top:-19px;left:24px;background:var(--amber);color:#3a2a05;font-family:'Sora';font-weight:800;font-size:14px;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;box-shadow:0 4px 12px rgba(232,170,40,.5)}
+.pcard h3{font-family:'Sora';font-size:22px;font-weight:800;margin:8px 0 4px;color:var(--teal)}
+.reg{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);background:#e8f4f5;border-radius:999px;padding:4px 12px;margin-bottom:12px}
+.reg.warn{color:#8a5a00;background:#fdf0d3}
+.grp{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;color:#fff;background:linear-gradient(135deg,var(--teal),#0396a8);border-radius:999px;padding:4px 12px;margin:0 6px 12px 0}
+.bridge{background:#eaf6ff;border:1px solid #bcdcf5;border-radius:12px;padding:10px 13px;font-size:13px;line-height:1.55;color:#0d4a63;margin-bottom:12px}
+.warnbox{background:#fdf0d3;border:1px solid #f0d9a8;border-radius:12px;padding:10px 13px;font-size:13px;line-height:1.55;color:#7a5200;margin-bottom:12px}
+.portable{background:#e6f5f4;border:1px solid #bfe3e2;border-radius:12px;padding:10px 13px;font-size:13px;line-height:1.55;color:#026A79;margin-bottom:12px}
+.formula{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.formula b{background:#e8f4f5;color:var(--teal);font-size:12.5px;padding:6px 11px;border-radius:8px;font-weight:700}
+.formula b.hot{background:#fdf0d3;color:#8a5a00}
+.ex{background:#f6fbfb;border-left:4px solid var(--amber);border-radius:0 12px 12px 0;padding:12px 14px;font-size:16px;line-height:1.55;margin-bottom:12px}
+.ex mark{background:#ffe9ad;padding:1px 5px;border-radius:5px;font-weight:700}
+.key{font-size:13.5px;color:var(--muted);line-height:1.6;margin-bottom:16px}
+.audiodock{display:flex;align-items:center;gap:12px;background:#eef6f6;border-radius:14px;padding:10px 14px}
+.abtn{width:48px;height:48px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--teal),#0396a8);color:#fff;font-size:18px;cursor:pointer;flex-shrink:0;box-shadow:0 5px 14px rgba(2,106,121,.35);display:grid;place-items:center;transition:transform .15s}
+.abtn:active{transform:scale(.92)}
+.abtn .eq{display:none;align-items:flex-end;gap:2.5px;height:18px}
+.abtn .eq i{width:3.5px;background:#fff;border-radius:2px;animation:eq .7s ease-in-out infinite}
+.abtn .eq i:nth-child(2){animation-delay:.15s}.abtn .eq i:nth-child(3){animation-delay:.3s}.abtn .eq i:nth-child(4){animation-delay:.45s}
+@keyframes eq{0%,100%{height:6px}50%{height:17px}}
+.abtn.playing .tr{display:none}.abtn.playing .eq{display:flex}
+.abtn.slowbtn{width:40px;height:40px;font-size:16px;background:linear-gradient(135deg,#49ADB3,#026A79)}
+.abtn.slowbtn.playing{outline:3px solid var(--amber);outline-offset:2px}
+.audiodock span{font-size:13px;font-weight:600;color:var(--muted)}
+.car-nav{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:8px}
+.arrow{width:52px;height:52px;border-radius:50%;border:none;background:#fff;box-shadow:0 6px 18px rgba(2,106,121,.18);font-size:20px;cursor:pointer;color:var(--teal);transition:all .2s}
+.arrow:hover{background:var(--teal);color:#fff;transform:scale(1.08)}
+.dots{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-width:320px}
+.dots button{width:11px;height:11px;border-radius:50%;border:none;background:#c4d8da;cursor:pointer;transition:all .25s;padding:0}
+.dots button.on{background:var(--amber);transform:scale(1.4)}
+.hint{text-align:center;color:var(--muted);font-size:12.5px;margin-top:12px}
+@media (max-width:560px){.car{min-height:540px}.car-track{height:500px}.arrow{width:44px;height:44px}}
+@media (prefers-reduced-motion:reduce){.pcard{transition:none}.abtn .eq i{animation:none}}
+</style>
+</head>
+<body>
+<div class="head">
+  <div class="eyebrow">MODULE 3 · LESSON 3 · DISCOVER</div>
+  <h2>🪑 The Hot Seat</h2>
+  <p class="sub">Chunks for Handling Difficult Conversations</p>
+  <p class="thread">Firmness without aggression — protect the relationship while holding your position.</p>
+</div>
+<div class="rulebox">🔥 <b>The Hot Seat rule:</b> validate the person, hold your position. Never cave to end the tension.</div>
+<div class="counter"><b id="cnum">1</b> / 10</div>
+<div class="car"><div class="car-track" id="track"></div></div>
+<div class="car-nav">
+  <button class="arrow" onclick="move(-1)" aria-label="Previous pattern">←</button>
+  <div class="dots" id="dots"></div>
+  <button class="arrow" onclick="move(1)" aria-label="Next pattern">→</button>
+</div>
+<p class="hint">👆 drag or swipe &nbsp;·&nbsp; ← → keys work too</p>
+
+<script>
+const PATTERNS=[
+ {n:'01',name:'I need to be honest with you:',grp:'SET THE TONE',reg:'⚖️ Both — spoken & written',warn:false,bridge:null,portable:null,warnbox:'⚠️ Candor ≠ confrontation. Delivered cold, this sounds like a warning — keep your tone warm and calm.',f:['I need to be','+','honest with you:','+','the hard truth'],hot:[2],ex:'I need to be honest with you: the deadline won’t move.',key:'The CANDOR move — direct and adult. It signals that what comes next is true, not comfortable. Cards 1 vs 2 are two tones: #1 is candor (direct), #2 is care (softens). Spend #1 once per conversation — repeat it and it becomes a hammer.'},
+ {n:'02',name:'This isn’t easy to say, but…',grp:'SET THE TONE',reg:'🗣️ Spoken',warn:false,bridge:null,portable:null,warnbox:null,f:['This isn’t easy to say,','+','but…','+','the hard truth'],hot:[1],ex:'This isn’t easy to say, but we can’t renew the contract.',key:'The CARE move — same hard truth as #1, wrapped in empathy. Pick #2 when the other person is already upset or vulnerable: it says “I feel the weight of this too”.'},
+ {n:'03',name:'I see where you’re coming from, but…',grp:'DISAGREE DIPLOMATICALLY',reg:'🗣️ Spoken',warn:false,bridge:null,portable:null,warnbox:null,f:['I see where','+','you’re coming from,','+','but…','+','your counter'],hot:[2],ex:'I see where you’re coming from, but the numbers don’t support it.',key:'Acknowledges THEIR PERSPECTIVE — you heard their reasoning, and you’re still holding your ground. #3 vs #4: #3 honors how they think, #4 honors what they said.'},
+ {n:'04',name:'That’s a fair point, but…',grp:'DISAGREE DIPLOMATICALLY',reg:'⚖️ Both — spoken & written',warn:false,bridge:null,portable:null,warnbox:null,f:['That’s a fair point,','+','but…','+','your counter'],hot:[0],ex:'That’s a fair point, but it only covers the short term.',key:'Acknowledges the VALIDITY of the point — grants it was worth making, then pivots. Faster and lighter than #3: use it when you actually agree with part of what they said.'},
+ {n:'05',name:'I’m afraid that’s not possible.',grp:'SAY NO WITHOUT BREAKING',reg:'⚖️ Both — spoken & written',warn:false,bridge:null,portable:null,warnbox:'⚠️ “I’m afraid” is a softener, not an apology — don’t follow it with a long excuse. One clean sentence, then stop.',f:['I’m afraid','+','that’s not possible.'],hot:[0],ex:'I’m afraid that’s not possible on this timeline.',key:'The classic polite NO. Short, clean, final — the softener cushions the refusal so the relationship survives it. Never pair it with justifications: excuses invite negotiation.'},
+ {n:'06',name:'What I can do is…',grp:'SAY NO WITHOUT BREAKING',reg:'⚖️ Both — spoken & written',warn:false,bridge:'🔁 Spiral: this is a what-cleft — you mastered it in Module 2, Lesson 1 (The Art of Emphasis).',portable:null,warnbox:null,f:['What I can do','+','is','+','your offer'],hot:[0],ex:'What I can do is extend the deadline by a week.',key:'The no becomes a YES-WITH-CONDITIONS. Always follow #5 with #6: after refusing, immediately redirect to what IS possible. The relationship survives on this move.'},
+ {n:'07',name:'I completely understand your frustration.',grp:'DE-ESCALATE',reg:'⚖️ Both — spoken & written',warn:false,bridge:null,portable:'🧭 Portable move — usable at ANY point in a conversation, not only after a refusal. Validation opens ears.',warnbox:null,f:['I completely','+','understand your frustration.'],hot:[1],ex:'I completely understand your frustration — this is the second delay.',key:'Validation, not agreement: you’re acknowledging the FEELING, not conceding the point. Anger drops the moment people feel heard — and only then can they listen to you.'},
+ {n:'08',name:'Let’s take a step back.',grp:'DE-ESCALATE',reg:'🗣️ Spoken',warn:false,bridge:null,portable:'🧭 Portable move — usable at ANY point in a conversation, not only after a refusal. Hit pause before words do damage.',warnbox:null,f:['Let’s','+','take a step back.'],hot:[1],ex:'Let’s take a step back and look at what we both want.',key:'A verbal circuit-breaker: stops the spiral, buys thinking time, and reframes the moment as “us” instead of “me vs you”. Use it the second voices start rising — not after.'},
+ {n:'09',name:'Here’s what I propose:',grp:'CLOSE WITH A WAY OUT',reg:'⚖️ Both — spoken & written',warn:false,bridge:null,portable:null,warnbox:null,f:['Here’s','+','what I propose:','+','your plan'],hot:[1],ex:'Here’s what I propose: we split the cost 50/50.',key:'Take ownership of the solution. After the no and the de-escalation, YOU lead the way out — never leave the fix to the upset person. One concrete plan beats three vague promises.'},
+ {n:'10',name:'How can we make this work?',grp:'CLOSE WITH A WAY OUT',reg:'⚖️ Both — spoken & written',warn:false,bridge:null,portable:null,warnbox:null,f:['How can','+','we make this work?'],hot:[1],ex:'The refund isn’t possible — but how can we make this work?',key:'The most disarming closer: a genuine question. Puts the problem on the table and invites them to co-own the solution — people rarely attack a plan they helped build.'}
+];
+const track=document.getElementById('track'),dots=document.getElementById('dots'),cnum=document.getElementById('cnum');
+let cur=0;
+PATTERNS.forEach((p,i)=>{
+  const d=document.createElement('div');d.className='pcard';
+  d.innerHTML=`<span class="num">${i+1}</span><h3>${p.name}</h3>
+   <span class="grp">${p.grp}</span><span class="reg${p.warn?' warn':''}">${p.reg}</span>
+   ${p.bridge?`<div class="bridge">${p.bridge}</div>`:''}${p.warnbox?`<div class="warnbox">${p.warnbox}</div>`:''}${p.portable?`<div class="portable">${p.portable}</div>`:''}
+   <div class="formula">${p.f.map((x,j)=>`<b class="${p.hot.includes(j)?'hot':''}">${x}</b>`).join('')}</div>
+   <div class="ex">“${p.ex}”</div><p class="key">🔑 ${p.key}</p>
+   <div class="audiodock"><button class="abtn" aria-label="Hear ${p.name}"><span class="tr">▶</span><span class="eq"><i></i><i></i><i></i><i></i></span></button><button class="abtn slowbtn" aria-label="Hear ${p.name} slowly">🐢</button><span>▶ natural · 🐢 slow</span></div>`;
+  d.querySelector('.abtn').onclick=(e)=>{e.stopPropagation();toggleAudio('m3l3-audio-'+p.n+'.mp3',d.querySelector('.abtn'));};
+  d.querySelector('.slowbtn').onclick=(e)=>{e.stopPropagation();toggleAudio('m3l3-audio-'+p.n+'-slow.mp3',d.querySelector('.slowbtn'))};
+  track.appendChild(d);
+  const b=document.createElement('button');b.setAttribute('aria-label','Go to pattern '+(i+1));b.onclick=()=>go(i);dots.appendChild(b);
+});
+/* audio: one at a time */
+let curA=null,curB=null;
+function toggleAudio(file,btn){
+  if(curA&&!curA.paused&&curB===btn){curA.pause();btn.classList.remove('playing');return;}
+  if(curA){curA.pause();if(curB)curB.classList.remove('playing');}
+  curA=new Audio(file);curB=btn;btn.classList.add('playing');
+  curA.onended=()=>btn.classList.remove('playing');
+  curA.onerror=()=>{btn.classList.remove('playing');};
+  curA.play().catch(()=>btn.classList.remove('playing'));
+}
+/* coverflow */
+function layout(){
+  const cards=track.children;
+  for(let i=0;i<cards.length;i++){
+    const off=i-cur,c=cards[i],ax=Math.min(Math.abs(off),3);
+    c.style.transform=`translateX(${off*62}%) scale(${1-ax*0.14}) translateZ(${-ax*160}px) rotateY(${off===0?0:(off>0?-14:14)}deg)`;
+    c.style.opacity=ax>2?0:(1-ax*0.28);
+    c.style.zIndex=20-ax;
+    c.style.pointerEvents=Math.abs(off)>2?'none':'auto';
+  }
+  [...dots.children].forEach((d,i)=>d.classList.toggle('on',i===cur));
+  cnum.textContent=cur+1;
+}
+function go(i){cur=(i+PATTERNS.length)%PATTERNS.length;layout();}
+function move(d){go(cur+d);}
+layout();
+/* swipe + keys */
+let sx=null;
+track.addEventListener('pointerdown',e=>{sx=e.clientX;});
+window.addEventListener('pointerup',e=>{if(sx===null)return;const dx=e.clientX-sx;sx=null;if(Math.abs(dx)>40)move(dx<0?1:-1);});
+window.addEventListener('keydown',e=>{if(e.key==='ArrowRight')move(1);if(e.key==='ArrowLeft')move(-1);});
+</script>
+</body>
+</html>

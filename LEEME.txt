@@ -1,104 +1,138 @@
-MÓDULO 3 · LECCIÓN 2 — "The Storyteller" (Chunks for Storytelling and Anecdotes)
+MÓDULO 3 · LECCIÓN 3 — "The Hot Seat"
+Chunks for Handling Difficult Conversations
 Diseño espectacular mobile + desktop — PARA EL CURSO DE INGLÉS
 Versión PLANA (sin carpetas): todos los archivos van sueltos
 en la RAÍZ del repo sounding-natural
 ================================================================
 
-LOS 10 CHUNKS (validados pedagógicamente, en orden narrativo):
-🎬 SET THE SCENE:
- 1. Let me set the scene:        "Let me set the scene: it's 2019, and we're losing clients."   [⚖️ Both]
- 2. A little background first:    "A little background first: we had just merged two teams."     [⚖️ Both]
-📖 BUILD THE STORY:
- 3. So there we were,             "So there we were, in a room with the board."                  [🗣️ Spoken]
- 4. It all started when…          "It all started when the system crashed on launch day."         [⚖️ Both]
- 5. And that's when everything changed.  (igual)                                                  [⚖️ Both]
- 6. And then, out of nowhere,     "And then, out of nowhere, our biggest client called."         [🗣️ Spoken]
- 7. To cut a long story short,    "To cut a long story short, we shipped in three weeks."        [🗣️ Spoken]
-🎯 LAND THE POINT:
- 8. In the end,                   "In the end, we doubled our revenue."                           [⚖️ Both]
- 9. Looking back,                 "Looking back, the crisis was the best thing that happened."    [⚖️ Both]
-10. The moral of the story?       "The moral of the story? Never skip the backup plan."          [🗣️ Spoken — NUNCA en reportes formales]
+LOS 10 CHUNKS (validados pedagógicamente, organizados por
+momento del discurso — la escalera de una conversación difícil):
 
-PUNTO CLAVE DE LA LECCIÓN: las historias en inglés usan DOS tiempos —
-el pasado continuo pone el fondo (was/were + -ing), el pasado simple
-mueve la acción. Ataca el "and then… and then…" plano.
+SET THE TONE ("preface, don't ambush")
+1. I need to be honest with you:      [candor — directo]
+2. This isn't easy to say, but…       [care — suaviza]
 
-QUÉ HAY EN ESTE ZIP (27 archivos, todos a la RAÍZ del repo)
+DISAGREE DIPLOMATICALLY ("validate the point, hold your ground")
+3. I see where you're coming from, but…   [reconoce su perspectiva]
+4. That's a fair point, but…             [reconoce la validez del punto]
+
+SAY NO WITHOUT BREAKING ("no + alternative")
+5. I'm afraid that's not possible.    [el "no" limpio — sin pedir perdón]
+6. What I can do is…                  [both — 🔁 spiral bridge: what-cleft del M2L1]
+
+DE-ESCALATE ("portable moves — úsalos en CUALQUIER momento")
+7. I completely understand your frustration.   [validar ≠ estar de acuerdo]
+8. Let's take a step back.                     [reiniciar sin rendirse]
+
+CLOSE WITH A WAY OUT ("termina con plan, no con disculpa")
+9. Here's what I propose:             [both]
+10. How can we make this work?        [both]
+
+🔁 El chunk 6 es un what-cleft del Módulo 2 (Lección 1) con
+etiqueta explícita de puente en la tarjeta — la espiral:
+la misma forma, un trabajo nuevo (decir no con alternativa).
+🧭 Los chunks 7 y 8 son movimientos portátiles: funcionan en
+cualquier punto de la conversación, no solo después de un "no".
+Regla de la lección: firmeza sin agresión — valida a la persona,
+sostén tu posición. Nunca cedas solo para acabar la tensión.
+
+QUÉ HAY EN EL PAQUETE (27 archivos: 5 HTML + hero + 20 MP3 + LEEME)
 ------------------------------------------------------------
-m3l2-carousel.html     SOLO el carousel de los 10 chunks (coverflow).
-                       Cada tarjeta: ▶ natural y 🐢 slow, momento
-                       narrativo (🎬/📖/🎯), etiqueta de registro
-                       (🗣️/⚖️), nota de los dos tiempos y aviso de
-                       registro en la tarjeta 10. Para "Discover".
+m3l3-hero.png          🖼️ Imagen de introducción de la lección
+                       ("The Hot Seat"). REEMPLAZA el video
+                       introductorio en Rise: borra el bloque de
+                       video y pon esta imagen.
 
-m3l2-listen.html       🕵️ SOLO "Ear Detective": 10 rondas. Escuchas una
-                       frase e identificas QUÉ chunk es. 🐇/🐢 por ronda,
-                       puntaje + racha. Para "Listen".
+m3l3-carousel.html     🪑 Discover: coverflow de los 10 chunks.
+                       Cada tarjeta tiene ▶ natural y 🐢 slow,
+                       píldora de momento (SET THE TONE / DISAGREE
+                       DIPLOMATICALLY / SAY NO WITHOUT BREAKING /
+                       DE-ESCALATE / CLOSE WITH A WAY OUT),
+                       etiqueta de registro, puente 🔁 en el chunk 6
+                       y llamados 🧭 "portable move" en 7 y 8.
+                       Para embeber en Rise en "Discover".
 
-m3l2-play.html         📖 SOLO "The Anecdote": mecánica NUEVA de
-                       secuenciación. 8 anécdotas profesionales
-                       desordenadas — tócalas en orden (escena →
-                       nudo → desenlace). Si el orden está mal, te
-                       explica por qué la historia no tiene sentido.
-                       Para "Play".
+m3l3-listen.html       🕵️ Ear Detective: 10 rondas. Escuchas una
+                       frase e identificas QUÉ chunk es.
+                       Botones 🐇 Natural / 🐢 Slow, puntaje + racha.
+                       Para embeber en Rise en "Listen".
 
-m3l2-speak.html        SOLO las 3 misiones de habla: (1) abrir un caso
-                       de estudio, (2) comprimir un reporte con "To cut
-                       a long story short", (3) tu historia de 90
-                       segundos con chunks de los 3 momentos. Respuestas
-                       modelo (▶/🐢) + checklist. Para "Speak".
+m3l3-play.html         🔥 "The Hot Seat": el juego insignia (8 rondas:
+                       cliente furioso, empleado a la defensiva, jefe
+                       exigente, colega que te pasa su deadline,
+                       proveedor que niega el reembolso, compañero que
+                       culpa a otros, stakeholder que recorta el
+                       presupuesto, socio agresivo). Cada ronda tiene
+                       un interlocutor con nombre y poder claro.
+                       Eliges el chunk que DESESCALA SIN CEDER.
+                       Los distractores: demasiado agresivo, demasiado
+                       débil (cede todo), o frío y corporativo.
+                       Para embeber en Rise en "Play".
 
-m3l2-quiz.html         🏆 SOLO "The Final Exam": 8 preguntas de
-                       transferencia en situaciones nuevas. Para "Prove".
+m3l3-speak.html        🎙️ "The Difficult Call": 3 misiones: (1) dar una
+                       mala noticia en 60 segundos (retraso de 2
+                       semanas), (2) contradecir a tu director sin
+                       quemar el puente en 60 segundos, (3) la llamada
+                       del cliente furioso — capstone de 90 segundos
+                       con arco de 5 chunks. Respuestas modelo +
+                       checklists de autoevaluación ("validé antes de
+                       redirigir", "dije no sin pedir perdón de más").
+                       Para embeber en Rise en "Speak".
 
-m3l2-hero.png          🖼️ Imagen de introducción de la lección
-                       ("The Storyteller"). Bloque Imagen al inicio
-                       de la lección en Rise.
+m3l3-quiz.html         🏆 The Final Exam: 8 preguntas de transferencia.
+                       Ataca: validar vs. estar de acuerdo, el patrón
+                       "no + alternativa", el pedir perdón de más,
+                       el "however" en habla, los movimientos
+                       portátiles 7/8, los dos tonos de prefacio
+                       (candor vs. care), el what-cleft del chunk 6.
+                       Pantalla de estrellas. Para embeber en Rise en "Prove".
 
-m3l2-audio-01.mp3  (10 audios VELOCIDAD NATURAL,
+m3l3-audio-01.mp3  (10 audios VELOCIDAD NATURAL,
    ...              uno por chunk, con tu voz "me")
-m3l2-audio-10.mp3
+m3l3-audio-10.mp3
 
-m3l2-audio-01-slow.mp3  (10 audios LENTOS,
+m3l3-audio-01-slow.mp3  (10 audios LENTOS,
    ...                   misma voz, 20% más despacio)
-m3l2-audio-10-slow.mp3
+m3l3-audio-10-slow.mp3
 
-CÓMO SUBIRLO (en DOS tandas)
------------------------------
-TANDA 1 (7 archivos pequeños — si algo falla, se ve aquí):
-  m3l2-carousel.html, m3l2-listen.html, m3l2-play.html,
-  m3l2-speak.html, m3l2-quiz.html, m3l2-hero.png, LEEME.txt
-  1. Ve a github.com/Rickhazur/sounding-natural
-  2. Add file → Upload files → arrastra los 7 sueltos
-  3. Commit changes. Espera 2 minutos.
-  4. Di "ya" para verificar antes de la tanda 2.
+CÓMO SUBIRLO — EN DOS TANDAS (no las mezcles)
+----------------------------------------------
+TANDA 1 (archivos pequeños — si algo falla, se ve aquí):
+1. Ve a github.com/Rickhazur/sounding-natural
+2. Add file → Upload files.
+3. Arrastra estos 6 sueltos (no en carpeta):
+   m3l3-carousel.html, m3l3-listen.html, m3l3-play.html,
+   m3l3-speak.html, m3l3-quiz.html, m3l3-hero.png
+4. Commit changes.
 
-TANDA 2 (20 audios):
-  Arrastra los 20 MP3 sueltos a la raíz. Commit changes.
+TANDA 2 (los 20 audios):
+5. Repite Add file → Upload files.
+6. Arrastra los 20 MP3 sueltos (m3l3-audio-01.mp3 …
+   m3l3-audio-10-slow.mp3).
+7. Commit changes. Espera 2 minutos.
 
-CÓMO EMBEBER EN RISE (bloque Multimedia → Embed)
---------------------------------------------------
-Carousel:
-<iframe src="https://rickhazur.github.io/sounding-natural/m3l2-carousel.html" width="100%" height="800" frameborder="0" style="border-radius:16px;" title="Chunk Carousel"></iframe>
+CÓMO EMBEBER EN RISE
+---------------------
+En Rise, bloque Multimedia → Embed, pega uno de estos códigos:
+
+Carousel (Discover):
+<iframe src="https://rickhazur.github.io/sounding-natural/m3l3-carousel.html" width="100%" height="800" frameborder="0" style="border-radius:16px;" title="The Hot Seat — Discover"></iframe>
 
 Listen (Ear Detective):
-<iframe src="https://rickhazur.github.io/sounding-natural/m3l2-listen.html" width="100%" height="720" frameborder="0" style="border-radius:16px;" title="Ear Detective"></iframe>
+<iframe src="https://rickhazur.github.io/sounding-natural/m3l3-listen.html" width="100%" height="720" frameborder="0" style="border-radius:16px;" title="Ear Detective — The Hot Seat"></iframe>
 
-Play (The Anecdote):
-<iframe src="https://rickhazur.github.io/sounding-natural/m3l2-play.html" width="100%" height="800" frameborder="0" style="border-radius:16px;" title="The Anecdote"></iframe>
+Play (The Hot Seat):
+<iframe src="https://rickhazur.github.io/sounding-natural/m3l3-play.html" width="100%" height="800" frameborder="0" style="border-radius:16px;" title="The Hot Seat game"></iframe>
 
-Speak:
-<iframe src="https://rickhazur.github.io/sounding-natural/m3l2-speak.html" width="100%" height="1060" frameborder="0" style="border-radius:16px;" title="Speaking missions"></iframe>
+Speak (The Difficult Call):
+<iframe src="https://rickhazur.github.io/sounding-natural/m3l3-speak.html" width="100%" height="1060" frameborder="0" style="border-radius:16px;" title="The Difficult Call"></iframe>
 
-Quiz (Final Exam):
-<iframe src="https://rickhazur.github.io/sounding-natural/m3l2-quiz.html" width="100%" height="750" frameborder="0" style="border-radius:16px;" title="Final quiz"></iframe>
-
-IMAGEN INTRODUCTORIA
----------------------
-Bloque Imagen al inicio de la lección en Rise → sube m3l2-hero.png.
+Quiz (The Final Exam):
+<iframe src="https://rickhazur.github.io/sounding-natural/m3l3-quiz.html" width="100%" height="750" frameborder="0" style="border-radius:16px;" title="Final quiz — The Hot Seat"></iframe>
 
 LOS AUDIOS
 ----------
 20 audios con tu voz "me" aprobada: 10 en velocidad natural
-y 10 lentos (misma voz, 20% más despacio). El estudiante elige:
-🐇 Natural o 🐢 Slow.
+y 10 lentos (misma voz, 20% más despacio, mismo tono).
+El estudiante elige: 🐇 Natural o 🐢 Slow.
+Todos los naturales fueron verificados por transcripción.
