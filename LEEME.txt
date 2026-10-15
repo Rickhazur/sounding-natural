@@ -1,139 +1,109 @@
-MÓDULO 1 · LECCIÓN 3 — "Framing Your Message"
-Discourse Frames for Packaging What You Say So It Lands
-(CÓMO / Producir — el thread de la lección)
+MÓDULO 2 · LECCIÓN 1 — "The Art of Emphasis" (RECONSTRUIDA v2)
 Diseño espectacular mobile + desktop — PARA EL CURSO DE INGLÉS
 Versión PLANA (sin carpetas): todos los archivos van sueltos
 en la RAÍZ del repo sounding-natural
 ================================================================
 
-LOS 10 FRAMES (validados pedagógicamente, ordenados por
-momento del discurso — el arco de producir un mensaje enmarcado):
+EL NUEVO SISTEMA (10 patrones de ÉNFASIS Y FOCO, validados
+pedagógicamente — las inversiones ahora viven en la Lección 3):
+1. Emphatic do            "We do value your partnership."
+2. It-cleft               "It was Maria who closed the deal."
+3. Contrastive focus      "It's not the price, it's the timeline."
+4. What-cleft             "What we need is a decision by Friday."
+5. Reversed what-cleft    "A decision by Friday is what we need."
+6. All-cleft              "All we need is a decision."
+7. The reason… is…        "The reason I'm calling is to confirm the dates."
+8. "The thing is…"        "The thing is, we need more time."
+9. Object fronting        "This clause we cannot accept."
+10. Complement fronting   "Critical to the deal is the timeline."
 
-🗺️ FRAME — abrir y organizar el mensaje
-1. Here's the thing:              "Here's the thing: we need two more weeks."
-2. Let me put it this way:        "Let me put it this way: our current plan is too slow."
-
-🔧 CLARIFY — reparar en tiempo real (el trío clarificador)
-3. What I'm trying to say is      "What I'm trying to say is the report isn't ready yet."
-   → groping: las palabras aún no llegan (ten paciencia conmigo)
-4. What I mean is                 "What I mean is we should wait for the client."
-   → correcting: corrijo lo que acabo de decir
-
-🛡️ SOFTEN — atenuar sin debilitar (hedge honesto, nunca filler)
-5. As far as I know,              "As far as I know, the contract ends in June."
-   → marca el LÍMITE de tu conocimiento
-6. To be fair,                    "To be fair, the team worked very hard on this."
-   → añade una consideración justa, equilibra
-
-📰 DELIVER — dar las noticias (buenas o malas)
-7. The good news is               "The good news is we finished ahead of schedule."
-8. The bad news is                "The bad news is the budget is over."
-9. The problem is                 "The problem is we don't have enough data."
-
-🔭 PROJECT — proyectar hacia adelante
-10. What happens next is          "What happens next is we meet the client on Monday."
-
-PEDAGOGÍA DE LA LECCIÓN (no negociable):
-- Los frames son PACKAGING, no contenido: el frame empaqueta,
-  el ___ slot lleva el contenido. Lanza el frame MIENTRAS se
-  forma el contenido — este es el payoff de PRODUCIR.
-- El trío clarificador NO es intercambiable: groping ("trying
-  to say") vs correcting ("what I mean") vs deliberate
-  rephrase ("let me put it this way"). Se enseña con las
-  tarjetas de contraste 🔍 en las cards 2/3/4 del carrusel.
-- Hedge honesto, nunca como filler.
-- Los frames 1, 4 y 10 se enseñan como FUNCIÓN (manejo del
-  discurso), NUNCA como estructuras gramaticales — ese es el
-  puente con el Módulo 2 y no se puede colapsar.
-
-QUÉ HAY EN EL PAQUETE (27 archivos: 5 HTML + hero + 20 MP3 + LEEME)
+QUÉ HAY EN ESTE ZIP (28 archivos, todos a la RAÍZ del repo)
 ------------------------------------------------------------
-m1l3-hero.png          🖼️ Imagen de introducción de la lección
-                       ("Framing Your Message", negro/oro premium).
+m2l1-index.html        La lección completa (hero, viaje, carousel,
+                       listen, juego, speak, quiz final).
+
+m2l1-carousel.html     SOLO el carousel de los 10 patrones.
+                       Cada tarjeta tiene ▶ natural y 🐢 slow,
+                       más etiqueta de registro (hablado / escrito).
+                       Para embeber en Rise en "Discover".
+
+m2l1-listen.html       🕵️ SOLO "Ear Detective": juego de discriminación
+                       auditiva (10 rondas). Escuchas una frase y
+                       adivinas QUÉ patrón es — sin ver tarjetas.
+                       Botones 🐇 Natural / 🐢 Slow en cada ronda.
+                       Para embeber en Rise en "Listen".
+
+m2l1-play.html         ⚡ SOLO "Pattern Picker Pro": el juego insignia
+                       de la lección (8 rondas). Situaciones
+                       profesionales reales: elige la frase más
+                       natural y enfática. Trampas clásicas de
+                       hispanohablantes ("do values", "That we
+                       need is…", "is because", pronombres al frente).
+                       Para embeber en Rise en "Play".
+
+m2l1-speak.html        SOLO las 3 misiones de habla con respuesta
+                       modelo (▶ natural y 🐢 slow) + auto-chequeo
+                       de registro ("the thing is" = boca, no email).
+                       Para "Speak".
+
+m2l1-quiz.html         🏆 SOLO "The Final Exam": 8 preguntas de
+                       transferencia (situaciones nuevas, mismos
+                       patrones). Para embeber en Rise en "Prove".
+
+m2l1-hero.png          🖼️ Imagen de introducción de la lección
+                       (título + subtítulo + 3 objetivos).
                        REEMPLAZA el video introductorio en Rise:
                        borra el bloque de video y pon esta imagen.
 
-m1l3-carousel.html     🖼️ Discover: coverflow de los 10 frames.
-                       Cada tarjeta muestra el frame con su slot
-                       ___ + ejemplo completado, píldora de momento
-                       (🗺️🔧🛡️📰🔭), contraste del trío 🔍 en las
-                       cards 2/3/4, y botones 🐇 natural / 🐢 slow.
-                       Para embeber en Rise en "Discover".
+m2l1-audio-01.mp3  (10 audios VELOCIDAD NATURAL,
+   ...              uno por patrón, con tu voz "me")
+m2l1-audio-10.mp3
 
-m1l3-listen.html       🕵️ Ear Detective: 10 rondas. Escuchas una
-                       frase e identificas QUÉ frame es.
-                       Botones 🐇 Natural / 🐢 Slow, puntaje + racha,
-                       pantalla de estrellas. Para "Listen".
-
-m1l3-play.html         🖼️ "The Framer": el juego insignia (8 escenas,
-                       un día de trabajo real: client call → lost
-                       thread → slip of the tongue → unsure fact →
-                       tough review → status update → the issue →
-                       the close). Eliges el frame que mejor
-                       EMPAQUETA el mensaje. Los distractores rotan:
-                       frame con función equivocada / versión brusca
-                       sin frame / versión sobre-atenuada. Para "Play".
-
-m1l3-speak.html        🎙️ 3 misiones: (1) dar malas noticias con
-                       frames (60s), (2) reformular un mensaje
-                       confuso con el trío (60s), (3) proyectar
-                       próximos pasos (90s). Respuestas modelo
-                       verbatim (▶/🐢), timers de cuenta regresiva
-                       funcionales y checklist de packaging.
-                       Para "Speak".
-
-m1l3-quiz.html         🏆 The Final Exam: 8 preguntas de transferencia
-                       (contraste del trío, hedging honesto, elección
-                       de packaging, frame vs. blunt). Pantalla de
-                       estrellas. Para embeber en Rise en "Prove".
-
-m1l3-audio-01.mp3  (10 audios VELOCIDAD NATURAL,
-   ...              uno por frame, con tu voz "me")
-m1l3-audio-10.mp3
-
-m1l3-audio-01-slow.mp3  (10 audios LENTOS,
+m2l1-audio-01-slow.mp3  (10 audios LENTOS,
    ...                   misma voz, 20% más despacio)
-m1l3-audio-10-slow.mp3
+m2l1-audio-10-slow.mp3
 
-CÓMO SUBIRLO — EN DOS TANDAS (no las mezcles)
-----------------------------------------------
-TANDA 1 (archivos pequeños — si algo falla, se ve aquí):
-1. Ve a github.com/Rickhazur/sounding-natural
-2. Add file → Upload files.
-3. Arrastra estos 7 sueltos (no en carpeta):
-   m1l3-carousel.html, m1l3-listen.html, m1l3-play.html,
-   m1l3-speak.html, m1l3-quiz.html, m1l3-hero.png, LEEME.txt
-4. Commit changes.
+NOTA: los archivos viejos page-pattern-picker-v2.html y
+page-lesson4-quiz.html del repo contienen el sistema ANTERIOR
+y ya no se usan en esta lección — el juego y el quiz ahora
+son m2l1-play.html y m2l1-quiz.html (autocontenidos).
 
-TANDA 2 (los 20 audios):
-5. Repite Add file → Upload files.
-6. Arrastra los 20 MP3 sueltos (m1l3-audio-01.mp3 …
-   m1l3-audio-10-slow.mp3).
-7. Commit changes. Espera 2 minutos.
+CÓMO SUBIRLO (una sola vez)
+----------------------------
+1. Descomprime el ZIP.
+2. Ve a github.com/Rickhazur/sounding-natural
+3. Add file → Upload files.
+4. Arrastra LOS 28 ARCHIVOS sueltos (no en carpeta).
+5. Commit changes. Espera 2 minutos.
 
 CÓMO EMBEBER EN RISE
 ---------------------
 En Rise, bloque Multimedia → Embed, pega uno de estos códigos:
 
-Carousel (Discover):
-<iframe src="https://rickhazur.github.io/sounding-natural/m1l3-carousel.html" width="100%" height="800" frameborder="0" style="border-radius:16px;" title="Framing Your Message — Discover"></iframe>
+Carousel:
+<iframe src="https://rickhazur.github.io/sounding-natural/m2l1-carousel.html" width="100%" height="800" frameborder="0" style="border-radius:16px;" title="Pattern Carousel"></iframe>
 
 Listen (Ear Detective):
-<iframe src="https://rickhazur.github.io/sounding-natural/m1l3-listen.html" width="100%" height="720" frameborder="0" style="border-radius:16px;" title="Ear Detective — Framing Your Message"></iframe>
+<iframe src="https://rickhazur.github.io/sounding-natural/m2l1-listen.html" width="100%" height="720" frameborder="0" style="border-radius:16px;" title="Ear Detective"></iframe>
 
-Play (The Framer):
-<iframe src="https://rickhazur.github.io/sounding-natural/m1l3-play.html" width="100%" height="800" frameborder="0" style="border-radius:16px;" title="The Framer game"></iframe>
+Play (Pattern Picker Pro):
+<iframe src="https://rickhazur.github.io/sounding-natural/m2l1-play.html" width="100%" height="750" frameborder="0" style="border-radius:16px;" title="Pattern Picker Pro"></iframe>
 
-Speak (Framing workout):
-<iframe src="https://rickhazur.github.io/sounding-natural/m1l3-speak.html" width="100%" height="1060" frameborder="0" style="border-radius:16px;" title="Your framing workout"></iframe>
+Speak:
+<iframe src="https://rickhazur.github.io/sounding-natural/m2l1-speak.html" width="100%" height="1060" frameborder="0" style="border-radius:16px;" title="Speaking missions"></iframe>
 
 Quiz (The Final Exam):
-<iframe src="https://rickhazur.github.io/sounding-natural/m1l3-quiz.html" width="100%" height="750" frameborder="0" style="border-radius:16px;" title="Final quiz — Framing Your Message"></iframe>
+<iframe src="https://rickhazur.github.io/sounding-natural/m2l1-quiz.html" width="100%" height="750" frameborder="0" style="border-radius:16px;" title="Final quiz"></iframe>
+
+IMAGEN INTRODUCTORIA (reemplaza el video)
+-----------------------------------------
+1. En Rise, abre la lección del Módulo 2.
+2. Borra el bloque del video introductorio.
+3. Agrega un bloque Imagen en su lugar.
+4. Sube m2l1-hero.png.
 
 LOS AUDIOS
 ----------
 20 audios con tu voz "me" aprobada: 10 en velocidad natural
 y 10 lentos (misma voz, 20% más despacio, mismo tono).
 El estudiante elige: 🐇 Natural o 🐢 Slow.
-Verificación por transcripción: 10/10 audios naturales
-verificados palabra por palabra contra el guion.

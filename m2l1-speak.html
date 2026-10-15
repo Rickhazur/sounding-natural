@@ -20,10 +20,12 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);paddin
 .mission h4{font-family:'Sora';font-size:16px;margin-bottom:6px}
 .mission p{font-size:14.5px;color:var(--muted);line-height:1.65;margin-bottom:12px}
 .mission code{background:#eef6f6;color:var(--teal);padding:2px 8px;border-radius:6px;font-weight:700;font-size:13.5px}
-.model{display:flex;align-items:center;gap:10px;background:#eef6f6;border-radius:12px;padding:9px 14px}
+.warnbox{background:#fdf3e3;border:1px solid #f0d9a8;border-radius:12px;padding:12px 14px;font-size:13.5px;line-height:1.6;color:#7a5a1a;margin-bottom:12px}
+.model{display:flex;align-items:center;gap:10px;background:#eef6f6;border-radius:12px;padding:9px 14px;flex-wrap:wrap}
 .model button{width:40px;height:40px;border-radius:50%;border:none;background:var(--teal);color:#fff;font-size:15px;cursor:pointer;flex-shrink:0;display:grid;place-items:center}
 .model button.playing{background:var(--amber);color:#3a2a05}
 .model span{font-size:13px;font-weight:600;color:var(--muted)}
+.model .sent{flex-basis:100%;font-size:14.5px;color:var(--ink);font-weight:600;font-style:italic}
 .check{background:#e9f5f5;border-radius:18px;padding:24px;margin-top:20px}
 .check h4{font-family:'Sora';margin-bottom:14px;text-align:center;font-size:16px}
 .check label{display:flex;gap:12px;align-items:flex-start;background:#fff;border-radius:12px;padding:13px 16px;margin-bottom:10px;font-size:14.5px;cursor:pointer;box-shadow:0 3px 10px rgba(2,106,121,.07)}
@@ -34,33 +36,35 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);paddin
 <body>
 <div class="wrap">
   <div class="banner">
-    <h2>🎙️ Your turn — speak like an advanced speaker</h2>
+    <h2>🎙️ Your turn — speak with emphasis</h2>
     <p>Record yourself (phone voice memo is fine). Then compare with the model.</p>
   </div>
-  <p class="sub">Use a <b>different</b> advanced structure for each situation:</p>
+  <p class="sub">Use a <b>different</b> emphasis pattern for each situation:</p>
 
   <div class="mission"><span class="mnum">1</span><div>
-    <h4>Emphasize → your boss asks who finished the report</h4>
-    <p>Answer with an it-cleft: <code>It was __ who __</code></p>
-    <div class="model"><button data-a="m2l1-audio-01-it-cleft.mp3" aria-label="Play model answer">▶</button><button data-a="m2l1-audio-01-it-cleft-slow.mp3" aria-label="Play model answer slowly">🐢</button><span>🔊 Model answer — tap to compare</span></div>
+    <h4>Push back → a supplier sends an unfair clause</h4>
+    <p>Reject it with object fronting — make the clause the star: <code>This clause __</code>. Never front a pronoun (✗ “It we cannot accept”).</p>
+    <div class="model"><span class="sent">“This clause we cannot accept.”</span><button data-a="m2l1-audio-09.mp3" aria-label="Play model answer">▶</button><button data-a="m2l1-audio-09-slow.mp3" aria-label="Play model answer slowly">🐢</button><span>🔊 Model answer — tap to compare</span></div>
   </div></div>
 
   <div class="mission"><span class="mnum">2</span><div>
-    <h4>Tell a story → your worst trip delay</h4>
-    <p>Use inversion: <code>Never have I __</code> or <code>Hardly had we __ when __</code></p>
-    <div class="model"><button data-a="m2l1-audio-06-hardly-inversion.mp3" aria-label="Play model answer">▶</button><button data-a="m2l1-audio-06-hardly-inversion-slow.mp3" aria-label="Play model answer slowly">🐢</button><span>🔊 Model answer — tap to compare</span></div>
+    <h4>Open a status call → state your motive with focus</h4>
+    <p>Use the reason-cleft: <code>The reason I'm calling is __</code>. Remember: “to” or “that” — never “because”.</p>
+    <div class="model"><span class="sent">“The reason I'm calling is to confirm the dates.”</span><button data-a="m2l1-audio-07.mp3" aria-label="Play model answer">▶</button><button data-a="m2l1-audio-07-slow.mp3" aria-label="Play model answer slowly">🐢</button><span>🔊 Model answer — tap to compare</span></div>
   </div></div>
 
   <div class="mission"><span class="mnum">3</span><div>
-    <h4>Suggest formally → propose an idea in a meeting</h4>
-    <p>Use the subjunctive: <code>I suggest that he __</code> / <code>It's vital that we __</code></p>
-    <div class="model"><button data-a="m2l1-audio-10-mandative-subjunctive.mp3" aria-label="Play model answer">▶</button><button data-a="m2l1-audio-10-mandative-subjunctive-slow.mp3" aria-label="Play model answer slowly">🐢</button><span>🔊 Model answer — tap to compare</span></div>
+    <h4>Say it vs. write it → you need more time</h4>
+    <p>On the CALL, raise the real problem gently with <code>The thing is, __</code>. In the EMAIL, write <code>The fact is that __</code>.</p>
+    <div class="warnbox">⚠️ <b>Register check:</b> “The thing is” lives in your <b>mouth</b> — meetings and calls. In formal writing it sounds sloppy. The register rule IS the lesson.</div>
+    <div class="model"><span class="sent">“The thing is, we need more time.”</span><button data-a="m2l1-audio-08.mp3" aria-label="Play model answer">▶</button><button data-a="m2l1-audio-08-slow.mp3" aria-label="Play model answer slowly">🐢</button><span>🔊 Model answer — tap to compare</span></div>
   </div></div>
 
   <div class="check">
     <h4>Then listen back and check yourself:</h4>
-    <label><input type="checkbox"> Did I use the advanced structure — not the basic version?</label>
-    <label><input type="checkbox"> Did the inversion / cleft sound natural, not forced?</label>
+    <label><input type="checkbox"> Did I use the emphasis pattern — not the flat version?</label>
+    <label><input type="checkbox"> Did “the thing is” stay in my MOUTH and out of my email?</label>
+    <label><input type="checkbox"> Did I front a real object — never a pronoun like “it”?</label>
     <label><input type="checkbox"> Would a native speaker say it this way?</label>
   </div>
 </div>

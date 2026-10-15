@@ -15,11 +15,13 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);paddin
 .head p{color:var(--muted);font-size:14px;margin-top:6px}
 .counter{text-align:center;font-family:'Sora';font-weight:800;color:var(--teal);font-size:14px;letter-spacing:.12em;margin:14px 0 4px}
 .counter b{color:var(--amber);font-size:18px}
-.car{position:relative;max-width:920px;margin:0 auto;min-height:470px;touch-action:pan-y}
-.car-track{position:relative;height:430px;perspective:1400px}
-.pcard{position:absolute;top:0;left:50%;width:min(400px,88%);margin-left:min(-200px,-44%);background:#fff;border-radius:24px;padding:32px 28px 26px;box-shadow:0 18px 50px rgba(2,106,121,.18);border-top:6px solid var(--teal);transition:transform .55s cubic-bezier(.34,1.3,.5,1),opacity .45s;will-change:transform}
+.car{position:relative;max-width:920px;margin:0 auto;min-height:500px;touch-action:pan-y}
+.car-track{position:relative;height:460px;perspective:1400px}
+.pcard{position:absolute;top:0;left:50%;width:min(400px,88%);margin-left:min(-200px,-44%);background:#fff;border-radius:24px;padding:30px 28px 26px;box-shadow:0 18px 50px rgba(2,106,121,.18);border-top:6px solid var(--teal);transition:transform .55s cubic-bezier(.34,1.3,.5,1),opacity .45s;will-change:transform}
 .pcard .num{position:absolute;top:-19px;left:24px;background:var(--amber);color:#3a2a05;font-family:'Sora';font-weight:800;font-size:14px;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;box-shadow:0 4px 12px rgba(232,170,40,.5)}
-.pcard h3{font-family:'Sora';font-size:22px;font-weight:800;margin:8px 0 12px;color:var(--teal)}
+.pcard h3{font-family:'Sora';font-size:22px;font-weight:800;margin:8px 0 4px;color:var(--teal)}
+.reg{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);background:#e8f4f5;border-radius:999px;padding:4px 12px;margin-bottom:12px}
+.reg.warn{color:#8a5a00;background:#fdf0d3}
 .formula{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
 .formula b{background:#e8f4f5;color:var(--teal);font-size:12.5px;padding:6px 11px;border-radius:8px;font-weight:700}
 .formula b.hot{background:#fdf0d3;color:#8a5a00}
@@ -44,14 +46,14 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);paddin
 .dots button{width:11px;height:11px;border-radius:50%;border:none;background:#c4d8da;cursor:pointer;transition:all .25s;padding:0}
 .dots button.on{background:var(--amber);transform:scale(1.4)}
 .hint{text-align:center;color:var(--muted);font-size:12.5px;margin-top:12px}
-@media (max-width:560px){.car{min-height:500px}.car-track{height:460px}.arrow{width:44px;height:44px}}
+@media (max-width:560px){.car{min-height:540px}.car-track{height:500px}.arrow{width:44px;height:44px}}
 @media (prefers-reduced-motion:reduce){.pcard{transition:none}.abtn .eq i{animation:none}}
 </style>
 </head>
 <body>
 <div class="head">
-  <h2>⚡ Discover the 10 patterns</h2>
-  <p>Swipe through the arsenal — tap 🔊 on any card to hear it.</p>
+  <h2>⚡ Discover the 10 emphasis patterns</h2>
+  <p>Swipe through the arsenal — tap 🔊 on any card to hear it. Watch the register tag.</p>
 </div>
 <div class="counter"><b id="cnum">1</b> / 10</div>
 <div class="car"><div class="car-track" id="track"></div></div>
@@ -64,36 +66,37 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);paddin
 
 <script>
 const PATTERNS=[
- {slug:'01-it-cleft',name:'It-cleft',f:['It','+','be','+','emphasized element','+','relative clause'],hot:[3],ex:'It <mark>was Maria</mark> who told me.',key:'“It was X who…” puts maximum emphasis on the person.'},
- {slug:'02-the-reason',name:'The reason',f:['The reason','+','clause','+','be','+','purpose'],hot:[0],ex:'<mark>The reason</mark> I’m calling <mark>is</mark> to confirm.',key:'Formal and clear — states your motive like a professional.'},
- {slug:'03-what-cleft',name:'What-cleft',f:['What','+','clause','+','be','+','key info'],hot:[0],ex:'<mark>What</mark> I need <mark>is</mark> more time.',key:'Emphasizes what matters most.'},
- {slug:'04-fronting',name:'Fronting',f:['fronted element','+','rest of sentence'],hot:[0],ex:'<mark>This</mark> I will never forget.',key:'Moving the object to the front adds emotional power.'},
- {slug:'05-should-inversion',name:'Should-inversion',f:['Should','+','subject','+','base verb'],hot:[0],ex:'<mark>Should you need</mark> anything, call me.',key:'A formal way to say “if” — pure boardroom English.'},
- {slug:'06-hardly-inversion',name:'Hardly-inversion',f:['Hardly','+','had','+','subject','+','when…'],hot:[0],ex:'<mark>Hardly had we arrived</mark> when it started raining.',key:'Barely had time before the next event — instant drama.'},
- {slug:'07-never-inversion',name:'Never-inversion',f:['Never','+','have','+','subject','+','past participle'],hot:[0],ex:'<mark>Never have I seen</mark> such dedication.',key:'Negative word first + inversion = dramatic emphasis.'},
- {slug:'08-were-inversion',name:'Were-inversion',f:['Were','+','subject','+','to + verb'],hot:[0],ex:'<mark>Were I to accept,</mark> I’d need guarantees.',key:'Formal hypotheticals — negotiations love this.'},
- {slug:'09-impersonal-passive',name:'Impersonal passive',f:['It','+','be','+','past participle','+','that-clause'],hot:[2],ex:'It <mark>is said that</mark> she speaks five languages.',key:'No one specific says it — objective, report-style.'},
- {slug:'10-mandative-subjunctive',name:'Mandative subjunctive',f:['suggest / demand','+','that','+','subject','+','base verb'],hot:[0],ex:'I suggest that he <mark>go</mark> immediately.',key:'After suggest / demand / insist: base verb — “he go”, not “he goes”.'}
+ {n:'01',name:'Emphatic do',reg:'🗣️ Spoken · corrective',warn:false,f:['do / does / did','+','base verb'],hot:[0],ex:'We <mark>do</mark> value your partnership.',key:'One word, maximum force — and it corrects a wrong assumption. Spanish has NO equivalent: ✗ “We do values”.'},
+ {n:'02',name:'It-cleft',reg:'⚖️ Spoken & written',warn:false,f:['It','+','be','+','emphasized element','+','who / that'],hot:[2],ex:'It <mark>was Maria</mark> who closed the deal.',key:'“It was X who…” spotlights one person. Like Spanish “fue… quien”. ✗ “It was Maria closed the deal” — never drop the relative.'},
+ {n:'03',name:'Contrastive focus',reg:'🗣️ Spoken',warn:false,f:["It's not",'X',", it's",'Y'],hot:[0,2],ex:'It’s <mark>not the price, it’s the timeline</mark>.',key:'A negative it-cleft — the most conversational way to correct someone. Negotiation gold.'},
+ {n:'04',name:'What-cleft',reg:'🗣️ Spoken',warn:false,f:['What','+','clause','+','be','+','key info'],hot:[0],ex:'<mark>What</mark> we need <mark>is</mark> a decision by Friday.',key:'Spanish “lo que… es” maps one-to-one — your strongest transfer. ✗ “That we need is…”'},
+ {n:'05',name:'Reversed what-cleft',reg:'🗣️ Spoken',warn:false,f:['key info','+','be','+','what + clause'],hot:[2],ex:'A decision by Friday <mark>is what we need</mark>.',key:'The spoken default — 66% of clefts in real discussion take this form. Put the punch last.'},
+ {n:'06',name:'All-cleft',reg:'🗣️ Spoken',warn:false,f:['All','+','clause','+','be','+','key info'],hot:[0],ex:'<mark>All</mark> we need <mark>is</mark> a decision.',key:'Restrictive — “nothing more than”. Not a duplicate of #4: ✗ “All what we need”.'},
+ {n:'07',name:'The reason… is…',reg:'⚖️ Spoken & written',warn:false,f:['The reason','+','clause','+','be','+','to / that'],hot:[0],ex:'<mark>The reason</mark> I’m calling <mark>is</mark> to confirm the dates.',key:'The calls-and-emails workhorse. ✗ “…is because…” is nonstandard — use “to” or “that”.'},
+ {n:'08',name:'“The thing is…”',reg:'🗣️ Spoken ONLY — never the email',warn:true,f:['The thing is,','+','the real point'],hot:[0],ex:'<mark>The thing is,</mark> we need more time.',key:'A meetings-and-calls discourse marker. The register restriction IS the lesson: in writing, use “The fact is…”.'},
+ {n:'09',name:'Object fronting',reg:'🗣️ Spoken',warn:false,f:['fronted object','+','subject + verb'],hot:[0],ex:'<mark>This clause</mark> we cannot accept.',key:'Spoken stylistic punch. Hard rule: unstressed pronouns NEVER front — ✗ “It we cannot accept”.'},
+ {n:'10',name:'Complement fronting',reg:'📝 Formal · written',warn:false,f:['fronted complement','+','be','+','subject'],hot:[0],ex:'<mark>Critical to the deal</mark> is the timeline.',key:'Formal, written home — reports and speeches. Learn the collocation “Of particular concern is…”.'}
 ];
 const track=document.getElementById('track'),dots=document.getElementById('dots'),cnum=document.getElementById('cnum');
 let cur=0;
 PATTERNS.forEach((p,i)=>{
   const d=document.createElement('div');d.className='pcard';
   d.innerHTML=`<span class="num">${i+1}</span><h3>${p.name}</h3>
+   <span class="reg${p.warn?' warn':''}">${p.reg}</span>
    <div class="formula">${p.f.map((x,j)=>`<b class="${p.hot.includes(j)?'hot':''}">${x}</b>`).join('')}</div>
    <div class="ex">“${p.ex}”</div><p class="key">🔑 ${p.key}</p>
    <div class="audiodock"><button class="abtn" aria-label="Hear ${p.name}"><span class="tr">▶</span><span class="eq"><i></i><i></i><i></i><i></i></span></button><button class="abtn slowbtn" aria-label="Hear ${p.name} slowly">🐢</button><span>▶ natural · 🐢 slow</span></div>`;
-  d.querySelector('.abtn').onclick=(e)=>{e.stopPropagation();toggleAudio(p.slug,d.querySelector('.abtn'));};
-  d.querySelector('.slowbtn').onclick=(e)=>{e.stopPropagation();toggleAudio(p.slug+'-slow',d.querySelector('.slowbtn'))};
+  d.querySelector('.abtn').onclick=(e)=>{e.stopPropagation();toggleAudio('m2l1-audio-'+p.n+'.mp3',d.querySelector('.abtn'));};
+  d.querySelector('.slowbtn').onclick=(e)=>{e.stopPropagation();toggleAudio('m2l1-audio-'+p.n+'-slow.mp3',d.querySelector('.slowbtn'))};
   track.appendChild(d);
   const b=document.createElement('button');b.setAttribute('aria-label','Go to pattern '+(i+1));b.onclick=()=>go(i);dots.appendChild(b);
 });
 /* audio: one at a time */
 let curA=null,curB=null;
-function toggleAudio(slug,btn){
+function toggleAudio(file,btn){
   if(curA&&!curA.paused&&curB===btn){curA.pause();btn.classList.remove('playing');return;}
   if(curA){curA.pause();if(curB)curB.classList.remove('playing');}
-  curA=new Audio('m2l1-audio-'+slug+'.mp3');curB=btn;btn.classList.add('playing');
+  curA=new Audio(file);curB=btn;btn.classList.add('playing');
   curA.onended=()=>btn.classList.remove('playing');
   curA.onerror=()=>{btn.classList.remove('playing');};
   curA.play().catch(()=>btn.classList.remove('playing'));

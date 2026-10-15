@@ -67,7 +67,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);paddin
   <div id="startScreen" class="panel">
     <div class="emoji-big">🕵️</div>
     <h2>Ear Detective</h2>
-    <p>Hear the pattern. <b>Name the pattern.</b></p>
+    <p>Hear the emphasis. <b>Name the pattern.</b></p>
     <p>No cards, no text, no formulas — just your ears. Ten sentences, ten mysteries to solve.</p>
     <div class="rules"><span>🎧 10 rounds</span><span>🐢 slow version</span><span>🔥 streak bonus</span><span>↻ replay anytime</span></div>
     <button class="btn" onclick="startGame()">START ▶</button>
@@ -102,16 +102,16 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);paddin
 </div>
 <script>
 const P=[
- {a:'m2l1-audio-01-it-cleft.mp3',s:'m2l1-audio-01-it-cleft-slow.mp3',name:'It-cleft',sent:'It <mark>was Maria</mark> who told me.',key:'“It was X who…” puts maximum emphasis on the person.'},
- {a:'m2l1-audio-02-the-reason.mp3',s:'m2l1-audio-02-the-reason-slow.mp3',name:'The reason',sent:'<mark>The reason</mark> I’m calling <mark>is</mark> to confirm.',key:'“The reason + clause + be + purpose” — formal and clear.'},
- {a:'m2l1-audio-03-what-cleft.mp3',s:'m2l1-audio-03-what-cleft-slow.mp3',name:'What-cleft',sent:'<mark>What</mark> I need <mark>is</mark> more time.',key:'“What + clause + be + key info” — emphasizes what matters most.'},
- {a:'m2l1-audio-04-fronting.mp3',s:'m2l1-audio-04-fronting-slow.mp3',name:'Fronting',sent:'<mark>This</mark> I will never forget.',key:'Moving the object to the front adds emotional power.'},
- {a:'m2l1-audio-05-should-inversion.mp3',s:'m2l1-audio-05-should-inversion-slow.mp3',name:'Should-inversion',sent:'<mark>Should you need</mark> anything, call me.',key:'“Should + subject + verb” — a formal way to say “if”.'},
- {a:'m2l1-audio-06-hardly-inversion.mp3',s:'m2l1-audio-06-hardly-inversion-slow.mp3',name:'Hardly-inversion',sent:'<mark>Hardly had we arrived</mark> when it started raining.',key:'“Hardly + inversion + when” — drama, right on time.'},
- {a:'m2l1-audio-07-never-inversion.mp3',s:'m2l1-audio-07-never-inversion-slow.mp3',name:'Never-inversion',sent:'<mark>Never have I seen</mark> such dedication.',key:'Negative word first + inversion = dramatic emphasis.'},
- {a:'m2l1-audio-08-were-inversion.mp3',s:'m2l1-audio-08-were-inversion-slow.mp3',name:'Were-inversion',sent:'<mark>Were I to accept,</mark> I’d need guarantees.',key:'“Were + subject + to + verb” — formal hypotheticals.'},
- {a:'m2l1-audio-09-impersonal-passive.mp3',s:'m2l1-audio-09-impersonal-passive-slow.mp3',name:'Impersonal passive',sent:'It <mark>is said that</mark> she speaks five languages.',key:'“It is said / believed / reported that…” — nobody specific says it.'},
- {a:'m2l1-audio-10-mandative-subjunctive.mp3',s:'m2l1-audio-10-mandative-subjunctive-slow.mp3',name:'Mandative subjunctive',sent:'I suggest that he <mark>go</mark> immediately.',key:'After suggest / demand / insist: base verb — “he go”, not “he goes”.'}
+ {a:'m2l1-audio-01.mp3',s:'m2l1-audio-01-slow.mp3',name:'Emphatic do',sent:'We <mark>do</mark> value your partnership.',key:'“do + base verb” — maximum force, corrects a wrong assumption.'},
+ {a:'m2l1-audio-02.mp3',s:'m2l1-audio-02-slow.mp3',name:'It-cleft',sent:'It <mark>was Maria</mark> who closed the deal.',key:'“It was X who…” spotlights one person.'},
+ {a:'m2l1-audio-03.mp3',s:'m2l1-audio-03-slow.mp3',name:'Contrastive focus',sent:'It’s <mark>not the price, it’s the timeline</mark>.',key:'“It’s not X, it’s Y” — the conversational corrector.'},
+ {a:'m2l1-audio-04.mp3',s:'m2l1-audio-04-slow.mp3',name:'What-cleft',sent:'<mark>What</mark> we need <mark>is</mark> a decision by Friday.',key:'“What + clause + be + key info” — like Spanish “lo que… es”.'},
+ {a:'m2l1-audio-05.mp3',s:'m2l1-audio-05-slow.mp3',name:'Reversed what-cleft',sent:'A decision by Friday <mark>is what we need</mark>.',key:'The punch goes last — the spoken default.'},
+ {a:'m2l1-audio-06.mp3',s:'m2l1-audio-06-slow.mp3',name:'All-cleft',sent:'<mark>All</mark> we need <mark>is</mark> a decision.',key:'Restrictive — “nothing more than”.'},
+ {a:'m2l1-audio-07.mp3',s:'m2l1-audio-07-slow.mp3',name:'The reason… is…',sent:'<mark>The reason</mark> I’m calling <mark>is</mark> to confirm the dates.',key:'States your motive like a professional.'},
+ {a:'m2l1-audio-08.mp3',s:'m2l1-audio-08-slow.mp3',name:'“The thing is…”',sent:'<mark>The thing is,</mark> we need more time.',key:'Meetings and calls only — never the formal email.'},
+ {a:'m2l1-audio-09.mp3',s:'m2l1-audio-09-slow.mp3',name:'Object fronting',sent:'<mark>This clause</mark> we cannot accept.',key:'Front the object for stylistic punch.'},
+ {a:'m2l1-audio-10.mp3',s:'m2l1-audio-10-slow.mp3',name:'Complement fronting',sent:'<mark>Critical to the deal</mark> is the timeline.',key:'Formal, written emphasis — reports and speeches.'}
 ];
 let order,qi,score,streak,answered,aud=null,speed='n';
 const bp=document.getElementById('bigplay');
