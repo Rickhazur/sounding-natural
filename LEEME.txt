@@ -1,91 +1,99 @@
-MÓDULO 1 · LECCIÓN 2 — "The Meeting"
-Chunks for Active Meeting Participation (ELEGIR)
+MÓDULO 1 · LECCIÓN 3 — "Framing Your Message"
+Discourse Frames for Packaging What You Say So It Lands
+(CÓMO / Producir — el thread de la lección)
 Diseño espectacular mobile + desktop — PARA EL CURSO DE INGLÉS
 Versión PLANA (sin carpetas): todos los archivos van sueltos
 en la RAÍZ del repo sounding-natural
 ================================================================
 
-LOS 10 CHUNKS (validados pedagógicamente, 2026-10-15 —
-reporte en research_notes/m1l2-meetings-validation-20261015/):
+LOS 10 FRAMES (validados pedagógicamente, ordenados por
+momento del discurso — el arco de producir un mensaje enmarcado):
 
-🟢 OPEN — "start the meeting"
-1. Let's get started.          "Let's get started. Good morning, everyone."      [spoken]
-2. First on the agenda,        "First on the agenda, the sales numbers."        [spoken]
+🗺️ FRAME — abrir y organizar el mensaje
+1. Here's the thing:              "Here's the thing: we need two more weeks."
+2. Let me put it this way:        "Let me put it this way: our current plan is too slow."
 
-🟢 JOIN IN — "enter the conversation" (🧭 portable: fires ANYWHERE)
-3. Can I jump in here?         "Can I jump in here?"                            [spoken — ask to ADD]
-4. Sorry to interrupt, but…    "Sorry to interrupt, but this is urgent."        [spoken — apologize, CUT IN]
+🔧 CLARIFY — reparar en tiempo real (el trío clarificador)
+3. What I'm trying to say is      "What I'm trying to say is the report isn't ready yet."
+   → groping: las palabras aún no llegan (ten paciencia conmigo)
+4. What I mean is                 "What I mean is we should wait for the client."
+   → correcting: corrijo lo que acabo de decir
 
-🟡 CHECK ALIGNMENT — "the judgment call" (🧭 portable)
-5. Any questions so far?       "Any questions so far?"                          [spoken — checks COMPREHENSION]
-6. Are we aligned on this?     "Are we aligned on this?"                        [spoken — checks AGREEMENT]
+🛡️ SOFTEN — atenuar sin debilitar (hedge honesto, nunca filler)
+5. As far as I know,              "As far as I know, the contract ends in June."
+   → marca el LÍMITE de tu conocimiento
+6. To be fair,                    "To be fair, the team worked very hard on this."
+   → añade una consideración justa, equilibra
 
-🟢 STEER — "direct the flow"
-7. Moving on to…               "Moving on to the budget."                       [spoken]
-8. Let's circle back to that.  "Let's circle back to that after lunch."        [spoken — promise the return]
+📰 DELIVER — dar las noticias (buenas o malas)
+7. The good news is               "The good news is we finished ahead of schedule."
+8. The bad news is                "The bad news is the budget is over."
+9. The problem is                 "The problem is we don't have enough data."
 
-🟢 CLOSE — "land with actions"
-9. To wrap up,                 "To wrap up, great progress today."              [spoken]
-10. So, action items:          "So, action items: Ana sends the report by Friday."  [spoken — owner + deadline]
+🔭 PROJECT — proyectar hacia adelante
+10. What happens next is          "What happens next is we meet the client on Monday."
 
-CLAVES PEDAGÓGICAS DE LA LECCIÓN:
-- #5 ≠ #6: "comprehension ≠ agreement" — verifica que ENTENDIERON (#5)
-  antes de verificar que ESTÁN DE ACUERDO (#6). Nunca "Does that
-  make sense?" (el 54% de profesionales lo percibe condescendiente).
-- #3 ≠ #4: dos TONOS, no sinónimos — #3 pide permiso para AGREGAR,
-  #4 se disculpa por CORTAR. El camino medio entre el silencio
-  (trampa del hispanohablante) y la interrupción brusca.
-- Cierre con acción: secuencia "To wrap up," + "So, action items:"
-  y la regla no escrita: cada item lleva DUEÑO + FECHA, o se evapora.
+PEDAGOGÍA DE LA LECCIÓN (no negociable):
+- Los frames son PACKAGING, no contenido: el frame empaqueta,
+  el ___ slot lleva el contenido. Lanza el frame MIENTRAS se
+  forma el contenido — este es el payoff de PRODUCIR.
+- El trío clarificador NO es intercambiable: groping ("trying
+  to say") vs correcting ("what I mean") vs deliberate
+  rephrase ("let me put it this way"). Se enseña con las
+  tarjetas de contraste 🔍 en las cards 2/3/4 del carrusel.
+- Hedge honesto, nunca como filler.
+- Los frames 1, 4 y 10 se enseñan como FUNCIÓN (manejo del
+  discurso), NUNCA como estructuras gramaticales — ese es el
+  puente con el Módulo 2 y no se puede colapsar.
 
 QUÉ HAY EN EL PAQUETE (27 archivos: 5 HTML + hero + 20 MP3 + LEEME)
 ------------------------------------------------------------
-m1l2-hero.png          🖼️ Imagen de introducción de la lección
-                       ("The Meeting", negro/dorado premium).
+m1l3-hero.png          🖼️ Imagen de introducción de la lección
+                       ("Framing Your Message", negro/oro premium).
                        REEMPLAZA el video introductorio en Rise:
                        borra el bloque de video y pon esta imagen.
 
-m1l2-carousel.html     🤝 Discover: coverflow de los 10 chunks.
-                       Cada tarjeta tiene ▶ natural y 🐢 slow,
-                       etiqueta de momento (🟢/🟡), 🧭 portable
-                       moves en 3/4/5/6, caja de advertencia en 5
-                       ("does that make sense?") y en 8 (promete
-                       el retorno). Para embeber en Rise en "Discover".
+m1l3-carousel.html     🖼️ Discover: coverflow de los 10 frames.
+                       Cada tarjeta muestra el frame con su slot
+                       ___ + ejemplo completado, píldora de momento
+                       (🗺️🔧🛡️📰🔭), contraste del trío 🔍 en las
+                       cards 2/3/4, y botones 🐇 natural / 🐢 slow.
+                       Para embeber en Rise en "Discover".
 
-m1l2-listen.html       🕵️ Ear Detective: 10 rondas. Escuchas una
-                       frase e identificas QUÉ chunk es.
-                       Botones 🐇 Natural / 🐢 Slow, puntaje + racha.
-                       Para embeber en Rise en "Listen".
+m1l3-listen.html       🕵️ Ear Detective: 10 rondas. Escuchas una
+                       frase e identificas QUÉ frame es.
+                       Botones 🐇 Natural / 🐢 Slow, puntaje + racha,
+                       pantalla de estrellas. Para "Listen".
 
-m1l2-play.html         🤝 "The Meeting": el juego insignia (8 escenas,
-                       un arco de reunión real: open → join → align →
-                       steer → close). Eliges el chunk con el JUICIO
-                       exacto. Los distractores son gramaticalmente
-                       perfectos — la trampa es el momento: demasiado
-                       brusco, demasiado pasivo o el chunk correcto
-                       en el MOMENTO incorrecto (#5 vs #6, #3 vs #4).
-                       Para embeber en Rise en "Play".
+m1l3-play.html         🖼️ "The Framer": el juego insignia (8 escenas,
+                       un día de trabajo real: client call → lost
+                       thread → slip of the tongue → unsure fact →
+                       tough review → status update → the issue →
+                       the close). Eliges el frame que mejor
+                       EMPAQUETA el mensaje. Los distractores rotan:
+                       frame con función equivocada / versión brusca
+                       sin frame / versión sobre-atenuada. Para "Play".
 
-m1l2-speak.html        🎙️ 3 misiones con cronómetro (60s/60s/90s):
-                       (1) abrir la reunión, (2) intervenir + chequear
-                       alineación, (3) cerrar con acciones. Respuestas
-                       modelo (▶/🐢) + checklist de judgment calls.
+m1l3-speak.html        🎙️ 3 misiones: (1) dar malas noticias con
+                       frames (60s), (2) reformular un mensaje
+                       confuso con el trío (60s), (3) proyectar
+                       próximos pasos (90s). Respuestas modelo
+                       verbatim (▶/🐢), timers de cuenta regresiva
+                       funcionales y checklist de packaging.
                        Para "Speak".
 
-m1l2-quiz.html         🏆 The Final Exam: 8 preguntas de transferencia
-                       (situaciones nuevas). Ataca: el tono de
-                       interrupción (#3 vs #4), comprensión-vs-acuerdo
-                       (#5 vs #6), el cierre con acción y el chunk
-                       correcto en el momento incorrecto.
-                       Pantalla de estrellas. Para embeber en Rise en "Prove".
+m1l3-quiz.html         🏆 The Final Exam: 8 preguntas de transferencia
+                       (contraste del trío, hedging honesto, elección
+                       de packaging, frame vs. blunt). Pantalla de
+                       estrellas. Para embeber en Rise en "Prove".
 
-m1l2-audio-01.mp3  (10 audios VELOCIDAD NATURAL,
-   ...              uno por chunk, con tu voz "me")
-m1l2-audio-10.mp3
+m1l3-audio-01.mp3  (10 audios VELOCIDAD NATURAL,
+   ...              uno por frame, con tu voz "me")
+m1l3-audio-10.mp3
 
-m1l2-audio-01-slow.mp3  (10 audios LENTOS,
+m1l3-audio-01-slow.mp3  (10 audios LENTOS,
    ...                   misma voz, 20% más despacio)
-m1l2-audio-10-slow.mp3
+m1l3-audio-10-slow.mp3
 
 CÓMO SUBIRLO — EN DOS TANDAS (no las mezcles)
 ----------------------------------------------
@@ -93,14 +101,14 @@ TANDA 1 (archivos pequeños — si algo falla, se ve aquí):
 1. Ve a github.com/Rickhazur/sounding-natural
 2. Add file → Upload files.
 3. Arrastra estos 7 sueltos (no en carpeta):
-   m1l2-carousel.html, m1l2-listen.html, m1l2-play.html,
-   m1l2-speak.html, m1l2-quiz.html, m1l2-hero.png, LEEME.txt
+   m1l3-carousel.html, m1l3-listen.html, m1l3-play.html,
+   m1l3-speak.html, m1l3-quiz.html, m1l3-hero.png, LEEME.txt
 4. Commit changes.
 
 TANDA 2 (los 20 audios):
 5. Repite Add file → Upload files.
-6. Arrastra los 20 MP3 sueltos (m1l2-audio-01.mp3 …
-   m1l2-audio-10-slow.mp3).
+6. Arrastra los 20 MP3 sueltos (m1l3-audio-01.mp3 …
+   m1l3-audio-10-slow.mp3).
 7. Commit changes. Espera 2 minutos.
 
 CÓMO EMBEBER EN RISE
@@ -108,22 +116,24 @@ CÓMO EMBEBER EN RISE
 En Rise, bloque Multimedia → Embed, pega uno de estos códigos:
 
 Carousel (Discover):
-<iframe src="https://rickhazur.github.io/sounding-natural/m1l2-carousel.html" width="100%" height="800" frameborder="0" style="border-radius:16px;" title="The Meeting — Discover"></iframe>
+<iframe src="https://rickhazur.github.io/sounding-natural/m1l3-carousel.html" width="100%" height="800" frameborder="0" style="border-radius:16px;" title="Framing Your Message — Discover"></iframe>
 
 Listen (Ear Detective):
-<iframe src="https://rickhazur.github.io/sounding-natural/m1l2-listen.html" width="100%" height="720" frameborder="0" style="border-radius:16px;" title="Ear Detective — The Meeting"></iframe>
+<iframe src="https://rickhazur.github.io/sounding-natural/m1l3-listen.html" width="100%" height="720" frameborder="0" style="border-radius:16px;" title="Ear Detective — Framing Your Message"></iframe>
 
-Play (The Meeting):
-<iframe src="https://rickhazur.github.io/sounding-natural/m1l2-play.html" width="100%" height="800" frameborder="0" style="border-radius:16px;" title="The Meeting game"></iframe>
+Play (The Framer):
+<iframe src="https://rickhazur.github.io/sounding-natural/m1l3-play.html" width="100%" height="800" frameborder="0" style="border-radius:16px;" title="The Framer game"></iframe>
 
-Speak (Run the meeting):
-<iframe src="https://rickhazur.github.io/sounding-natural/m1l2-speak.html" width="100%" height="1060" frameborder="0" style="border-radius:16px;" title="Run the meeting — speak"></iframe>
+Speak (Framing workout):
+<iframe src="https://rickhazur.github.io/sounding-natural/m1l3-speak.html" width="100%" height="1060" frameborder="0" style="border-radius:16px;" title="Your framing workout"></iframe>
 
 Quiz (The Final Exam):
-<iframe src="https://rickhazur.github.io/sounding-natural/m1l2-quiz.html" width="100%" height="750" frameborder="0" style="border-radius:16px;" title="Final quiz — The Meeting"></iframe>
+<iframe src="https://rickhazur.github.io/sounding-natural/m1l3-quiz.html" width="100%" height="750" frameborder="0" style="border-radius:16px;" title="Final quiz — Framing Your Message"></iframe>
 
 LOS AUDIOS
 ----------
 20 audios con tu voz "me" aprobada: 10 en velocidad natural
 y 10 lentos (misma voz, 20% más despacio, mismo tono).
 El estudiante elige: 🐇 Natural o 🐢 Slow.
+Verificación por transcripción: 10/10 audios naturales
+verificados palabra por palabra contra el guion.

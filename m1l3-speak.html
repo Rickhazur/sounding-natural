@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Framing Workout — Speak · Module 1 · Lesson 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#026A79;--teal2:#49ADB3;--amber:#E8AA28;--ink:#123C46;--muted:#5b6f75;--bg:#f2f8f8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);padding:34px 16px}
+.wrap{max-width:820px;margin:0 auto}
+.banner{background:linear-gradient(135deg,#eef7f4,#d9edf0);border:2px solid #c4e2e6;border-radius:20px;padding:26px;text-align:center;margin-bottom:8px}
+.banner h2{font-family:'Sora';font-weight:800;font-size:clamp(19px,4vw,26px);color:var(--teal)}
+.banner p{color:var(--muted);font-size:14px;margin-top:6px}
+.sub{text-align:center;color:var(--muted);font-size:14px;margin:18px 0;font-weight:600}
+.mission{background:#fff;border-radius:18px;padding:22px;display:flex;gap:18px;align-items:flex-start;box-shadow:0 8px 26px rgba(2,106,121,.09);border:1px solid #e9f2f2;margin-bottom:14px}
+.mnum{flex-shrink:0;width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--amber),#d1941a);color:#3a2a05;font-family:'Sora';font-weight:800;font-size:19px;display:grid;place-items:center}
+.mission h4{font-family:'Sora';font-size:16px;margin-bottom:6px}
+.mission p{font-size:14.5px;color:var(--muted);line-height:1.65;margin-bottom:12px}
+.mission code{background:#eef6f6;color:var(--teal);padding:2px 8px;border-radius:6px;font-weight:700;font-size:13.5px}
+.timer{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.tdisp{font-family:'Sora';font-weight:800;font-size:20px;color:var(--teal);background:#eef6f6;border-radius:12px;padding:8px 18px;min-width:96px;text-align:center}
+.tdisp.done{background:#fdf0d3;color:#8a5a00}
+.tbtn{border:2px solid var(--teal);background:#fff;color:var(--teal);font-weight:700;font-size:13.5px;padding:9px 18px;border-radius:999px;cursor:pointer}
+.tbtn:hover{background:var(--teal);color:#fff}
+.model{display:flex;align-items:center;gap:10px;background:#eef6f6;border-radius:12px;padding:9px 14px;flex-wrap:wrap;margin-bottom:8px}
+.model button{width:40px;height:40px;border-radius:50%;border:none;background:var(--teal);color:#fff;font-size:15px;cursor:pointer;flex-shrink:0;display:grid;place-items:center}
+.model button.playing{background:var(--amber);color:#3a2a05}
+.model span{font-size:13px;font-weight:600;color:var(--muted)}
+.model .sent{flex-basis:100%;font-size:14.5px;color:var(--ink);font-weight:600;font-style:italic}
+.check{background:#e9f5f5;border-radius:18px;padding:24px;margin-top:20px}
+.check h4{font-family:'Sora';margin-bottom:14px;text-align:center;font-size:16px}
+.check label{display:flex;gap:12px;align-items:flex-start;background:#fff;border-radius:12px;padding:13px 16px;margin-bottom:10px;font-size:14.5px;cursor:pointer;box-shadow:0 3px 10px rgba(2,106,121,.07)}
+.check input{width:20px;height:20px;accent-color:var(--teal);margin-top:1px;flex-shrink:0}
+@media (max-width:560px){.mission{flex-direction:column;gap:12px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="banner">
+    <h2>🎙️ Your turn — the framing workout</h2>
+    <p>Record yourself (phone voice memo is fine). Start the timer, speak, then compare with the model. Packaging is the grade.</p>
+  </div>
+  <p class="sub">Three missions — launch the frame <b>while your content forms</b>:</p>
+
+  <div class="mission"><span class="mnum">1</span><div>
+    <h4>📰 Deliver bad news like a professional — 60 seconds</h4>
+    <p>The client call starts now. Package the news with frames 7/8/9: <code>The good news is / The bad news is / The problem is</code>. Bad news lands professionally when it’s packaged — never dropped bare.</p>
+    <div class="timer"><span class="tdisp" id="td1">1:00</span><button class="tbtn" onclick="startTimer('td1',60,this)">⏱ Start 60s</button></div>
+    <div class="model"><span class="sent">“The bad news is the budget is over.”</span><button data-a="m1l3-audio-08.mp3" aria-label="Play model answer">▶</button><button data-a="m1l3-audio-08-slow.mp3" aria-label="Play model answer slowly">🐢</button><span>🔊 Model — the bad news, packaged</span></div>
+    <div class="model"><span class="sent">“The problem is we don't have enough data.”</span><button data-a="m1l3-audio-09.mp3" aria-label="Play model answer">▶</button><button data-a="m1l3-audio-09-slow.mp3" aria-label="Play model answer slowly">🐢</button><span>🔊 Model — name the issue, no blame</span></div>
+    <div class="model"><span class="sent">“The good news is we finished ahead of schedule.”</span><button data-a="m1l3-audio-07.mp3" aria-label="Play model answer">▶</button><button data-a="m1l3-audio-07-slow.mp3" aria-label="Play model answer slowly">🐢</button><span>🔊 Model — the good news, same frame family</span></div>
+  </div></div>
+
+  <div class="mission"><span class="mnum">2</span><div>
+    <h4>🔧 Rephrase a muddled message — 60 seconds</h4>
+    <p>You just gave a confusing explanation and the room looks lost. Repair it live with the clarify trio: <code>What I'm trying to say is / What I mean is / Let me put it this way:</code> — groping, correcting, deliberate rephrase. Pick the right member.</p>
+    <div class="timer"><span class="tdisp" id="td2">1:00</span><button class="tbtn" onclick="startTimer('td2',60,this)">⏱ Start 60s</button></div>
+    <div class="model"><span class="sent">“What I'm trying to say is the report isn't ready yet.”</span><button data-a="m1l3-audio-03.mp3" aria-label="Play model answer">▶</button><button data-a="m1l3-audio-03-slow.mp3" aria-label="Play model answer slowly">🐢</button><span>🔊 Model — groping, buys time</span></div>
+    <div class="model"><span class="sent">“What I mean is we should wait for the client.”</span><button data-a="m1l3-audio-04.mp3" aria-label="Play model answer">▶</button><button data-a="m1l3-audio-04-slow.mp3" aria-label="Play model answer slowly">🐢</button><span>🔊 Model — correcting, repairs it</span></div>
+    <div class="model"><span class="sent">“Let me put it this way: our current plan is too slow.”</span><button data-a="m1l3-audio-02.mp3" aria-label="Play model answer">▶</button><button data-a="m1l3-audio-02-slow.mp3" aria-label="Play model answer slowly">🐢</button><span>🔊 Model — deliberate rephrase, cleaner</span></div>
+  </div></div>
+
+  <div class="mission"><span class="mnum">3</span><div>
+    <h4>🔭 Project next steps — 90 seconds</h4>
+    <p>Close your update. Flag the point (<code>Here's the thing:</code>), hedge what you’re unsure of (<code>As far as I know,</code>), then project forward (<code>What happens next is</code>). End with direction — never trail off.</p>
+    <div class="timer"><span class="tdisp" id="td3">1:30</span><button class="tbtn" onclick="startTimer('td3',90,this)">⏱ Start 90s</button></div>
+    <div class="model"><span class="sent">“Here's the thing: we need two more weeks.”</span><button data-a="m1l3-audio-01.mp3" aria-label="Play model answer">▶</button><button data-a="m1l3-audio-01-slow.mp3" aria-label="Play model answer slowly">🐢</button><span>🔊 Model — flag the point</span></div>
+    <div class="model"><span class="sent">“As far as I know, the contract ends in June.”</span><button data-a="m1l3-audio-05.mp3" aria-label="Play model answer">▶</button><button data-a="m1l3-audio-05-slow.mp3" aria-label="Play model answer slowly">🐢</button><span>🔊 Model — hedge honestly, once</span></div>
+    <div class="model"><span class="sent">“What happens next is we meet the client on Monday.”</span><button data-a="m1l3-audio-10.mp3" aria-label="Play model answer">▶</button><button data-a="m1l3-audio-10-slow.mp3" aria-label="Play model answer slowly">🐢</button><span>🔊 Model — project forward</span></div>
+  </div></div>
+
+  <div class="check">
+    <h4>🖼️ Then listen back — packaging self-check:</h4>
+    <label><input type="checkbox"> Did I launch the frame WHILE my content was forming — not after I found the words?</label>
+    <label><input type="checkbox"> Did I pick the right clarify member? (groping = “trying to say” · correcting = “what I mean” · deliberate rephrase = “let me put it this way”)</label>
+    <label><input type="checkbox"> Did I hedge honestly — knowledge limits and fair balance, never filler?</label>
+    <label><input type="checkbox"> Did bad news arrive packaged — or dropped bare?</label>
+    <label><input type="checkbox"> Did I close by projecting what happens next — instead of trailing off?</label>
+  </div>
+</div>
+<script>
+let curA=null,curB=null;
+document.querySelectorAll('.model button').forEach(b=>{
+  const label=b.textContent;
+  b.onclick=()=>{
+    if(curA&&!curA.paused&&curB===b){curA.pause();b.classList.remove('playing');b.textContent=label;return;}
+    if(curA){curA.pause();if(curB){curB.classList.remove('playing');curB.textContent=curB._label||'▶';}}
+    curA=new Audio(b.dataset.a);curB=b;b._label=label;b.classList.add('playing');b.textContent='⏸';
+    curA.onended=()=>{b.classList.remove('playing');b.textContent=label;};
+    curA.play().catch(()=>{b.classList.remove('playing');b.textContent=label;});
+  };
+});
+/* countdown timers */
+const timers={};
+function fmt(s){return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+function startTimer(id,secs,btn){
+  if(timers[id]){clearInterval(timers[id]);delete timers[id];btn.textContent='⏱ Start '+secs+'s';document.getElementById(id).textContent=fmt(secs);document.getElementById(id).classList.remove('done');return;}
+  let left=secs;
+  const d=document.getElementById(id);
+  d.classList.remove('done');d.textContent=fmt(left);btn.textContent='⏸ Stop';
+  const iv=setInterval(()=>{
+    left--;
+    if(left<=0){clearInterval(iv);delete timers[id];d.textContent='⏰ Time!';d.classList.add('done');btn.textContent='⏱ Restart '+secs+'s';return;}
+    d.textContent=fmt(left);
+  },1000);
+  timers[id]=iv;
+}
+</script>
+</body>
+</html>
