@@ -1,72 +1,120 @@
-MÓDULO 2 · LECCIÓN 1 — "Speak Like an Advanced Speaker"
+MÓDULO 3 · LECCIÓN 1 — "The Pitch"
+Chunks for Giving Opinions and Persuading
 Diseño espectacular mobile + desktop — PARA EL CURSO DE INGLÉS
 Versión PLANA (sin carpetas): todos los archivos van sueltos
 en la RAÍZ del repo sounding-natural
 ================================================================
 
-QUÉ HAY EN ESTE ZIP (26 archivos, todos a la RAÍZ del repo)
-------------------------------------------------------------
-m2l1-index.html        La lección completa (hero, viaje, carousel,
-                       listen, juego, speak, quiz final).
+LOS 10 CHUNKS (validados pedagógicamente, organizados por
+momento del discurso — el arco de un pitch real):
 
-m2l1-carousel.html     SOLO el carousel de los 10 patrones.
-                       Cada tarjeta tiene ▶ natural y 🐢 slow.
+A · OPENING YOUR STANCE ("mark it as yours")
+1. From my perspective,   "From my perspective, the timeline is the real risk."   [both]
+2. The way I see it,      "The way I see it, we should pilot this first."        [spoken]
+3. If you ask me,         "If you ask me, the proposal needs more data."        [spoken]
+
+B · CALIBRATING FORCE ("the volume knob")
+4. I'm inclined to believe…  "I'm inclined to believe the client will accept."   [both — safe upward]
+5. As far as I'm concerned,  "As far as I'm concerned, this clause is non-negotiable."  [SPOKEN ONLY — hard end of the dial, never neutral]
+
+C · STEERING THE ARGUMENT ("steer, don't push")
+6. Have you considered…?      "Have you considered a phased rollout?"            [both]
+7. The key thing here is…     "The key thing here is trust."                     [both — 🔁 spiral bridge]
+8. What it comes down to is…  "What it comes down to is cost."                   [both — 🔁 spiral bridge]
+
+D · LANDING IT ("close with the takeaway")
+9. The bottom line is…        "The bottom line is, we need a decision today."   [spoken — 🔁 spiral bridge]
+10. I'd strongly recommend…  "I'd strongly recommend we sign this week."        [both — safe upward]
+
+🔁 Los chunks 7, 8 y 9 reutilizan gramática del Módulo 2 con
+etiqueta explícita de puente en cada tarjeta — no es repetición,
+es la espiral: la misma forma, un trabajo nuevo (persuadir).
+
+QUÉ HAY EN EL PAQUETE (27 archivos: 5 HTML + hero + 20 MP3 + LEEME)
+------------------------------------------------------------
+m3l1-hero.png          🖼️ Imagen de introducción de la lección
+                       ("The Pitch"). REEMPLAZA el video
+                       introductorio en Rise: borra el bloque de
+                       video y pon esta imagen.
+
+m3l1-carousel.html     🎤 Discover: coverflow de los 10 chunks.
+                       Cada tarjeta tiene ▶ natural y 🐢 slow,
+                       etiqueta de grupo (A/B/C/D), etiqueta de
+                       registro (🗣️/⚖️), puentes 🔁 en 7/8/9 y
+                       caja de advertencia en el chunk 5.
                        Para embeber en Rise en "Discover".
 
-m2l1-listen.html       🕵️ SOLO "Ear Detective": juego de discriminación
-                       auditiva (10 rondas). Escuchas una frase y
-                       adivinas QUÉ patrón es — sin ver tarjetas.
-                       Botones 🐇 Natural / 🐢 Slow en cada ronda.
+m3l1-listen.html       🕵️ Ear Detective: 10 rondas. Escuchas una
+                       frase e identificas QUÉ chunk es.
+                       Botones 🐇 Natural / 🐢 Slow, puntaje + racha.
                        Para embeber en Rise en "Listen".
 
-m2l1-speak.html        SOLO las 3 misiones de habla con respuesta
-                       modelo (▶ natural y 🐢 slow) + auto-chequeo.
-                       Para "Speak".
+m3l1-play.html         🎤 "The Pitch": el juego insignia (8 escenas,
+                       un arco de reunión real: kickoff → jefe →
+                       colega → cliente → ejecutivos → cierre →
+                       reporte → slide final). Cada escena tiene un
+                       interlocutor con nombre y poder claro. Eliges
+                       el chunk con el TONO exacto. Los distractores
+                       son gramaticalmente perfectos — la trampa es
+                       el tono (débil / agresivo / informal).
+                       Para embeber en Rise en "Play".
 
-m2l1-hero.png          🖼️ Imagen de introducción de la lección
-                       (título + subtítulo + 3 objetivos).
-                       REEMPLAZA el video introductorio en Rise:
-                       borra el bloque de video y pon esta imagen.
+m3l1-speak.html        🎙️ 3 misiones: (1) abrir tu postura en un
+                       kickoff (grupo A), (2) contradecir a tu jefe
+                       sin romper la relación (grupo B), (3) tu pitch
+                       de 60 segundos con chunks de 3 grupos.
+                       Respuestas modelo (▶/🐢) + checklist de
+                       calibración de tono. Para "Speak".
 
-m2l1-audio-01-it-cleft.mp3  (10 audios VELOCIDAD NATURAL,
-   ...                       uno por patrón, con tu voz "me")
-m2l1-audio-10-mandative-subjunctive.mp3
+m3l1-quiz.html         🏆 The Final Exam: 8 preguntas de transferencia
+                       (situaciones nuevas). Ataca: el "in my opinion"
+                       de un solo volumen, el mal uso de "as far as
+                       I'm concerned", la calibración del hedging y
+                       las conclusiones sin aterrizar. Pantalla de
+                       estrellas. Para embeber en Rise en "Prove".
 
-m2l1-audio-01-it-cleft-slow.mp3  (10 audios LENTOS,
-   ...                       misma voz, 20% más despacio)
-m2l1-audio-10-mandative-subjunctive-slow.mp3
+m3l1-audio-01.mp3  (10 audios VELOCIDAD NATURAL,
+   ...              uno por chunk, con tu voz "me")
+m3l1-audio-10.mp3
 
-El juego y el quiz NO vienen incluidos porque YA ESTÁN en tu
-repo: page-pattern-picker-v2.html y page-lesson4-quiz.html.
-La lección completa los enlaza directamente.
+m3l1-audio-01-slow.mp3  (10 audios LENTOS,
+   ...                   misma voz, 20% más despacio)
+m3l1-audio-10-slow.mp3
 
-CÓMO SUBIRLO (una sola vez)
-----------------------------
-1. Descomprime el ZIP.
-2. Ve a github.com/Rickhazur/sounding-natural
-3. Add file → Upload files.
-4. Arrastra LOS 26 ARCHIVOS sueltos (no en carpeta).
-5. Commit changes. Espera 2 minutos.
+CÓMO SUBIRLO — EN DOS TANDAS (no las mezcles)
+----------------------------------------------
+TANDA 1 (archivos pequeños — si algo falla, se ve aquí):
+1. Ve a github.com/Rickhazur/sounding-natural
+2. Add file → Upload files.
+3. Arrastra estos 7 sueltos (no en carpeta):
+   m3l1-carousel.html, m3l1-listen.html, m3l1-play.html,
+   m3l1-speak.html, m3l1-quiz.html, m3l1-hero.png, LEEME.txt
+4. Commit changes.
+
+TANDA 2 (los 20 audios):
+5. Repite Add file → Upload files.
+6. Arrastra los 20 MP3 sueltos (m3l1-audio-01.mp3 …
+   m3l1-audio-10-slow.mp3).
+7. Commit changes. Espera 2 minutos.
 
 CÓMO EMBEBER EN RISE
 ---------------------
 En Rise, bloque Multimedia → Embed, pega uno de estos códigos:
 
-Carousel:
-<iframe src="https://rickhazur.github.io/sounding-natural/m2l1-carousel.html" width="100%" height="800" frameborder="0" style="border-radius:16px;" title="Pattern Carousel"></iframe>
+Carousel (Discover):
+<iframe src="https://rickhazur.github.io/sounding-natural/m3l1-carousel.html" width="100%" height="800" frameborder="0" style="border-radius:16px;" title="The Pitch — Discover"></iframe>
 
 Listen (Ear Detective):
-<iframe src="https://rickhazur.github.io/sounding-natural/m2l1-listen.html" width="100%" height="720" frameborder="0" style="border-radius:16px;" title="Ear Detective"></iframe>
+<iframe src="https://rickhazur.github.io/sounding-natural/m3l1-listen.html" width="100%" height="720" frameborder="0" style="border-radius:16px;" title="Ear Detective — The Pitch"></iframe>
 
-Speak:
-<iframe src="https://rickhazur.github.io/sounding-natural/m2l1-speak.html" width="100%" height="1060" frameborder="0" style="border-radius:16px;" title="Speaking missions"></iframe>
+Play (The Pitch):
+<iframe src="https://rickhazur.github.io/sounding-natural/m3l1-play.html" width="100%" height="800" frameborder="0" style="border-radius:16px;" title="The Pitch game"></iframe>
 
-IMAGEN INTRODUCTORIA (reemplaza el video)
------------------------------------------
-1. En Rise, abre la lección del Módulo 2.
-2. Borra el bloque del video introductorio.
-3. Agrega un bloque Imagen en su lugar.
-4. Sube m2l1-hero.png.
+Speak (60-second pitch):
+<iframe src="https://rickhazur.github.io/sounding-natural/m3l1-speak.html" width="100%" height="1060" frameborder="0" style="border-radius:16px;" title="Your 60-second pitch"></iframe>
+
+Quiz (The Final Exam):
+<iframe src="https://rickhazur.github.io/sounding-natural/m3l1-quiz.html" width="100%" height="750" frameborder="0" style="border-radius:16px;" title="Final quiz — The Pitch"></iframe>
 
 LOS AUDIOS
 ----------
