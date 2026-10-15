@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🕵️ Ear Detective: Final Round — Module 3 · Final Mission</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#026A79;--teal2:#49ADB3;--amber:#E8AA28;--ink:#123C46;--muted:#5b6f75;--bg:#f2f8f8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);padding:30px 14px;min-height:100vh;display:flex;justify-content:center}
+.wrap{width:100%;max-width:640px}
+.hidden{display:none!important}
+.eyebrow{text-align:center;font-family:'Sora';font-weight:800;font-size:12px;letter-spacing:.28em;color:var(--teal2);margin-bottom:14px}
+.panel{background:#fff;border-radius:26px;padding:44px 34px;text-align:center;box-shadow:0 18px 50px rgba(2,106,121,.16)}
+.emoji-big{font-size:64px;margin-bottom:14px}
+.panel h2{font-family:'Sora';font-weight:800;font-size:clamp(24px,5vw,32px);color:var(--teal);margin-bottom:10px}
+.panel p{color:var(--muted);line-height:1.65;margin-bottom:8px}
+.panel .rules{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:18px 0 26px}
+.panel .rules span{background:#eef6f6;color:var(--teal);font-weight:700;font-size:13px;padding:8px 15px;border-radius:999px}
+.btn{display:inline-block;background:linear-gradient(135deg,var(--teal),#0396a8);color:#fff;font-family:'Sora';font-weight:800;font-size:16px;padding:15px 44px;border:none;border-radius:999px;cursor:pointer;box-shadow:0 10px 26px rgba(2,106,121,.35);transition:transform .2s}
+.btn:hover{transform:translateY(-2px) scale(1.02)}
+.hud{display:flex;gap:10px;margin-bottom:12px}
+.hud-box{flex:1;background:#fff;border-radius:14px;padding:10px;text-align:center;box-shadow:0 4px 14px rgba(2,106,121,.10)}
+.hud-box .label{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.hud-box .value{font-family:'Sora';font-weight:800;font-size:20px;color:var(--teal)}
+.pbar{height:8px;background:#dcebeb;border-radius:99px;overflow:hidden;margin-bottom:16px}
+.pbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal2),var(--amber));border-radius:99px;transition:width .4s}
+.qcard{background:#fff;border-radius:24px;padding:34px 28px;box-shadow:0 18px 50px rgba(2,106,121,.16);text-align:center}
+.bigplay{width:96px;height:96px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--amber),#d1941a);color:#3a2a05;font-size:36px;cursor:pointer;box-shadow:0 12px 30px rgba(232,170,40,.45);margin:6px auto 18px;display:grid;place-items:center;transition:transform .15s}
+.bigplay:active{transform:scale(.93)}
+.bigplay .eq{display:none;align-items:flex-end;gap:4px;height:26px}
+.bigplay .eq i{width:5px;background:#3a2a05;border-radius:3px;animation:eq .7s ease-in-out infinite}
+.bigplay .eq i:nth-child(2){animation-delay:.15s}.bigplay .eq i:nth-child(3){animation-delay:.3s}
+@keyframes eq{0%,100%{height:9px}50%{height:24px}}
+.bigplay.playing .tr{display:none}.bigplay.playing .eq{display:flex}
+.speedrow{display:flex;gap:10px;justify-content:center;margin:0 0 18px}
+.spd{border:2px solid #dcebeb;background:#fff;color:var(--teal);font-weight:700;font-size:13.5px;padding:9px 18px;border-radius:999px;cursor:pointer}
+.spd.active{background:var(--teal);border-color:var(--teal);color:#fff}
+.q{font-family:'Sora';font-weight:800;font-size:19px;margin-bottom:20px}
+.opts{display:grid;gap:10px}
+.opt{background:#f2f8f8;border:2px solid #e2efef;border-radius:14px;padding:15px;font-size:15.5px;font-weight:700;cursor:pointer;transition:all .2s;color:var(--ink)}
+.opt:hover:not(.disabled){border-color:var(--teal2);transform:translateY(-1px)}
+.opt.disabled{cursor:default;opacity:.75}
+.opt.correct{background:#e5f6ec;border-color:#2e9e5b;color:#14532d}
+.opt.wrong{background:#fdecec;border-color:#d64545;color:#7a1f1f}
+.feedback{display:none;margin-top:18px;border-radius:14px;padding:16px;font-size:14.5px;line-height:1.65;text-align:left}
+.feedback.show{display:block}
+.feedback.good{background:#e5f6ec;border:1px solid #bfe6cd}
+.feedback.bad{background:#fdf3e3;border:1px solid #f0d9a8}
+.feedback .sent{display:block;font-size:16.5px;margin:8px 0;color:var(--ink)}
+.feedback .sent mark{background:#ffe9ad;padding:1px 6px;border-radius:6px}
+#nb .btn{margin-top:16px;font-size:15px;padding:13px 36px}
+.replay{margin-top:10px;background:none;border:none;color:var(--teal);font-weight:700;font-size:13.5px;cursor:pointer;text-decoration:underline}
+#stars{font-size:40px;margin:10px 0;letter-spacing:6px}
+#finalScore{font-family:'Sora';font-weight:800;font-size:26px;color:var(--teal);margin:6px 0}
+@media (prefers-reduced-motion:reduce){.bigplay .eq i{animation:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div id="startScreen" class="panel">
+    <div class="eyebrow">MODULE 3 · FINAL MISSION</div>
+    <div class="emoji-big">🕵️</div>
+    <h2>Ear Detective: Final Round</h2>
+    <p>Hear a chunk — <b>name the lesson it comes from.</b></p>
+    <p>No text, no hints — just your ears. Fifteen rounds, all four lessons of Module 3.</p>
+    <div class="rules"><span>🎧 15 rounds</span><span>🐇 replay anytime</span><span>🐢 slow version</span><span>🔥 streak bonus</span></div>
+    <button class="btn" onclick="startGame()">START ▶</button>
+  </div>
+
+  <div id="gameScreen" class="hidden">
+    <div class="eyebrow">MODULE 3 · FINAL MISSION</div>
+    <div class="hud">
+      <div class="hud-box"><div class="label">Round</div><div class="value" id="qnum">1/15</div></div>
+      <div class="hud-box"><div class="label">Score</div><div class="value" id="score">0</div></div>
+      <div class="hud-box"><div class="label">Streak</div><div class="value" id="streak">0</div></div>
+    </div>
+    <div class="pbar"><i id="pfill"></i></div>
+    <div class="qcard">
+      <button class="bigplay" id="bigplay" aria-label="Play the chunk"><span class="tr">▶</span><span class="eq"><i></i><i></i><i></i></span></button>
+      <div class="speedrow"><button class="spd active" id="spdN" onclick="setSpeed('n')">🐇 Natural</button><button class="spd" id="spdS" onclick="setSpeed('s')">🐢 Slow</button></div>
+      <p class="q">Which lesson does this chunk come from?</p>
+      <div class="opts" id="opts"></div>
+      <div class="feedback" id="fb"></div>
+      <div id="nb"></div>
+    </div>
+  </div>
+
+  <div id="endScreen" class="panel hidden">
+    <div class="eyebrow">MODULE 3 · FINAL MISSION</div>
+    <div class="emoji-big" id="endEmoji">🏆</div>
+    <h2>Final round closed!</h2>
+    <div id="stars">⭐⭐⭐</div>
+    <div id="finalScore">0 points</div>
+    <p id="endMsg"></p>
+    <button class="btn" onclick="startGame()" style="margin-top:14px">Play again ↻</button>
+  </div>
+
+</div>
+<script>
+const LESSONS={
+ L1:{icon:'🎯',name:'The Pitch'},
+ L2:{icon:'📖',name:'The Storyteller'},
+ L3:{icon:'🔥',name:'The Hot Seat'},
+ L4:{icon:'🍸',name:'The Mixer'}
+};
+const ROUNDS=[
+ {lesson:'L1',n:3,text:"If you ask me,"},
+ {lesson:'L1',n:7,text:"The key thing here is…"},
+ {lesson:'L1',n:9,text:"The bottom line is…"},
+ {lesson:'L1',n:2,text:"The way I see it,"},
+ {lesson:'L2',n:1,text:"Let me set the scene:"},
+ {lesson:'L2',n:5,text:"And that's when everything changed."},
+ {lesson:'L2',n:9,text:"Looking back,"},
+ {lesson:'L2',n:10,text:"The moral of the story?"},
+ {lesson:'L3',n:1,text:"I need to be honest with you:"},
+ {lesson:'L3',n:6,text:"What I can do is…"},
+ {lesson:'L3',n:7,text:"I completely understand your frustration."},
+ {lesson:'L4',n:2,text:"What brings you here?"},
+ {lesson:'L4',n:5,text:"That sounds fascinating — how did you get into it?"},
+ {lesson:'L4',n:9,text:"I won't keep you any longer —"},
+ {lesson:'L4',n:8,text:"I've been looking forward to meeting you."}
+];
+ROUNDS.forEach(r=>{
+  const num=String(r.n).padStart(2,'0');
+  r.a='m3l'+r.lesson.slice(1)+'-audio-'+num+'.mp3';
+  r.s='m3l'+r.lesson.slice(1)+'-audio-'+num+'-slow.mp3';
+});
+const LBL=['L1','L2','L3','L4'];
+let order,qi,score,streak,answered,aud=null,speed='n';
+const bp=document.getElementById('bigplay');
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function playAud(){
+  const r=ROUNDS[order[qi]];
+  if(aud)aud.pause();
+  aud=new Audio(speed==='s'?r.s:r.a);bp.classList.add('playing');
+  aud.onended=()=>bp.classList.remove('playing');
+  aud.play().catch(()=>bp.classList.remove('playing'));
+}
+function setSpeed(x){speed=x;document.getElementById('spdN').classList.toggle('active',x==='n');document.getElementById('spdS').classList.toggle('active',x==='s');}
+bp.onclick=playAud;
+function lessonLabel(k){return LESSONS[k].icon+' '+LESSONS[k].name;}
+function startGame(){
+  order=shuffle([...Array(ROUNDS.length).keys()]);qi=0;score=0;streak=0;
+  document.getElementById('startScreen').classList.add('hidden');
+  document.getElementById('endScreen').classList.add('hidden');
+  document.getElementById('gameScreen').classList.remove('hidden');
+  showQ();playAud();
+}
+function showQ(){
+  answered=false;
+  const r=ROUNDS[order[qi]];
+  document.getElementById('qnum').textContent=(qi+1)+'/'+ROUNDS.length;
+  document.getElementById('score').textContent=score;
+  document.getElementById('streak').textContent=streak+(streak>=3?' 🔥':'');
+  document.getElementById('pfill').style.width=(qi/ROUNDS.length*100)+'%';
+  const others=shuffle(LBL.filter(l=>l!==r.lesson));
+  const opts=shuffle([r.lesson,...others]);
+  const box=document.getElementById('opts');box.innerHTML='';
+  opts.forEach(k=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=lessonLabel(k);
+    b.onclick=()=>answer(k===r.lesson,b);box.appendChild(b);
+  });
+  const fb=document.getElementById('fb');fb.className='feedback';fb.innerHTML='';
+  document.getElementById('nb').innerHTML='';
+}
+function answer(ok,el){
+  if(answered)return;answered=true;
+  const r=ROUNDS[order[qi]],fb=document.getElementById('fb');
+  document.querySelectorAll('.opt').forEach(o=>o.classList.add('disabled'));
+  if(ok){
+    const pts=10+streak*5;score+=pts;streak++;
+    el.classList.add('correct');
+    fb.className='feedback show good';
+    fb.innerHTML=`✅ <strong>Correct! +${pts} points — ${lessonLabel(r.lesson)}</strong><span class="sent">“${r.text}”</span>`;
+  }else{
+    streak=0;el.classList.add('wrong');
+    document.querySelectorAll('.opt').forEach(o=>{if(o.textContent===lessonLabel(r.lesson))o.classList.add('correct');});
+    fb.className='feedback show bad';
+    fb.innerHTML=`❌ Not quite — that was <strong>${lessonLabel(r.lesson)}</strong><span class="sent">“${r.text}”</span>`;
+  }
+  document.getElementById('score').textContent=score;
+  document.getElementById('streak').textContent=streak+(streak>=3?' 🔥':'');
+  document.getElementById('nb').innerHTML=`<button class="replay" onclick="playAud()">↻ hear it again</button><br><button class="btn" onclick="nextQ()">${qi+1<ROUNDS.length?'Next mystery →':'See results 🏆'}</button>`;
+}
+function nextQ(){qi++;if(qi>=ROUNDS.length)endGame();else{showQ();playAud();}}
+function endGame(){
+  document.getElementById('gameScreen').classList.add('hidden');
+  document.getElementById('endScreen').classList.remove('hidden');
+  const pct=score/(ROUNDS.length*10);let stars,emoji,msg;
+  if(pct>=1.2){stars='⭐⭐⭐';emoji='🏆';msg='Outstanding! You can place every Module 3 chunk by ear alone!';}
+  else if(pct>=0.8){stars='⭐⭐⭐';emoji='🎉';msg='Excellent! Your ear knows all four lessons!';}
+  else if(pct>=0.5){stars='⭐⭐';emoji='💪';msg='Good! Replay the arsenal, then try again!';}
+  else{stars='⭐';emoji='📚';msg='Keep training! Review the chunks and try again.';}
+  document.getElementById('endEmoji').textContent=emoji;
+  document.getElementById('stars').textContent=stars;
+  document.getElementById('finalScore').textContent=score+' points';
+  document.getElementById('endMsg').textContent=msg;
+}
+</script>
+</body>
+</html>
