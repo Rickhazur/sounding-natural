@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Speak · Lesson 7 · The Hard Ones · Job Interviews</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#026A79;--teal2:#49ADB3;--amber:#E8AA28;--ink:#123C46;--muted:#5b6f75;--bg:#f2f8f8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);padding:34px 16px}
+.wrap{max-width:820px;margin:0 auto}
+.banner{background:linear-gradient(135deg,#0b5560,#026A79);color:#fff;border-radius:20px;padding:26px;text-align:center;margin-bottom:8px}
+.banner h2{font-family:'Sora';font-weight:800;font-size:clamp(19px,4vw,26px)}
+.banner p{color:#cfe3e6;font-size:14px;margin-top:6px}
+.sub{text-align:center;color:var(--muted);font-size:14px;margin:18px 0;font-weight:600}
+.mission{background:#fff;border-radius:18px;padding:22px;display:flex;gap:18px;align-items:flex-start;box-shadow:0 8px 26px rgba(2,106,121,.09);border:1px solid #e9f2f2;margin-bottom:14px}
+.mnum{flex-shrink:0;width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--amber),#d1941a);color:#3a2a05;font-family:'Sora';font-weight:800;font-size:19px;display:grid;place-items:center}
+.mission h4{font-family:'Sora';font-size:16px;margin-bottom:6px}
+.mission p{font-size:14.5px;color:var(--muted);line-height:1.65;margin-bottom:12px}
+.mission code{background:#eef6f6;color:var(--teal);padding:2px 8px;border-radius:6px;font-weight:700;font-size:13.5px}
+.warnbox{background:#fdf3e3;border:1px solid #f0d9a8;border-radius:12px;padding:12px 14px;font-size:13.5px;line-height:1.6;color:#7a5a1a;margin-bottom:12px}
+.model{display:flex;align-items:center;gap:10px;background:#eef6f6;border-radius:12px;padding:9px 14px;flex-wrap:wrap;margin-bottom:8px}
+.model button{width:40px;height:40px;border-radius:50%;border:none;background:var(--teal);color:#fff;font-size:15px;cursor:pointer;flex-shrink:0;display:grid;place-items:center}
+.model button.playing{background:var(--amber);color:#3a2a05}
+.model span{font-size:13px;font-weight:600;color:var(--muted)}
+.model .sent{flex-basis:100%;font-size:14.5px;color:var(--ink);font-weight:600;font-style:italic}
+.model .sent mark{background:#ffe9ad;padding:1px 5px;border-radius:5px}
+.timer{display:flex;align-items:center;gap:12px;background:#f2fbfb;border:1px dashed var(--teal2);border-radius:12px;padding:10px 14px;margin-top:10px}
+.tbtn{background:#fff;border:2px solid var(--teal2);color:var(--teal);font-weight:700;font-size:14px;padding:8px 20px;border-radius:999px;cursor:pointer}
+.tbtn:hover{background:#e8f4f5}
+.tdisp{font-family:'Sora';font-weight:800;font-size:24px;color:var(--teal);min-width:76px}
+.tdisp.done{color:#2e9e5b}
+.timer small{color:var(--muted);font-size:12.5px}
+.check{background:#e9f5f5;border-radius:18px;padding:24px;margin-top:20px}
+.check h4{font-family:'Sora';margin-bottom:14px;text-align:center;font-size:16px}
+.check label{display:flex;gap:12px;align-items:flex-start;background:#fff;border-radius:12px;padding:13px 16px;margin-bottom:10px;font-size:14.5px;cursor:pointer;box-shadow:0 3px 10px rgba(2,106,121,.07)}
+.check input{width:20px;height:20px;accent-color:var(--teal);margin-top:1px;flex-shrink:0}
+@media (max-width:560px){.mission{flex-direction:column;gap:12px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="banner">
+    <h2>🎙️ Your turn — survive the hot seat out loud</h2>
+    <p>"Tell me about a conflict." "What's your weakness?" Record yourself (phone voice memo is fine). Then compare with the model. Composure is the grade.</p>
+  </div>
+  <p class="sub">Use chunks from <b>at least 3 groups</b> (🧊 · 📖 · 🌱 · ⚡). The timer keeps you honest:</p>
+
+  <div class="mission"><span class="mnum">1</span><div>
+    <h4>🧊 Open with composure</h4>
+    <p>Frame the pause, then signal candor: <code>That's a fair question</code> + <code>I'll be honest with you</code>.</p>
+<div class="model"><span class="sent">“<mark>That's a fair question.</mark> Let me think for a moment.”</span><button data-a="ji-m1l7-audio-01.mp3" aria-label="Play model answer">▶</button><button data-a="ji-m1l7-audio-01-slow.mp3" aria-label="Play model answer slowly">🐢</button><span>🔊 🔊 Composure — frame the pause</span></div>
+<div class="model"><span class="sent">“<mark>I'll be honest with you.</mark> The first months were rough.”</span><button data-a="ji-m1l7-audio-02.mp3" aria-label="Play model answer">▶</button><button data-a="ji-m1l7-audio-02-slow.mp3" aria-label="Play model answer slowly">🐢</button><span>🔊 🔊 Candor — disarm</span></div>
+    <div class="timer" data-secs="45"><button class="tbtn" onclick="startTimer(this)">⏱ Start 45s</button><span class="tdisp">00:45</span><small>frame + candor</small></div>
+  </div></div>
+  <div class="mission"><span class="mnum">2</span><div>
+    <h4>📖 Facts, then the turn</h4>
+    <p>Reporter mode first, then the mandatory turn: <code>What happened was __</code> + <code>Since then, I've __</code>.</p>
+<div class="model"><span class="sent">“<mark>What happened was</mark> the client changed the scope twice.”</span><button data-a="ji-m1l7-audio-03.mp3" aria-label="Play model answer">▶</button><button data-a="ji-m1l7-audio-03-slow.mp3" aria-label="Play model answer slowly">🐢</button><span>🔊 🔊 Facts — no spin</span></div>
+<div class="model"><span class="sent">“<mark>Since then, I've</mark> led three successful launches.”</span><button data-a="ji-m1l7-audio-05.mp3" aria-label="Play model answer">▶</button><button data-a="ji-m1l7-audio-05-slow.mp3" aria-label="Play model answer slowly">🐢</button><span>🔊 🔊 Turn — problem to growth</span></div>
+    <div class="timer" data-secs="60"><button class="tbtn" onclick="startTimer(this)">⏱ Start 60s</button><span class="tdisp">01:00</span><small>facts + turn</small></div>
+  </div></div>
+  <div class="mission"><span class="mnum">3</span><div>
+    <h4>🌱 Close with the receipt</h4>
+    <p>End every hard story with learning: <code>It taught me the importance of __</code>. Then own a gap: <code>I'm comfortable saying I don't know, and __</code>.</p>
+<div class="model"><span class="sent">“<mark>It taught me the importance of</mark> clear expectations.”</span><button data-a="ji-m1l7-audio-09.mp3" aria-label="Play model answer">▶</button><button data-a="ji-m1l7-audio-09-slow.mp3" aria-label="Play model answer slowly">🐢</button><span>🔊 🔊 Receipt — pain purchased something</span></div>
+<div class="model"><span class="sent">“<mark>I'm comfortable saying I don't know, and</mark> I'd find out by Friday.”</span><button data-a="ji-m1l7-audio-10.mp3" aria-label="Play model answer">▶</button><button data-a="ji-m1l7-audio-10-slow.mp3" aria-label="Play model answer slowly">🐢</button><span>🔊 🔊 Gap — with a plan</span></div>
+    <div class="timer" data-secs="60"><button class="tbtn" onclick="startTimer(this)">⏱ Start 60s</button><span class="tdisp">01:00</span><small>receipt + owned gap</small></div>
+  </div></div>
+
+  <div class="check">
+    <h4>🎯 Then listen back — interview checklist:</h4>
+    <label><input type="checkbox"> Did I frame the pause — "that's a fair question"?</label>
+    <label><input type="checkbox"> Was the subject mandatory — "IT was a difficult period"?</label>
+    <label><input type="checkbox"> Did every hard story TURN — "since then, I've"?</label>
+    <label><input type="checkbox"> Did I avoid the evasive trick — active "working on", not "wouldn't call it"?</label>
+    <label><input type="checkbox"> Did the gap come with a plan — the "and"?</label>
+  </div>
+</div>
+<script>
+let curA=null,curB=null;
+document.querySelectorAll('.model button').forEach(b=>{
+  const label=b.textContent;
+  b.onclick=()=>{
+    if(curA&&!curA.paused&&curB===b){curA.pause();b.classList.remove('playing');b.textContent=label;return;}
+    if(curA){curA.pause();if(curB){curB.classList.remove('playing');curB.textContent=curB._label||'▶';}}
+    curA=new Audio(b.dataset.a);curB=b;b._label=label;b.classList.add('playing');b.textContent='⏸';
+    curA.onended=()=>{b.classList.remove('playing');b.textContent=label;};
+    curA.play().catch(()=>{b.classList.remove('playing');b.textContent=label;});
+  };
+});
+/* countdown timers */
+function fmt(t){return String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0');}
+function startTimer(btn){
+  const box=btn.closest('.timer'),disp=box.querySelector('.tdisp'),total=+box.dataset.secs;
+  if(box._iv){clearInterval(box._iv);box._iv=null;}
+  let t=total;disp.classList.remove('done');disp.textContent=fmt(t);btn.textContent='⏹ Stop — tap to reset';
+  box._iv=setInterval(()=>{
+    t--;disp.textContent=fmt(Math.max(t,0));
+    if(t<=0){clearInterval(box._iv);box._iv=null;disp.classList.add('done');btn.textContent='⏱ Restart '+total+'s';}
+  },1000);
+}
+</script>
+</body>
+</html>

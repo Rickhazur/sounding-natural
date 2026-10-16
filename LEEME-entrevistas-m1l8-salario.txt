@@ -1,0 +1,58 @@
+BEYOND WORDS: JOB INTERVIEWS — MODULE 2 · DURANTE — THE INTERVIEW · LESSON 8: "SALARY & CONDITIONS"
+Paquete: entrevistas-m1l8-salario.zip (26 archivos: 6 HTML + 20 MP3 — versión PLANA, sin carpetas)
+================================================================
+
+LOS 10 CHUNKS (validados pedagógicamente — listas finales aprobadas por Ricardo):
+
+1. Based on my research, __
+2. My salary expectations are in the range of __
+3. I'm looking for something in the ballpark of __
+4. Could you share the salary band for this role?
+5. Is there flexibility on __?
+6. Beyond salary, __ matters to me
+7. Would you consider __?
+8. I want to make sure we're aligned on __
+9. I appreciate the offer. Let me think it over
+10. I agree with the base; however, __
+
+QUÉ HAY EN EL PAQUETE
+---------------------
+ji-*-index.html      🏠 Hub de la lección: hero + las 5 etapas con enlaces.
+ji-*-carousel.html   🎤 Discover: carrusel 3D de los 10 chunks. Cada tarjeta
+                     lidera con la FUNCIÓN (⚡ DOES), ejemplo + glosa,
+                     ▶ natural y 🐢 slow, y caja de pitfall del hispanohablante.
+ji-*-listen.html     🕵️ Ear Detective: 10 rondas. Escuchas la frase e
+                     identificas QUÉ chunk es. 🐇 Natural / 🐢 Slow, racha, estrellas.
+ji-*-play.html       💰 "The Number Talk": 8 mini-diálogos con hueco. Distractores:
+                     calco del español / error fosilizado / versión telegráfica.
+ji-*-speak.html      🎙️ 3 misiones con TEMPORIZADOR + respuestas modelo
+                     VERBATIM (▶/🐢) + checklist.
+ji-*-quiz.html       🏆 The Final Exam: 8 preguntas de transferencia
+                     (situaciones NUEVAS, mismos chunks).
+
+ji-*-audio-01.mp3 …  10 audios VELOCIDAD NATURAL, voz "me" de Ricardo
+ji-*-audio-10.mp3    (su voz de inglés aprobada, intacta).
+
+ji-*-audio-01-slow.mp3 …  10 audios LENTOS (misma voz, 20% más despacio).
+ji-*-audio-10-slow.mp3
+
+Los 50 audios naturales fueron transcritos y verificados palabra por palabra.
+
+CÓMO SUBIRLO — EN DOS TANDAS (no las mezcles)
+----------------------------------------------
+TANDA 1 (archivos pequeños — si algo falla, se ve aquí):
+1. Ve a tu repo sounding-natural en GitHub.
+2. Add file → Upload files.
+3. Arrastra los 6 HTML sueltos (no en carpeta).
+4. Commit changes.
+
+TANDA 2 (los 20 audios):
+5. Repite Add file → Upload files.
+6. Arrastra los 20 MP3 sueltos.
+7. Commit changes. Espera 2 minutos.
+
+EMBEBS EN RISE
+--------------
+Bloque Multimedia → Embed, con el patrón:
+<iframe src="https://rickhazur.github.io/sounding-natural/ji-m1l8-carousel.html" width="100%" height="800" frameborder="0"></iframe>
+(un iframe por etapa: carousel, listen, play, speak, quiz)
