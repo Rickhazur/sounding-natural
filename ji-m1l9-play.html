@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎯 The Closer — Lesson 9 · Your Questions for Them · Job Interviews</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#026A79;--teal2:#49ADB3;--amber:#E8AA28;--ink:#123C46;--muted:#5b6f75;--bg:#f2f8f8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);padding:30px 14px;min-height:100vh;display:flex;justify-content:center}
+.wrap{width:100%;max-width:640px}
+.hidden{display:none!important}
+.panel{background:#fff;border-radius:26px;padding:44px 34px;text-align:center;box-shadow:0 18px 50px rgba(2,106,121,.16)}
+.emoji-big{font-size:64px;margin-bottom:14px}
+.panel h2{font-family:'Sora';font-weight:800;font-size:clamp(24px,5vw,32px);color:var(--teal);margin-bottom:10px}
+.panel p{color:var(--muted);line-height:1.65;margin-bottom:8px}
+.panel .rules{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:18px 0 26px}
+.panel .rules span{background:#eef6f6;color:var(--teal);font-weight:700;font-size:13px;padding:8px 15px;border-radius:999px}
+.btn{display:inline-block;background:linear-gradient(135deg,var(--teal),#0396a8);color:#fff;font-family:'Sora';font-weight:800;font-size:16px;padding:15px 44px;border:none;border-radius:999px;cursor:pointer;box-shadow:0 10px 26px rgba(2,106,121,.35);transition:transform .2s}
+.btn:hover{transform:translateY(-2px) scale(1.02)}
+.hud{display:flex;gap:10px;margin-bottom:12px}
+.hud-box{flex:1;background:#fff;border-radius:14px;padding:10px;text-align:center;box-shadow:0 4px 14px rgba(2,106,121,.10)}
+.hud-box .label{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.hud-box .value{font-family:'Sora';font-weight:800;font-size:20px;color:var(--teal)}
+.pbar{height:8px;background:#dcebeb;border-radius:99px;overflow:hidden;margin-bottom:16px}
+.pbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal2),var(--amber));border-radius:99px;transition:width .4s}
+.qcard{background:#fff;border-radius:24px;padding:34px 28px;box-shadow:0 18px 50px rgba(2,106,121,.16)}
+.draft{display:flex;gap:10px;align-items:flex-start;background:#eef6f6;border-radius:14px;padding:14px 16px;margin-bottom:18px;font-size:14.5px;line-height:1.6;color:var(--ink)}
+.draft .tag{flex-shrink:0;background:var(--teal);color:#fff;font-size:11.5px;font-weight:800;letter-spacing:.06em;padding:5px 12px;border-radius:999px;margin-top:1px}
+.q{font-family:'Sora';font-weight:800;font-size:19px;margin-bottom:20px;text-align:center}
+.opts{display:grid;gap:10px}
+.opt{background:#f2f8f8;border:2px solid #e2efef;border-radius:14px;padding:15px;font-size:15.5px;font-weight:600;cursor:pointer;transition:all .2s;color:var(--ink);line-height:1.5;text-align:left}
+.opt:hover:not(.disabled){border-color:var(--teal2);transform:translateY(-1px)}
+.opt.disabled{cursor:default;opacity:.8}
+.opt.correct{background:#e5f6ec;border-color:#2e9e5b;color:#14532d;font-weight:700}
+.opt.wrong{background:#fdecec;border-color:#d64545;color:#7a1f1f}
+.feedback{display:none;margin-top:18px;border-radius:14px;padding:16px;font-size:14.5px;line-height:1.65;text-align:left}
+.feedback.show{display:block}
+.feedback.good{background:#e5f6ec;border:1px solid #bfe6cd}
+.feedback.bad{background:#fdf3e3;border:1px solid #f0d9a8}
+#nb{text-align:center}
+#nb .btn{margin-top:16px;font-size:15px;padding:13px 36px}
+#stars{font-size:40px;margin:10px 0;letter-spacing:6px}
+#finalScore{font-family:'Sora';font-weight:800;font-size:26px;color:var(--teal);margin:6px 0}
+@media (prefers-reduced-motion:reduce){.pbar i{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div id="startScreen" class="panel">
+    <div class="emoji-big">🎯</div>
+    <h2>🎯 The Closer</h2>
+    <p>Your questions for them. Eight rounds — pick the question that puts you in their memory.</p>
+    <p>Eight rounds. Distractors rotate: a <b>calque</b>, a <b>fossilized error</b>, or a <b>blunt telegram</b> version — all understandable, all unhirable.</p>
+    <div class="rules"><span>🌊 8 rounds</span><span>+10 per round</span><span>🔥 streak bonus</span></div>
+    <button class="btn" onclick="startGame()">START ▶</button>
+  </div>
+
+  <div id="gameScreen" class="hidden">
+    <div class="hud">
+      <div class="hud-box"><div class="label">Round</div><div class="value" id="qnum">1/8</div></div>
+      <div class="hud-box"><div class="label">Score</div><div class="value" id="score">0</div></div>
+      <div class="hud-box"><div class="label">Streak</div><div class="value" id="streak">0</div></div>
+    </div>
+    <div class="pbar"><i id="pfill"></i></div>
+    <div class="qcard">
+      <div class="draft"><span class="tag">🌊 Dialogue</span><span id="draft"></span></div>
+      <p class="q">Pick the chunk that keeps it flowing:</p>
+      <div class="opts" id="opts"></div>
+      <div class="feedback" id="fb"></div>
+      <div id="nb"></div>
+    </div>
+  </div>
+
+  <div id="endScreen" class="panel hidden">
+    <div class="emoji-big" id="endEmoji">🏆</div>
+    <h2>Flow complete!</h2>
+    <div id="stars">⭐⭐⭐</div>
+    <div id="finalScore">0 points</div>
+    <p id="endMsg"></p>
+    <button class="btn" onclick="startGame()" style="margin-top:14px">Play again ↻</button>
+  </div>
+
+</div>
+<script>
+const R=[
+ {sit:'🎬 Round 1 — Ask THE question: “___?”',
+  opts:['What does success look like in this role?','What does the success look like in this role?','How the success looks like in this role?'],ok:0,
+  pat:'What does success look like in this role?',key:'"Ø success" — no article: abstract nouns take none. "How the success looks like" mixes two structures ("how does it look" / "what does it look like").'},
+ {sit:'🎬 Round 2 — Show strategic thinking: “___ right now?”',
+  opts:['What are the biggest challenges facing the team right now?','What are the biggest challenges confronting the team right now?','What are the bigger challenges facing the team right now?'],ok:0,
+  pat:'What are the biggest challenges facing the team right now?',key:'The chunk is "FACING the team" — "confronting" is understandable but not the chunk; "bigger" compares instead of declaring the biggest.'},
+ {sit:'🎬 Round 3 — Evaluate the fit: “___ the team culture?”',
+  opts:['How would you describe the team culture?','How you would describe the team culture?','How would you describe the team culture to me?'],ok:0,
+  pat:'How would you describe the team culture?',key:'"How WOULD you describe" — inversion in the question. "How you would" is statement order; the extra "to me" is unnecessary weight.'},
+ {sit:'🎬 Round 4 — Surface objections: “___?”',
+  opts:['Is there anything about my background that concerns you?','Is there something about my background that concerns you?','There is anything about my background that concerns you?'],ok:0,
+  pat:'Is there anything about my background that concerns you?',key:'"Is there ANYTHING" — questions take "anything"; "something" belongs in affirmatives. And it\'s a question — inversion mandatory.'},
+ {sit:'🎬 Round 5 — Signal accountability: “___?”',
+  opts:['How is performance measured here?','How the performance is measured here?','How is the performance measured here?'],ok:0,
+  pat:'How is performance measured here?',key:'Inversion ("how IS") + "Ø performance" (no article for the abstract noun). Both errors are calques of Spanish structure.'},
+ {sit:'🎬 Round 6 — Build rapport: “___ working here?”',
+  opts:['What do you enjoy most about working here?','What do you enjoy more about working here?','What you enjoy most about working here?'],ok:0,
+  pat:'What do you enjoy most about working here?',key:'"Enjoy MOST about" — superlative + "about" (fixed). "More" compares; "what you enjoy" without "do" is statement order.'},
+ {sit:'🎬 Round 7 — Close properly: “___?”',
+  opts:['What are the next steps in the process?','What are the next steps of the process?','What are next steps in the process?'],ok:0,
+  pat:'What are the next steps in the process?',key:'"Steps IN the process" — fixed. "Of" drifts; dropping "the" before "next steps" breaks the definite reference.'},
+ {sit:'🎬 Round 8 — Open confidently: “___.”',
+  opts:['Feel free to ask me anything.','Feel free to make me any question.','Feel free asking me anything.'],ok:0,
+  pat:'Feel free to ask me anything',key:'"Feel free TO ASK" — infinitive, and you ASK questions, never "make" them. "Make me any question" is the fossil, doubled.'}
+];
+const MAXSCORE=80; /* 8 rounds ×10 */
+let order,qi,score,streak,answered;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function setHUD(){
+  document.getElementById('qnum').textContent=(qi+1)+'/'+R.length;
+  document.getElementById('score').textContent=score;
+  document.getElementById('streak').textContent=streak+(streak>=3?' 🔥':'');
+}
+function startGame(){
+  order=shuffle([...Array(R.length).keys()]);qi=0;score=0;streak=0;
+  document.getElementById('startScreen').classList.add('hidden');
+  document.getElementById('endScreen').classList.add('hidden');
+  document.getElementById('gameScreen').classList.remove('hidden');
+  showQ();
+}
+function showQ(){
+  answered=false;
+  const r=R[order[qi]];
+  setHUD();
+  document.getElementById('pfill').style.width=(qi/R.length*100)+'%';
+  document.getElementById('draft').textContent=r.sit;
+  const idx=shuffle([0,1,2]);
+  const box=document.getElementById('opts');box.innerHTML='';
+  idx.forEach(k=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=r.opts[k];
+    b.onclick=()=>pick(k===r.ok,b);box.appendChild(b);
+  });
+  const fb=document.getElementById('fb');fb.className='feedback';fb.innerHTML='';
+  document.getElementById('nb').innerHTML='';
+}
+function pick(ok,el){
+  if(answered)return;answered=true;
+  const r=R[order[qi]],fb=document.getElementById('fb');
+  document.querySelectorAll('.opt').forEach(o=>o.classList.add('disabled'));
+  if(ok){
+    const pts=10+streak*5;score+=pts;streak++;el.classList.add('correct');
+    fb.className='feedback show good';
+    fb.innerHTML=`✅ <strong>+${pts} — the flow holds!</strong><br>🔑 <strong>${r.pat}:</strong> ${r.key}`;
+  }else{
+    streak=0;el.classList.add('wrong');
+    document.querySelectorAll('.opt').forEach(o=>{if(o.textContent===r.opts[r.ok])o.classList.add('correct');});
+    fb.className='feedback show bad';
+    fb.innerHTML=`❌ The flow choice: <strong>“${r.opts[r.ok]}”</strong><br>🔑 <strong>${r.pat}:</strong> ${r.key}`;
+  }
+  setHUD();
+  document.getElementById('nb').innerHTML=`<button class="btn" onclick="nextQ()">${qi+1<R.length?'Next dialogue →':'See results 🏆'}</button>`;
+}
+function nextQ(){qi++;if(qi>=R.length)endGame();else showQ();}
+function endGame(){
+  document.getElementById('gameScreen').classList.add('hidden');
+  document.getElementById('endScreen').classList.remove('hidden');
+  const pct=score/MAXSCORE;let stars,emoji,msg;
+  if(pct>=1.2){stars='⭐⭐⭐';emoji='🏆';msg='Outstanding! Your interview English is sharp and professional!';}
+  else if(pct>=0.8){stars='⭐⭐⭐';emoji='🎉';msg='Excellent! You pick the hired candidate\'s chunk every time!';}
+  else if(pct>=0.5){stars='⭐⭐';emoji='💪';msg='Good! Replay the playbook, then scan again!';}
+  else{stars='⭐';emoji='📚';msg='Keep training! Review the chunks and scan again.';}
+  document.getElementById('endEmoji').textContent=emoji;
+  document.getElementById('stars').textContent=stars;
+  document.getElementById('finalScore').textContent=score+' points';
+  document.getElementById('endMsg').textContent=msg;
+}
+</script>
+</body>
+</html>
