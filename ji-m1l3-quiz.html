@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Final Exam — Research the Company · Lesson 3 · Job Interviews</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#026A79;--teal2:#49ADB3;--amber:#E8AA28;--ink:#123C46;--muted:#5b6f75;--bg:#f2f8f8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);padding:30px 14px;min-height:100vh;display:flex;justify-content:center}
+.wrap{width:100%;max-width:640px}
+.hidden{display:none!important}
+.panel{background:#fff;border-radius:26px;padding:44px 34px;text-align:center;box-shadow:0 18px 50px rgba(2,106,121,.16)}
+.emoji-big{font-size:64px;margin-bottom:14px}
+.panel h2{font-family:'Sora';font-weight:800;font-size:clamp(24px,5vw,32px);color:var(--teal);margin-bottom:10px}
+.panel p{color:var(--muted);line-height:1.65;margin-bottom:8px}
+.panel .rules{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:18px 0 26px}
+.panel .rules span{background:#eef6f6;color:var(--teal);font-weight:700;font-size:13px;padding:8px 15px;border-radius:999px}
+.btn{display:inline-block;background:linear-gradient(135deg,var(--teal),#0396a8);color:#fff;font-family:'Sora';font-weight:800;font-size:16px;padding:15px 44px;border:none;border-radius:999px;cursor:pointer;box-shadow:0 10px 26px rgba(2,106,121,.35);transition:transform .2s}
+.btn:hover{transform:translateY(-2px) scale(1.02)}
+.hud{display:flex;gap:10px;margin-bottom:12px}
+.hud-box{flex:1;background:#fff;border-radius:14px;padding:10px;text-align:center;box-shadow:0 4px 14px rgba(2,106,121,.10)}
+.hud-box .label{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.hud-box .value{font-family:'Sora';font-weight:800;font-size:20px;color:var(--teal)}
+.pbar{height:8px;background:#dcebeb;border-radius:99px;overflow:hidden;margin-bottom:16px}
+.pbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal2),var(--amber));border-radius:99px;transition:width .4s}
+.qcard{background:#fff;border-radius:24px;padding:34px 28px;box-shadow:0 18px 50px rgba(2,106,121,.16)}
+.draft{display:flex;gap:10px;align-items:flex-start;background:#eef6f6;border-radius:14px;padding:14px 16px;margin-bottom:18px;font-size:14.5px;line-height:1.6;color:var(--ink)}
+.draft .tag{flex-shrink:0;background:var(--teal);color:#fff;font-size:11.5px;font-weight:800;letter-spacing:.06em;padding:5px 12px;border-radius:999px;margin-top:1px}
+.opts{display:grid;gap:10px}
+.opt{background:#f2f8f8;border:2px solid #e2efef;border-radius:14px;padding:15px;font-size:15.5px;font-weight:600;cursor:pointer;transition:all .2s;color:var(--ink);line-height:1.5;text-align:left}
+.opt:hover:not(.disabled){border-color:var(--teal2);transform:translateY(-1px)}
+.opt.disabled{cursor:default;opacity:.8}
+.opt.correct{background:#e5f6ec;border-color:#2e9e5b;color:#14532d;font-weight:700}
+.opt.wrong{background:#fdecec;border-color:#d64545;color:#7a1f1f}
+.feedback{display:none;margin-top:18px;border-radius:14px;padding:16px;font-size:14.5px;line-height:1.65;text-align:left}
+.feedback.show{display:block}
+.feedback.good{background:#e5f6ec;border:1px solid #bfe6cd}
+.feedback.bad{background:#fdf3e3;border:1px solid #f0d9a8}
+#nb{text-align:center}
+#nb .btn{margin-top:16px;font-size:15px;padding:13px 36px}
+#stars{font-size:40px;margin:10px 0;letter-spacing:6px}
+#finalScore{font-family:'Sora';font-weight:800;font-size:26px;color:var(--teal);margin:6px 0}
+@media (prefers-reduced-motion:reduce){.pbar i{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div id="startScreen" class="panel">
+    <div class="emoji-big">🏆</div>
+    <h2>The Final Exam</h2>
+    <p>No more practice wheels. <b>New interview situations, same chunks — and the traps are all about FUNCTION.</b></p>
+    <p>Eight transfer questions on research the company. Beat the exam to unlock the next lesson.</p>
+    <div class="rules"><span>🏆 8 questions</span><span>+10 per answer</span><span>🔥 streak</span></div>
+    <button class="btn" onclick="startGame()">START ▶</button>
+  </div>
+
+  <div id="gameScreen" class="hidden">
+    <div class="hud">
+      <div class="hud-box"><div class="label">Question</div><div class="value" id="qnum">1/8</div></div>
+      <div class="hud-box"><div class="label">Score</div><div class="value" id="score">0</div></div>
+      <div class="hud-box"><div class="label">Streak</div><div class="value" id="streak">0</div></div>
+    </div>
+    <div class="pbar"><i id="pfill"></i></div>
+    <div class="qcard">
+      <div class="draft"><span class="tag">🏆 Situation</span><span id="draft"></span></div>
+      <div class="opts" id="opts"></div>
+      <div class="feedback" id="fb"></div>
+      <div id="nb"></div>
+    </div>
+  </div>
+
+  <div id="endScreen" class="panel hidden">
+    <div class="emoji-big" id="endEmoji">🏆</div>
+    <h2>Exam complete!</h2>
+    <div id="stars">⭐⭐⭐</div>
+    <div id="finalScore">0 points</div>
+    <p id="endMsg"></p>
+    <button class="btn" onclick="startGame()" style="margin-top:14px">Try again ↻</button>
+  </div>
+
+</div>
+<script>
+const Q=[
+ {sit:'Function check. What does “What caught my attention was __” DO?',
+  opts:['Shows you did your homework, with emphasis.','Describes your job duties.','Asks about the salary.'],ok:0,
+  pat:'What caught my attention was __',key:'Homework + emphasis — that’s the job. It spotlights YOUR finding with a what-cleft.'},
+ {sit:'Preposition spot. Which fit statement is correct?',
+  opts:['It aligns with our values.','It aligns to our values.','It aligns in our values.'],ok:0,
+  pat:'It aligns with __',key:'WITH — fixed. "To" is the "alinearse a" calque; "in" invents a new error.'},
+ {sit:'Calque spot. Which pivot is professional?',
+  opts:['I would love to contribute to your team.','I would love to contribute with your team.','I would love contributing to your team.'],ok:0,
+  pat:'I\'d love to contribute to __',key:'"Would love TO + verb" and "contribute TO". "With" is the calque; the gerund after "would love" breaks the pattern.'},
+ {sit:'Say vs. tell. Which insight line is correct?',
+  opts:['That tells me you value learning.','That says me you value learning.','That tells to me you value learning.'],ok:0,
+  pat:'That tells me __',key:'"Tell" takes the person directly — tells ME. "Say" never takes a person ("say to me"); "tells to me" doubles the error.'},
+ {sit:'Participle check. Which qualifier is correct?',
+  opts:['From what I have seen, you grew fast.','From what I have saw, you grew fast.','From what I seen, you grew fast.'],ok:0,
+  pat:'From what I\'ve seen, __',key:'Present perfect needs the participle: have SEEN. "Saw" is the past simple — a fossil that survives in fast speech.'},
+ {sit:'New situation. The interviewer asks "Why us?" You open with…',
+  opts:['I was impressed by __ (something specific).','I like your company very much.','Your company is big and famous.'],ok:0,
+  pat:'I was impressed by __',key:'Specific admiration beats generic praise. "Big and famous" flatters nobody; "I like" is a feeling, not research.'},
+ {sit:'Function check. What does “That tells me __” DO?',
+  opts:['Draws a conclusion — turns data into insight.','Lists more facts about the company.','Asks the interviewer a question.'],ok:0,
+  pat:'That tells me __',key:'The insight move: reading data, not reciting it. That’s what leaders do — and what interviewers reward.'},
+ {sit:'Spiral-forward. Research (L3) feeds which Module 2 moment?',
+  opts:['"Why our company?" — answered with proof, not praise.','The salary negotiation.','The thank-you email.'],ok:0,
+  pat:'🔁 Spiral-forward',key:'L3 builds the research muscle; Module 2 spends it live when they ask "why us?". Same chunks, new pressure — the spiral.'}
+];
+const MAXSCORE=80; /* 8 questions ×10 */
+let order,qi,score,streak,answered;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function setHUD(){
+  document.getElementById('qnum').textContent=(qi+1)+'/'+Q.length;
+  document.getElementById('score').textContent=score;
+  document.getElementById('streak').textContent=streak+(streak>=3?' 🔥':'');
+}
+function startGame(){
+  order=shuffle([...Array(Q.length).keys()]);qi=0;score=0;streak=0;
+  document.getElementById('startScreen').classList.add('hidden');
+  document.getElementById('endScreen').classList.add('hidden');
+  document.getElementById('gameScreen').classList.remove('hidden');
+  showQ();
+}
+function showQ(){
+  answered=false;
+  const r=Q[order[qi]];
+  setHUD();
+  document.getElementById('pfill').style.width=(qi/Q.length*100)+'%';
+  document.getElementById('draft').textContent=r.sit;
+  const idx=shuffle([0,1,2]);
+  const box=document.getElementById('opts');box.innerHTML='';
+  idx.forEach(k=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=r.opts[k];
+    b.onclick=()=>pick(k===r.ok,b);box.appendChild(b);
+  });
+  const fb=document.getElementById('fb');fb.className='feedback';fb.innerHTML='';
+  document.getElementById('nb').innerHTML='';
+}
+function pick(ok,el){
+  if(answered)return;answered=true;
+  const r=Q[order[qi]],fb=document.getElementById('fb');
+  document.querySelectorAll('.opt').forEach(o=>o.classList.add('disabled'));
+  if(ok){
+    const pts=10+streak*5;score+=pts;streak++;el.classList.add('correct');
+    fb.className='feedback show good';
+    fb.innerHTML=`✅ <strong>+${pts} — nailed it!</strong><br>🔑 <strong>${r.pat}:</strong> ${r.key}`;
+  }else{
+    streak=0;el.classList.add('wrong');
+    document.querySelectorAll('.opt').forEach(o=>{if(o.textContent===r.opts[r.ok])o.classList.add('correct');});
+    fb.className='feedback show bad';
+    fb.innerHTML=`❌ The correct answer: <strong>“${r.opts[r.ok]}”</strong><br>🔑 <strong>${r.pat}:</strong> ${r.key}`;
+  }
+  setHUD();
+  document.getElementById('nb').innerHTML=`<button class="btn" onclick="nextQ()">${qi+1<Q.length?'Next question →':'See results 🏆'}</button>`;
+}
+function nextQ(){qi++;if(qi>=Q.length)endGame();else showQ();}
+function endGame(){
+  document.getElementById('gameScreen').classList.add('hidden');
+  document.getElementById('endScreen').classList.remove('hidden');
+  const pct=score/MAXSCORE;let stars,emoji,msg;
+  if(pct>=1.2){stars='⭐⭐⭐';emoji='🏆';msg='Outstanding! You think in functions, not translations!';}
+  else if(pct>=0.8){stars='⭐⭐⭐';emoji='🎉';msg='Excellent! Your discourse instincts are professional!';}
+  else if(pct>=0.5){stars='⭐⭐';emoji='💪';msg='Good! Review the carousel, then try again!';}
+  else{stars='⭐';emoji='📚';msg='Keep training! Replay the patterns and try again.';}
+  document.getElementById('endEmoji').textContent=emoji;
+  document.getElementById('stars').textContent=stars;
+  document.getElementById('finalScore').textContent=score+' points';
+  document.getElementById('endMsg').textContent=msg;
+}
+</script>
+</body>
+</html>
