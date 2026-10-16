@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pattern Carousel — Lesson 10 · Thank-You Email & Follow-Up · Job Interviews</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#026A79;--teal2:#49ADB3;--amber:#E8AA28;--ink:#123C46;--muted:#5b6f75;--bg:#f2f8f8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);padding:34px 12px;min-height:100vh}
+.head{text-align:center;margin-bottom:8px}
+.head h2{font-family:'Sora';font-weight:800;font-size:clamp(20px,4vw,28px);color:var(--teal)}
+.head p{color:var(--muted);font-size:14px;margin-top:6px}
+.counter{text-align:center;font-family:'Sora';font-weight:800;color:var(--teal);font-size:14px;letter-spacing:.12em;margin:14px 0 4px}
+.counter b{color:var(--amber);font-size:18px}
+.car{position:relative;max-width:920px;margin:0 auto;min-height:560px;touch-action:pan-y}
+.car-track{position:relative;height:520px;perspective:1400px}
+.pcard{position:absolute;top:0;left:50%;width:min(400px,88%);margin-left:min(-200px,-44%);background:#fff;border-radius:24px;padding:30px 28px 26px;box-shadow:0 18px 50px rgba(2,106,121,.18);border-top:6px solid var(--teal);transition:transform .55s cubic-bezier(.34,1.3,.5,1),opacity .45s;will-change:transform}
+.pcard .num{position:absolute;top:-19px;left:24px;background:var(--amber);color:#3a2a05;font-family:'Sora';font-weight:800;font-size:14px;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;box-shadow:0 4px 12px rgba(232,170,40,.5)}
+.pcard h3{font-family:'Sora';font-size:22px;font-weight:800;margin:8px 0 4px;color:var(--teal)}
+.reg{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);background:#e8f4f5;border-radius:999px;padding:4px 12px;margin-bottom:12px}
+.grp{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;color:#fff;background:linear-gradient(135deg,var(--teal),#0396a8);border-radius:999px;padding:4px 12px;margin:0 6px 12px 0}
+.func{background:#eaf3fd;border:1px solid #bcd0f5;border-radius:12px;padding:10px 13px;font-size:13.5px;line-height:1.55;color:#14365f;margin-bottom:12px;font-weight:700}
+.func b{color:var(--teal)}
+.bridge{background:#eaf6ff;border:1px solid #bcdcf5;border-radius:12px;padding:10px 13px;font-size:13px;line-height:1.55;color:#0d4a63;margin-bottom:12px}
+.warnbox{background:#fdf0d3;border:1px solid #f0d9a8;border-radius:12px;padding:10px 13px;font-size:13px;line-height:1.55;color:#7a5200;margin-bottom:12px}
+.ex{background:#f6fbfb;border-left:4px solid var(--amber);border-radius:0 12px 12px 0;padding:12px 14px;font-size:16px;line-height:1.55;margin-bottom:8px}
+.ex mark{background:#ffe9ad;padding:1px 5px;border-radius:5px;font-weight:700}
+.gloss{font-size:13.5px;color:var(--muted);line-height:1.6;margin-bottom:12px;font-style:italic}
+.key{font-size:13.5px;color:var(--muted);line-height:1.6;margin-bottom:16px}
+.audiodock{display:flex;align-items:center;gap:12px;background:#eef6f6;border-radius:14px;padding:10px 14px}
+.abtn{width:48px;height:48px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--teal),#0396a8);color:#fff;font-size:18px;cursor:pointer;flex-shrink:0;box-shadow:0 5px 14px rgba(2,106,121,.35);display:grid;place-items:center;transition:transform .15s}
+.abtn:active{transform:scale(.92)}
+.abtn .eq{display:none;align-items:flex-end;gap:2.5px;height:18px}
+.abtn .eq i{width:3.5px;background:#fff;border-radius:2px;animation:eq .7s ease-in-out infinite}
+.abtn .eq i:nth-child(2){animation-delay:.15s}.abtn .eq i:nth-child(3){animation-delay:.3s}.abtn .eq i:nth-child(4){animation-delay:.45s}
+@keyframes eq{0%,100%{height:6px}50%{height:17px}}
+.abtn.playing .tr{display:none}.abtn.playing .eq{display:flex}
+.abtn.slowbtn{width:40px;height:40px;font-size:16px;background:linear-gradient(135deg,#49ADB3,#026A79)}
+.abtn.slowbtn.playing{outline:3px solid var(--amber);outline-offset:2px}
+.audiodock span{font-size:13px;font-weight:600;color:var(--muted)}
+.car-nav{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:8px}
+.arrow{width:52px;height:52px;border-radius:50%;border:none;background:#fff;box-shadow:0 6px 18px rgba(2,106,121,.18);font-size:20px;cursor:pointer;color:var(--teal);transition:all .2s}
+.arrow:hover{background:var(--teal);color:#fff;transform:scale(1.08)}
+.dots{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-width:320px}
+.dots button{width:11px;height:11px;border-radius:50%;border:none;background:#c4d8da;cursor:pointer;transition:all .25s;padding:0}
+.dots button.on{background:var(--amber);transform:scale(1.4)}
+.hint{text-align:center;color:var(--muted);font-size:12.5px;margin-top:12px}
+@media (max-width:560px){.car{min-height:600px}.car-track{height:560px}.arrow{width:44px;height:44px}}
+@media (prefers-reduced-motion:reduce){.pcard{transition:none}.abtn .eq i{animation:none}}
+</style>
+</head>
+<body>
+<div class="head">
+  <h2>✉️ Discover: Thank-You Email & Follow-Up — 10 post-interview chunks</h2>
+  <p>The thank-you email is a genre with rules — every card leads with WHAT the chunk does. Tap ▶ to hear it. Watch the pitfall warnings.</p>
+</div>
+<div class="counter"><b id="cnum">1</b> / 10</div>
+<div class="car"><div class="car-track" id="track"></div></div>
+<div class="car-nav">
+  <button class="arrow" onclick="move(-1)" aria-label="Previous pattern">←</button>
+  <div class="dots" id="dots"></div>
+  <button class="arrow" onclick="move(1)" aria-label="Next pattern">→</button>
+</div>
+<p class="hint">👆 drag or swipe &nbsp;·&nbsp; ← → keys work too</p>
+
+<script>
+const PATTERNS=[ {n:'01',name:'Thank you for taking the time to speak with me today',grp:'✉️ Thank-you',reg:'✍️ Written · email',func:'⚡ DOES: <b>opens with gratitude + time specificity</b> — the canonical email opener.',bridge:null,warnbox:null,ex:'“<mark>Thank you for taking the time</mark> to speak with me today.”',gloss:'«Gracias por tomarse el tiempo de hablar conmigo hoy».',key:'Gratitude plus the specific day — never "thanks for the interview" alone. Specificity is what makes it feel real.'},
+ {n:'02',name:'I enjoyed learning more about __',grp:'✉️ Thank-you',reg:'✍️ Written · email',func:'⚡ DOES: <b>shows genuine interest</b> — with the gerund doing the grammatical work.',bridge:null,warnbox:'⚠️ <i>enjoy</i> + GERUND: <i>I enjoyed <b>learning</b></i> — never <i>I enjoyed to learn</i>.',ex:'“<mark>I enjoyed learning</mark> more about your expansion plans in the region.”',gloss:'«Disfruté aprender más sobre…» — gerundio obligatorio.',key:'The perfect habitat of the gerund: "enjoyed learning". The fossil "enjoyed to learn" dies right here.'},
+ {n:'03',name:'I was excited to learn about __',grp:'✉️ Thank-you',reg:'✍️ Written · email',func:'⚡ DOES: <b>connects their words to your motivation</b> — active listening, on paper.',bridge:null,warnbox:null,ex:'“<mark>I was excited to learn</mark> about your new logistics hub.”',gloss:'«Me entusiasmó saber sobre…» — escucha activa por escrito.',key:'The pedagogue\'s replacement: "reinforced my interest" was C1 weight in a B2 course. This does the same job at half the lexical cost.'},
+ {n:'04',name:'I\'d like to reiterate __',grp:'✉️ Thank-you',reg:'✍️ Written · email',func:'⚡ DOES: <b>restates your fit</b> — with formal precision.',bridge:null,warnbox:null,ex:'“<mark>I\'d like to reiterate</mark> my fit for the operations role.”',gloss:'«Quisiera reiterar…» — el verbo de este email.',key:'"Reiterate" IS the verb of this email — learned whole as a block, exactly how chunks work.'},
+ {n:'05',name:'Please don\'t hesitate to reach out if __',grp:'✉️ Thank-you',reg:'✍️ Written · email',func:'⚡ DOES: <b>offers availability</b> — in formal written register.',bridge:null,warnbox:null,ex:'“<mark>Please don\'t hesitate to reach out</mark> if you need anything else from me.”',gloss:'«No dude en contactarme si…» — disponibilidad cortés.',key:'Standard formal availability formula — high real frequency. Memorize it whole; never assemble it word by word.'},
+ {n:'06',name:'I wanted to follow up on __',grp:'📞 Follow-up',reg:'✍️ Written · email',func:'⚡ DOES: <b>opens the follow-up email</b> — the polite past "wanted" does the softening.',bridge:null,warnbox:null,ex:'“<mark>I wanted to follow up</mark> on our interview last Tuesday.”',gloss:'«Quería hacer seguimiento sobre…» — pasado cortés.',key:'The polite past: "I wanted" softens the nudge. Present-tense "I want to follow up" sounds like a demand.'},
+ {n:'07',name:'Just checking in regarding __',grp:'📞 Follow-up',reg:'✍️ Written · email',func:'⚡ DOES: <b>the light nudge</b> — what people actually write.',bridge:null,warnbox:null,ex:'“<mark>Just checking in</mark> regarding the next steps in the process.”',gloss:'«Solo paso a preguntar sobre…» — el nudge real.',key:'"Just checking in" is what professionals really write — not "I am writing to inquire". Real beats stiff.'},
+ {n:'08',name:'I\'m still very interested in the role',grp:'📞 Follow-up',reg:'✍️ Written · email',func:'⚡ DOES: <b>reaffirms interest after silence</b> — without sounding desperate.',bridge:null,warnbox:null,ex:'“<mark>I\'m still very interested</mark> in the role.”',gloss:'«Sigo muy interesado/a en el puesto».',key:'The pedagogue\'s replacement: "I remain" was stiff C1 template-speak. "I\'m still" keeps the same professional register in B2 syntax.'},
+ {n:'09',name:'Looking forward to hearing from you',grp:'✉️ Thank-you',reg:'✍️ Written · email',func:'⚡ DOES: <b>the standard professional close</b> — the email\'s final line.',bridge:null,warnbox:'⚠️ <i>look forward TO</i> + GERUND: <i>looking forward to <b>hearing</b></i> — never <i>looking forward to hear</i>. The classic hispanohablante fossil, caught in its natural habitat.',ex:'“<mark>Looking forward to hearing</mark> from you.”',gloss:'«Quedo atento/a a su respuesta» — to + gerundio.',key:'Impeccable catch: the thank-you email is exactly where this fossil hurts most in real life.'},
+ {n:'10',name:'Best regards,',grp:'✉️ Thank-you',reg:'✍️ Written · email',func:'⚡ DOES: <b>the safe sign-off</b> — modern professional email\'s default.',bridge:null,warnbox:'⚠️ Register: modern professional email closes with <i>Best regards</i> — not a calque of <i>Atentamente</i>. (<i>Sincerely</i> is for last-century formal letters.)',ex:'“<mark>Best regards</mark>, Ricardo Torres.”',gloss:'«Saludos cordiales» — el cierre seguro.',key:'The lesson here isn\'t the chunk (trivial) — it\'s the register pitfall. One wrong sign-off dates you a decade.'}
+];
+const track=document.getElementById('track'),dots=document.getElementById('dots'),cnum=document.getElementById('cnum');
+let cur=0;
+PATTERNS.forEach((p,i)=>{
+  const d=document.createElement('div');d.className='pcard';
+  d.innerHTML=`<span class="num">${i+1}</span><h3>${p.name}</h3>
+   <span class="grp">${p.grp}</span><span class="reg">${p.reg}</span>
+   <div class="func">${p.func}</div>
+   ${p.bridge?`<div class="bridge">${p.bridge}</div>`:''}${p.warnbox?`<div class="warnbox">${p.warnbox}</div>`:''}
+   <div class="ex">“${p.ex}”</div><div class="gloss">${p.gloss}</div><p class="key">🔑 ${p.key}</p>
+   <div class="audiodock"><button class="abtn" aria-label="Hear ${p.name}"><span class="tr">▶</span><span class="eq"><i></i><i></i><i></i><i></i></span></button><button class="abtn slowbtn" aria-label="Hear ${p.name} slowly">🐢</button><span>▶ natural · 🐢 slow</span></div>`;
+  d.querySelector('.abtn').onclick=(e)=>{e.stopPropagation();toggleAudio('ji-m1l10-audio-'+p.n+'.mp3',d.querySelector('.abtn'));};
+  d.querySelector('.slowbtn').onclick=(e)=>{e.stopPropagation();toggleAudio('ji-m1l10-audio-'+p.n+'-slow.mp3',d.querySelector('.slowbtn'))};
+  track.appendChild(d);
+  const b=document.createElement('button');b.setAttribute('aria-label','Go to pattern '+(i+1));b.onclick=()=>go(i);dots.appendChild(b);
+});
+/* audio: one at a time */
+let curA=null,curB=null;
+function toggleAudio(file,btn){
+  if(curA&&!curA.paused&&curB===btn){curA.pause();btn.classList.remove('playing');return;}
+  if(curA){curA.pause();if(curB)curB.classList.remove('playing');}
+  curA=new Audio(file);curB=btn;btn.classList.add('playing');
+  curA.onended=()=>btn.classList.remove('playing');
+  curA.onerror=()=>{btn.classList.remove('playing');};
+  curA.play().catch(()=>btn.classList.remove('playing'));
+}
+/* coverflow */
+function layout(){
+  const cards=track.children;
+  for(let i=0;i<cards.length;i++){
+    const off=i-cur,c=cards[i],ax=Math.min(Math.abs(off),3);
+    c.style.transform=`translateX(${off*62}%) scale(${1-ax*0.14}) translateZ(${-ax*160}px) rotateY(${off===0?0:(off>0?-14:14)}deg)`;
+    c.style.opacity=ax>2?0:(1-ax*0.28);
+    c.style.zIndex=20-ax;
+    c.style.pointerEvents=Math.abs(off)>2?'none':'auto';
+  }
+  [...dots.children].forEach((d,i)=>d.classList.toggle('on',i===cur));
+  cnum.textContent=cur+1;
+}
+function go(i){cur=(i+PATTERNS.length)%PATTERNS.length;layout();}
+function move(d){go(cur+d);}
+layout();
+/* swipe + keys */
+let sx=null;
+track.addEventListener('pointerdown',e=>{sx=e.clientX;});
+window.addEventListener('pointerup',e=>{if(sx===null)return;const dx=e.clientX-sx;sx=null;if(Math.abs(dx)>40)move(dx<0?1:-1);});
+window.addEventListener('keydown',e=>{if(e.key==='ArrowRight')move(1);if(e.key==='ArrowLeft')move(-1);});
+</script>
+</body>
+</html>

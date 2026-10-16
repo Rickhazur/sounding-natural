@@ -1,0 +1,85 @@
+CAPSTONE FINAL — "The Real Interview"
+El examen que aprueba el curso "Beyond Words: Job Interviews in English"
+========================================================================
+Un solo archivo HTML autocontenido (sin audios, sin carpetas):
+súbelo suelto a la RAÍZ del repo sounding-natural.
+
+QUÉ ES
+-------
+El simulacro de entrevista completo de 15 a 20 minutos que
+aprueba el curso, según el diseño aprobado (sección 5):
+
+  Fase 1 · El pitch de 60 segundos (L5) ............ 1:00
+  Fase 2 · 3 preguntas clásicas (L6) .............. 3 × 1:30
+  Fase 3 · 1 pregunta difícil (L7, aleatoria) ..... 1:30
+  Fase 4 · 1 pregunta de salario (L8) .............. 1:30
+  Fase 5 · Tus 3 preguntas de cierre (L9) .......... 2:00
+  Fase 6 · La llamada de oferta (L11) — NUEVO ..... 3:00
+         El "hiring manager" presenta una oferta verbal;
+         el alumno debe agradecer, pedir tiempo y sondear
+         un término, todo en voz alta y en inglés.
+
+Cada fase trae su temporizador visible (iniciar / pausar /
+reiniciar) y los chunks de su lección como recordatorio.
+Las preguntas clásicas y la difícil salen ALEATORIAS en
+cada intento — ningún simulacro es igual al anterior.
+
+Al final: rúbrica de 4 ejes con casillas (Contenido, Chunks,
+Anti-fosilización con los 10 errores del curso, Presencia),
+botón para IMPRIMIR la rúbrica, y el veredicto binario y
+honesto: "Ready for a real interview" / "Not yet" — con
+espacio de feedback por eje para el "not yet" (también
+imprimible).
+
+OJO — regla de la rúbrica (pedida por el pedagogo): STAR
+aplica SOLO a las preguntas conductuales (la difícil y
+algunas clásicas). NO se exige STAR en la pregunta de
+salario ni en las de cierre.
+
+Todo el contenido está en inglés. Incluye instrucciones
+breves de uso: con un compañero (recomendado) o a solas
+grabándose con el celular.
+
+QUÉ HAY EN EL PAQUETE (2 archivos)
+----------------------------------
+ji-capstone-final.html      🎬 El simulacro completo.
+                            Súbelo a la raíz del repo.
+                            (Nombre exacto — no lo cambies.)
+
+LEEME-capstone-final.txt    📄 Este archivo. No se sube.
+
+VERIFICADO
+----------
+· JavaScript validado con node --check (sintaxis OK).
+· Los 13 IDs que usa el JS existen en el HTML; las 6 fases
+  están presentes; todas las funciones de los botones
+  existen. Sin referencias rotas.
+
+CÓMO SUBIRLO
+------------
+1. Ve a github.com/Rickhazur/sounding-natural
+2. Add file → Upload files.
+3. Arrastra ji-capstone-final.html suelto (no en carpeta).
+4. Commit changes. Espera 1-2 minutos.
+5. Verifica en vivo:
+   https://rickhazur.github.io/sounding-natural/ji-capstone-final.html
+
+CÓMO EMBEBER EN RISE
+---------------------
+Al final del curso (después del Módulo 3), bloque
+Multimedia → Embed, pega este código:
+
+<iframe src="https://rickhazur.github.io/sounding-natural/ji-capstone-final.html" width="100%" height="1000" frameborder="0" style="border-radius:16px;" title="The Real Interview — Final Capstone"></iframe>
+
+CÓMO USARLO CON TUS ESTUDIANTES
+-------------------------------
+· CON UN COMPAÑERO (recomendado): el compañero lee las
+  líneas del entrevistador en voz alta, maneja los
+  temporizadores y al final califica con la rúbrica.
+  En la fase 6 hace de hiring manager y lee el guion
+  de la oferta.
+· A SOLAS: el estudiante se graba con el celular, lee
+  cada línea del entrevistador y responde EN VOZ ALTA
+  (nunca en la cabeza), luego se califica con honestidad.
+· Regla de oro: sin pausas entre fases y sin notas
+  durante el simulacro. Como una entrevista real.

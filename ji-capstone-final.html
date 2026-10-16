@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Final Capstone — The Real Interview | Beyond Words: Job Interviews in English</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#F5F9FA;color:#123C46;line-height:1.6}
+.container{max-width:760px;margin:0 auto;padding:24px}
+.header{text-align:center;margin-bottom:20px}
+h1{color:#026A79;font-size:30px;margin-bottom:6px}
+.subtitle{color:#5a7a82;font-size:15px;max-width:600px;margin:0 auto}
+.topbar{display:flex;justify-content:space-between;align-items:center;background:#fff;border-radius:12px;padding:12px 20px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);flex-wrap:wrap;gap:8px}
+.time{font-weight:bold;color:#026A79;font-size:16px}
+.phase-ind{font-size:14px;color:#5a7a82}
+.screen{display:none}
+.screen.show{display:block}
+.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.1);margin-bottom:16px}
+.card-banner{background:linear-gradient(135deg,#026A79,#025F6D);padding:24px 28px;color:#fff}
+.card-tag{display:inline-block;background:#E8AA28;color:#123C46;font-size:12px;font-weight:bold;padding:5px 14px;border-radius:20px;margin-bottom:10px;letter-spacing:1px}
+.card-title{font-size:22px;font-weight:bold}
+.card-body{padding:24px 28px}
+.interviewer{background:#F5F9FA;border-radius:10px;padding:16px 18px;margin-bottom:16px;font-size:16.5px;border-left:4px solid #026A79;font-style:italic}
+.interviewer strong{font-style:normal;color:#026A79}
+.chunk-hints{background:#EAF7F6;border-radius:10px;padding:14px 18px;margin-bottom:18px;font-size:14.5px;color:#026A79}
+.chunk-hints strong{display:block;margin-bottom:6px;color:#026A79}
+.chunk-hints .chip{display:inline-block;background:#fff;border:1px solid #bcdfe2;border-radius:16px;padding:3px 12px;margin:3px 4px 3px 0;font-size:13.5px}
+.timer-box{background:#123C46;color:#fff;border-radius:12px;padding:16px 20px;margin-bottom:18px;text-align:center}
+.timer-display{font-size:42px;font-weight:bold;letter-spacing:2px;font-variant-numeric:tabular-nums}
+.timer-display.done{color:#E8AA28}
+.timer-label{font-size:13px;color:#bcdfe2;margin-bottom:8px;letter-spacing:1px}
+.timer-controls button{background:#026A79;color:#fff;border:none;border-radius:10px;padding:10px 22px;font-size:15px;font-weight:bold;cursor:pointer;font-family:inherit;margin:4px}
+.timer-controls button:hover{background:#025F6D}
+.timer-controls button.ghost{background:transparent;border:2px solid #5a8a92;color:#bcdfe2}
+.instructions{background:#fef9e8;border:1px solid #E8AA28;border-radius:12px;padding:16px 20px;margin-bottom:18px;font-size:15px}
+.instructions strong{color:#026A79}
+ol.steps,ul.steps{margin:8px 0 8px 20px;font-size:15px}
+ol.steps li,ul.steps li{margin-bottom:6px}
+.btn-next{display:block;margin:8px 0 4px;background:#026A79;color:#fff;border:none;padding:14px;font-size:16px;font-weight:bold;border-radius:12px;cursor:pointer;font-family:inherit;width:100%}
+.btn-next:hover{background:#025F6D}
+.btn-next.amber{background:#E8AA28;color:#123C46}
+.btn-next.amber:hover{background:#d69520}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap}
+.btn-row .btn-next{flex:1;min-width:200px}
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}
+.mode-card{background:#fff;border:2px solid #d0e4e6;border-radius:12px;padding:18px}
+.mode-card h3{color:#026A79;font-size:17px;margin-bottom:8px}
+.mode-card p{font-size:14.5px;color:#3a5a62}
+.qnav{display:flex;gap:8px;margin-bottom:14px}
+.qdot{width:36px;height:36px;border-radius:50%;background:#d0e4e6;color:#5a7a82;font-weight:bold;display:flex;align-items:center;justify-content:center;font-size:15px}
+.qdot.active{background:#026A79;color:#fff}
+.qdot.done{background:#E8AA28;color:#123C46}
+.rubric-axis{background:#fff;border-radius:16px;box-shadow:0 4px 16px rgba(0,0,0,.08);margin-bottom:16px;overflow:hidden}
+.rubric-head{background:linear-gradient(135deg,#026A79,#025F6D);color:#fff;padding:16px 22px;display:flex;justify-content:space-between;align-items:center}
+.rubric-head h3{font-size:18px}
+.rubric-score{font-size:14px;background:#E8AA28;color:#123C46;font-weight:bold;border-radius:20px;padding:4px 14px}
+.rubric-body{padding:18px 22px}
+.check{display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #eef4f5;font-size:15px;cursor:pointer}
+.check:last-child{border-bottom:none}
+.check input{width:20px;height:20px;margin-top:3px;flex-shrink:0;accent-color:#026A79;cursor:pointer}
+.check small{display:block;color:#5a7a82;font-size:13.5px}
+.star-note{background:#fef9e8;border:1px solid #E8AA28;border-radius:10px;padding:12px 16px;font-size:14px;margin-bottom:12px}
+.star-note strong{color:#026A79}
+.verdict-btns{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0}
+.verdict-btn{border:none;border-radius:16px;padding:26px 18px;font-size:18px;font-weight:bold;cursor:pointer;font-family:inherit;line-height:1.4}
+.verdict-btn.ready{background:#e8f7ee;border:2px solid #2E9B4A;color:#1d6e33}
+.verdict-btn.ready:hover{background:#d4f0dd}
+.verdict-btn.notyet{background:#fef9e8;border:2px solid #E8AA28;color:#8a5f10}
+.verdict-btn.notyet:hover{background:#fdf0d0}
+.feedback-area{width:100%;min-height:90px;border:2px solid #d0e4e6;border-radius:10px;padding:12px 14px;font-family:inherit;font-size:15px;color:#123C46;margin-top:6px;resize:vertical}
+.feedback-label{font-weight:bold;color:#026A79;margin-top:16px;display:block;font-size:15.5px}
+.final{text-align:center;background:#fff;border-radius:16px;padding:48px 32px;box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.final-emoji{font-size:60px;margin-bottom:8px}
+.final-title{font-size:26px;color:#026A79;font-weight:bold;margin-bottom:12px}
+.final-msg{color:#5a7a82;max-width:540px;margin:0 auto 20px;font-size:16px}
+.script-box{background:#fff8e6;border:2px dashed #E8AA28;border-radius:12px;padding:18px 20px;margin-bottom:16px;font-size:15.5px}
+.script-box strong{color:#026A79}
+.must-do{background:#EAF7F6;border-radius:10px;padding:14px 18px;margin-bottom:18px;font-size:15px}
+.must-do li{margin-bottom:6px}
+@media (max-width:600px){
+  body{font-size:16px !important;padding:12px !important}
+  h1{font-size:1.5em !important}
+  .container{max-width:100% !important;padding:12px !important;margin:0 !important}
+  .mode-grid,.verdict-btns{grid-template-columns:1fr !important}
+  .btn-next{min-height:48px !important;font-size:17px !important}
+  .timer-display{font-size:34px}
+  img{max-width:100% !important;height:auto !important}
+}
+@media print{
+  .no-print,.topbar,.timer-controls,.btn-next,.btn-row,.verdict-btns,#btn-print-rubric,#btn-print-feedback{display:none !important}
+  .screen{display:none !important}
+  body.show-rubric-print #screen-rubric{display:block !important}
+  body.show-feedback-print #screen-verdict{display:block !important}
+  body.show-feedback-print #verdict-buttons-row,body.show-feedback-print #ready-panel{display:none !important}
+  .card,.rubric-axis,.final{box-shadow:none !important}
+  .container{max-width:100% !important}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+<h1>&#127942; Final Capstone &mdash; The Real Interview</h1>
+<p class="subtitle">Beyond Words: Job Interviews in English &middot; The exam that approves the course &middot; 15&ndash;20 minutes</p>
+</div>
+
+<div class="topbar">
+<span class="time" id="elapsed">00:00</span>
+<span class="phase-ind" id="phase-ind">Ready</span>
+<span class="phase-ind">Target: 15&ndash;20 min total</span>
+</div>
+
+<!-- ==================== INTRO ==================== -->
+<div class="screen show" id="screen-intro">
+<div class="card">
+<div class="card-banner">
+<div class="card-tag">FINAL EXAM &middot; ROLE-PLAY</div>
+<div class="card-title">This is not a quiz. This is the interview.</div>
+</div>
+<div class="card-body">
+<div class="instructions">
+<strong>How it works.</strong> You will go through a complete 15&ndash;20 minute job interview in English: your 60-second pitch, 3 classic questions, 1 hard question, 1 salary question, your 3 closing questions &mdash; and a surprise <strong>offer call</strong> at the end. Each phase has a visible timer. Don&rsquo;t pause between phases: real interviews don&rsquo;t wait.
+</div>
+<div class="mode-grid">
+<div class="mode-card">
+<h3>&#129309; With a partner (recommended)</h3>
+<p>Your partner reads the <em>interviewer</em> lines out loud, runs the timers, and scores you with the 4-axis rubric at the end. They play the hiring manager in the offer call.</p>
+</div>
+<div class="mode-card">
+<h3>&#127909; Solo</h3>
+<p>Record yourself on your phone. Read each interviewer line, answer <strong>out loud</strong> (never in your head), then score yourself honestly with the rubric. Honesty is the whole point.</p>
+</div>
+</div>
+<div class="instructions">
+<strong>Rules.</strong>
+<ul class="steps">
+<li>Answer everything <strong>out loud</strong>, in English, in full sentences.</li>
+<li>Use the course chunks &mdash; that&rsquo;s what they&rsquo;re for.</li>
+<li>Respect the timers. When time&rsquo;s up, you stop.</li>
+<li>No notes during the interview. Your preparation is the 11 lessons.</li>
+</ul>
+</div>
+<button class="btn-next" onclick="startInterview()">Start the interview &rarr;</button>
+</div>
+</div>
+</div>
+
+<!-- ==================== PHASES ==================== -->
+<div class="screen" id="screen-phases">
+
+<!-- PHASE 1: PITCH -->
+<div class="card phase" id="phase-1">
+<div class="card-banner">
+<div class="card-tag">PHASE 1 OF 6 &middot; LESSON 5</div>
+<div class="card-title">The 60-Second Pitch</div>
+</div>
+<div class="card-body">
+<div class="interviewer"><strong>Interviewer:</strong> &ldquo;So &mdash; tell me about yourself.&rdquo;</div>
+<div class="timer-box">
+<div class="timer-label">ANSWER TIME</div>
+<div class="timer-display" id="t1-display">01:00</div>
+<div class="timer-controls no-print">
+<button onclick="timers.t1.start()">Start</button>
+<button onclick="timers.t1.pause()">Pause</button>
+<button class="ghost" onclick="timers.t1.reset()">Reset</button>
+</div>
+</div>
+<div class="chunk-hints"><strong>Chunks you own for this (L5):</strong><br>
+<span class="chip">I&rsquo;m a __ with __ years of experience in __</span>
+<span class="chip">Currently, I __</span>
+<span class="chip">Most recently, I __</span>
+<span class="chip">What drives me is __</span>
+<span class="chip">I&rsquo;m excited about this opportunity because __</span>
+</div>
+<button class="btn-next" onclick="goPhase(2)">Next phase &rarr;</button>
+</div>
+</div>
+
+<!-- PHASE 2: CLASSICS -->
+<div class="card phase" id="phase-2" style="display:none">
+<div class="card-banner">
+<div class="card-tag">PHASE 2 OF 6 &middot; LESSON 6</div>
+<div class="card-title">Classic Questions</div>
+</div>
+<div class="card-body">
+<div class="qnav no-print" id="q2-dots"></div>
+<div class="interviewer"><strong>Interviewer:</strong> <span id="q2-text">&ldquo;&rdquo;</span></div>
+<div class="timer-box">
+<div class="timer-label">ANSWER TIME &middot; 90 SECONDS EACH</div>
+<div class="timer-display" id="t2-display">01:30</div>
+<div class="timer-controls no-print">
+<button onclick="timers.t2.start()">Start</button>
+<button onclick="timers.t2.pause()">Pause</button>
+<button class="ghost" onclick="timers.t2.reset()">Reset</button>
+</div>
+</div>
+<div class="chunk-hints"><strong>Chunks you own for this (L6):</strong><br>
+<span class="chip">What sets me apart is __</span>
+<span class="chip">My greatest strength is __</span>
+<span class="chip">For example, __</span>
+<span class="chip">What excites me about this role is __</span>
+<span class="chip">I bring __ to the table</span>
+</div>
+<div class="btn-row">
+<button class="btn-next no-print" id="q2-next" onclick="nextClassic()">Next question &rarr;</button>
+<button class="btn-next amber" id="q2-phase" style="display:none" onclick="goPhase(3)">Next phase &rarr;</button>
+</div>
+</div>
+</div>
+
+<!-- PHASE 3: HARD ONE -->
+<div class="card phase" id="phase-3" style="display:none">
+<div class="card-banner">
+<div class="card-tag">PHASE 3 OF 6 &middot; LESSON 7</div>
+<div class="card-title">The Hard One</div>
+</div>
+<div class="card-body">
+<div class="interviewer"><strong>Interviewer:</strong> <span id="q3-text">&ldquo;&rdquo;</span></div>
+<div class="timer-box">
+<div class="timer-label">ANSWER TIME</div>
+<div class="timer-display" id="t3-display">01:30</div>
+<div class="timer-controls no-print">
+<button onclick="timers.t3.start()">Start</button>
+<button onclick="timers.t3.pause()">Pause</button>
+<button class="ghost" onclick="timers.t3.reset()">Reset</button>
+<button class="ghost" onclick="redealHard()">&#8635; Different question</button>
+</div>
+</div>
+<div class="chunk-hints"><strong>Chunks you own for this (L7):</strong><br>
+<span class="chip">That&rsquo;s a fair question</span>
+<span class="chip">I&rsquo;ll be honest with you</span>
+<span class="chip">What happened was __</span>
+<span class="chip">Since then, I&rsquo;ve __</span>
+<span class="chip">An area I&rsquo;m actively working on is __</span>
+</div>
+<button class="btn-next" onclick="goPhase(4)">Next phase &rarr;</button>
+</div>
+</div>
+
+<!-- PHASE 4: SALARY -->
+<div class="card phase" id="phase-4" style="display:none">
+<div class="card-banner">
+<div class="card-tag">PHASE 4 OF 6 &middot; LESSON 8</div>
+<div class="card-title">The Salary Question</div>
+</div>
+<div class="card-body">
+<div class="interviewer"><strong>Interviewer:</strong> &ldquo;What are your salary expectations?&rdquo;<br><br><span style="font-size:14px">(After your answer, the interviewer pushes once: &ldquo;Could you give me a specific number?&rdquo;)</span></div>
+<div class="timer-box">
+<div class="timer-label">ANSWER TIME</div>
+<div class="timer-display" id="t4-display">01:30</div>
+<div class="timer-controls no-print">
+<button onclick="timers.t4.start()">Start</button>
+<button onclick="timers.t4.pause()">Pause</button>
+<button class="ghost" onclick="timers.t4.reset()">Reset</button>
+</div>
+</div>
+<div class="chunk-hints"><strong>Chunks you own for this (L8):</strong><br>
+<span class="chip">Based on my research, __</span>
+<span class="chip">My salary expectations are in the range of __</span>
+<span class="chip">Is there flexibility on __?</span>
+<span class="chip">I appreciate the offer. Let me think it over</span>
+</div>
+<button class="btn-next" onclick="goPhase(5)">Next phase &rarr;</button>
+</div>
+</div>
+
+<!-- PHASE 5: YOUR QUESTIONS -->
+<div class="card phase" id="phase-5" style="display:none">
+<div class="card-banner">
+<div class="card-tag">PHASE 5 OF 6 &middot; LESSON 9</div>
+<div class="card-title">Your Questions for Them</div>
+</div>
+<div class="card-body">
+<div class="interviewer"><strong>Interviewer:</strong> &ldquo;Do you have any questions for me?&rdquo;</div>
+<p style="margin-bottom:14px;font-size:15.5px">Ask <strong>3 smart questions</strong> out loud &mdash; the ones that keep you in the interviewer&rsquo;s memory.</p>
+<div class="timer-box">
+<div class="timer-label">YOUR 3 QUESTIONS</div>
+<div class="timer-display" id="t5-display">02:00</div>
+<div class="timer-controls no-print">
+<button onclick="timers.t5.start()">Start</button>
+<button onclick="timers.t5.pause()">Pause</button>
+<button class="ghost" onclick="timers.t5.reset()">Reset</button>
+</div>
+</div>
+<div class="chunk-hints"><strong>Your arsenal (L9):</strong><br>
+<span class="chip">What does success look like in this role?</span>
+<span class="chip">What are the biggest challenges facing the team right now?</span>
+<span class="chip">How is performance measured here?</span>
+<span class="chip">What are the next steps in the process?</span>
+<span class="chip">Thank you for your time today</span>
+</div>
+<button class="btn-next" onclick="goPhase(6)">Next phase &rarr;</button>
+</div>
+</div>
+
+<!-- PHASE 6: OFFER CALL -->
+<div class="card phase" id="phase-6" style="display:none">
+<div class="card-banner">
+<div class="card-tag">PHASE 6 OF 6 &middot; LESSON 11 &middot; THE TWIST</div>
+<div class="card-title">The Offer Call</div>
+</div>
+<div class="card-body">
+<div class="instructions"><strong>The scene.</strong> The interview is over. Two days later, your phone rings. It&rsquo;s the hiring manager &mdash; played by your partner, or imagined out loud if you&rsquo;re solo.</div>
+<div class="script-box">
+<strong>&#128222; Hiring manager (read out loud):</strong><br><br>
+&ldquo;Hi [your name], this is Alex from [company]. I&rsquo;m calling with great news &mdash; we&rsquo;d like to offer you the position! The base salary is <strong>$X per month</strong>, plus health insurance and 15 vacation days. We&rsquo;d love to have your answer by <strong>Friday</strong>. What do you think?&rdquo;
+</div>
+<div class="must-do">
+<strong style="color:#026A79">You must do 3 things &mdash; out loud, in English:</strong>
+<ol class="steps">
+<li><strong>Thank them</strong> for the offer (never skip the courtesy).</li>
+<li><strong>Ask for time</strong> to consider &mdash; never accept on the spot.</li>
+<li><strong>Probe one term</strong> &mdash; the salary band, flexibility, or a benefit.</li>
+</ol>
+</div>
+<div class="timer-box">
+<div class="timer-label">THE CALL &middot; 2&ndash;3 MINUTES</div>
+<div class="timer-display" id="t6-display">03:00</div>
+<div class="timer-controls no-print">
+<button onclick="timers.t6.start()">Start</button>
+<button onclick="timers.t6.pause()">Pause</button>
+<button class="ghost" onclick="timers.t6.reset()">Reset</button>
+</div>
+</div>
+<div class="chunk-hints"><strong>Chunks you own for this (L11):</strong><br>
+<span class="chip">Thank you for the offer. I&rsquo;m excited about the possibility of joining</span>
+<span class="chip">Could I take a few days to consider the full offer?</span>
+<span class="chip">Would you be open to __?</span>
+<span class="chip">Is there flexibility on __?</span>
+<span class="chip">That would make the decision much easier for me</span>
+</div>
+<button class="btn-next amber" onclick="goRubric()">Finish &mdash; score me &rarr;</button>
+</div>
+</div>
+
+</div><!-- /screen-phases -->
+
+<!-- ==================== RUBRIC ==================== -->
+<div class="screen" id="screen-rubric">
+<div class="card">
+<div class="card-banner">
+<div class="card-tag">SCORING &middot; 4 AXES</div>
+<div class="card-title">The Rubric</div>
+</div>
+<div class="card-body">
+<div class="instructions"><strong>Be honest &mdash; this is the exam.</strong> Check what you actually saw (or heard), not what you hoped for. One axis at a time.</div>
+</div>
+</div>
+
+<div class="rubric-axis" id="axis-content">
+<div class="rubric-head"><h3>1 &middot; Content</h3><span class="rubric-score" id="score-content">0/4</span></div>
+<div class="rubric-body">
+<div class="star-note"><strong>&#11088; STAR rule:</strong> STAR (Situation &rarr; Task &rarr; Action &rarr; Result) applies to <strong>behavioral questions only</strong> &mdash; the hard question and some classics. <strong>Do NOT require STAR</strong> for the salary question or the closing questions. Penalizing those answers for &ldquo;no STAR&rdquo; would be wrong.</div>
+<label class="check"><input type="checkbox" data-axis="content"><span>The 60-second pitch followed the 5-part structure <small>opening &rarr; current role &rarr; recent past &rarr; what drives me &rarr; enthusiastic close</small></span></label>
+<label class="check"><input type="checkbox" data-axis="content"><span>Behavioral answers used STAR structure <small>situation, task, action, result &mdash; where STAR actually belongs</small></span></label>
+<label class="check"><input type="checkbox" data-axis="content"><span>Answers were specific, not generic <small>real examples, numbers, names &mdash; not &ldquo;I&rsquo;m a hard worker&rdquo;</small></span></label>
+<label class="check"><input type="checkbox" data-axis="content"><span>The 3 closing questions were smart and memorable <small>not questions the interview already answered</small></span></label>
+</div>
+</div>
+
+<div class="rubric-axis" id="axis-chunks">
+<div class="rubric-head"><h3>2 &middot; Chunks</h3><span class="rubric-score" id="score-chunks">0/4</span></div>
+<div class="rubric-body">
+<label class="check"><input type="checkbox" data-axis="chunks"><span>Used at least <strong>8 different course chunks</strong> across the interview <small>count them &mdash; variety matters more than repetition</small></span></label>
+<label class="check"><input type="checkbox" data-axis="chunks"><span>Chunks were <strong>accurate</strong> <small>correct prepositions, word order, no broken halves</small></span></label>
+<label class="check"><input type="checkbox" data-axis="chunks"><span>Right chunk, right moment <small>the chunk fit the question &mdash; not forced in</small></span></label>
+<label class="check"><input type="checkbox" data-axis="chunks"><span>L11 chunks appeared in the offer call <small>thanked for the offer, asked for time, probed one term</small></span></label>
+</div>
+</div>
+
+<div class="rubric-axis" id="axis-fossil">
+<div class="rubric-head"><h3>3 &middot; Anti-Fossilization</h3><span class="rubric-score" id="score-fossil">0/10</span></div>
+<div class="rubric-body">
+<p style="font-size:14.5px;color:#5a7a82;margin-bottom:10px">Check each fossil error the candidate kept <strong>under control</strong> (did NOT commit):</p>
+<label class="check"><input type="checkbox" data-axis="fossil"><span><strong>1.</strong> No missing subjects <small>&ldquo;It was a difficult period&rdquo; &mdash; never &ldquo;Was difficult&rdquo;</small></span></label>
+<label class="check"><input type="checkbox" data-axis="fossil"><span><strong>2.</strong> Age &amp; experience correct <small>&ldquo;I&rsquo;m 30&rdquo; &middot; &ldquo;10 years <em>of experience</em>&rdquo;</small></span></label>
+<label class="check"><input type="checkbox" data-axis="fossil"><span><strong>3.</strong> No &ldquo;I am agree&rdquo; <small>&ldquo;I <em>agree</em>&rdquo; &mdash; the verb, never the adjective</small></span></label>
+<label class="check"><input type="checkbox" data-axis="fossil"><span><strong>4.</strong> Adjective order correct <small>&ldquo;a <em>cross-functional</em> team&rdquo; &mdash; adjective before noun</small></span></label>
+<label class="check"><input type="checkbox" data-axis="fossil"><span><strong>5.</strong> Uncountables correct <small>&ldquo;feedback&rdquo;, &ldquo;experience&rdquo; &mdash; no &ldquo;-s&rdquo;</small></span></label>
+<label class="check"><input type="checkbox" data-axis="fossil"><span><strong>6.</strong> Prepositions correct <small><em>responsible FOR &middot; good AT &middot; open TO &middot; enthusiastic ABOUT &middot; align WITH</em></small></span></label>
+<label class="check"><input type="checkbox" data-axis="fossil"><span><strong>7.</strong> No &ldquo;explain me&rdquo; <small>&ldquo;give <em>you</em> some context&rdquo; &mdash; the person goes in the middle</small></span></label>
+<label class="check"><input type="checkbox" data-axis="fossil"><span><strong>8.</strong> &ldquo;Actually&rdquo; used correctly <small>means &ldquo;de hecho&rdquo; &mdash; never &ldquo;actualmente&rdquo;</small></span></label>
+<label class="check"><input type="checkbox" data-axis="fossil"><span><strong>9.</strong> Articles correct <small>&ldquo;&Oslash; success&rdquo; &middot; &ldquo;the team&rdquo; &mdash; no missing or extra articles</small></span></label>
+<label class="check"><input type="checkbox" data-axis="fossil"><span><strong>10.</strong> No double negatives; make/do correct <small>&ldquo;I don&rsquo;t know <em>anything</em>&rdquo; &middot; &ldquo;<em>make</em> sure&rdquo;</small></span></label>
+</div>
+</div>
+
+<div class="rubric-axis" id="axis-presence">
+<div class="rubric-head"><h3>4 &middot; Presence</h3><span class="rubric-score" id="score-presence">0/4</span></div>
+<div class="rubric-body">
+<label class="check"><input type="checkbox" data-axis="presence"><span>Spoke with <strong>confidence</strong> &mdash; no freezing, no giving up mid-answer</span></label>
+<label class="check"><input type="checkbox" data-axis="presence"><span><strong>Natural pace</strong> &mdash; not rushing, not stalling</span></label>
+<label class="check"><input type="checkbox" data-axis="presence"><span><strong>Did not translate out loud</strong> &mdash; no long Spanish pauses, no thinking aloud in Spanish</span></label>
+<label class="check"><input type="checkbox" data-axis="presence"><span><strong>Professional presence</strong> &mdash; posture, eye contact (or camera), tone of someone who belongs in the room</span></label>
+</div>
+</div>
+
+<div class="btn-row no-print" style="margin-bottom:16px">
+<button class="btn-next" id="btn-print-rubric" onclick="printRubric()">&#128438; Print rubric</button>
+<button class="btn-next amber" onclick="goVerdict()">Give the verdict &rarr;</button>
+</div>
+</div>
+
+<!-- ==================== VERDICT ==================== -->
+<div class="screen" id="screen-verdict">
+<div class="card">
+<div class="card-banner">
+<div class="card-tag">THE MOMENT OF TRUTH</div>
+<div class="card-title">The Verdict</div>
+</div>
+<div class="card-body">
+<p style="font-size:15.5px;margin-bottom:6px">One honest call. No &ldquo;almost&rdquo;. The course is approved <strong>only</strong> with a real <em>ready</em>.</p>
+<div class="verdict-btns no-print" id="verdict-buttons-row">
+<button class="verdict-btn ready" onclick="setVerdict(true)">&#9989;<br>Ready for a<br>real interview</button>
+<button class="verdict-btn notyet" onclick="setVerdict(false)">&#9203;<br>Not yet</button>
+</div>
+
+<div id="ready-panel" style="display:none">
+<div class="final">
+<div class="final-emoji">&#127942;</div>
+<div class="final-title">Ready for a real interview.</div>
+<p class="final-msg">You walked in as the professional you already are &mdash; clear, confident, and ready. The 11 lessons did their job. Now go get the job.</p>
+<p class="final-msg" style="font-size:14px">This capstone counts toward your <strong>Beyond Words Professional</strong> credential (internal course certificate, aligned to CEFR B2/C1 descriptors).</p>
+<button class="btn-next no-print" onclick="location.reload()">&#8635; Run it again</button>
+</div>
+</div>
+
+<div id="notyet-panel" style="display:none">
+<div class="instructions"><strong>Not yet is not failure.</strong> It&rsquo;s a map. Write specific feedback per axis &mdash; what exactly to fix &mdash; then go back to those lessons and run the capstone again.</div>
+<label class="feedback-label" for="fb-content">1 &middot; Content &mdash; what to fix:</label>
+<textarea class="feedback-area" id="fb-content" placeholder="e.g. Pitch had no enthusiastic close. STAR was missing the Result in the hard question."></textarea>
+<label class="feedback-label" for="fb-chunks">2 &middot; Chunks &mdash; what to fix:</label>
+<textarea class="feedback-area" id="fb-chunks" placeholder="e.g. Only 5 different chunks. &lsquo;Good in&rsquo; instead of &lsquo;good at&rsquo;. No L11 chunks in the offer call."></textarea>
+<label class="feedback-label" for="fb-fossil">3 &middot; Anti-fossilization &mdash; what to fix:</label>
+<textarea class="feedback-area" id="fb-fossil" placeholder="e.g. Said &lsquo;feedbacks&rsquo; twice. Dropped the subject in &lsquo;was difficult&rsquo;."></textarea>
+<label class="feedback-label" for="fb-presence">4 &middot; Presence &mdash; what to fix:</label>
+<textarea class="feedback-area" id="fb-presence" placeholder="e.g. Froze for 10 seconds on the salary question. Rushed the closing questions."></textarea>
+<div class="btn-row no-print" style="margin-top:18px">
+<button class="btn-next" id="btn-print-feedback" onclick="printFeedback()">&#128438; Print my feedback</button>
+<button class="btn-next amber" onclick="location.reload()">&#8635; Try the capstone again</button>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+</div><!-- /container -->
+<script>
+/* ---------- utils ---------- */
+function fmt(s){var m=Math.floor(s/60),ss=s%60;return (m<10?'0':'')+m+':'+(ss<10?'0':'')+ss;}
+function beep(){try{var C=window.AudioContext||window.webkitAudioContext;var ctx=new C();var o=ctx.createOscillator();var g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=880;g.gain.setValueAtTime(0.12,ctx.currentTime);o.start();o.stop(ctx.currentTime+0.5);}catch(e){}}
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+
+/* ---------- timers ---------- */
+function makeTimer(displayId,totalSec){
+  var el=document.getElementById(displayId),remaining=totalSec,iv=null;
+  function render(){el.textContent=fmt(remaining);if(remaining===0){el.classList.add('done');}else{el.classList.remove('done');}}
+  render();
+  return{
+    start:function(){if(iv)return;iv=setInterval(function(){if(remaining>0){remaining--;render();if(remaining===0){clearInterval(iv);iv=null;beep();}}},1000);},
+    pause:function(){if(iv){clearInterval(iv);iv=null;}},
+    reset:function(){if(iv){clearInterval(iv);iv=null;}remaining=totalSec;render();}
+  };
+}
+var timers={};
+
+/* ---------- elapsed clock ---------- */
+var elapsedSec=0,elapsedIv=null;
+function startElapsed(){if(elapsedIv)return;elapsedIv=setInterval(function(){elapsedSec++;document.getElementById('elapsed').textContent=fmt(elapsedSec);},1000);}
+
+/* ---------- navigation ---------- */
+var PHASE_NAMES={1:'Phase 1 of 6 \u00B7 The Pitch',2:'Phase 2 of 6 \u00B7 Classics',3:'Phase 3 of 6 \u00B7 The Hard One',4:'Phase 4 of 6 \u00B7 Salary',5:'Phase 5 of 6 \u00B7 Your Questions',6:'Phase 6 of 6 \u00B7 The Offer Call'};
+function showScreen(id){var ss=document.querySelectorAll('.screen');for(var i=0;i<ss.length;i++){ss[i].classList.remove('show');}document.getElementById(id).classList.add('show');window.scrollTo({top:0,behavior:'smooth'});}
+function startInterview(){
+  showScreen('screen-phases');goPhase(1);startElapsed();
+}
+function goPhase(n){
+  var ps=document.querySelectorAll('.phase');for(var i=0;i<ps.length;i++){ps[i].style.display='none';}
+  document.getElementById('phase-'+n).style.display='block';
+  document.getElementById('phase-ind').textContent=PHASE_NAMES[n];
+  if(n===2){renderClassic();}
+  if(n===3){renderHard();}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function goRubric(){document.getElementById('phase-ind').textContent='Scoring \u00B7 The Rubric';showScreen('screen-rubric');}
+function goVerdict(){document.getElementById('phase-ind').textContent='The Verdict';showScreen('screen-verdict');}
+
+/* ---------- phase 2: classics ---------- */
+var CLASSICS=['Why should we hire you?','What is your greatest strength?','Why do you want to work with us?','What can you bring to this role?'];
+var classics=[],classicIdx=0;
+function renderClassic(){
+  classics=shuffle(CLASSICS.slice()).slice(0,3);classicIdx=0;drawClassic();
+}
+function drawClassic(){
+  document.getElementById('q2-text').textContent='\u201C'+classics[classicIdx]+'\u201D';
+  var dots=document.getElementById('q2-dots');dots.innerHTML='';
+  for(var i=0;i<3;i++){var d=document.createElement('div');d.className='qdot'+(i===classicIdx?' active':(i<classicIdx?' done':''));d.textContent=(i+1);dots.appendChild(d);}
+  if(timers.t2){timers.t2.reset();}
+  document.getElementById('q2-next').style.display=(classicIdx<2)?'block':'none';
+  document.getElementById('q2-phase').style.display=(classicIdx===2)?'block':'none';
+}
+function nextClassic(){if(classicIdx<2){classicIdx++;drawClassic();}}
+
+/* ---------- phase 3: hard one ---------- */
+var HARDS=['Tell me about a time you failed.','Why did you leave your last job?','What is your greatest weakness?'];
+function renderHard(){
+  var q=HARDS[Math.floor(Math.random()*HARDS.length)];
+  document.getElementById('q3-text').textContent='\u201C'+q+'\u201D';
+  if(timers.t3){timers.t3.reset();}
+}
+function redealHard(){renderHard();}
+
+/* ---------- rubric scoring ---------- */
+var AXIS_TOTAL={content:4,chunks:4,fossil:10,presence:4};
+function updateScores(){
+  var counts={content:0,chunks:0,fossil:0,presence:0};
+  var boxes=document.querySelectorAll('input[type="checkbox"][data-axis]');
+  for(var i=0;i<boxes.length;i++){if(boxes[i].checked){counts[boxes[i].getAttribute('data-axis')]++;}}
+  for(var k in counts){document.getElementById('score-'+k).textContent=counts[k]+'/'+AXIS_TOTAL[k];}
+}
+document.addEventListener('change',function(e){if(e.target&&e.target.getAttribute&&e.target.getAttribute('data-axis')){updateScores();}});
+
+/* ---------- verdict ---------- */
+function setVerdict(ready){
+  document.getElementById('ready-panel').style.display=ready?'block':'none';
+  document.getElementById('notyet-panel').style.display=ready?'none':'block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ---------- printing ---------- */
+function printRubric(){document.body.classList.add('show-rubric-print');window.print();}
+function printFeedback(){document.body.classList.add('show-feedback-print');window.print();}
+window.onafterprint=function(){document.body.classList.remove('show-rubric-print');document.body.classList.remove('show-feedback-print');};
+
+/* ---------- init ---------- */
+timers.t1=makeTimer('t1-display',60);
+timers.t2=makeTimer('t2-display',90);
+timers.t3=makeTimer('t3-display',90);
+timers.t4=makeTimer('t4-display',90);
+timers.t5=makeTimer('t5-display',120);
+timers.t6=makeTimer('t6-display',180);
+updateScores();
+</script>
+</body>
+</html>
